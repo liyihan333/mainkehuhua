@@ -35,8 +35,8 @@ import com.kwsoft.kehuhua.utils.DataProcess;
 import com.kwsoft.kehuhua.view.RecycleViewDivider;
 import com.kwsoft.kehuhua.view.WrapContentLinearLayoutManager;
 import com.kwsoft.kehuhua.widget.CommonToolbar;
-import com.kwsoft.version.StageTestActivity;
-import com.kwsoft.version.CourseHpsActivity;
+import com.kwsoft.kehuhua.hampson.activity.StageTestActivity;
+import com.kwsoft.kehuhua.hampson.activity.CourseHpsActivity;
 import com.zhy.http.okhttp.OkHttpUtils;
 
 import java.util.ArrayList;

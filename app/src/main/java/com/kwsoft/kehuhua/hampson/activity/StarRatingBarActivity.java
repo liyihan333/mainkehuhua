@@ -1,4 +1,4 @@
-package com.kwsoft.version;
+package com.kwsoft.kehuhua.hampson.activity;
 
 import android.os.Bundle;
 import android.view.View;

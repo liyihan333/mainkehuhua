@@ -244,6 +244,18 @@
         <activity android:name=".OperateDataActivity" />
         <activity android:name=".ListActivity2" />
         <activity android:name="com.kwsoft.kehuhua.SetIpPortActivity"></activity>
+        <activity android:name="com.kwsoft.kehuhua.hampson.activity.StarRatingBarActivity">
+
+        </activity>
+        <activity android:name="com.kwsoft.kehuhua.hampson.activity.CourseRatingBarActivity">
+
+        </activity>
+        <activity android:name="com.kwsoft.kehuhua.hampson.activity.CourseHpsActivity">
+
+        </activity>
+        <activity android:name="com.kwsoft.kehuhua.hampson.activity.StageTestActivity">
+
+        </activity>
     </application>
 
 </manifest>

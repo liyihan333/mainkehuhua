@@ -28,7 +28,7 @@ import com.kwsoft.kehuhua.urlCnn.EdusStringCallback;
 import com.kwsoft.kehuhua.urlCnn.ErrorToast;
 import com.kwsoft.kehuhua.utils.CloseActivityClass;
 import com.kwsoft.kehuhua.widget.CommonToolbar;
-import com.kwsoft.version.StarRatingBarActivity;
+import com.kwsoft.kehuhua.hampson.activity.StarRatingBarActivity;
 import com.zhy.http.okhttp.OkHttpUtils;
 
 import java.util.ArrayList;

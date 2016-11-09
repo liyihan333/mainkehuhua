@@ -1,27 +1,27 @@
-package com.kwsoft.version.adapter;
+package com.kwsoft.kehuhua.hampson.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
-import android.widget.RatingBar;
 import android.widget.TextView;
+
 import com.kwsoft.kehuhua.adcustom.R;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Administrator on 2016/11/8 0008.
+ * Created by Administrator on 2016/11/7 0007.
  */
 
-public class CourseRatingBarAdapter extends BaseAdapter {
+public class StageTestAdapter extends BaseAdapter {
     private Context mContext;
     private List<Map<String, String>> list = new ArrayList<>();
 
-    public CourseRatingBarAdapter(Context mContext, List<Map<String, String>> list) {
+    public StageTestAdapter(Context mContext, List<Map<String, String>> list) {
         this.mContext = mContext;
         this.list = list;
     }
@@ -43,18 +43,19 @@ public class CourseRatingBarAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-      ViewHolder holder = null;
+        ViewHolder holder = null;
         if (view == null) {
             //解析布局
-            view = LayoutInflater.from(mContext).inflate(R.layout.activity_course_ratingbar_star_list_item, null);
+            view = LayoutInflater.from(mContext).inflate(R.layout.activity_stage_test_list_item, null);
             //创建ViewHolder持有类
             holder = new ViewHolder();
             //将每个控件的对象保存到持有类中
+            holder.tv_month = (TextView) view.findViewById(R.id.tv_month);
+            holder.tv_day = (TextView) view.findViewById(R.id.tv_day);
             holder.tv_title = (TextView) view.findViewById(R.id.tv_title);
-            holder.tv_teach_name = (TextView) view.findViewById(R.id.tv_teach_name);
-            holder.tv_teach_content = (TextView) view.findViewById(R.id.tv_teach_content);
-           // holder.ratingbar = (RatingBar) view.findViewById(R.id.ratingbar);
-            holder.ll_cb_layout = (LinearLayout) view.findViewById(R.id.ll_cb_layout);
+            holder.tv_score = (TextView) view.findViewById(R.id.tv_score);
+            holder.tv_content_title = (TextView) view.findViewById(R.id.tv_content_title);
+            holder.tv_content = (TextView) view.findViewById(R.id.tv_content);
             //将每个convertView对象中设置这个持有类对象
             view.setTag(holder);
         }
@@ -62,16 +63,16 @@ public class CourseRatingBarAdapter extends BaseAdapter {
         holder = (ViewHolder) view.getTag();
         Map<String, String> map = list.get(i);
         //然后可以直接使用这个类中的控件，对控件进行操作，而不用重复去findViewById了
+        holder.tv_month.setText(map.get("month"));
+        holder.tv_day.setText(map.get("day"));
         holder.tv_title.setText(map.get("title"));
-        holder.tv_teach_name.setText(map.get("teachName"));
-        holder.tv_teach_content.setText(map.get("teachContent"));
-
+        holder.tv_score.setText(map.get("score"));
+        holder.tv_content_title.setText(map.get("contentTitle"));
+        holder.tv_content.setText(map.get("content"));
         return view;
     }
 
     class ViewHolder {
-        TextView tv_title, tv_teach_name, tv_teach_content;
-        //RatingBar ratingbar;
-        LinearLayout ll_cb_layout;
+        TextView tv_month, tv_day, tv_title, tv_score, tv_content_title, tv_content;
     }
 }

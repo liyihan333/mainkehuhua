@@ -1,4 +1,4 @@
-package com.kwsoft.version;
+package com.kwsoft.kehuhua.hampson.activity;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -6,7 +6,7 @@ import android.widget.ListView;
 
 import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.adcustom.base.BaseActivity;
-import com.kwsoft.version.adapter.CourseAdapter;
+import com.kwsoft.kehuhua.hampson.adapter.CourseAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;

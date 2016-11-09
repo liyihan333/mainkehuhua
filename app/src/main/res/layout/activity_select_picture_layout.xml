@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#f7f7f7"
     android:orientation="vertical"
     tools:context="com.kwsoft.kehuhua.wechatPicture.SelectPictureActivity">
 
@@ -18,16 +19,20 @@
         app:isShowTitle="true">
 
     </com.kwsoft.kehuhua.widget.CommonToolbar>
-
-    <RelativeLayout
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/ll_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:orientation="vertical">
 
             <TextView
@@ -44,7 +49,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="300dp"
                 android:layout_margin="18dp"
-                android:background="@android:color/white"
                 android:columnWidth="90dp"
                 android:gravity="center"
                 android:horizontalSpacing="5dp"
@@ -52,76 +56,91 @@
                 android:scrollbars="none"
                 android:stretchMode="columnWidth"
                 android:verticalSpacing="5dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <com.kwsoft.kehuhua.wechatPicture.andio.AudioRecordButton
-                    android:id="@+id/recordButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="35dp"
-                    android:layout_marginBottom="7dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="2dp"
-                    android:background="@drawable/button_recordnormal"
-                    android:gravity="center"
-                    android:minHeight="0dp"
-                    android:padding="5dp"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:text="@string/normal"
-                    android:textColor="#727272">
-
-                </com.kwsoft.kehuhua.wechatPicture.andio.AudioRecordButton>
-
-               <Button
-                   android:id="@+id/btn_up"
-                   android:layout_width="wrap_content"
-                   android:layout_height="35dp"
-                   android:layout_marginLeft="10dp"
-                   android:layout_marginTop="2dp"
-                   android:gravity="center"
-                   android:background="@drawable/photo_btn_first"
-                   style="?android:attr/borderlessButtonStyle"
-                   android:textColor="@color/white"
-                   android:text="上传音频"
-                   android:textSize="15sp"/>
-            </LinearLayout>
-            <ListView
-                android:id="@+id/listview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:layout_weight="1"
-                android:background="#ebebeb"
-                android:divider="@null"
-                android:dividerHeight="10dp">
-
-            </ListView>
-
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerInParent="true"
-            android:layout_centerVertical="true"
-            android:orientation="horizontal"
-            android:paddingTop="40dp">
+            android:layout_marginTop="11dp"
+            android:orientation="vertical">
 
-            <com.kwsoft.kehuhua.wechatPicture.WaterWaveProgress
-                android:id="@+id/waterWaveProgress1"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="114dp"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="20dp"
+                    android:text="音频附件列表"
+                    android:textColor="@color/list_item_left"
+                    android:textSize="15sp" />
+
+                <com.kwsoft.kehuhua.wechatPicture.andio.AudioRecordButton
+                    android:id="@+id/recordButton"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="286dp"
+                    android:layout_height="36dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/btn_radio_say"
+                    android:gravity="center"
+                    android:minHeight="0dp"
+                    android:padding="5dp"
+                    android:text="@string/normal"
+                    android:textColor="#858585"
+                    android:textSize="15sp">
+
+                </com.kwsoft.kehuhua.wechatPicture.andio.AudioRecordButton>
+
+                <ListView
+                    android:id="@+id/listview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/white">
+
+                </ListView>
+
+                <Button
+                    android:id="@+id/btn_up"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/photo_btn_first"
+                    android:gravity="center"
+                    android:text="上传音频"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_weight="1"
-                android:visibility="gone"
-                tools:maxProgress="100"
-                tools:progress="0" />
-        </LinearLayout>
-    </RelativeLayout>
+                android:layout_centerHorizontal="true"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                android:orientation="horizontal"
+                android:paddingTop="40dp">
 
+                <com.kwsoft.kehuhua.wechatPicture.WaterWaveProgress
+                    android:id="@+id/waterWaveProgress1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_weight="1"
+                    android:visibility="gone"
+                    tools:maxProgress="100"
+                    tools:progress="0" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
 </LinearLayout>

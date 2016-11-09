@@ -1,12 +1,11 @@
-package com.kwsoft.version;
+package com.kwsoft.kehuhua.hampson.activity;
 
 import android.os.Bundle;
 import android.widget.ListView;
 
 import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.adcustom.base.BaseActivity;
-import com.kwsoft.version.adapter.CourseRatingBarAdapter;
-import com.kwsoft.version.adapter.StageTestAdapter;
+import com.kwsoft.kehuhua.hampson.adapter.CourseRatingBarAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
