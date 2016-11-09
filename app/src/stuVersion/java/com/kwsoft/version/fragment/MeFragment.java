@@ -21,6 +21,7 @@ import com.kwsoft.kehuhua.urlCnn.EdusStringCallback;
 import com.kwsoft.kehuhua.urlCnn.ErrorToast;
 import com.kwsoft.kehuhua.utils.Utils;
 import com.kwsoft.version.Common.DataCleanManager;
+import com.kwsoft.version.CourseHpsActivity;
 import com.kwsoft.version.CourseRatingBarActivity;
 import com.kwsoft.version.FeedbackActivity;
 import com.kwsoft.version.ResetPwdActivity;
@@ -186,7 +187,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
             case R.id.ll_stu_feedback:
 //                Intent intent1 = new Intent(getActivity(), FeedbackActivity.class);
 //                startActivity(intent1);
-                Intent intent1 = new Intent(getActivity(), StarRatingBarActivity.class);
+                Intent intent1 = new Intent(getActivity(), CourseHpsActivity.class);
                 startActivity(intent1);
                 break;
             case R.id.stu_version_layout:

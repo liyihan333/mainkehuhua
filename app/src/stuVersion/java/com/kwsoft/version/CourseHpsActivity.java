@@ -1,4 +1,4 @@
-package com.kwsoft.version.view;
+package com.kwsoft.version;
 
 import com.kwsoft.kehuhua.adcustom.base.BaseActivity;
 import android.os.Bundle;
