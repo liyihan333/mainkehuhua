@@ -400,7 +400,7 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
                         String isSuccess=response.substring(0,1);
                         if(isSuccess.equals("1")){
                             Intent intent = new Intent();
-                            intent.setClass(InfoActivity.this,ListActivity2.class);
+                            intent.setClass(InfoActivity.this,ListActivity3.class);
                             startActivity(intent);
                         }else{
                             Toast.makeText(InfoActivity.this, response+"请检查表关联", Toast.LENGTH_SHORT).show();

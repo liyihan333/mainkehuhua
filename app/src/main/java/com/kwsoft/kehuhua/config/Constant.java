@@ -150,7 +150,7 @@ public class Constant {
     public static int topBarColor;
 
 
-
+    public static List<Map<String, Object>> buttonSet=new ArrayList<>();//按钮列表数据
 
 
 

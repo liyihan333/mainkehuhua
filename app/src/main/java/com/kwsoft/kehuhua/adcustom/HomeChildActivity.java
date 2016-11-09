@@ -52,7 +52,7 @@ public class HomeChildActivity extends Activity implements View.OnClickListener 
         child_menu_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Intent mIntent = new Intent(HomeChildActivity.this, ListActivity2.class);
+                Intent mIntent = new Intent(HomeChildActivity.this, ListActivity3.class);
                 mIntent.putExtra("menu", menuStr);
                 startActivity(mIntent);
             }

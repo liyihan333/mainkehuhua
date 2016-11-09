@@ -26,7 +26,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.kwsoft.kehuhua.adcustom.BlankActivity;
 import com.kwsoft.kehuhua.adcustom.ChartActivity;
 import com.kwsoft.kehuhua.adcustom.CourseActivity;
-import com.kwsoft.kehuhua.adcustom.ListActivity2;
+import com.kwsoft.kehuhua.adcustom.ListActivity3;
 import com.kwsoft.kehuhua.adcustom.MessagAlertActivity;
 import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.adcustom.base.BaseActivity;
@@ -112,7 +112,7 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
                 Constant.stu_homeSetId = String.valueOf(parentList.get(position).get("SourceDataId"));
                 try {
                     Intent intent = new Intent();
-                    intent.setClass(getActivity(), ListActivity2.class);
+                    intent.setClass(getActivity(), ListActivity3.class);
                     intent.putExtra("itemData", JSON.toJSONString(itemData));
                     startActivity(intent);
                 } catch (Exception e) {
@@ -442,7 +442,7 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
         String childString = JSONArray.toJSONString(childList);
         Intent intent = new Intent();
         if (itemData.get("menuPageUrl") == null) {
-            intent.setClass(getActivity(), ListActivity2.class);
+            intent.setClass(getActivity(), ListActivity3.class);
         } else {
             intent.setClass(getActivity(), CourseActivity.class);
         }
