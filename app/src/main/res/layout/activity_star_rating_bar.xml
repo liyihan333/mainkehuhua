@@ -2,9 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:orientation="vertical">
-
+    <com.kwsoft.kehuhua.widget.CommonToolbar
+        android:id="@+id/common_toolbar"
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
+        android:background="?attr/colorPrimary"
+        app:isShowRightButton="true"
+        app:isShowTitle="true">
+    </com.kwsoft.kehuhua.widget.CommonToolbar>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">

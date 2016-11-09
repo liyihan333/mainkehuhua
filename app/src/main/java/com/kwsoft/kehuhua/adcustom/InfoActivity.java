@@ -28,6 +28,7 @@ import com.kwsoft.kehuhua.urlCnn.EdusStringCallback;
 import com.kwsoft.kehuhua.urlCnn.ErrorToast;
 import com.kwsoft.kehuhua.utils.CloseActivityClass;
 import com.kwsoft.kehuhua.widget.CommonToolbar;
+import com.kwsoft.version.StarRatingBarActivity;
 import com.zhy.http.okhttp.OkHttpUtils;
 
 import java.util.ArrayList;
@@ -214,9 +215,38 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
                                     switch (buttonType) {
                                         case 12://修改页面
                                         case 18://关联添加页面
-                                            Intent mIntentEdit = new Intent(mContext, OperateDataActivity.class);
-                                            mIntentEdit.putExtra("itemSet", operaButtonSetMapStr);
-                                            startActivity(mIntentEdit);
+//mainPageId=2293, mainTableId=126, mainId=242, pageId=3020, tableId=262
+                                          String nextPageId=String.valueOf(operaButtonSetMap.get("startTurnPage"));
+                                            String nextTable=String.valueOf(operaButtonSetMap.get("tableId"));
+                                            boolean  isPingJia=tableId.equals("126")&&pageId.equals("2293")
+                                                    &&mainId.equals("242")&&nextPageId.equals("3020")&&nextTable.equals("262");
+
+                                            Log.e(TAG, "onItemClick: operaButtonSetMapStr "+operaButtonSetMapStr);
+                                            Log.e(TAG, "onItemClick: isPingJia "+isPingJia);
+                                            if (buttonType==18&&isPingJia) {
+                                                Intent mIntentEdit = new Intent(mContext, StarRatingBarActivity.class);
+                                                mIntentEdit.putExtra("itemSet", operaButtonSetMapStr);
+                                                startActivity(mIntentEdit);
+
+
+
+                                            }else{
+                                                Intent mIntentEdit = new Intent(mContext, OperateDataActivity.class);
+                                                mIntentEdit.putExtra("itemSet", operaButtonSetMapStr);
+                                                startActivity(mIntentEdit);
+                                            }
+
+
+
+
+
+
+
+
+
+
+
+
                                             break;
                                         case 13://单项删除操作
                                             delMapParams.put(Constant.tableId, tableId);

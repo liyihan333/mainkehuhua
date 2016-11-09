@@ -10,6 +10,9 @@ import android.widget.RatingBar;
 
 import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.adcustom.base.BaseActivity;
+import com.kwsoft.kehuhua.widget.CommonToolbar;
+
+import static com.kwsoft.kehuhua.config.Constant.topBarColor;
 
 /**
  * Created by Administrator on 2016/11/8 0008.
@@ -26,7 +29,7 @@ public class StarRatingBarActivity extends BaseActivity {
     public EditText et_content;
     public CheckBox ratebar1, ratebar2, ratebar3, ratebar4, ratebar5;
     public LinearLayout ll_cb_first, ll_cb_sec, ll_cb_third, ll_cb_forth, ll_cb_fifth, ll_cb_six;
-
+    private CommonToolbar mToolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +39,33 @@ public class StarRatingBarActivity extends BaseActivity {
 
     @Override
     public void initView() {
+
+
+        mToolbar = (CommonToolbar) findViewById(R.id.common_toolbar);
+        mToolbar.setTitle("评价");
+        mToolbar.setBackgroundColor(getResources().getColor(topBarColor));
+        //左侧返回按钮
+        mToolbar.setRightButtonIcon(getResources().getDrawable(R.mipmap.edit_commit1));
+        mToolbar.setLeftButtonOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+        mToolbar.showRightImageButton();
+        //右侧下拉按钮
+        mToolbar.setRightButtonOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                popButton();
+            }
+        });
+
+
+
+
+
+
         ratebar1 = (CheckBox) findViewById(R.id.ratebar1);
         ratebar2 = (CheckBox) findViewById(R.id.ratebar2);
         ratebar3 = (CheckBox) findViewById(R.id.ratebar3);

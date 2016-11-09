@@ -35,6 +35,8 @@ import com.kwsoft.kehuhua.utils.DataProcess;
 import com.kwsoft.kehuhua.view.RecycleViewDivider;
 import com.kwsoft.kehuhua.view.WrapContentLinearLayoutManager;
 import com.kwsoft.kehuhua.widget.CommonToolbar;
+import com.kwsoft.version.StageTestActivity;
+import com.kwsoft.version.CourseHpsActivity;
 import com.zhy.http.okhttp.OkHttpUtils;
 
 import java.util.ArrayList;
@@ -259,6 +261,8 @@ public class ListActivity2 extends BaseActivity {
     /**
      * 4、处理字段接口数据,方法 下一步请求列表数据
      */
+
+    List<Map<String, Object>> operaButtonSetList;
     @SuppressWarnings("unchecked")
     public void setStore(String jsonData) {
         List<Map<String, Object>> dataList = new ArrayList<>();
@@ -295,8 +299,24 @@ public class ListActivity2 extends BaseActivity {
 //获取子项内部按钮
             if (pageSet.get("operaButtonSet") != null) {
                 try {
-                    List<Map<String, Object>> operaButtonSetList = (List<Map<String, Object>>) pageSet.get("operaButtonSet");
+                    operaButtonSetList = (List<Map<String, Object>>) pageSet.get("operaButtonSet");
+
+                    if (operaButtonSetList.size()>0) {
+                        for (int i=0;i<operaButtonSetList.size();i++) {
+                            operaButtonSetList.get(i).put("tableIdList", tableId);
+                            operaButtonSetList.get(i).put("pageIdList", pageId);
+                        }
+
+
+                    }
+
+
                     operaButtonSet = JSONArray.toJSONString(operaButtonSetList);
+
+
+
+
+
                     Log.e("TAG", "获取operaButtonSet" + operaButtonSet);
 
                 } catch (Exception e) {
@@ -355,7 +375,32 @@ public class ListActivity2 extends BaseActivity {
 //                    Toast.LENGTH_SHORT).show();
 //        }
 //用适配器并判断展示数据
-        showData();
+        Log.e(TAG, "refreshPage: paramsMap  "+paramsMap.toString());
+
+        //pageId=3377, tableId=100
+        Log.e(TAG, "refreshPage: tableId "+tableId+" pageId "+pageId);
+        if (tableId.equals("100")&&pageId.equals("3377")) {
+
+            //学员端走定制化阶段测评页面
+            Intent intent = new Intent();
+            intent.setClass(this, StageTestActivity.class);
+
+            startActivity(intent);
+
+            Log.e(TAG, "refreshPage: 学员端走定制化阶段测评页面");
+        }else if (tableId.equals("102")&&pageId.equals("2308")) {
+
+            //学员端走定制化课堂内容（一对一教学日志）页面
+            Intent intent = new Intent();
+            intent.setClass(this, CourseHpsActivity.class);
+
+            startActivity(intent);
+
+            Log.e(TAG, "refreshPage: 学员端走定制化课堂内容（一对一教学日志）页面");
+        }else {
+            showData();
+        }
+
     }
 
     public int isResume=0;
@@ -429,7 +474,7 @@ public class ListActivity2 extends BaseActivity {
     private static final String TAG = "ListActivity2";
     public void normalRequest() {
         Log.e(TAG, "normalRequest: ");
-        mAdapter = new ListAdapter2(datas, childTab);
+        mAdapter = new ListAdapter2(datas, childTab,operaButtonSetList);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new WrapContentLinearLayoutManager(ListActivity2.this));
         mRecyclerView.addItemDecoration(new RecycleViewDivider(mContext, LinearLayoutManager.VERTICAL));
@@ -504,11 +549,16 @@ public class ListActivity2 extends BaseActivity {
         //重设参数值
         paramsMap.put(Constant.tableId, tableId);
         paramsMap.put(Constant.pageId, pageId);
+
+
         Constant.paramsMapSearch = paramsMap;
         Constant.mainTableIdValue = tableId;
         Constant.mainPageIdValue = pageId;
         //重新请求数据
-        refreshData();
+
+
+            refreshData();
+
 
     }
 

@@ -22,6 +22,7 @@
     <!--/>-->
     <!--android:layout_toEndOf="@+id/checkbox_operate_data"-->
     <RelativeLayout
+        android:id="@+id/list_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white">
@@ -272,7 +273,41 @@
         </RelativeLayout>
 
     </RelativeLayout>
+<RelativeLayout
+    android:layout_marginTop="10dp"
+    android:id="@+id/list_opera_layout"
+    android:layout_below="@+id/list_content"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:visibility="gone">
 
+    <Button
+
+        android:id="@+id/list_opera0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="确认上课"
+        android:layout_centerVertical="true"
+        android:visibility="gone"/>
+    <Button
+        android:id="@+id/list_opera1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="确认下课"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="3dp"
+        android:visibility="gone"/>
+    <Button
+        android:id="@+id/list_opera2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="交作业"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:visibility="gone"/>
+
+</RelativeLayout>
 
 </RelativeLayout>
 
