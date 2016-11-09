@@ -2,10 +2,10 @@
 
     <!-- Base application theme. -->
     <!--<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">-->
-        <!--&lt;!&ndash; Customize your theme here. &ndash;&gt;-->
-        <!--<item name="colorPrimary">@color/colorPrimary</item>-->
-        <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
-        <!--<item name="colorAccent">@color/colorAccent</item>-->
+    <!--&lt;!&ndash; Customize your theme here. &ndash;&gt;-->
+    <!--<item name="colorPrimary">@color/colorPrimary</item>-->
+    <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+    <!--<item name="colorAccent">@color/colorAccent</item>-->
     <!--</style>-->
 
     <style name="AppTheme.NoActionBar">
@@ -22,6 +22,7 @@
         <item name="android:windowEnterAnimation">@anim/popshow_anim</item>
         <item name="android:windowExitAnimation">@anim/pophidden_anim</item>
     </style>
+
     <style name="topMenuPopupWindowAnimation">
         <item name="android:windowEnterAnimation">@anim/top_menu_popshow_anim</item>
         <item name="android:windowExitAnimation">@anim/top_menu_pophidden_anim</item>
@@ -94,13 +95,13 @@
     </style>
 
     <!--<style name="myToolbarNavigationButtonStyle"-->
-        <!--parent="@style/Widget.AppCompat.Toolbar.Button.Navigation">-->
-        <!--&lt;!&ndash;<item name="android:minWidth">0dp</item>&ndash;&gt;-->
-        <!--&lt;!&ndash;<item name="android:layout_marginStart">50dp</item>&ndash;&gt;-->
-        <!--<item name="android:scaleX">2</item>-->
-        <!--<item name="android:scaleY">2</item>-->
+    <!--parent="@style/Widget.AppCompat.Toolbar.Button.Navigation">-->
+    <!--&lt;!&ndash;<item name="android:minWidth">0dp</item>&ndash;&gt;-->
+    <!--&lt;!&ndash;<item name="android:layout_marginStart">50dp</item>&ndash;&gt;-->
+    <!--<item name="android:scaleX">2</item>-->
+    <!--<item name="android:scaleY">2</item>-->
 
-        <!--&lt;!&ndash;<item name="android:scaleType">fitStart</item>&ndash;&gt;-->
+    <!--&lt;!&ndash;<item name="android:scaleType">fitStart</item>&ndash;&gt;-->
     <!--</style>-->
 
     <style name="popupwindow_fade">
@@ -163,7 +164,6 @@
     </style>
 
 
-
     <!--
 
      设置弹出窗口的属性，frame叠加，isfloat是否浮动，tarnslucent是否半透明，dim是背景是否变暗 -->
@@ -173,5 +173,25 @@
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+    <!--五星好评-编辑-->
+    <style name="foodRatingBar" parent="@android:style/Widget.RatingBar">
+        <!--指向star_rating_bar_full.xml文件 -->
+        <item name="android:progressDrawable">@drawable/star_rating_bar_full</item>
+        <item name="android:minHeight">25dip</item>
+        <item name="android:maxHeight">58dip</item>
+        <!-- 是否不支持用户交互，只应作为指标。 -->
+        <item name="android:isIndicator">false</item>
+    </style>
+
+    <!--五星好评-不可编辑-->
+    <style name="foodRatingBarNoEdit" parent="@android:style/Widget.RatingBar">
+        <!--指向star_rating_bar_full.xml文件 -->
+        <item name="android:progressDrawable">@drawable/star_rating_bar_full</item>
+        <item name="android:minHeight">10dip</item>
+        <item name="android:maxHeight">58dip</item>
+        <!-- 是否不支持用户交互，只应作为指标。 -->
+        <item name="android:isIndicator">true</item>
     </style>
 </resources>

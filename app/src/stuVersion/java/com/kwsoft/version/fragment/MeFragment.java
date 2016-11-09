@@ -14,17 +14,23 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.kwsoft.kehuhua.adcustom.CourseActivity;
 import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.config.Constant;
 import com.kwsoft.kehuhua.urlCnn.EdusStringCallback;
 import com.kwsoft.kehuhua.urlCnn.ErrorToast;
 import com.kwsoft.kehuhua.utils.Utils;
 import com.kwsoft.version.Common.DataCleanManager;
+import com.kwsoft.version.CourseRatingBarActivity;
 import com.kwsoft.version.FeedbackActivity;
 import com.kwsoft.version.ResetPwdActivity;
+import com.kwsoft.version.StageTestActivity;
+import com.kwsoft.version.StarRatingBarActivity;
 import com.kwsoft.version.StuInfoActivity;
 import com.kwsoft.version.StuLoginActivity;
 import com.kwsoft.version.StuPra;
+import com.kwsoft.version.adapter.CourseRatingBarAdapter;
+import com.kwsoft.version.adapter.StageTestAdapter;
 import com.pgyersdk.update.PgyUpdateManager;
 import com.zhy.http.okhttp.OkHttpUtils;
 
@@ -178,7 +184,9 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                 dialog1();
                 break;
             case R.id.ll_stu_feedback:
-                Intent intent1 = new Intent(getActivity(), FeedbackActivity.class);
+//                Intent intent1 = new Intent(getActivity(), FeedbackActivity.class);
+//                startActivity(intent1);
+                Intent intent1 = new Intent(getActivity(), StarRatingBarActivity.class);
                 startActivity(intent1);
                 break;
             case R.id.stu_version_layout:

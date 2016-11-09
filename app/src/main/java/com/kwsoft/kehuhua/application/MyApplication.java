@@ -23,7 +23,8 @@ import okhttp3.OkHttpClient;
 
 import static com.kwsoft.kehuhua.config.Constant.sysUrl;
 
-public class MyApplication extends Application {
+public class
+MyApplication extends Application {
     Context mContext;
     public static List<Activity> mActivityList = new ArrayList<Activity>();
     private static MyApplication instance;
@@ -130,6 +131,7 @@ public class MyApplication extends Application {
 //            }
 //        }
 //        return activePackages.toArray(new String[activePackages.size()]);
+//    }
 //    }
     public void exitLogin(Context context) {
         Activity login = null;

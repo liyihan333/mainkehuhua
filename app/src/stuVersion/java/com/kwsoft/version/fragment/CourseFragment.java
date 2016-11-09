@@ -462,7 +462,7 @@ public class CourseFragment extends Fragment implements OnDataListener, WeekDate
 //                courseView.getTopRightIv().setMaxWidth((int)(courseInfoWidth/2));
 //                courseView.getTopRightIv().setMaxHeight((int)(courseInfoWidth/2));
                 courseView.setLayoutParams(layoutParams);
-                Log.e("TAG", "课程表检测3。1");
+                Log.e("TAG", "课程表检测3。1"+marginLeft+"//"+marginTop);
                 String courseName = "";
                 if (list.get(i).get("SHOW_CONTENT") != null) {
                     courseName = String.valueOf(list.get(i).get("SHOW_CONTENT"));
