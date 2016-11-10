@@ -20,6 +20,7 @@ import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
 import com.kwsoft.kehuhua.adapter.ListAdapter2;
 import com.kwsoft.kehuhua.adcustom.InfoActivity;
+import com.kwsoft.kehuhua.adcustom.ListActivity3;
 import com.kwsoft.kehuhua.adcustom.OperateDataActivity;
 import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.adcustom.base.BaseActivity;
@@ -269,6 +270,27 @@ public class ListFragment extends Fragment {
             if (pageSet.get("buttonSet") != null) {
                 Constant.buttonSet = (List<Map<String, Object>>) pageSet.get("buttonSet");//初始化下拉按钮数据
                 Log.e("TAG", "获取buttonSet" + Constant.buttonSet);
+
+                //判断右上角按钮是否可见
+                if (Constant.buttonSet.size() > 0) {
+
+                        for (int i=0;i<Constant.buttonSet.size();i++) {
+                            Constant.buttonSet.get(i).put("tableIdList", tableId);
+                            Constant.buttonSet.get(i).put("pageIdList", pageId);
+                        }
+
+                    ((ListActivity3)getActivity()).mToolbar.showRightImageButton();
+                    ((ListActivity3)getActivity()).mToolbar.setRightButtonOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            ((ListActivity3)getActivity()).buttonList();
+                        }
+                    });
+
+                } else {
+                    ((ListActivity3)getActivity()).mToolbar.hideRightImageButton();
+                }
+
 
             }
 //获取dataList

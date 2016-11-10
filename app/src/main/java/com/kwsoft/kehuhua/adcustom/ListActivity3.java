@@ -42,7 +42,7 @@ import static com.kwsoft.kehuhua.config.Constant.tableId;
 
 public class ListActivity3 extends BaseActivity {
 
-    private CommonToolbar mToolbar;
+    public CommonToolbar mToolbar;
     private List<Map<String, Object>> childList = new ArrayList<>();
     private PopupWindow toolListPop, childListPop;
 
@@ -194,19 +194,6 @@ public class ListActivity3 extends BaseActivity {
                 finish();
             }
         });
-        //判断右上角按钮是否可见
-                if (Constant.buttonSet.size() > 0) {
-                    mToolbar.showRightImageButton();
-                    mToolbar.setRightButtonOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            buttonList();
-                        }
-                    });
-
-                } else {
-                    mToolbar.hideRightImageButton();
-                }
         manager= getSupportFragmentManager() ;
         transaction = manager.beginTransaction() ;
 
@@ -378,7 +365,7 @@ public class ListActivity3 extends BaseActivity {
                             @Override
                             public void onItemClick(AdapterView<?> arg0,
                                                     View arg1, int arg2, long arg3) {
-//                                toPage(arg2);
+                                toPage(arg2);
                                 // 隐藏弹出窗口
                                 if (toolListPop != null && toolListPop.isShowing()) {
                                     toolListPop.dismiss();
@@ -389,6 +376,23 @@ public class ListActivity3 extends BaseActivity {
             }
         } catch (Exception e) {
             Toast.makeText(ListActivity3.this, "无按钮数据", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void toPage(int position) {
+        int buttonType = (int) buttonSet.get(position).get("buttonType");
+        Map<String, Object> buttonSetItem = buttonSet.get(position);
+        switch (buttonType) {
+            case 0://添加页面
+                Intent intent = new Intent(mContext, OperateDataActivity.class);
+                intent.putExtra("itemSet", JSON.toJSONString(buttonSetItem));
+                startActivityForResult(intent, 5);
+                break;
+            case 3://批量删除操作
+//              listAdapter.flag = true;
+//              listAdapter.notifyDataSetChanged();
+//              setGone();
+                break;
         }
     }
 }
