@@ -1,16 +1,28 @@
 package com.kwsoft.kehuhua.hampson.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
+import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.adcustom.base.BaseActivity;
+import com.kwsoft.kehuhua.config.Constant;
+import com.kwsoft.kehuhua.urlCnn.EdusStringCallback;
+import com.kwsoft.kehuhua.urlCnn.ErrorToast;
 import com.kwsoft.kehuhua.widget.CommonToolbar;
+import com.zhy.http.okhttp.OkHttpUtils;
+
+import java.util.Map;
+
+import okhttp3.Call;
 
 import static com.kwsoft.kehuhua.config.Constant.topBarColor;
 
@@ -34,7 +46,35 @@ public class StarRatingBarActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_star_rating_bar);
+        getDataIntent();
         initView();
+    }
+    private String mainTableId,mainPageId,tableId,pageId,dataId;
+
+
+    private void getDataIntent() {
+
+        //获取数据并解析
+        Intent intent = getIntent();
+        String buttonSetItemStr = intent.getStringExtra("itemSet");
+        Map<String, Object> buttonSetItem = JSON.parseObject(buttonSetItemStr);
+        Log.e(TAG, "getIntentData: buttonSetItem "+buttonSetItem.toString());
+
+        //获取参数并添加
+        //mainTableId
+        mainTableId = String.valueOf(buttonSetItem.get("tableIdList"));
+
+        //mainPageId
+        mainPageId = String.valueOf(buttonSetItem.get("pageIdList"));
+
+        //tableId
+        tableId = String.valueOf(buttonSetItem.get("tableId"));
+        //pageId
+        pageId = String.valueOf(buttonSetItem.get("startTurnPage"));
+        //dataId：在对列表操作的时候是没有的，只有行级操作的时候才有
+        dataId = String.valueOf(buttonSetItem.get("dataId"));
+
+
     }
 
     @Override
@@ -116,6 +156,7 @@ public class StarRatingBarActivity extends BaseActivity {
         cb_six_rb5 = (CheckBox) findViewById(R.id.cb_six_rb5);
 
         et_content = (EditText) findViewById(R.id.et_content);
+
         initRateBarListener();
     }
 
@@ -243,4 +284,57 @@ public class StarRatingBarActivity extends BaseActivity {
             }
         });
     }
+
+    private static final String TAG = "StarRatingBarActivity";
+
+
+    private void getCommit() {
+
+            String pingJiaValue="";
+            if (hasInternetConnected()) {
+                dialog.show();
+                String volleyUrl1= Constant.sysUrl + Constant.commitAdd + "?" +
+                                Constant.tableId + "=" + tableId + "&" + Constant.pageId + "=" + pageId + "&" +
+                        pingJiaValue + "&t0_au_"+tableId+"_"+pageId+"_3301="+dataId;//+ keyRelation
+
+                //请求地址（关联添加和修改）
+                String volleyUrl = volleyUrl1.replaceAll(" ", "%20").replaceAll("&&","&");
+                //get请求
+                OkHttpUtils
+                        .get()
+                        .url(volleyUrl)
+                        .build()
+                        .execute(new EdusStringCallback(StarRatingBarActivity.this) {
+                            @Override
+                            public void onError(Call call, Exception e, int id) {
+                                ErrorToast.errorToast(mContext,e);
+                                dialog.dismiss();
+                                Toast.makeText(StarRatingBarActivity.this, "操作失败", Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onResponse(String response, int id) {
+                                Log.e(TAG, "onResponse: "+response);
+                                if (response != null && !response.equals("0")) {
+                                    //返回列表页面并刷新
+//                                    backToInfo();
+                                } else {
+                                    Toast.makeText(StarRatingBarActivity.this, "操作失败", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+            }else{
+                Toast.makeText(this, "无网络", Toast.LENGTH_SHORT).show();
+            }
+
+
+
+
+
+
+    }
+
+
+
+
 }

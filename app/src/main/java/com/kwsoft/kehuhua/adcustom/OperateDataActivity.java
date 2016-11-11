@@ -127,6 +127,8 @@ public class OperateDataActivity extends BaseActivity {
 
                         keyRelation = "t0_au_" + tableId + "_" + pageId + "_" + Constant.relationFieldId + "=" + dataId;
                         }
+
+                        Log.e(TAG, "setStore: keyRelation "+keyRelation);
                         break;
                     case 12:
                         keyRelation = "&t0_au_" + tableId + "_" + pageId + "=" + dataId;
