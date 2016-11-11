@@ -19,9 +19,9 @@ import java.util.Map;
 
 public class StageTestAdapter extends BaseAdapter {
     private Context mContext;
-    private List<Map<String, String>> list = new ArrayList<>();
+    private List<List<Map<String, String>>> list = new ArrayList<>();
 
-    public StageTestAdapter(Context mContext, List<Map<String, String>> list) {
+    public StageTestAdapter(Context mContext, List<List<Map<String, String>>> list) {
         this.mContext = mContext;
         this.list = list;
     }
@@ -50,6 +50,7 @@ public class StageTestAdapter extends BaseAdapter {
             //创建ViewHolder持有类
             holder = new ViewHolder();
             //将每个控件的对象保存到持有类中
+            holder.tv_year= (TextView) view.findViewById(R.id.tv_year);
             holder.tv_month = (TextView) view.findViewById(R.id.tv_month);
             holder.tv_day = (TextView) view.findViewById(R.id.tv_day);
             holder.tv_title = (TextView) view.findViewById(R.id.tv_title);
@@ -61,18 +62,41 @@ public class StageTestAdapter extends BaseAdapter {
         }
         //每次需要使用的时候都会拿到这个持有类
         holder = (ViewHolder) view.getTag();
-        Map<String, String> map = list.get(i);
+        List<Map<String, String>> map = list.get(i);
         //然后可以直接使用这个类中的控件，对控件进行操作，而不用重复去findViewById了
-        holder.tv_month.setText(map.get("month"));
-        holder.tv_day.setText(map.get("day"));
-        holder.tv_title.setText(map.get("title"));
-        holder.tv_score.setText(map.get("score"));
-        holder.tv_content_title.setText(map.get("contentTitle"));
-        holder.tv_content.setText(map.get("content"));
+
+        //成绩标题
+        holder.tv_title.setText(map.get(1).get("fieldCnName2"));
+        //分数
+        holder.tv_score.setText(map.get(0).get("fieldCnName2"));
+
+        //成绩描述
+        holder.tv_content_title.setText(map.get(2).get("fieldCnName"));
+        holder.tv_content.setText(map.get(2).get("fieldCnName2"));
+
+       //考试日期
+
+        String date=map.get(3).get("fieldCnName2");
+//分别获取年月日
+        String cpYear=date.substring(0,4);
+        String cpMonth=date.substring(5,7)+"月";
+        String cpDay=date.substring(8,10)+"日";
+        //年
+        holder.tv_year.setText(cpYear);
+        //月
+        holder.tv_month.setText(cpMonth);
+        //日
+        holder.tv_day.setText(cpDay);
+
+
+
+
+
+
         return view;
     }
 
     class ViewHolder {
-        TextView tv_month, tv_day, tv_title, tv_score, tv_content_title, tv_content;
+        TextView tv_year,tv_month, tv_day, tv_title, tv_score, tv_content_title, tv_content;
     }
 }

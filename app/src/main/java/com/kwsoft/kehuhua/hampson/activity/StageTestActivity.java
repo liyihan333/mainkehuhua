@@ -6,7 +6,6 @@ import android.widget.TextView;
 
 import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.adcustom.base.BaseActivity;
-import com.kwsoft.kehuhua.hampson.adapter.StageTestAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,8 +40,8 @@ public class StageTestActivity extends BaseActivity {
         list.add(map);
         list.add(map);
         list.add(map);
-        StageTestAdapter adapter = new StageTestAdapter(this,list);
-        listView.setAdapter(adapter);
+//        StageTestAdapter adapter = new StageTestAdapter(this,list);
+//        listView.setAdapter(adapter);
 
 
     }

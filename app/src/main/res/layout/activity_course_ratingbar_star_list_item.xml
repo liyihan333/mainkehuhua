@@ -61,6 +61,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/teach_name_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="老师姓名"
@@ -86,6 +87,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/my_ping_jia"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="教学内容"
@@ -93,31 +95,37 @@
                     android:textSize="16sp" />
 
                 <LinearLayout
+                    android:id="@+id/star_layout"
                     android:layout_width="match_parent"
                     android:layout_height="16dp"
                     android:layout_marginLeft="21dp"
                     android:orientation="horizontal">
 
                     <View
+                        android:id="@+id/star0"
                         android:layout_width="16dp"
                         android:layout_height="match_parent"
                         android:background="@mipmap/star_ratingbar_full" />
                     <View
-                        android:layout_width="16dp"
-                        android:layout_marginLeft="6dp"
-                        android:layout_height="match_parent"
-                        android:background="@mipmap/star_ratingbar_full" />
-                    <View
+                        android:id="@+id/star1"
                         android:layout_width="16dp"
                         android:layout_marginLeft="6dp"
                         android:layout_height="match_parent"
                         android:background="@mipmap/star_ratingbar_full" />
                     <View
+                        android:id="@+id/star2"
                         android:layout_width="16dp"
                         android:layout_marginLeft="6dp"
                         android:layout_height="match_parent"
                         android:background="@mipmap/star_ratingbar_full" />
                     <View
+                        android:id="@+id/star3"
+                        android:layout_width="16dp"
+                        android:layout_marginLeft="6dp"
+                        android:layout_height="match_parent"
+                        android:background="@mipmap/star_ratingbar_full" />
+                    <View
+                        android:id="@+id/star4"
                         android:layout_width="16dp"
                         android:layout_marginLeft="6dp"
                         android:layout_height="match_parent"
@@ -164,20 +172,6 @@
                 android:orientation="horizontal">
 
             </com.kwsoft.kehuhua.hampson.view.AutoNextLineLinearlayout>
-            <!--<CheckBox-->
-                <!--android:id="@+id/rb1"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:background="@drawable/sel_radio_group_selector"-->
-                <!--android:button="@null"-->
-                <!--android:paddingBottom="9dp"-->
-                <!--android:paddingLeft="11dp"-->
-                <!--android:enabled="false"-->
-                <!--android:checked="true"-->
-                <!--android:paddingRight="11dp"-->
-                <!--android:paddingTop="9dp"-->
-                <!--android:text="一般"-->
-                <!--android:textColor="@color/checkb_color_selector" />-->
 
         </LinearLayout>
 

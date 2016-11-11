@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
@@ -39,6 +38,7 @@ import okhttp3.Call;
 
 /**
  * Created by Administrator on 2016/9/19 0019.
+ *
  */
 public class AssortFragment extends Fragment {
 

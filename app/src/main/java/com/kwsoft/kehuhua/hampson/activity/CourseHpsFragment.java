@@ -2,12 +2,16 @@ package com.kwsoft.kehuhua.hampson.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -41,8 +45,10 @@ public class CourseHpsFragment extends Fragment {
     @Bind(R.id.lv)
     ListView mRecyclerView;
 
-//    private List<Map<String, String>> list = new ArrayList<>();
+    //    private List<Map<String, String>> list = new ArrayList<>();
     private static final String TAG = "CourseHpsFragment";
+    @Bind(R.id.swipeRefreshLayout)
+    SwipeRefreshLayout swipeRefreshLayout;
     private String tableId, pageId;
 
 
@@ -55,13 +61,9 @@ public class CourseHpsFragment extends Fragment {
     private int state = STATE_NORMAL;
 
 
-
     private String operaButtonSet;
     private List<List<Map<String, String>>> datas;
     private CourseAdapter mAdapter;
-
-
-
 
 
     @Override
@@ -71,27 +73,11 @@ public class CourseHpsFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         ((BaseActivity) getActivity()).dialog.show();
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
 //        initRefreshLayout();//初始化空间
         getDataIntent();//获取初始化数据
         getData();
 
-
-//        Log.e(TAG, "onCreate: initView()结束");
-//        Map<String, String> map = new HashMap<>();
-//        map.put("time", "2015-06-16");
-//        map.put("title", "少儿一对一英语基础班");
-//        map.put("homework", "课后内容");
-//        map.put("teachName", "李小璐");
-//        map.put("teachContent", "第一阶段第一阶段第一阶段第一阶段第一阶段第一阶段第一阶段第一阶段第一阶段第一阶段第一阶段第一阶段");
-//        map.put("attence", "考勤");
-//        list.add(map);
-//        list.add(map);
-//        list.add(map);
-//        list.add(map);
-//        CourseAdapter adapter = new CourseAdapter(getActivity(), list);
-//        Log.e(TAG, "onCreate: adapter初始化结束");
-//        listView.setAdapter(adapter);
-//        Log.e(TAG, "onCreate: setAdapter结束");
         return view;
     }
 
@@ -100,37 +86,32 @@ public class CourseHpsFragment extends Fragment {
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
-
-//    //初始化SwipeRefreshLayout
-//    private void initRefreshLayout() {
-//        mRefreshLayout.setLoadMore(true);
-//        mRefreshLayout.setMaterialRefreshListener(new MaterialRefreshListener() {
-//            @Override
-//            public void onRefresh(MaterialRefreshLayout materialRefreshLayout) {
-//
-//                refreshData();
-//            }
-//
-//            @Override
-//            public void onRefreshLoadMore(MaterialRefreshLayout materialRefreshLayout) {
-//
-//                if (mAdapter != null && mAdapter.getItemCount() < totalNum) {
-//
-//                    loadMoreData();
-//                } else {
-////                    Snackbar.make(mRecyclerView, "没有更多了", Snackbar.LENGTH_SHORT).show();
-//                    mRefreshLayout.finishRefreshLoadMore();
-//                }
-//            }
-//        });
-//    }
     /**
      * 接收菜单传递过来的模块数据包
      */
 
     public Bundle listDataBundle;
     private Map<String, String> paramsMap;
+
     public void getDataIntent() {
+
+
+
+        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light, android.R.color.holo_orange_light, android.R.color.holo_red_light);
+        //设置下拉刷新监听
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
+            @Override
+            public void onRefresh() {
+                new LoadDataThread().start();
+            }
+        });
+
+
+
+
+
         listDataBundle = getArguments();
         String paramsStr = listDataBundle.getString("listFragmentData");
 
@@ -138,17 +119,53 @@ public class CourseHpsFragment extends Fragment {
                 new TypeReference<Map<String, String>>() {
                 });
 
-        tableId=paramsMap.get(Constant.tableId);
-        pageId=paramsMap.get(Constant.pageId);
-        Constant.mainTableIdValue =tableId;
-        Constant.mainPageIdValue =pageId;
+        tableId = paramsMap.get(Constant.tableId);
+        pageId = paramsMap.get(Constant.pageId);
+        Constant.mainTableIdValue = tableId;
+        Constant.mainPageIdValue = pageId;
     }
+    /**
+     * 加载菜单数据的线程
+     */
+    class LoadDataThread extends Thread {
+        @Override
+        public void run() {
+            //下载数据，重新设定dataList
+            getData();
+            //防止数据加载过快动画效果差
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            Log.e("TAG", "学员端开始handler通知 ");
+            handler.sendEmptyMessage(0x101);//通过handler发送一个更新数据的标记，适配器进行dataSetChange，然后停止刷新动画
+        }
+    }
+
+    //下拉刷新handler
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 0x101:
+                    Log.e("TAG", "学员端开始handler通知跳转后 ");
+                    if (swipeRefreshLayout.isRefreshing()) {
+                        mAdapter.notifyDataSetChanged();
+                        swipeRefreshLayout.setRefreshing(false);//设置不刷新
+                        Toast.makeText(getActivity(), "数据已刷新", Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+            }
+        }
+    };
     /**
      * 获取字段接口数据
      */
     @SuppressWarnings("unchecked")
     public void getData() {
-        if (((BaseActivity)getActivity()).hasInternetConnected()) {
+        if (((BaseActivity) getActivity()).hasInternetConnected()) {
 
             //地址
             String volleyUrl = Constant.sysUrl + Constant.requestListSet;
@@ -158,7 +175,7 @@ public class CourseHpsFragment extends Fragment {
             paramsMap.put("start", start + "");
             paramsMap.put("limit", limit + "");
 
-            Log.e(TAG, "getData: paramsMap "+paramsMap.toString());
+            Log.e(TAG, "getData: paramsMap " + paramsMap.toString());
             //请求
             OkHttpUtils
                     .post()
@@ -168,41 +185,43 @@ public class CourseHpsFragment extends Fragment {
                     .execute(new EdusStringCallback(getActivity()) {
                         @Override
                         public void onError(Call call, Exception e, int id) {
-                            ErrorToast.errorToast(mContext,e);
+                            ErrorToast.errorToast(mContext, e);
 //                            mRefreshLayout.finishRefresh();
-                            ((BaseActivity)getActivity()).dialog.dismiss();
+                            ((BaseActivity) getActivity()).dialog.dismiss();
                             backStart();
-                            Log.e(TAG, "onError: Call  "+call+"  id  "+id);
+                            Log.e(TAG, "onError: Call  " + call + "  id  " + id);
                         }
 
                         @Override
                         public void onResponse(String response, int id) {
-                            Log.e(TAG, "onResponse: "+"  id  "+id);
+                            Log.e(TAG, "onResponse: " + "  id  " + id);
 
                             setStore(response);
                         }
                     });
-        }else{
+        } else {
 
-            ((BaseActivity)getActivity()).dialog.dismiss();
+            ((BaseActivity) getActivity()).dialog.dismiss();
 //            mRefreshLayout.finishRefresh();
             Toast.makeText(getActivity(), "请连接网络", Toast.LENGTH_SHORT).show();
             backStart();
         }
     }
 
-    public void backStart(){
+    public void backStart() {
 
         //下拉失败后需要将加上limit的strat返还给原来的start，否则会获取不到数据
-        if ( state == STATE_MORE) {
+        if (state == STATE_MORE) {
             //start只能是limit的整数倍
-            if (start>limit) {
-                start-=limit;
+            if (start > limit) {
+                start -= limit;
             }
 //            mRefreshLayout.finishRefreshLoadMore();
         }
     }
+
     List<Map<String, Object>> operaButtonSetList;
+
     @SuppressWarnings("unchecked")
     public void setStore(String jsonData) {
         List<Map<String, Object>> dataList = new ArrayList<>();
@@ -222,8 +241,8 @@ public class CourseHpsFragment extends Fragment {
                 try {
                     operaButtonSetList = (List<Map<String, Object>>) pageSet.get("operaButtonSet");
 
-                    if (operaButtonSetList.size()>0) {
-                        for (int i=0;i<operaButtonSetList.size();i++) {
+                    if (operaButtonSetList.size() > 0) {
+                        for (int i = 0; i < operaButtonSetList.size(); i++) {
                             operaButtonSetList.get(i).put("tableIdList", tableId);
                             operaButtonSetList.get(i).put("pageIdList", pageId);
                         }
@@ -245,21 +264,22 @@ public class CourseHpsFragment extends Fragment {
 
         } catch (Exception e) {
             e.printStackTrace();
-            ((BaseActivity)getActivity()).dialog.dismiss();
+            ((BaseActivity) getActivity()).dialog.dismiss();
         }
 //将dataList与fieldSet合并准备适配数据
-        datas = DataProcess.combineSetData(tableId,pageId, fieldSet, dataList);
+        datas = DataProcess.combineSetData(tableId, pageId, fieldSet, dataList);
         showData();
 
 
     }
 
-    public int isResume=0;
+    public int isResume = 0;
+
     /**
      * 分动作展示数据
      */
     private void showData() {
-        Log.e(TAG, "showData: "+state);
+        Log.e(TAG, "showData: " + state);
         switch (state) {
             case STATE_NORMAL:
                 normalRequest();
@@ -292,6 +312,7 @@ public class CourseHpsFragment extends Fragment {
                 break;
         }
     }
+
     /**
      * 下拉刷新方法
      */
@@ -316,23 +337,20 @@ public class CourseHpsFragment extends Fragment {
 
     public void normalRequest() {
         Log.e(TAG, "normalRequest: ");
-        mAdapter = new CourseAdapter(getActivity(),datas);
+        mAdapter = new CourseAdapter(getActivity(), datas);
         mRecyclerView.setAdapter(mAdapter);
 //        mRecyclerView.setLayoutManager(new WrapContentLinearLayoutManager(getActivity()));
 //        mRecyclerView.addItemDecoration(new RecycleViewDivider(getActivity(), LinearLayoutManager.VERTICAL));
 ////        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 ////                mRecyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL_LIST));
-//        mAdapter.setOnItemClickListener(new CourseContentAdapter.OnRecyclerViewItemClickListener() {
-//            @Override
-//            public void onItemClick(View view, String data) {
-//                Log.e("TAG", "data " + data);
-//                toItem(data);
-//            }
-//        });
-        ((BaseActivity)getActivity()).dialog.dismiss();
-        if (totalNum>0) {
-            Snackbar.make(mRecyclerView, "加载完成，共"+totalNum+"条", Snackbar.LENGTH_SHORT).show();
-        }else{
+        mRecyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+            }
+        });
+        ((BaseActivity) getActivity()).dialog.dismiss();
+        if (totalNum == 0) {
             Snackbar.make(mRecyclerView, "本页无数据", Snackbar.LENGTH_SHORT).show();
 
         }

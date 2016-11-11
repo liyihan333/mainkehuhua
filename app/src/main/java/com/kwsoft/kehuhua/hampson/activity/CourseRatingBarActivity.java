@@ -5,7 +5,6 @@ import android.widget.ListView;
 
 import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.adcustom.base.BaseActivity;
-import com.kwsoft.kehuhua.hampson.adapter.CourseRatingBarAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,8 +36,8 @@ public class CourseRatingBarActivity extends BaseActivity {
         list.add(map);
         list.add(map);
         list.add(map);
-        CourseRatingBarAdapter adapter = new CourseRatingBarAdapter(this,list);
-        lv_listview.setAdapter(adapter);
+//        CourseRatingBarAdapter adapter = new CourseRatingBarAdapter(this,list);
+//        lv_listview.setAdapter(adapter);
     }
 
     @Override
