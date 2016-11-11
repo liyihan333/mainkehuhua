@@ -36,11 +36,14 @@ import com.kwsoft.kehuhua.urlCnn.ErrorToast;
 import com.kwsoft.kehuhua.utils.DataProcess;
 import com.kwsoft.kehuhua.zxing.CaptureActivity;
 import com.kwsoft.version.StuInfoActivity;
+import com.kwsoft.version.TodayCourseTabActivity;
 import com.kwsoft.version.androidRomType.AndtoidRomUtil;
 import com.kwsoft.version.view.StudyGridView;
 import com.zhy.http.okhttp.OkHttpUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,7 +73,8 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
     private List<Map<String, Object>> menuListMap = new ArrayList<>();
     private PullToRefreshScrollView pull_refresh_scrollview;
     private SharedPreferences sPreferences;
-    private TextView tvUserrole, tvMonth, tvDay;
+    private TextView tvUserrole, tvMonth, tvDay; //角色、日期、星期
+    private String monthstr, daystr;
     private Boolean isLogin = false;
     public String arrStr;
     public Bundle arrBundle;
@@ -82,7 +86,7 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
 
         View view = inflater.inflate(R.layout.fragment_study, container, false);
         teachUrl = Constant.sysUrl + Constant.projectLoginUrl;
-        Log.e("studyfrg","studyfrg");
+        Log.e("studyfrg", "studyfrg");
         initView(view);
 
         ButterKnife.bind(this, view);
@@ -98,6 +102,13 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
         try {
             String username = Constant.loginName;
             stuName.setText(username);
+            String roleNames = Constant.roleNamesTeach;
+            String spStr[] = roleNames.split(",");
+            tvUserrole.setText(spStr[0]);
+            initDateWeek();
+            tvMonth.setText(monthstr);
+            tvDay.setText(daystr);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -142,14 +153,26 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
         //mScrollView = mPullRefreshScrollView.getRefreshableView();
         getData();
         //菜单列表中的gridview数据
-       // setMenuModel();
+        // setMenuModel();
         // initData();
         initModel();
     }
-    public int isResume=0;
+
+    private void initDateWeek() {
+        long time = System.currentTimeMillis();
+        Date date = new Date(time);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日 HH时mm分ss秒 EEEE");
+        format = new SimpleDateFormat("yyyy/MM/dd");
+        monthstr = format.format(date).substring(5);
+        format = new SimpleDateFormat("EEEE");
+        daystr = format.format(date);
+    }
+
+    public int isResume = 0;
+
     @Override
     public void onResume() {
-        isResume=1;
+        isResume = 1;
         super.onResume();
         if (!isLogin) {
             isLogin = arrBundle.getBoolean("isLogin");
@@ -177,7 +200,7 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
                 for (int i = 0; i < listMap.size(); i++) {
                     Map<String, Object> map = listMap.get(i);
                     leg = (map.get("menuName").toString()).length();
-                    map.put("menuName", map.get("menuName").toString().substring(0,leg-5));
+                    map.put("menuName", map.get("menuName").toString().substring(0, leg - 5));
                     map.put("image", image[i]);
                     menuListAll.add(map);
                 }
@@ -214,8 +237,8 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
     private void getData() {
         arrBundle = getArguments();
         arrStr = arrBundle.getString("arrStr");
-       homePageListstr = arrBundle.getString("homePageList");
-        Log.e("homePageListstr",homePageListstr);
+        homePageListstr = arrBundle.getString("homePageList");
+        Log.e("homePageListstr", homePageListstr);
     }
 
     public void setMenuAdapter(final List<Map<String, Object>> menuListMaps) {
@@ -227,9 +250,13 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i == 0) {
-
+                    //今日课表
+                    Intent intent = new Intent(getActivity(), TodayCourseTabActivity.class);
+                    intent.putExtra("titleName", String.valueOf(menuListMaps.get(i).get("menuName")));
+                    startActivity(intent);
                 } else if (i == 1) {
-                    Intent intent = new Intent(getActivity(), ChartActivity.class);
+                    //明日课表
+                    Intent intent = new Intent(getActivity(), TodayCourseTabActivity.class);
                     intent.putExtra("titleName", String.valueOf(menuListMaps.get(i).get("menuName")));
                     startActivity(intent);
                 } else if (i == 2) {
@@ -298,7 +325,7 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
                 map.put("penetratePageId", listMap.get(i).get("phonePageId"));
                 map.put("tableId", listMap.get(i).get("tableId"));
                 List<Map<String, Object>> listMap1 = (List<Map<String, Object>>) listMap.get(i).get("valueMap");
-                String name = "";
+                String name = 0 + "";
                 if (listMap1.size() > 0) {
                     if (listMap1.get(0) != null && listMap1.get(0).size() > 0) {
                         name = String.valueOf(listMap1.get(0).get("name"));
@@ -512,12 +539,12 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
             //在更新UI后，无需其它Refresh操作，系统会自己加载新的listView
             pull_refresh_scrollview.onRefreshComplete();
             pull_refresh_scrollview.onRefreshComplete();
-            if (isResume==0) {
+            if (isResume == 0) {
                 Toast.makeText(getActivity(), "数据已刷新", Toast.LENGTH_SHORT).show();
             }
 
 
-            isResume=0;
+            isResume = 0;
         } catch (Exception e) {
             e.printStackTrace();
         }
