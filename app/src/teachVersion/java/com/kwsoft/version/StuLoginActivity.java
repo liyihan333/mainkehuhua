@@ -1,6 +1,7 @@
 package com.kwsoft.version;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -386,6 +387,7 @@ public class StuLoginActivity extends BaseActivity implements View.OnClickListen
                 if (loginInfo.get("USERNAME") != null) {
                     Log.e("TAG", "USERNAME" + loginInfo.get("USERNAME"));
                     Constant.loginName = String.valueOf(loginInfo.get("USERNAME"));
+                    Constant.roleNamesTeach=String.valueOf(loginInfo.get("roleNames"));
                     Toast.makeText(StuLoginActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
                     Constant.USERID = String.valueOf(loginInfo.get("USERID"));
                 }
