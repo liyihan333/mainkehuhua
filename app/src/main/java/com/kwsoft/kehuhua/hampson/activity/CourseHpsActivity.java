@@ -6,7 +6,6 @@ import android.widget.ListView;
 
 import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.adcustom.base.BaseActivity;
-import com.kwsoft.kehuhua.hampson.adapter.CourseAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,9 +38,9 @@ public class CourseHpsActivity extends BaseActivity {
         list.add(map);
         list.add(map);
         list.add(map);
-        CourseAdapter adapter = new CourseAdapter(this,list);
-        Log.e(TAG, "onCreate: adapter初始化结束" );
-        listView.setAdapter(adapter);
+//        CourseAdapter adapter = new CourseAdapter(this,list);
+//        Log.e(TAG, "onCreate: adapter初始化结束" );
+//        listView.setAdapter(adapter);
         Log.e(TAG, "onCreate: setAdapter结束");
     }
 
