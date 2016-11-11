@@ -61,8 +61,8 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
     // private KanbanGridView homeGridView;
     private StudyGridView homeGridView;
     private List<Map<String, Object>> parentList = new ArrayList<>();
-    private int[] image = {R.mipmap.edus_see_scan, R.mipmap.edus_see_form,
-            R.mipmap.edus_see_news, R.mipmap.edus_see_set};
+    private int[] image = {R.mipmap.edus_see_set_tody, R.mipmap.edus_see_form_tomorrow,
+            R.mipmap.edus_see_scan, R.mipmap.edus_see_news};
     private int[] imgs2 = {R.drawable.stu_see_record_task, R.drawable.stu_see_record_curriculum,
             R.drawable.stu_see_record_leave, R.drawable.stu_see_record_curriculumb};
     private GridView gridView;
@@ -79,9 +79,12 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_study, container, false);
         teachUrl = Constant.sysUrl + Constant.projectLoginUrl;
+        Log.e("studyfrg","studyfrg");
         initView(view);
+
         ButterKnife.bind(this, view);
         return view;
     }
@@ -139,8 +142,9 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
         //mScrollView = mPullRefreshScrollView.getRefreshableView();
         getData();
         //菜单列表中的gridview数据
-        setMenuModel();
+       // setMenuModel();
         // initData();
+        initModel();
     }
     public int isResume=0;
     @Override
@@ -189,21 +193,22 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
 
     private void initModel() {
         Map<String, Object> map = new HashMap<>();
-        map.put("menuName", "扫码考勤");
+        map.put("menuName", "今日课表");
         map.put("image", image[0]);
         menuListAll.add(map);
         map = new HashMap<>();
-        map.put("menuName", "报表管理");
+        map.put("menuName", "明日课表");
         map.put("image", image[1]);
         menuListAll.add(map);
         map = new HashMap<>();
-        map.put("menuName", "消息提醒");
+        map.put("menuName", "扫码考勤");
         map.put("image", image[2]);
         menuListAll.add(map);
         map = new HashMap<>();
-        map.put("menuName", "系统设置");
+        map.put("menuName", "消息提醒");
         map.put("image", image[3]);
         menuListAll.add(map);
+        setMenuAdapter(menuListAll);
     }
 
     private void getData() {
@@ -222,22 +227,20 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i == 0) {
+
+                } else if (i == 1) {
+                    Intent intent = new Intent(getActivity(), ChartActivity.class);
+                    intent.putExtra("titleName", String.valueOf(menuListMaps.get(i).get("menuName")));
+                    startActivity(intent);
+                } else if (i == 2) {
                     PermissionGen.needPermission(StudyFragment.this, 106,
                             new String[]{
                                     Manifest.permission.CAMERA,
                                     Manifest.permission.WRITE_EXTERNAL_STORAGE
                             }
                     );
-                } else if (i == 1) {
-                    Intent intent = new Intent(getActivity(), ChartActivity.class);
-                    intent.putExtra("titleName", String.valueOf(menuListMaps.get(i).get("menuName")));
-                    startActivity(intent);
-                } else if (i == 2) {
-                    Intent intent = new Intent(getActivity(), MessagAlertActivity.class);
-                    startActivity(intent);
                 } else if (i == 3) {
-                    Intent intent = new Intent(getActivity(), BlankActivity.class);
-                    intent.putExtra("titleName", String.valueOf(menuListMaps.get(i).get("menuName")));
+                    Intent intent = new Intent(getActivity(), MessagAlertActivity.class);
                     startActivity(intent);
                 }
             }
