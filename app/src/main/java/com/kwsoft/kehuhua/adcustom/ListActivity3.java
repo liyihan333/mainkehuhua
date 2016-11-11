@@ -122,6 +122,7 @@ public class ListActivity3 extends BaseActivity {
 //                    Log.e(TAG, "refreshPage: 学员端走定制化评价列表展示页面");
 
                 }else {
+                    //Log.e("评价列表：",)
                     Fragment listFragment = new ListFragment();
                     listFragment.setArguments(listBundle);
                     mFragments.add(listFragment);

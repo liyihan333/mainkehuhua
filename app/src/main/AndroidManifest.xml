@@ -245,8 +245,9 @@
         <activity android:name=".ListActivity2" />
         <activity android:name=".ListActivity3" />
         <activity android:name="com.kwsoft.kehuhua.SetIpPortActivity"></activity>
-        <activity android:name="com.kwsoft.kehuhua.hampson.activity.StarRatingBarActivity">
-
+        <activity android:name="com.kwsoft.kehuhua.hampson.activity.StarRatingBarActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            >
         </activity>
         <activity android:name="com.kwsoft.kehuhua.hampson.activity.CourseRatingBarActivity">
 
@@ -257,6 +258,7 @@
         <activity android:name="com.kwsoft.kehuhua.hampson.activity.StageTestActivity">
 
         </activity>
+        <activity android:name="com.kwsoft.kehuhua.hampson.activity.AssessActivity"/>
     </application>
 
 </manifest>

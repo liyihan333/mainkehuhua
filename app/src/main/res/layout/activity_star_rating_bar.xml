@@ -685,7 +685,6 @@
                 android:layout_marginTop="43dp"
                 android:background="@drawable/bg_et_rating_bar"
                 android:gravity="top"
-                android:focusable="false"
                 android:hint="有哪些话要对我们说"
                 android:paddingBottom="8dp"
                 android:paddingLeft="6dp"

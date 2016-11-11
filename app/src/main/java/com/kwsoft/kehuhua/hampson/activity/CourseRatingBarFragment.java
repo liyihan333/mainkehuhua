@@ -24,7 +24,7 @@ import butterknife.ButterKnife;
 public class CourseRatingBarFragment extends Fragment {
     @Bind(R.id.lv_listview)
     ListView listView;
-    private List<Map<String, String>> list = new ArrayList<>();
+    private List<Map<String, Object>> list = new ArrayList<>();
     private static final String TAG = "CourseHpsActivity";
 
     @Override
@@ -32,11 +32,15 @@ public class CourseRatingBarFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_course_ratingbar_star_list, container, false);
         ButterKnife.bind(this, view);
-        Map<String, String> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         map.put("title", "少儿一对一英语基础课程");
         map.put("teachName", "李明福");
         map.put("teachContent", "第一阶段第一阶段第一阶段第一阶段第一阶段第一阶段");
+        String[] tags = {"一般ds", "没有新意", "作业太多", "我很认真", "讲课速度太快"};
+        map.put("tags",tags);
         list.add(map);
+        String[] tags1 = {"没有新意dsf", "作业太多", "我很认真", "讲课速度太快"};
+        map.put("tags",tags1);
         list.add(map);
         list.add(map);
         list.add(map);

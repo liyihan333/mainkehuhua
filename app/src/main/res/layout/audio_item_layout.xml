@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
+    android:layout_height="wrap_content"
     android:layout_marginTop="5dp"
     android:orientation="vertical">
 
@@ -11,35 +11,46 @@
         android:layout_height="40dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:visibility="gone"
-        android:layout_marginRight="5dp"
-        android:src="@mipmap/icon" />
+        android:src="@mipmap/icon"
+        android:visibility="gone" />
 
     <FrameLayout
         android:id="@+id/recorder_length"
-        android:layout_width="wrap_content"
+        android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
+        android:layout_marginLeft="16dp"
         android:layout_toLeftOf="@id/item_icon"
-        android:background="@drawable/chatto_bg_focused" >
+        android:background="@mipmap/radio_voice_bg">
 
         <View
             android:id="@+id/id_recorder_anim"
             android:layout_width="25dp"
             android:layout_height="25dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="20dp"
+            android:background="@mipmap/radio_voice_wifi" />
+
+        <TextView
+            android:id="@+id/recorder_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|right"
-            android:background="@mipmap/adj"/>
+            android:layout_marginRight="10dp"
+            android:text="3'"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
 
     </FrameLayout>
 
-    <TextView
-        android:id="@+id/recorder_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="3dp"
-        android:layout_toLeftOf="@id/recorder_length"
-        android:text=""
-        android:textColor="#ff777777"/>
+        <ImageView
+            android:id="@+id/item_icon_right"
+            android:layout_width="18dp"
+            android:layout_height="17dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="23dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/radio_voice_del"
+            />
 
 </RelativeLayout>

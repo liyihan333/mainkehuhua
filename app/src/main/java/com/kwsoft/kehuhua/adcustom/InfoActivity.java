@@ -222,30 +222,16 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
                                                     &&mainId.equals("242")&&nextPageId.equals("3020")&&nextTable.equals("262");
 
                                             Log.e(TAG, "onItemClick: operaButtonSetMapStr "+operaButtonSetMapStr);
-                                            Log.e(TAG, "onItemClick: isPingJia "+isPingJia);
+                                            Log.e(TAG, "onItemClick: isPingJia "+isPingJia+"/"+buttonType);
                                             if (buttonType==18&&isPingJia) {
                                                 Intent mIntentEdit = new Intent(mContext, StarRatingBarActivity.class);
                                                 mIntentEdit.putExtra("itemSet", operaButtonSetMapStr);
                                                 startActivity(mIntentEdit);
-
-
-
                                             }else{
                                                 Intent mIntentEdit = new Intent(mContext, OperateDataActivity.class);
                                                 mIntentEdit.putExtra("itemSet", operaButtonSetMapStr);
                                                 startActivity(mIntentEdit);
                                             }
-
-
-
-
-
-
-
-
-
-
-
 
                                             break;
                                         case 13://单项删除操作

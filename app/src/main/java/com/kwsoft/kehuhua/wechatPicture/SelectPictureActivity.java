@@ -66,13 +66,12 @@ public class SelectPictureActivity extends BaseActivity implements View.OnClickL
     private WaterWaveProgress waveProgress;
 
     //录制视频参数
-    AudioRecordButton button;
-    private ListView mlistview;
+    public static AudioRecordButton button;
+    public static ListView mlistview;
     private ArrayAdapter<Recorder> mAdapter;
     private View viewanim;
     private List<Recorder> mDatas = new ArrayList<Recorder>();
     private Button btn_up;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -163,9 +162,7 @@ public class SelectPictureActivity extends BaseActivity implements View.OnClickL
         btn_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Recorder recorder = mDatas.get(0);
-                String path = recorder.getFilePathString();
-                uploadAudio(path);
+                uploadAudioFirst();
             }
         });
 
@@ -182,10 +179,13 @@ public class SelectPictureActivity extends BaseActivity implements View.OnClickL
             public void onFinished(float seconds, String filePath) {
                 // TODO Auto-generated method stub
                 Log.e("filepath=", filePath);
+                mDatas.clear();
                 Recorder recorder = new Recorder(seconds, filePath);
                 mDatas.add(recorder);
                 mAdapter.notifyDataSetChanged();
                 mlistview.setSelection(mDatas.size() - 1);
+                button.setVisibility(View.GONE);
+                mlistview.setVisibility(View.VISIBLE);
             }
         });
 
@@ -200,7 +200,7 @@ public class SelectPictureActivity extends BaseActivity implements View.OnClickL
                 if (viewanim != null) {//让第二个播放的时候第一个停止播放
                     // viewanim.setBackgroundResource(R.id.id_recorder_anim);
                     //  viewanim.setBackgroundResource(R.mipmap.adj);
-                    viewanim.setBackgroundResource(R.mipmap.ic_launcher);
+                    viewanim.setBackgroundResource(R.mipmap.radio_voice_wifi);
                     viewanim = null;
                 }
                 viewanim = view.findViewById(R.id.id_recorder_anim);
@@ -215,7 +215,7 @@ public class SelectPictureActivity extends BaseActivity implements View.OnClickL
                             @Override
                             public void onCompletion(MediaPlayer mp) {
                                 // viewanim.setBackgroundResource(R.id.id_recorder_anim);
-                                viewanim.setBackgroundResource(R.mipmap.ic_launcher);
+                                viewanim.setBackgroundResource(R.mipmap.radio_voice_wifi);
                             }
                         });
             }
@@ -223,9 +223,24 @@ public class SelectPictureActivity extends BaseActivity implements View.OnClickL
 
     }
 
+
+    public static void hideListView() {
+        Log.e("hidel","hidelistview");
+        button.setVisibility(View.VISIBLE);
+        mlistview.setVisibility(View.GONE);
+    }
+
+    /**
+     * 上传音频一
+     */
+    private void uploadAudioFirst() {
+        Recorder recorder = mDatas.get(0);
+        String path = recorder.getFilePathString();
+        uploadAudio(path);
+    }
+
     /**
      * 上传音频
-     *
      */
     private void uploadAudio(String path) {
         File audioFile = new File(path);
@@ -335,8 +350,13 @@ public class SelectPictureActivity extends BaseActivity implements View.OnClickL
             //上传文件
             uploadMethod(url, myFile);
         } else {
-            Toast.makeText(SelectPictureActivity.this, "您尚未选择图片", Toast.LENGTH_SHORT).show();
+            Toast.makeText(SelectPictureActivity.this, "您尚未选择图片，上传音频", Toast.LENGTH_SHORT).show();
             waveProgress.setVisibility(View.GONE);
+        }
+        if (mDatas!=null&&mDatas.size()>0){
+           uploadAudioFirst();
+        }else {
+            Toast.makeText(SelectPictureActivity.this, "您尚未录制音频", Toast.LENGTH_SHORT).show();
         }
     }
 

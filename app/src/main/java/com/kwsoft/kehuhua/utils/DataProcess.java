@@ -10,6 +10,7 @@ import com.kwsoft.kehuhua.adcustom.CourseActivity;
 import com.kwsoft.kehuhua.adcustom.ListActivity3;
 import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.config.Constant;
+import com.kwsoft.kehuhua.hampson.activity.AssessActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -163,6 +164,7 @@ public class DataProcess {
         return mDataList;
 
     }
+
     /**
      * 专门为添加提交时撰写的最后阶段拼接方法
      * 第一个参数为activity
@@ -323,7 +325,7 @@ public class DataProcess {
     /**
      * 列表页合并配置和数据，并添加参数
      */
-    public static List<List<Map<String, String>>> combineSetData(String tableId,String pageId,List<Map<String, Object>> set, List<Map<String, Object>> data) {
+    public static List<List<Map<String, String>>> combineSetData(String tableId, String pageId, List<Map<String, Object>> set, List<Map<String, Object>> data) {
         List<List<Map<String, String>>> newData = new ArrayList<>();
         for (int i = 0; i < data.size(); i++) {
             List<Map<String, String>> itemNum = new ArrayList<>();
@@ -356,19 +358,15 @@ public class DataProcess {
     }
 
 
-
-
-
     /**
      * 跳转到list页面，分至此不分有无菜单情况
-     *
      */
     @SuppressWarnings("unchecked")
     public static void toList(Activity mActivity, Map<String, Object> itemData) {
         //获取子列表
         List<Map<String, Object>> childList = new ArrayList<>();
-        if (itemData.get("meunColl")!=null) {
-            childList.addAll((List<Map<String, Object>>)itemData.get("meunColl"));
+        if (itemData.get("meunColl") != null) {
+            childList.addAll((List<Map<String, Object>>) itemData.get("meunColl"));
             for (int i = 0; i < childList.size(); i++) {
                 String newMenuName = String.valueOf(childList.get(i).get("menuName"));
                 childList.get(i).put("menuName", newMenuName.replace("手机端", ""));
@@ -376,21 +374,23 @@ public class DataProcess {
         }
         //转换整项为字符串准备发送
         String itemDataString = JSONArray.toJSONString(itemData);
-
+        Log.e("itemDate-", itemDataString);
         //转换子列表对象为字符串准备发送
         String childString = JSONArray.toJSONString(childList);
         Intent intent = new Intent();
-        if (itemData.get("menuPageUrl") == null) {
-            intent.setClass(mActivity, ListActivity3.class);
+        if ((itemData.get("menuName").toString()).contains("评价")) {
+            intent.setClass(mActivity, AssessActivity.class);
         } else {
-            intent.setClass(mActivity, CourseActivity.class);
+            if (itemData.get("menuPageUrl") == null) {
+                intent.setClass(mActivity, ListActivity3.class);
+            } else {
+                intent.setClass(mActivity, CourseActivity.class);
+            }
         }
         intent.putExtra("itemData", itemDataString);
         intent.putExtra("childData", childString);
         mActivity.startActivity(intent);
     }
-
-
 
 
 }
