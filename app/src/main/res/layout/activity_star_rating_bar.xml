@@ -96,10 +96,11 @@
 
 
                 <TextView
+                    android:id="@+id/tv_assess"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="31dp"
-                    android:text="请为老师点评，表达课程中的感受！"
+                    android:text="差"
                     android:textColor="@color/tv_b6b6b6"
                     android:textSize="13sp" />
             </LinearLayout>
@@ -611,6 +612,7 @@
                 android:textSize="16dp" />
 
             <Button
+                android:id="@+id/btn_add"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:background="@drawable/btn_ratingbar_first"
