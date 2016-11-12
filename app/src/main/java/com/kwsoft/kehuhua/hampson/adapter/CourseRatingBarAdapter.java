@@ -103,7 +103,7 @@ public class CourseRatingBarAdapter extends BaseAdapter {
         holder.my_ping_jia.setText(map.get(2).get("fieldCnName"));
 
         String pingJiaMiaoShu = map.get(3).get("fieldCnName2");
-
+        ll_cb_layout.removeAllViews();
         if (pingJiaMiaoShu != null && pingJiaMiaoShu.length() > 0) {
             String[] tags = pingJiaMiaoShu.split("，");//注意，这里的逗号为中文的
             Log.e(TAG, "getView: pingJiaMiaoShu " + pingJiaMiaoShu);
@@ -191,7 +191,7 @@ public class CourseRatingBarAdapter extends BaseAdapter {
         TextView tv_title, tv_teach_name, tv_teach_content, teach_name_title, my_ping_jia;
         View star0, star1, star2, star3, star4;
         //RatingBar ratingbar;
-        AutoNextLineLinearlayout ll_cb_layout;
+        //AutoNextLineLinearlayout ll_cb_layout;
     }
 
 }

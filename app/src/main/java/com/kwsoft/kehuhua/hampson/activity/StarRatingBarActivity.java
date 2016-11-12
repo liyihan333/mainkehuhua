@@ -31,17 +31,16 @@ import static com.kwsoft.kehuhua.config.Constant.topBarColor;
  */
 
 public class StarRatingBarActivity extends BaseActivity {
-    public RatingBar rb_ratingbar;
     public CheckBox cb_first_rb1, cb_first_rb2, cb_first_rb3, cb_first_rb4, cb_first_rb5;//一颗星
-    public CheckBox cb_sec_rb1, cb_sec_rb2, cb_sec_rb3, cb_sec_rb4;//两颗星
+    public CheckBox cb_sec_rb1, cb_sec_rb2, cb_sec_rb3;//两颗星
     public CheckBox cb_third_rb1, cb_third_rb2, cb_third_rb3, cb_third_rb4;//三颗星
-    public CheckBox cb_forth_rb1, cb_forth_rb2, cb_forth_rb3, cb_forth_rb4, cb_forth_rb5;//四颗星
+    public CheckBox cb_forth_rb1, cb_forth_rb2, cb_forth_rb3, cb_forth_rb4, cb_forth_rb5, cb_forth_rb6;//四颗星
     public CheckBox cb_fifth_rb1, cb_fifth_rb2, cb_fifth_rb3, cb_fifth_rb4, cb_fifth_rb5;//五颗星
-    public CheckBox cb_six_rb1, cb_six_rb2, cb_six_rb3, cb_six_rb4, cb_six_rb5;//0颗星
     public EditText et_content;
     public CheckBox ratebar1, ratebar2, ratebar3, ratebar4, ratebar5;
-    public LinearLayout ll_cb_first, ll_cb_sec, ll_cb_third, ll_cb_forth, ll_cb_fifth, ll_cb_six;
+    public LinearLayout ll_cb_first, ll_cb_sec, ll_cb_third, ll_cb_forth, ll_cb_fifth;
     private CommonToolbar mToolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +48,8 @@ public class StarRatingBarActivity extends BaseActivity {
         getDataIntent();
         initView();
     }
-    private String mainTableId,mainPageId,tableId,pageId,dataId;
+
+    private String mainTableId, mainPageId, tableId, pageId, dataId;
 
 
     private void getDataIntent() {
@@ -58,7 +58,7 @@ public class StarRatingBarActivity extends BaseActivity {
         Intent intent = getIntent();
         String buttonSetItemStr = intent.getStringExtra("itemSet");
         Map<String, Object> buttonSetItem = JSON.parseObject(buttonSetItemStr);
-        Log.e(TAG, "getIntentData: buttonSetItem "+buttonSetItem.toString());
+        Log.e(TAG, "getIntentData: buttonSetItem " + buttonSetItem.toString());
 
         //获取参数并添加
         //mainTableId
@@ -102,24 +102,17 @@ public class StarRatingBarActivity extends BaseActivity {
         });
 
 
-
-
-
-
         ratebar1 = (CheckBox) findViewById(R.id.ratebar1);
         ratebar2 = (CheckBox) findViewById(R.id.ratebar2);
         ratebar3 = (CheckBox) findViewById(R.id.ratebar3);
         ratebar4 = (CheckBox) findViewById(R.id.ratebar4);
         ratebar5 = (CheckBox) findViewById(R.id.ratebar5);
 
-        //rb_ratingbar = (RatingBar) findViewById(R.id.rb_ratingbar);
-
         ll_cb_first = (LinearLayout) findViewById(R.id.ll_cb_first);
         ll_cb_sec = (LinearLayout) findViewById(R.id.ll_cb_sec);
         ll_cb_third = (LinearLayout) findViewById(R.id.ll_cb_third);
         ll_cb_forth = (LinearLayout) findViewById(R.id.ll_cb_forth);
         ll_cb_fifth = (LinearLayout) findViewById(R.id.ll_cb_fifth);
-        ll_cb_six = (LinearLayout) findViewById(R.id.ll_cb_six);
 
         cb_first_rb1 = (CheckBox) findViewById(R.id.cb_fifth_rb1);
         cb_first_rb2 = (CheckBox) findViewById(R.id.cb_first_rb2);
@@ -130,7 +123,6 @@ public class StarRatingBarActivity extends BaseActivity {
         cb_sec_rb1 = (CheckBox) findViewById(R.id.cb_sec_rb1);
         cb_sec_rb2 = (CheckBox) findViewById(R.id.cb_sec_rb2);
         cb_sec_rb3 = (CheckBox) findViewById(R.id.cb_sec_rb3);
-        cb_sec_rb4 = (CheckBox) findViewById(R.id.cb_sec_rb4);
 
         cb_third_rb1 = (CheckBox) findViewById(R.id.cb_third_rb1);
         cb_third_rb2 = (CheckBox) findViewById(R.id.cb_third_rb2);
@@ -142,18 +134,13 @@ public class StarRatingBarActivity extends BaseActivity {
         cb_forth_rb3 = (CheckBox) findViewById(R.id.cb_forth_rb3);
         cb_forth_rb4 = (CheckBox) findViewById(R.id.cb_forth_rb4);
         cb_forth_rb5 = (CheckBox) findViewById(R.id.cb_forth_rb5);
+        cb_forth_rb6 = (CheckBox) findViewById(R.id.cb_forth_rb6);
 
         cb_fifth_rb1 = (CheckBox) findViewById(R.id.cb_fifth_rb1);
         cb_fifth_rb2 = (CheckBox) findViewById(R.id.cb_fifth_rb2);
         cb_fifth_rb3 = (CheckBox) findViewById(R.id.cb_fifth_rb3);
         cb_fifth_rb4 = (CheckBox) findViewById(R.id.cb_fifth_rb4);
         cb_fifth_rb5 = (CheckBox) findViewById(R.id.cb_fifth_rb5);
-
-        cb_six_rb1 = (CheckBox) findViewById(R.id.cb_six_rb1);
-        cb_six_rb2 = (CheckBox) findViewById(R.id.cb_six_rb2);
-        cb_six_rb3 = (CheckBox) findViewById(R.id.cb_six_rb3);
-        cb_six_rb4 = (CheckBox) findViewById(R.id.cb_six_rb4);
-        cb_six_rb5 = (CheckBox) findViewById(R.id.cb_six_rb5);
 
         et_content = (EditText) findViewById(R.id.et_content);
 
@@ -164,24 +151,20 @@ public class StarRatingBarActivity extends BaseActivity {
         ratebar1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                ratebar1.setChecked(true);
                 if (b) {
                     if (!ratebar5.isChecked() && !ratebar4.isChecked() && !ratebar3.isChecked() && !ratebar2.isChecked()) {
-                        ll_cb_first.setVisibility(View.VISIBLE);
+                         ll_cb_first.setVisibility(View.VISIBLE);
                         ll_cb_sec.setVisibility(View.GONE);
                         ll_cb_third.setVisibility(View.GONE);
                         ll_cb_forth.setVisibility(View.GONE);
                         ll_cb_fifth.setVisibility(View.GONE);
-                        ll_cb_six.setVisibility(View.GONE);
+                    } else {
+                        ll_cb_first.setVisibility(View.GONE);
                     }
 
-                } else {
-                    ratebar2.setChecked(false);
-                    ratebar3.setChecked(false);
-                    ratebar4.setChecked(false);
-                    ratebar5.setChecked(false);
-                    ll_cb_first.setVisibility(View.GONE);
-                    ll_cb_six.setVisibility(View.VISIBLE);
                 }
+
             }
         });
 
@@ -196,20 +179,15 @@ public class StarRatingBarActivity extends BaseActivity {
                         ll_cb_third.setVisibility(View.GONE);
                         ll_cb_forth.setVisibility(View.GONE);
                         ll_cb_fifth.setVisibility(View.GONE);
-                        ll_cb_six.setVisibility(View.GONE);
                     }
                 } else {
                     ratebar3.setChecked(false);
                     ratebar4.setChecked(false);
                     ratebar5.setChecked(false);
                     ll_cb_sec.setVisibility(View.GONE);
-                    if (!ratebar1.isChecked()) {
-                        ll_cb_six.setVisibility(View.VISIBLE);
-                    }
-                    else {
-                        ll_cb_first.setVisibility(View.VISIBLE);
-                        ll_cb_six.setVisibility(View.GONE);
-                    }
+                    //if (ratebar1.isChecked()) {
+                    ll_cb_first.setVisibility(View.VISIBLE);
+                    // }
                 }
             }
         });
@@ -223,7 +201,6 @@ public class StarRatingBarActivity extends BaseActivity {
                         ll_cb_third.setVisibility(View.VISIBLE);
                         ll_cb_forth.setVisibility(View.GONE);
                         ll_cb_fifth.setVisibility(View.GONE);
-                        ll_cb_six.setVisibility(View.GONE);
                     }
                     ratebar1.setChecked(true);
                     ratebar2.setChecked(true);
@@ -231,7 +208,7 @@ public class StarRatingBarActivity extends BaseActivity {
                     ratebar4.setChecked(false);
                     ratebar5.setChecked(false);
                     ll_cb_third.setVisibility(View.GONE);
-                    if (ratebar2.isChecked()){
+                    if (ratebar2.isChecked()) {
                         ll_cb_sec.setVisibility(View.VISIBLE);
                     }
                 }
@@ -247,7 +224,6 @@ public class StarRatingBarActivity extends BaseActivity {
                         ll_cb_third.setVisibility(View.GONE);
                         ll_cb_forth.setVisibility(View.VISIBLE);
                         ll_cb_fifth.setVisibility(View.GONE);
-                        ll_cb_six.setVisibility(View.GONE);
                     }
                     ratebar1.setChecked(true);
                     ratebar2.setChecked(true);
@@ -255,7 +231,7 @@ public class StarRatingBarActivity extends BaseActivity {
                 } else {
                     ratebar5.setChecked(false);
                     ll_cb_forth.setVisibility(View.GONE);
-                    if (ratebar3.isChecked()){
+                    if (ratebar3.isChecked()) {
                         ll_cb_third.setVisibility(View.VISIBLE);
                     }
                 }
@@ -274,10 +250,9 @@ public class StarRatingBarActivity extends BaseActivity {
                     ll_cb_third.setVisibility(View.GONE);
                     ll_cb_forth.setVisibility(View.GONE);
                     ll_cb_fifth.setVisibility(View.VISIBLE);
-                    ll_cb_six.setVisibility(View.GONE);
                 } else {
                     ll_cb_fifth.setVisibility(View.GONE);
-                    if (ratebar4.isChecked()){
+                    if (ratebar4.isChecked()) {
                         ll_cb_forth.setVisibility(View.VISIBLE);
                     }
                 }
@@ -290,51 +265,45 @@ public class StarRatingBarActivity extends BaseActivity {
 
     private void getCommit() {
 
-            String pingJiaValue="";
-            if (hasInternetConnected()) {
-                dialog.show();
-                String volleyUrl1= Constant.sysUrl + Constant.commitAdd + "?" +
-                                Constant.tableId + "=" + tableId + "&" + Constant.pageId + "=" + pageId + "&" +
-                        pingJiaValue + "&t0_au_"+tableId+"_"+pageId+"_3301="+dataId;//+ keyRelation
+        String pingJiaValue = "";
+        if (hasInternetConnected()) {
+            dialog.show();
+            String volleyUrl1 = Constant.sysUrl + Constant.commitAdd + "?" +
+                    Constant.tableId + "=" + tableId + "&" + Constant.pageId + "=" + pageId + "&" +
+                    pingJiaValue + "&t0_au_" + tableId + "_" + pageId + "_3301=" + dataId;//+ keyRelation
 
-                //请求地址（关联添加和修改）
-                String volleyUrl = volleyUrl1.replaceAll(" ", "%20").replaceAll("&&","&");
-                //get请求
-                OkHttpUtils
-                        .get()
-                        .url(volleyUrl)
-                        .build()
-                        .execute(new EdusStringCallback(StarRatingBarActivity.this) {
-                            @Override
-                            public void onError(Call call, Exception e, int id) {
-                                ErrorToast.errorToast(mContext,e);
-                                dialog.dismiss();
+            //请求地址（关联添加和修改）
+            String volleyUrl = volleyUrl1.replaceAll(" ", "%20").replaceAll("&&", "&");
+            //get请求
+            OkHttpUtils
+                    .get()
+                    .url(volleyUrl)
+                    .build()
+                    .execute(new EdusStringCallback(StarRatingBarActivity.this) {
+                        @Override
+                        public void onError(Call call, Exception e, int id) {
+                            ErrorToast.errorToast(mContext, e);
+                            dialog.dismiss();
+                            Toast.makeText(StarRatingBarActivity.this, "操作失败", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onResponse(String response, int id) {
+                            Log.e(TAG, "onResponse: " + response);
+                            if (response != null && !response.equals("0")) {
+                                //返回列表页面并刷新
+//                                    backToInfo();
+                            } else {
                                 Toast.makeText(StarRatingBarActivity.this, "操作失败", Toast.LENGTH_SHORT).show();
                             }
-
-                            @Override
-                            public void onResponse(String response, int id) {
-                                Log.e(TAG, "onResponse: "+response);
-                                if (response != null && !response.equals("0")) {
-                                    //返回列表页面并刷新
-//                                    backToInfo();
-                                } else {
-                                    Toast.makeText(StarRatingBarActivity.this, "操作失败", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
-            }else{
-                Toast.makeText(this, "无网络", Toast.LENGTH_SHORT).show();
-            }
-
-
-
-
+                        }
+                    });
+        } else {
+            Toast.makeText(this, "无网络", Toast.LENGTH_SHORT).show();
+        }
 
 
     }
-
-
 
 
 }

@@ -61,7 +61,6 @@ import okhttp3.Call;
 public class StudyFragment extends Fragment implements View.OnClickListener {
 
     private TextView stuName;
-    // private KanbanGridView homeGridView;
     private StudyGridView homeGridView;
     private List<Map<String, Object>> parentList = new ArrayList<>();
     private int[] image = {R.mipmap.edus_see_set_tody, R.mipmap.edus_see_form_tomorrow,

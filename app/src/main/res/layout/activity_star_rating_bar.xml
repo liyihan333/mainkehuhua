@@ -12,9 +12,15 @@
         android:layout_height="45dp"
         android:background="?attr/colorPrimary"
         app:isShowRightButton="true"
-        app:isShowTitle="true"></com.kwsoft.kehuhua.widget.CommonToolbar>
+        app:isShowTitle="true">
+
+    </com.kwsoft.kehuhua.widget.CommonToolbar>
 
     <ScrollView
+
+
+
+
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -42,6 +48,7 @@
                         android:id="@+id/ratebar1"
                         android:layout_width="29dp"
                         android:layout_height="29dp"
+                        android:checked="true"
                         android:background="@drawable/cb_sel_bg_ratingbar"
                         android:button="@null" />
 
@@ -122,7 +129,9 @@
                     android:layout_height="0.5dp"
                     android:layout_gravity="bottom"
                     android:layout_weight="1"
-                    android:background="@color/tv_dedede"></View>
+                    android:background="@color/tv_dedede">
+
+                </View>
             </LinearLayout>
 
             <LinearLayout
@@ -136,7 +145,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -156,7 +165,7 @@
                             android:paddingLeft="11dp"
                             android:paddingRight="11dp"
                             android:paddingTop="9dp"
-                            android:text="一般11"
+                            android:text="上课无计划"
                             android:textColor="@color/checkb_color_selector" />
 
                         <CheckBox
@@ -170,7 +179,7 @@
                             android:paddingLeft="11dp"
                             android:paddingRight="11dp"
                             android:paddingTop="9dp"
-                            android:text="没有新意"
+                            android:text="备课不认真"
                             android:textColor="@color/checkb_color_selector" />
 
                         <CheckBox
@@ -184,7 +193,7 @@
                             android:paddingLeft="11dp"
                             android:paddingRight="11dp"
                             android:paddingTop="9dp"
-                            android:text="作业太多"
+                            android:text="迟到"
                             android:textColor="@color/checkb_color_selector" />
                     </LinearLayout>
 
@@ -206,7 +215,7 @@
                             android:paddingLeft="11dp"
                             android:paddingRight="11dp"
                             android:paddingTop="9dp"
-                            android:text="讲课速度太快"
+                            android:text="早退"
                             android:textColor="@color/checkb_color_selector" />
 
                         <CheckBox
@@ -220,7 +229,7 @@
                             android:paddingLeft="11dp"
                             android:paddingRight="11dp"
                             android:paddingTop="9dp"
-                            android:text="没有新意"
+                            android:text="上课玩手机"
                             android:textColor="@color/checkb_color_selector" />
                         <!--</RadioGroup>-->
                     </LinearLayout>
@@ -251,7 +260,7 @@
                             android:paddingLeft="11dp"
                             android:paddingRight="11dp"
                             android:paddingTop="9dp"
-                            android:text="一般22"
+                            android:text="备课不认真"
                             android:textColor="@color/checkb_color_selector" />
 
                         <CheckBox
@@ -265,7 +274,7 @@
                             android:paddingLeft="11dp"
                             android:paddingRight="11dp"
                             android:paddingTop="9dp"
-                            android:text="没有新意"
+                            android:text="上课缺少互动"
                             android:textColor="@color/checkb_color_selector" />
 
                     </LinearLayout>
@@ -288,23 +297,9 @@
                             android:paddingLeft="11dp"
                             android:paddingRight="11dp"
                             android:paddingTop="9dp"
-                            android:text="讲课速度太快"
+                            android:text="上课玩手机"
                             android:textColor="@color/checkb_color_selector" />
 
-                        <CheckBox
-                            android:id="@+id/cb_sec_rb4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:background="@drawable/sel_radio_group_selector"
-                            android:button="@null"
-                            android:paddingBottom="9dp"
-                            android:paddingLeft="11dp"
-                            android:paddingRight="11dp"
-                            android:paddingTop="9dp"
-                            android:text="没有新意"
-                            android:textColor="@color/checkb_color_selector" />
-                        <!--</RadioGroup>-->
                     </LinearLayout>
                 </LinearLayout>
 
@@ -333,7 +328,7 @@
                             android:paddingLeft="11dp"
                             android:paddingRight="11dp"
                             android:paddingTop="9dp"
-                            android:text="一般33"
+                            android:text="耐心负责"
                             android:textColor="@color/checkb_color_selector" />
 
                         <CheckBox
@@ -347,7 +342,7 @@
                             android:paddingLeft="11dp"
                             android:paddingRight="11dp"
                             android:paddingTop="9dp"
-                            android:text="没有新意"
+                            android:text="上课玩手机"
                             android:textColor="@color/checkb_color_selector" />
 
                         <CheckBox
@@ -361,7 +356,7 @@
                             android:paddingLeft="11dp"
                             android:paddingRight="11dp"
                             android:paddingTop="9dp"
-                            android:text="作业太多"
+                            android:text="着装邋遢"
                             android:textColor="@color/checkb_color_selector" />
                     </LinearLayout>
 
@@ -383,7 +378,7 @@
                             android:paddingLeft="11dp"
                             android:paddingRight="11dp"
                             android:paddingTop="9dp"
-                            android:text="讲课速度太快"
+                            android:text="语速过快"
                             android:textColor="@color/checkb_color_selector" />
                     </LinearLayout>
                 </LinearLayout>
@@ -413,7 +408,7 @@
                             android:paddingLeft="11dp"
                             android:paddingRight="11dp"
                             android:paddingTop="9dp"
-                            android:text="一般44"
+                            android:text="备课认真"
                             android:textColor="@color/checkb_color_selector" />
 
                         <CheckBox
@@ -427,7 +422,7 @@
                             android:paddingLeft="11dp"
                             android:paddingRight="11dp"
                             android:paddingTop="9dp"
-                            android:text="没有新意"
+                            android:text="教学专业"
                             android:textColor="@color/checkb_color_selector" />
 
                         <CheckBox
@@ -441,7 +436,7 @@
                             android:paddingLeft="11dp"
                             android:paddingRight="11dp"
                             android:paddingTop="9dp"
-                            android:text="作业太多"
+                            android:text="讲解清晰"
                             android:textColor="@color/checkb_color_selector" />
                     </LinearLayout>
 
@@ -463,7 +458,7 @@
                             android:paddingLeft="11dp"
                             android:paddingRight="11dp"
                             android:paddingTop="9dp"
-                            android:text="讲课速度太快"
+                            android:text="穿着正装"
                             android:textColor="@color/checkb_color_selector" />
 
                         <CheckBox
@@ -477,9 +472,22 @@
                             android:paddingLeft="11dp"
                             android:paddingRight="11dp"
                             android:paddingTop="9dp"
-                            android:text="没有新意"
+                            android:text="着装邋遢"
                             android:textColor="@color/checkb_color_selector" />
-                        <!--</RadioGroup>-->
+                        <CheckBox
+                            android:id="@+id/cb_forth_rb6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:background="@drawable/sel_radio_group_selector"
+                            android:button="@null"
+                            android:paddingBottom="9dp"
+                            android:paddingLeft="11dp"
+                            android:paddingRight="11dp"
+                            android:paddingTop="9dp"
+                            android:text="语速过快"
+                            android:textColor="@color/checkb_color_selector" />
+
                     </LinearLayout>
                 </LinearLayout>
 
@@ -508,7 +516,7 @@
                             android:paddingLeft="11dp"
                             android:paddingRight="11dp"
                             android:paddingTop="9dp"
-                            android:text="一般55"
+                            android:text="备课认真"
                             android:textColor="@color/checkb_color_selector" />
 
                         <CheckBox
@@ -522,7 +530,7 @@
                             android:paddingLeft="11dp"
                             android:paddingRight="11dp"
                             android:paddingTop="9dp"
-                            android:text="没有新意"
+                            android:text="教学专业"
                             android:textColor="@color/checkb_color_selector" />
 
                         <CheckBox
@@ -536,7 +544,7 @@
                             android:paddingLeft="11dp"
                             android:paddingRight="11dp"
                             android:paddingTop="9dp"
-                            android:text="作业太多"
+                            android:text="穿着正式"
                             android:textColor="@color/checkb_color_selector" />
                     </LinearLayout>
 
@@ -558,7 +566,7 @@
                             android:paddingLeft="11dp"
                             android:paddingRight="11dp"
                             android:paddingTop="9dp"
-                            android:text="讲课速度太快"
+                            android:text="讲解清晰"
                             android:textColor="@color/checkb_color_selector" />
 
                         <CheckBox
@@ -572,106 +580,13 @@
                             android:paddingLeft="11dp"
                             android:paddingRight="11dp"
                             android:paddingTop="9dp"
-                            android:text="没有新意"
+                            android:text="语速过快"
                             android:textColor="@color/checkb_color_selector" />
                         <!--</RadioGroup>-->
                     </LinearLayout>
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/ll_cb_six"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="visible">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="27dp"
-                        android:orientation="horizontal"
-                        android:paddingLeft="32dp"
-                        android:paddingRight="32dp">
-
-                        <CheckBox
-                            android:id="@+id/cb_six_rb1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/sel_radio_group_selector"
-                            android:button="@null"
-                            android:paddingBottom="9dp"
-                            android:paddingLeft="11dp"
-                            android:paddingRight="11dp"
-                            android:paddingTop="9dp"
-                            android:text="一般66"
-                            android:textColor="@color/checkb_color_selector" />
-
-                        <CheckBox
-                            android:id="@+id/cb_six_rb2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:background="@drawable/sel_radio_group_selector"
-                            android:button="@null"
-                            android:paddingBottom="9dp"
-                            android:paddingLeft="11dp"
-                            android:paddingRight="11dp"
-                            android:paddingTop="9dp"
-                            android:text="没有新意"
-                            android:textColor="@color/checkb_color_selector" />
-
-                        <CheckBox
-                            android:id="@+id/cb_six_rb3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:background="@drawable/sel_radio_group_selector"
-                            android:button="@null"
-                            android:paddingBottom="9dp"
-                            android:paddingLeft="11dp"
-                            android:paddingRight="11dp"
-                            android:paddingTop="9dp"
-                            android:text="作业太多"
-                            android:textColor="@color/checkb_color_selector" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="32dp"
-                        android:layout_marginRight="32dp"
-                        android:layout_marginTop="17dp"
-                        android:orientation="horizontal">
-
-                        <CheckBox
-                            android:id="@+id/cb_six_rb4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/sel_radio_group_selector"
-                            android:button="@null"
-                            android:paddingBottom="9dp"
-                            android:paddingLeft="11dp"
-                            android:paddingRight="11dp"
-                            android:paddingTop="9dp"
-                            android:text="讲课速度太快"
-                            android:textColor="@color/checkb_color_selector" />
-
-                        <CheckBox
-                            android:id="@+id/cb_six_rb5"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:background="@drawable/sel_radio_group_selector"
-                            android:button="@null"
-                            android:paddingBottom="9dp"
-                            android:paddingLeft="11dp"
-                            android:paddingRight="11dp"
-                            android:paddingTop="9dp"
-                            android:text="没有新意"
-                            android:textColor="@color/checkb_color_selector" />
-                        <!--</RadioGroup>-->
-                    </LinearLayout>
-                </LinearLayout>
             </LinearLayout>
 
             <!--android:focusable="true"-->
