@@ -9,11 +9,11 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.kwsoft.kehuhua.adcustom.OperateDataActivity;
 import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.adcustom.base.BaseActivity;
 import com.kwsoft.kehuhua.config.Constant;
@@ -22,10 +22,12 @@ import com.kwsoft.kehuhua.urlCnn.ErrorToast;
 import com.kwsoft.kehuhua.widget.CommonToolbar;
 import com.zhy.http.okhttp.OkHttpUtils;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import okhttp3.Call;
 
+import static com.kwsoft.kehuhua.config.Constant.mainId;
 import static com.kwsoft.kehuhua.config.Constant.topBarColor;
 
 /**
@@ -52,32 +54,71 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
         setContentView(R.layout.activity_star_rating_bar);
         getDataIntent();
         initView();
-
+        getData();
 
     }
 
     private String mainTableId, mainPageId, tableId, pageId, dataId;
-
+    private Map<String, String> paramsMap;
 
     private void getDataIntent() {
+        //初始化参数Map
+        paramsMap = new HashMap<>();
         //获取数据并解析
         Intent intent = getIntent();
         String buttonSetItemStr = intent.getStringExtra("itemSet");
         Map<String, Object> buttonSetItem = JSON.parseObject(buttonSetItemStr);
-        Log.e(TAG, "getIntentData: buttonSetItem " + buttonSetItem.toString());
+        Log.e(TAG, "getIntentData: buttonSetItem "+buttonSetItem.toString());
+        //赋值页面标题
 
         //获取参数并添加
         //mainTableId
         mainTableId = String.valueOf(buttonSetItem.get("tableIdList"));
+        paramsMap.put(Constant.mainTableId, mainTableId);
         //mainPageId
         mainPageId = String.valueOf(buttonSetItem.get("pageIdList"));
+        paramsMap.put(Constant.mainPageId, mainPageId);
         //tableId
         tableId = String.valueOf(buttonSetItem.get("tableId"));
+        paramsMap.put(Constant.tableId, tableId);
         //pageId
         pageId = String.valueOf(buttonSetItem.get("startTurnPage"));
+        paramsMap.put(Constant.pageId, pageId);
         //dataId：在对列表操作的时候是没有的，只有行级操作的时候才有
         dataId = String.valueOf(buttonSetItem.get("dataId"));
+        if (dataId!=null&&!dataId.equals("null")) {
+
+            paramsMap.put(mainId, dataId);
+        }
+        Log.e(TAG, "getIntentData: paramsMap "+paramsMap.toString());
     }
+
+
+    private void getData() {
+        //不同页面类型请求Url不一样
+        String volleyUrl= Constant.sysUrl + Constant.requestRowsAdd;
+        //请求
+        OkHttpUtils
+                .post()
+                .params(paramsMap)
+                .url(volleyUrl)
+                .build()
+                .execute(new EdusStringCallback(StarRatingBarActivity.this) {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        ErrorToast.errorToast(mContext,e);
+                        dialog.dismiss();
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        Log.e(TAG, "onResponse: "+response+"  id  "+id);
+//                        setStore(response);
+                    }
+                });
+    }
+
+
 
     @Override
     public void initView() {
