@@ -267,9 +267,10 @@ public class CourseHpsFragment extends Fragment {
                 break;
             case STATE_MORE:
                 if (mAdapter != null) {
+                    mListView.setSelection(mAdapter.getCount());
                     mAdapter.addData(datas);
 //                    mListView.scrollToPosition(mAdapter.getDatas().size());
-                    mListView.setSelection(mAdapter.getCount());
+
                     mRefreshLayout.finishRefreshLoadMore();
                     Snackbar.make(mListView, "更新了" + datas.size() + "条", Snackbar.LENGTH_SHORT).show();
                 }

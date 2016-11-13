@@ -2,11 +2,8 @@ package com.kwsoft.kehuhua.hampson.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +15,8 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.TypeReference;
+import com.cjj.MaterialRefreshLayout;
+import com.cjj.MaterialRefreshListener;
 import com.kwsoft.kehuhua.adcustom.InfoActivity;
 import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.adcustom.base.BaseActivity;
@@ -36,18 +35,21 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import okhttp3.Call;
 
+
+
+
 /**
 
  */
 public class StageTestFragment extends Fragment {
 
     @Bind(R.id.lv)
-    ListView mRecyclerView;
+    ListView mListView;
 
     //    private List<Map<String, String>> list = new ArrayList<>();
-
-    @Bind(R.id.swipeRefreshLayout)
-    SwipeRefreshLayout swipeRefreshLayout;
+    private static final String TAG = "StageTestFragment";
+    @Bind(R.id.refresh_layout)
+    MaterialRefreshLayout mRefreshLayout;
     private String tableId, pageId;
 
 
@@ -63,7 +65,6 @@ public class StageTestFragment extends Fragment {
     private String operaButtonSet;
     private List<List<Map<String, String>>> datas;
     private StageTestAdapter mAdapter;
-    private static final String TAG = "StageTestFragment";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,55 +73,55 @@ public class StageTestFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         ((BaseActivity) getActivity()).dialog.show();
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
-//        initRefreshLayout();//初始化空间
         getDataIntent();//获取初始化数据
+        initRefreshLayout();
         getData();
-
-//        Map<String, String> map = new HashMap<>();
-//        map.put("month", "12月");
-//        map.put("day", "31日");
-//        map.put("title", "第二阶段模拟测试");
-//        map.put("score", "120");
-//        map.put("contentTitle", "成绩描述");
-//        map.put("content", "第一阶段第一阶段第一阶段第一阶段第一阶段第一阶段第一阶段第一阶段第一阶段第一阶段第一阶段第一阶段");
-//        list.add(map);
-//        list.add(map);
-//        list.add(map);
-//        list.add(map);
-//        StageTestAdapter adapter = new StageTestAdapter(getActivity(),list);
-//        listView.setAdapter(adapter);
         return view;
     }
+    //初始化SwipeRefreshLayout
+    private void initRefreshLayout() {
+        mRefreshLayout.setLoadMore(true);
+        mRefreshLayout.setMaterialRefreshListener(new MaterialRefreshListener() {
+            @Override
+            public void onRefresh(MaterialRefreshLayout materialRefreshLayout) {
+
+                refreshData();
+            }
+
+            @Override
+            public void onRefreshLoadMore(MaterialRefreshLayout materialRefreshLayout) {
+
+                if (mAdapter!=null&&mAdapter.getCount() < totalNum) {
+
+                    loadMoreData();
+                } else {
+//                    Snackbar.make(mListView, "没有更多了", Snackbar.LENGTH_SHORT).show();
+                    mRefreshLayout.finishRefreshLoadMore();
+                }
+            }
+        });
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String itemData=JSON.toJSONString(mAdapter.getItem(i));
+                toItem(itemData);
+            }
+        });
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
-
+    /**
+     * 接收菜单传递过来的模块数据包
+     */
 
     public Bundle listDataBundle;
     private Map<String, String> paramsMap;
 
     public void getDataIntent() {
-
-
-
-        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light, android.R.color.holo_orange_light, android.R.color.holo_red_light);
-        //设置下拉刷新监听
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-
-            @Override
-            public void onRefresh() {
-                new LoadDataThread().start();
-            }
-        });
-
-
-
-
-
         listDataBundle = getArguments();
         String paramsStr = listDataBundle.getString("listFragmentData");
 
@@ -133,42 +134,7 @@ public class StageTestFragment extends Fragment {
         Constant.mainTableIdValue = tableId;
         Constant.mainPageIdValue = pageId;
     }
-    /**
-     * 加载菜单数据的线程
-     */
-    class LoadDataThread extends Thread {
-        @Override
-        public void run() {
-            //下载数据，重新设定dataList
-            getData();
-            //防止数据加载过快动画效果差
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            Log.e("TAG", "学员端开始handler通知 ");
-            handler.sendEmptyMessage(0x101);//通过handler发送一个更新数据的标记，适配器进行dataSetChange，然后停止刷新动画
-        }
-    }
 
-    //下拉刷新handler
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case 0x101:
-                    Log.e("TAG", "学员端开始handler通知跳转后 ");
-                    if (swipeRefreshLayout.isRefreshing()) {
-                        mAdapter.notifyDataSetChanged();
-                        swipeRefreshLayout.setRefreshing(false);//设置不刷新
-                        Toast.makeText(getActivity(), "数据已刷新", Toast.LENGTH_SHORT).show();
-                    }
-                    break;
-            }
-        }
-    };
     /**
      * 获取字段接口数据
      */
@@ -211,7 +177,7 @@ public class StageTestFragment extends Fragment {
         } else {
 
             ((BaseActivity) getActivity()).dialog.dismiss();
-//            mRefreshLayout.finishRefresh();
+            mRefreshLayout.finishRefresh();
             Toast.makeText(getActivity(), "请连接网络", Toast.LENGTH_SHORT).show();
             backStart();
         }
@@ -282,7 +248,7 @@ public class StageTestFragment extends Fragment {
 
     }
 
-    public int isResume = 0;
+//    public int isResume = 0;
 
     /**
      * 分动作展示数据
@@ -294,29 +260,21 @@ public class StageTestFragment extends Fragment {
                 normalRequest();
                 break;
             case STATE_REFREH:
-
-//                if (mAdapter != null) {
-//
-//                    mAdapter.clearData();
-//                    mAdapter.addData(datas);
-//                    mRecyclerView.scrollToPosition(0);
-//                    mRefreshLayout.finishRefresh();
-//                    if (datas.size() == 0) {
-//                        Snackbar.make(mRecyclerView, "本页无数据", Snackbar.LENGTH_SHORT).show();
-//                    } else if(isResume==0){
-//                        Snackbar.make(mRecyclerView, "共"+totalNum+"条", Snackbar.LENGTH_SHORT).show();
-//                    }
-//
-//                }
-//                isResume=0;
+                if (mAdapter != null) {
+                    mAdapter.clear();
+                    mAdapter.addData(datas);
+                    mRefreshLayout.finishRefresh();
+                }
                 break;
             case STATE_MORE:
-//                if (mAdapter != null) {
-//                    mAdapter.addData(mAdapter.getDatas().size(), datas);
-//                    mRecyclerView.scrollToPosition(mAdapter.getDatas().size());
-//                    mRefreshLayout.finishRefreshLoadMore();
-//                    Snackbar.make(mRecyclerView, "更新了" + datas.size() + "条数据", Snackbar.LENGTH_SHORT).show();
-//                }
+                if (mAdapter != null) {
+                    mListView.setSelection(mAdapter.getCount());
+                    mAdapter.addData(datas);
+//                    mListView.scrollToPosition(mAdapter.getDatas().size());
+
+                    mRefreshLayout.finishRefreshLoadMore();
+                    Snackbar.make(mListView, "更新了" + datas.size() + "条", Snackbar.LENGTH_SHORT).show();
+                }
 
                 break;
         }
@@ -346,22 +304,15 @@ public class StageTestFragment extends Fragment {
 
     public void normalRequest() {
         Log.e(TAG, "normalRequest: ");
-        mAdapter = new StageTestAdapter(getActivity(), datas);
-        mRecyclerView.setAdapter(mAdapter);
-//        mRecyclerView.setLayoutManager(new WrapContentLinearLayoutManager(getActivity()));
-//        mRecyclerView.addItemDecoration(new RecycleViewDivider(getActivity(), LinearLayoutManager.VERTICAL));
-////        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-////                mRecyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL_LIST));
-        mRecyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-            }
-        });
+        Log.e(TAG, "normalRequest: datas "+datas.toString());
+        mAdapter = new StageTestAdapter(getActivity(),datas);
+        mListView.setAdapter(mAdapter);
         ((BaseActivity) getActivity()).dialog.dismiss();
         if (totalNum == 0) {
-            Snackbar.make(mRecyclerView, "本页无数据", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(mListView, "本页无数据", Snackbar.LENGTH_SHORT).show();
 
+        }else{
+            Snackbar.make(mListView, "加载完成，共"+totalNum+"条", Snackbar.LENGTH_SHORT).show();
         }
 
     }
@@ -381,25 +332,6 @@ public class StageTestFragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public void refreshPage(int position) {
-//        titleName = childList.get(position).get("menuName") + "";
-        Log.e("TAG", "list子菜单position " + position);
-        //重新设置顶部名称
-//        mToolbar.setTitle(titleName);
-        //重设参数值
-        paramsMap.put(Constant.tableId, tableId);
-        paramsMap.put(Constant.pageId, pageId);
-        Constant.paramsMapSearch = paramsMap;
-        Constant.mainTableIdValue = tableId;
-        Constant.mainPageIdValue = pageId;
-        //重新请求数据
-
-
-        refreshData();
-
-
     }
 
 }
