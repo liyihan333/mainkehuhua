@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.alibaba.fastjson.JSON;
-import com.kwsoft.kehuhua.adapter.EmptyViewHolder;
 import com.kwsoft.kehuhua.adcustom.R;
 
 import java.util.List;
@@ -55,14 +54,15 @@ public class CourseContentAdapter extends RecyclerView.Adapter<RecyclerView.View
         LayoutInflater mInflater = LayoutInflater.from(parent.getContext());
         Log.e("TAG", "viewType:" + viewType);
         Log.e(TAG, "onCreateViewHolder: viewType "+viewType);
-        if (VIEW_TYPE == viewType) {
-            view = mInflater.inflate(R.layout.empty_view, parent, false);
-
-            return new EmptyViewHolder(view);
-        }
+//        if (VIEW_TYPE == viewType) {
+//            view = mInflater.inflate(R.layout.empty_view, parent, false);
+//
+//            return new EmptyViewHolder(view);
+//        }
         view = mInflater.inflate(R.layout.activity_course_list_item, null);
         //将创建的View注册点击事件
         view.setOnClickListener(this);
+        Log.e(TAG, "onCreateViewHolder: view "+view);
         return new CourseContentHolder(view);
     }
 
@@ -110,7 +110,7 @@ public class CourseContentAdapter extends RecyclerView.Adapter<RecyclerView.View
     /**
      * 清除数据
      */
-    public void clearData() {
+    public void clear() {
 
         mDatas.clear();
         notifyItemRangeRemoved(0, mDatas.size());

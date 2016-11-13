@@ -99,4 +99,18 @@ public class CourseAdapter extends BaseAdapter {
                 teach_content_title;
         ImageView iv_attence,iv_homework;
     }
+
+    public void clear(){
+        mDatas.removeAll(mDatas);
+        notifyDataSetChanged();
+    }
+    public void addData(List<List<Map<String, String>>> addData){
+        mDatas.addAll(addData);
+        notifyDataSetChanged();
+    }
+
+    public List<List<Map<String, String>>> getDatas(){
+        return mDatas;
+
+    }
 }
