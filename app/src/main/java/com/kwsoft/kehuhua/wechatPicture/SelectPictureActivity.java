@@ -159,12 +159,12 @@ public class SelectPictureActivity extends BaseActivity implements View.OnClickL
         mlistview = (ListView) findViewById(R.id.listview);
         button = (AudioRecordButton) findViewById(R.id.recordButton);
         btn_up = (Button) findViewById(R.id.btn_up);
-        btn_up.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                uploadAudioFirst();
-            }
-        });
+//        btn_up.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                uploadAudioFirst();
+//            }
+//        });
 
         PermissionGen.with(SelectPictureActivity.this)
                 .addRequestCode(106)
@@ -225,7 +225,7 @@ public class SelectPictureActivity extends BaseActivity implements View.OnClickL
 
 
     public static void hideListView() {
-        Log.e("hidel","hidelistview");
+        Log.e("hidel", "hidelistview");
         button.setVisibility(View.VISIBLE);
         mlistview.setVisibility(View.GONE);
     }
@@ -260,7 +260,7 @@ public class SelectPictureActivity extends BaseActivity implements View.OnClickL
                     @Override
                     public void onResponse(String response, int id) {
                         Log.e("response", response);
-                        getFileCode(response);
+                        getAutoFileCode(response);
                     }
                 });
     }
@@ -328,6 +328,7 @@ public class SelectPictureActivity extends BaseActivity implements View.OnClickL
 
     }
 
+    Map<String, File> myFile = new HashMap<>();
 
     //上传文件
     public void upload() {
@@ -335,8 +336,8 @@ public class SelectPictureActivity extends BaseActivity implements View.OnClickL
         String url = sysUrl + pictureUrl;
         //待上传的两个文件
 
-        Map<String, File> myFile = new HashMap<>();
-        if (img_Paths.size() > 0) {
+
+        if (img_Paths.size() >= 0) {
             for (int i = 0; i < img_Paths.size(); i++) {
                 File file = new File(img_Paths.get(i));
 
@@ -346,55 +347,69 @@ public class SelectPictureActivity extends BaseActivity implements View.OnClickL
                     myFile.put(file.getName() + i, file);
                 }
             }
-            Log.e(TAG, "uploadMethod: 开始上传文件 " + myFile.toString());
-            //上传文件
-            uploadMethod(url, myFile);
-        } else {
-            Toast.makeText(SelectPictureActivity.this, "您尚未选择图片，上传音频", Toast.LENGTH_SHORT).show();
-            waveProgress.setVisibility(View.GONE);
         }
-        if (mDatas!=null&&mDatas.size()>0){
-           uploadAudioFirst();
-        }else {
-            Toast.makeText(SelectPictureActivity.this, "您尚未录制音频", Toast.LENGTH_SHORT).show();
+
+        if (mDatas != null && mDatas.size() > 0) {
+            Recorder recorder = mDatas.get(0);
+            String path = recorder.getFilePathString();
+            File audioFile = new File(path);
+            myFile.put(audioFile.getName(), audioFile);
         }
+        Log.e(TAG, "uploadMethod: 开始上传文件 " + myFile.toString());
+        //上传文件
+        uploadMethod(url, myFile);
+
+//        else {
+//            Toast.makeText(SelectPictureActivity.this, "您尚未选择图片", Toast.LENGTH_SHORT).show();
+//          //  parseAudo();
+//            waveProgress.setVisibility(View.GONE);
+//
+//        }
+
     }
 
     public void uploadMethod(String url, Map<String, File> files) {
-        Log.e(TAG, "uploadMethod: 开始上传文件");
-
-        OkHttpUtils.post()//
-                .files("myFiles", files)
-                .url(url)
-                .build()
-                .execute(new EdusStringCallback(SelectPictureActivity.this) {
-                    @Override
-                    public void onError(Call call, Exception e, int id) {
-                        ErrorToast.errorToast(mContext, e);
-                        waveProgress.setVisibility(View.GONE);
-                    }
-
-                    @Override
-                    public void onResponse(String response, int id) {
-
-                        getFileCode(response);
-                    }
-
-                    @Override
-                    public void inProgress(float progress, long total, int id) {
-                        if ((int) (100 * progress) == 100) {
+        Log.e(TAG, "uploadMethod: 开始上传文件" + files.toString());
+        if (files.size() > 0) {
+            OkHttpUtils.post()//
+                    .files("myFiles", files)
+                    .url(url)
+                    .build()
+                    .execute(new EdusStringCallback(SelectPictureActivity.this) {
+                        @Override
+                        public void onError(Call call, Exception e, int id) {
+                            ErrorToast.errorToast(mContext, e);
                             waveProgress.setVisibility(View.GONE);
-                            Log.e("total", total + "");
-                        } else {
-
-                            waveProgress.setProgress((int) (100 * progress));
-                            Log.e("progress", progress + "");
                         }
-                    }
 
-                });
+                        @Override
+                        public void onResponse(String response, int id) {
+
+                            getFileCode(response);
+                            //解析音频
+                            // parseAudo();
+                        }
+
+                        @Override
+                        public void inProgress(float progress, long total, int id) {
+                            if ((int) (100 * progress) == 100) {
+                                waveProgress.setVisibility(View.GONE);
+                                Log.e("total", total + "");
+                            } else {
+
+                                waveProgress.setProgress((int) (100 * progress));
+                                Log.e("progress", progress + "");
+                            }
+                        }
+
+                    });
+        }else {
+            Toast.makeText(SelectPictureActivity.this, "您尚未选择图片。音频", Toast.LENGTH_SHORT).show();
+//          //  parseAudo();
+            waveProgress.setVisibility(View.GONE);
+
+        }
     }
-
 
     //解析文件上传成功的code值
     private void getFileCode(String response) {
@@ -420,11 +435,54 @@ public class SelectPictureActivity extends BaseActivity implements View.OnClickL
                     }
                 }
             }
+
         } else {
             Toast.makeText(SelectPictureActivity.this, "文件值解析出现问题", Toast.LENGTH_SHORT).show();
         }
         Log.e("TAG", "文件上传码codeListStr:" + codeListStr);
         jump2Activity();
+    }
+
+
+    //解析文件音频上传成功的code值
+    private void getAutoFileCode(String response) {
+        codeListStr = "";
+        Log.e("TAG", "uploadMethod2:" + response);
+        Toast.makeText(SelectPictureActivity.this, "上传成功", Toast.LENGTH_SHORT).show();
+
+        jump2Activity();
+//        List<Integer> codeList = new ArrayList<>();
+//        if (response.contains(":")) {
+//            String[] value = response.split(",");
+//            for (String valueTemp : value) {
+//                String[] valueTemp1 = valueTemp.split(":");
+//                int valueCode = Integer.valueOf(valueTemp1[1]);
+//                codeList.add(valueCode);
+//            }
+//            Log.e("TAG", "文件上传codeList:" + codeList.toString());
+//            int leg = codeList.size();
+//            if (leg > 0) {
+//                for (int i = 0; i < leg; i++) {
+//                    if (i == (leg - 1)) {
+//                        codeListStr = codeListStr + codeList.get(i);
+//                    } else {
+//                        codeListStr = codeListStr + codeList.get(i) + ",";
+//                    }
+//                }
+//            }
+//
+//        } else {
+//            Toast.makeText(SelectPictureActivity.this, "文件值解析出现问题", Toast.LENGTH_SHORT).show();
+//        }
+        Log.e("TAG", "文件上传码codeListStr:" + codeListStr);
+    }
+
+    private void parseAudo() {
+        if (mDatas != null && mDatas.size() > 0) {
+            uploadAudioFirst();
+        } else {
+            Toast.makeText(SelectPictureActivity.this, "您尚未录制音频", Toast.LENGTH_SHORT).show();
+        }
     }
 
 

@@ -35,7 +35,7 @@ public class PlayAudioActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.hampson_activity_play_audio_layout);
-dialog.show();
+        dialog.show();
         getIntentData();
         initView();
 
