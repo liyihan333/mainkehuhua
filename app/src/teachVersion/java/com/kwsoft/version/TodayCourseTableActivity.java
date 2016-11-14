@@ -1,12 +1,12 @@
 package com.kwsoft.version;
 
+import com.kwsoft.kehuhua.adcustom.base.BaseActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 
 import com.kwsoft.kehuhua.adcustom.R;
-import com.kwsoft.kehuhua.adcustom.base.BaseActivity;
 import com.kwsoft.kehuhua.config.Constant;
 import com.kwsoft.kehuhua.widget.CommonToolbar;
 import com.kwsoft.version.adapter.TodayCourseTabAdapter;
@@ -17,11 +17,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Administrator on 2016/11/13 0013.
- *
+ * Created by Administrator on 2016/11/14 0014.
  */
 
-public class TodayCourseTabActivity extends BaseActivity {
+public class TodayCourseTableActivity extends BaseActivity {
     public ListView lv_listview;
     public List<Map<String, String>> list = new ArrayList<>();
     private CommonToolbar mToolbar;

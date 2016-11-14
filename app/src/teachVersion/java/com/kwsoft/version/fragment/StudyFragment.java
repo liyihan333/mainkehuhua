@@ -36,7 +36,7 @@ import com.kwsoft.kehuhua.urlCnn.ErrorToast;
 import com.kwsoft.kehuhua.utils.DataProcess;
 import com.kwsoft.kehuhua.zxing.CaptureActivity;
 import com.kwsoft.version.StuInfoActivity;
-import com.kwsoft.version.TodayCourseTabActivity;
+import com.kwsoft.version.TodayCourseTableActivity;
 import com.kwsoft.version.androidRomType.AndtoidRomUtil;
 import com.kwsoft.version.view.StudyGridView;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -250,12 +250,12 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i == 0) {
                     //今日课表
-                    Intent intent = new Intent(getActivity(), TodayCourseTabActivity.class);
+                    Intent intent = new Intent(getActivity(), TodayCourseTableActivity.class);
                     intent.putExtra("titleName", String.valueOf(menuListMaps.get(i).get("menuName")));
                     startActivity(intent);
                 } else if (i == 1) {
                     //明日课表
-                    Intent intent = new Intent(getActivity(), TodayCourseTabActivity.class);
+                    Intent intent = new Intent(getActivity(), TodayCourseTableActivity.class);
                     intent.putExtra("titleName", String.valueOf(menuListMaps.get(i).get("menuName")));
                     startActivity(intent);
                 } else if (i == 2) {
