@@ -10,7 +10,6 @@ import com.kwsoft.kehuhua.adcustom.CourseActivity;
 import com.kwsoft.kehuhua.adcustom.ListActivity3;
 import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.config.Constant;
-import com.kwsoft.kehuhua.hampson.activity.AssessActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -378,15 +377,15 @@ public class DataProcess {
         //转换子列表对象为字符串准备发送
         String childString = JSONArray.toJSONString(childList);
         Intent intent = new Intent();
-        if ((itemData.get("menuName").toString()).contains("评价")) {
-            intent.setClass(mActivity, AssessActivity.class);
-        } else {
+//        if ((itemData.get("menuName").toString()).contains("评价")) {
+//            intent.setClass(mActivity, AssessActivity.class);
+//        } else {
             if (itemData.get("menuPageUrl") == null) {
                 intent.setClass(mActivity, ListActivity3.class);
             } else {
                 intent.setClass(mActivity, CourseActivity.class);
             }
-        }
+//        }
         intent.putExtra("itemData", itemDataString);
         intent.putExtra("childData", childString);
         mActivity.startActivity(intent);

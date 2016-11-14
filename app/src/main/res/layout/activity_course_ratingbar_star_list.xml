@@ -24,11 +24,17 @@
             android:focusable="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:listitem="@layout/activity_course_ratingbar_star_list"
-            >
-
-        </ListView>
-
+            tools:listitem="@layout/activity_course_ratingbar_star_list_item"
+            />
+        <TextView
+            android:id="@android:id/empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="无相关数据"
+            android:textColor="@color/gray"
+            android:textSize="22sp"
+            android:gravity="center"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
     </com.cjj.MaterialRefreshLayout>
 
 </LinearLayout>

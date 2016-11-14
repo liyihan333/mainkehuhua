@@ -26,6 +26,7 @@ import com.kwsoft.kehuhua.adcustom.base.BaseActivity;
 import com.kwsoft.kehuhua.config.Constant;
 import com.kwsoft.kehuhua.fragments.ListFragment;
 import com.kwsoft.kehuhua.hampson.activity.CourseHpsFragment;
+import com.kwsoft.kehuhua.hampson.activity.CourseRatingBarFragment;
 import com.kwsoft.kehuhua.hampson.activity.StageTestFragment;
 import com.kwsoft.kehuhua.widget.CommonToolbar;
 
@@ -99,14 +100,17 @@ public class ListActivity3 extends BaseActivity {
                 Bundle listBundle = new Bundle();
                 listBundle.putString("listFragmentData", listFragmentData);
 
-                if (fragmentTableId.equals("100")&&fragmentPageId.equals("3377")) {
+
+                String menuNamePanDuan=String.valueOf(childList.get(i).get("menuName"));
+
+                if (menuNamePanDuan.contains("成长轨迹")) {
                     Fragment stageTestFragment = new StageTestFragment();
                     stageTestFragment.setArguments(listBundle);
                     mFragments.add(stageTestFragment);
                     transaction.add(R.id.fragment_container,stageTestFragment);
                     Log.e(TAG, "refreshPage: 学员端走定制化阶段测评页面");
 
-                }else if (fragmentTableId.equals("102")&&fragmentPageId.equals("2308")) {
+                }else if (menuNamePanDuan.contains("教学日志")) {
 
                     Fragment courseHpsFragment = new CourseHpsFragment();
                     courseHpsFragment.setArguments(listBundle);
@@ -114,12 +118,12 @@ public class ListActivity3 extends BaseActivity {
                     transaction.add(R.id.fragment_container, courseHpsFragment);
                     Log.e(TAG, "refreshPage: 学员端走定制化课堂内容（一对一教学日志）页面");
 //评价列表有数据之后在空串后加数字，共2个地方需要修改
-//                }else if(fragmentTableId.equals("")&&fragmentPageId.equals("")){
-//                    Fragment courseRatingBarFragment = new CourseRatingBarFragment();
-//                    courseRatingBarFragment.setArguments(listBundle);
-//                    mFragments.add(courseRatingBarFragment);
-//                    transaction.add(R.id.fragment_container, courseRatingBarFragment);
-//                    Log.e(TAG, "refreshPage: 学员端走定制化评价列表展示页面");
+                }else if(menuNamePanDuan.contains("评价")){
+                    Fragment courseRatingBarFragment = new CourseRatingBarFragment();
+                    courseRatingBarFragment.setArguments(listBundle);
+                    mFragments.add(courseRatingBarFragment);
+                    transaction.add(R.id.fragment_container, courseRatingBarFragment);
+                    Log.e(TAG, "refreshPage: 学员端走定制化评价列表展示页面");
 
                 }else {
                     //Log.e("评价列表：",)
@@ -159,17 +163,17 @@ public class ListActivity3 extends BaseActivity {
 
             Fragment xFragment;
 
-            if (fragmentTableId.equals("100")&&fragmentPageId.equals("3377")) {
+            if (titleName.contains("成长轨迹")) {
                 xFragment = new StageTestFragment();
                 Log.e(TAG, "refreshPage: 学员端走定制化阶段测评页面");
-            }else if (fragmentTableId.equals("102")&&fragmentPageId.equals("2308")) {
+            }else if (titleName.contains("教学日志")) {
                 xFragment = new CourseHpsFragment();
                 Log.e(TAG, "refreshPage: 学员端走定制化课堂内容（一对一教学日志）页面");
 
 //评价列表有数据之后在空串后加数字，共2个地方需要修改
-//                }else if(fragmentTableId.equals("")&&fragmentPageId.equals("")){
-//                    xFragment = new CourseRatingBarFragment();
-//                    Log.e(TAG, "refreshPage: 学员端走定制化评价列表展示页面");
+                }else if(titleName.contains("评价")){
+                    xFragment = new CourseRatingBarFragment();
+                    Log.e(TAG, "refreshPage: 学员端走定制化评价列表展示页面");
             }else {
                 xFragment = new ListFragment();
             }

@@ -11,9 +11,10 @@
         android:visibility="gone"
         />
     <TextView
+        android:padding="15dp"
         android:id="@+id/voice_file"
         android:layout_width="65dp"
         android:layout_height="65dp"
-        android:background="@drawable/ic_launcher"
+        android:background="@mipmap/voice_icon"
         android:visibility="gone"/>
 </LinearLayout>
