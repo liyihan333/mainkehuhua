@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.hampson.view.AutoNextLineLinearlayout;
+import com.kwsoft.kehuhua.hampson.view.FlexBoxLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,8 +95,9 @@ public class CourseRatingBarAdapter extends BaseAdapter {
 
         }
         //满意度，字段选择
-        AutoNextLineLinearlayout ll_cb_layout = (AutoNextLineLinearlayout) view.findViewById(R.id.autolayout);
-
+        FlexBoxLayout ll_cb_layout = (FlexBoxLayout) view.findViewById(R.id.autolayout);
+        ll_cb_layout.setHorizontalSpace(17);
+        ll_cb_layout.setVerticalSpace(10);
         //然后可以直接使用这个类中的控件，对控件进行操作，而不用重复去findViewById了
         //课程名称
         holder.tv_title.setText(map.get(1).get("fieldCnName2"));
@@ -145,7 +147,7 @@ public class CourseRatingBarAdapter extends BaseAdapter {
                 holder.star3.setBackgroundResource(R.mipmap.star_ratingbar_empty);
                 holder.star4.setBackgroundResource(R.mipmap.star_ratingbar_empty);
                 break;
-            case "二星":
+            case "两星":
                 holder.star0.setBackgroundResource(R.mipmap.star_ratingbar_full);
                 holder.star1.setBackgroundResource(R.mipmap.star_ratingbar_full);
                 holder.star2.setBackgroundResource(R.mipmap.star_ratingbar_empty);

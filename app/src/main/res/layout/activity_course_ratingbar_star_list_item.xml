@@ -165,13 +165,13 @@
             android:layout_marginRight="25dp"
             android:orientation="vertical"
             android:paddingTop="11dp">
-            <com.kwsoft.kehuhua.hampson.view.AutoNextLineLinearlayout
+            <com.kwsoft.kehuhua.hampson.view.FlexBoxLayout
                 android:id="@+id/autolayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-            </com.kwsoft.kehuhua.hampson.view.AutoNextLineLinearlayout>
+            </com.kwsoft.kehuhua.hampson.view.FlexBoxLayout>
 
         </LinearLayout>
 
