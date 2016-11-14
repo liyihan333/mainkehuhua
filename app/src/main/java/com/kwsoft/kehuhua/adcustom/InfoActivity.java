@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
+import com.kwsoft.kehuhua.adapter.InfoAdapter;
 import com.kwsoft.kehuhua.adcustom.base.BaseActivity;
 import com.kwsoft.kehuhua.config.Constant;
 import com.kwsoft.kehuhua.hampson.activity.StarRatingBarActivity;
@@ -102,6 +103,21 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
                 //判断按钮数据非空
                 if (operaButtonSet0.size()!=0) {
 
+
+                    infoDataList.get(0).get("allItemData");
+
+                    //循环保留显示按钮
+
+                    for (int i=0;i<operaButtonSet0.size();i++) {
+
+
+
+                    }
+
+
+
+
+
                     operaButtonSet=operaButtonSet0;
                     Log.e("TAG", "详情页operaButtonSet " +operaButtonSet.toString());
                 }
@@ -119,11 +135,13 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
     }
 
     public void presentData() {
+        InfoAdapter mAdapter=new InfoAdapter(InfoActivity.this, infoDataList);
+        mListView.setAdapter(mAdapter);
 
-        SimpleAdapter adapter = new SimpleAdapter(InfoActivity.this, infoDataList, R.layout.activity_info_item,
-                new String[]{"fieldCnName", "fieldCnName2"}, new int[]{R.id.tv_name,
-                R.id.tv_entity_name});
-        mListView.setAdapter(adapter);
+//        SimpleAdapter adapter = new SimpleAdapter(InfoActivity.this, infoDataList, R.layout.activity_info_item,
+//                new String[]{"fieldCnName", "fieldCnName2"}, new int[]{R.id.tv_name,
+//                R.id.tv_entity_name});
+//        mListView.setAdapter(adapter);
 
     }
 

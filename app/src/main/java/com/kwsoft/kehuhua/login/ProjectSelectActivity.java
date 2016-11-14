@@ -315,7 +315,7 @@ public class ProjectSelectActivity extends BaseActivity implements OnRefreshList
 
 //        refreshListView.setAdapter(adapter);
 //stopAnim();
-//            adapter = new SimpleAdapter(this, projectListMap,
+//            adapter = new SimplesAdapter(this, projectListMap,
 //                    R.layout.activity_project_select_item, new String[]{"programa_name"},
 //                    new int[]{R.id.programa_name});
 

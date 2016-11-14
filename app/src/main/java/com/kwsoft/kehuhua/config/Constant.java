@@ -154,7 +154,7 @@ public class Constant {
 
     public static List<Map<String, Object>> buttonSet=new ArrayList<>();//按钮列表数据
 
-
+    public final static String downLoadFileStr="DownLoadFile?str=";
 
 //学员端参数：
 

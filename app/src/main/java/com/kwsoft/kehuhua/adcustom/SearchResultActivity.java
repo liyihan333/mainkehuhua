@@ -304,7 +304,7 @@ public class SearchResultActivity extends AppCompatActivity {
 //                            toolListPop.dismiss();
 //                        }
 //                    });
-//                    final SimpleAdapter adapter = new SimpleAdapter(
+//                    final SimplesAdapter adapter = new SimplesAdapter(
 //                            this,
 //                            buttonSet,
 //                            R.layout.activity_list_buttonlist_item,
