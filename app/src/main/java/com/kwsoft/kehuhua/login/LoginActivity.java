@@ -156,7 +156,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 //            projectListMap = JSON.parseObject(jsonData,
 //                    new TypeReference<List<Map<String, Object>>>() {
 //                    });
-//            SimpleAdapter simpleAdapter = new SimpleAdapter(LoginActivity.this,
+//            SimplesAdapter simpleAdapter = new SimplesAdapter(LoginActivity.this,
 //                    projectListMap, R.layout.login_spinner_item,
 //                    new String[]{"programa_name"}, new int[]{R.id.login_spinner_item});
 //            projectSelectSpinner.setAdapter(simpleAdapter);

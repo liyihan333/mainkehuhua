@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
@@ -28,12 +29,36 @@
         android:id="@+id/tv_entity_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="25dp"
-        android:paddingRight="20dp"
+        android:paddingStart="25dp"
+        android:paddingEnd="20dp"
         android:textSize="20sp"
         android:text="fgfg"
         android:textColor="@color/list_item_right"
         />
+
+
+      <com.kwsoft.kehuhua.hampson.activity.ZuoYeImageGridView
+          android:id="@+id/zuoYeImageGridView"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:paddingStart="25dp"
+          android:paddingEnd="20dp"
+          android:numColumns="4"
+          android:visibility="gone"
+          >
+
+      </com.kwsoft.kehuhua.hampson.activity.ZuoYeImageGridView>
+
+
+
+
+
+
+
+
+
+
+
     </LinearLayout>
     <View
         android:layout_width="match_parent"

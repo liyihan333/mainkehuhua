@@ -134,4 +134,7 @@ dependencies {
     compile 'com.zhy:okhttputils:2.6.2'//okHttp组件
 
     compile 'com.pgyersdk:sdk:2.4.0'//蒲公英自动更新
+
+    compile 'com.facebook.fresco:fresco:0.14.1'//图片加载控件  facebook
+    compile 'me.relex:photodraweeview:1.1.2'//图片放大
 }

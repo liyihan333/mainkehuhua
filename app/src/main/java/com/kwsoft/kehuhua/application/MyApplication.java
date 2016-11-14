@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.util.Log;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.kwsoft.kehuhua.urlCnn.EdusLoggerInterceptor;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.cookie.CookieJarImpl;
@@ -38,6 +39,7 @@ MyApplication extends Application {
         JPushInterface.setDebugMode(false);    // 设置开启日志,发布时请关闭日志
         JPushInterface.init(this);            // 初始化 JPush
         initOkHttp();
+        Fresco.initialize(this);
         initIpPort();
 
     }
