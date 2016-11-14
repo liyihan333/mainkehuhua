@@ -164,7 +164,7 @@ public class CourseRatingBarFragment extends Fragment {
 
                         @Override
                         public void onResponse(String response, int id) {
-                            Log.e(TAG, "onResponse: " + "  id  " + response);
+                            Log.e(TAG, "onResponse-wyl: " + "  id  " + response);
 
                             setStore(response);
                         }

@@ -12,7 +12,9 @@
         android:id="@+id/stu_toolbar"
         android:layout_width="fill_parent"
         android:layout_height="45dp"
-        android:background="@color/stu_topBarColor"></com.kwsoft.kehuhua.widget.CnToolbar>
+        android:background="@color/bg_1b478e">
+
+    </com.kwsoft.kehuhua.widget.CnToolbar>
 
     <!--app:isShowSearchView="false"-->
     <!--android:minHeight="?attr/actionBarSize"-->

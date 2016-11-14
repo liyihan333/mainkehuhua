@@ -18,15 +18,16 @@ public class StuPra {
             R.drawable.stu_see_journal, R.drawable.stu_see_attendance,
             R.drawable.stu_see_leave, R.drawable.stu_see_visit,
             R.mipmap.stu_see_achievement,R.mipmap.stu_my_evaluate,
-            R.mipmap.stu_my_evaluate_curriculum,
-            R.drawable.stu_see_order, R.mipmap.stu_my_task,
-            R.mipmap.stu_my_journal, R.mipmap.stu_my_attendance,
-            R.mipmap.stu_my_leave, R.mipmap.stu_my_visit,
-            R.mipmap.stu_my_achievement,R.mipmap.stu_my_evaluate,
-            R.mipmap.stu_my_evaluate_curriculum,
-            R.drawable.stu_see_order, R.mipmap.stu_my_task,
-            R.mipmap.stu_my_journal, R.mipmap.stu_my_attendance,
-            R.mipmap.stu_my_leave, R.mipmap.stu_my_visit,
-            R.mipmap.stu_my_achievement,R.mipmap.stu_my_evaluate,
-            R.mipmap.stu_my_evaluate_curriculum};
+            R.mipmap.stu_my_evaluate_curriculum,R.mipmap.stu_my_meeting,R.mipmap.stu_my_report
+            };
+//    R.drawable.stu_see_order, R.mipmap.stu_my_task,
+//    R.mipmap.stu_my_journal, R.mipmap.stu_my_attendance,
+//    R.mipmap.stu_my_leave, R.mipmap.stu_my_visit,
+//    R.mipmap.stu_my_achievement,R.mipmap.stu_my_evaluate,
+//    R.mipmap.stu_my_evaluate_curriculum,
+//    R.drawable.stu_see_order, R.mipmap.stu_my_task,
+//    R.mipmap.stu_my_journal, R.mipmap.stu_my_attendance,
+//    R.mipmap.stu_my_leave, R.mipmap.stu_my_visit,
+//    R.mipmap.stu_my_achievement,R.mipmap.stu_my_evaluate,
+//    R.mipmap.stu_my_evaluate_curriculum
 }
