@@ -2,27 +2,33 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingTop="10dp"
+    android:paddingLeft="10dp"
+    android:paddingBottom="10dp"
+    android:paddingRight="10dp"
     android:background="#f7f7f7"
     android:orientation="vertical">
 
 
-    <android.support.v4.widget.SwipeRefreshLayout
+    <com.cjj.MaterialRefreshLayout
+        android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
-        android:id="@+id/swipeRefreshLayout"
-        android:orientation="vertical">
+        app:overlay="true"
+        app:wave_color="@android:color/transparent">
+
         <ListView
             android:id="@+id/lv"
+            android:focusable="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="14dp"
-            android:divider="@color/no_edit_tv"
-            android:dividerHeight="18dp">
+            tools:listitem="@layout/activity_course_ratingbar_star_list"
+            >
 
         </ListView>
-    </android.support.v4.widget.SwipeRefreshLayout>
+
+    </com.cjj.MaterialRefreshLayout>
 
 </LinearLayout>

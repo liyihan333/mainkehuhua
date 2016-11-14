@@ -15,6 +15,7 @@ import java.util.Map;
 
 /**
  * Created by Administrator on 2016/11/7 0007.
+ *
  */
 
 public class StageTestAdapter extends BaseAdapter {
@@ -98,5 +99,20 @@ public class StageTestAdapter extends BaseAdapter {
 
     class ViewHolder {
         TextView tv_year,tv_month, tv_day, tv_title, tv_score, tv_content_title, tv_content;
+    }
+
+
+    public void clear(){
+        list.removeAll(list);
+        notifyDataSetChanged();
+    }
+    public void addData(List<List<Map<String, String>>> addData){
+        list.addAll(addData);
+        notifyDataSetChanged();
+    }
+
+    public List<List<Map<String, String>>> getDatas(){
+        return list;
+
     }
 }

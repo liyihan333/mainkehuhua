@@ -13,7 +13,7 @@ import com.kwsoft.kehuhua.adcustom.R;
  */
 
 public class CourseContentHolder extends RecyclerView.ViewHolder {
-    final View mView;
+    View mView;
     TextView tv_time,teach_title,
             teach_content_title,
             tv_title,tv_teach_name ,

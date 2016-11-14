@@ -102,10 +102,10 @@ public class CourseRatingBarAdapter extends BaseAdapter {
         //我的评价
         holder.my_ping_jia.setText(map.get(2).get("fieldCnName"));
 
-        String pingJiaMiaoShu = map.get(3).get("fieldCnName2");
+        String pingJiaMiaoShu = map.get(5).get("fieldCnName2");
         ll_cb_layout.removeAllViews();
         if (pingJiaMiaoShu != null && pingJiaMiaoShu.length() > 0) {
-            String[] tags = pingJiaMiaoShu.split("，");//注意，这里的逗号为中文的
+            String[] tags = pingJiaMiaoShu.split(",");//注意，这里的逗号为中文的
             Log.e(TAG, "getView: pingJiaMiaoShu " + pingJiaMiaoShu);
             for (String tag : tags) {
                 TextView textview = (TextView) LayoutInflater.from(mContext).inflate(R.layout.assess_list_cb_item, null);
@@ -178,7 +178,7 @@ public class CourseRatingBarAdapter extends BaseAdapter {
         //获取评价信息
 
         //获取备注
-        holder.tv_teach_content.setText(map.get(4).get("fieldCnName2"));
+        holder.tv_teach_content.setText(map.get(3).get("fieldCnName2"));
         //  holder.ll_cb_layout.removeAllViews();
 
 
@@ -194,4 +194,17 @@ public class CourseRatingBarAdapter extends BaseAdapter {
         //AutoNextLineLinearlayout ll_cb_layout;
     }
 
+    public void clear(){
+        list.removeAll(list);
+        notifyDataSetChanged();
+    }
+    public void addData(List<List<Map<String, String>>> addData){
+        list.addAll(addData);
+        notifyDataSetChanged();
+    }
+
+    public List<List<Map<String, String>>> getDatas(){
+        return list;
+
+    }
 }

@@ -140,13 +140,13 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
             Log.e(TAG, "setStore: fieldSet "+fieldSet.toString());
 //判断添加还是修改，keyRelation赋值不一样
 
-            if (pageSet.get("relationFieldId") != null) {
-                Constant.relationFieldId = String.valueOf(pageSet.get("relationFieldId"));
+                    if (pageSet.get("relationFieldId") != null) {
+                        Constant.relationFieldId = String.valueOf(pageSet.get("relationFieldId"));
 
-                keyRelation = "t0_au_" + tableId + "_" + pageId + "_" + Constant.relationFieldId + "=" + dataId;
-            }
+                        keyRelation = "t0_au_" + tableId + "_" + pageId + "_" + Constant.relationFieldId + "=" + dataId;
+                    }
 
-            Log.e(TAG, "setStore: keyRelation "+keyRelation);
+                    Log.e(TAG, "setStore: keyRelation "+keyRelation);
 
 
             Log.e("TAG", "keyRelation " + keyRelation);
@@ -511,7 +511,7 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
             } else if (cb_first_rb5.isChecked()) {
                 assessStr = cb_first_rb5.getText().toString();
             }
-            //2星
+         //2星
         } else if (ll_cb_sec.getVisibility() == View.VISIBLE) {
             if (cb_sec_rb1.isChecked()) {
                 assessStr = cb_sec_rb1.getText().toString();
@@ -603,7 +603,7 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
                             Log.e(TAG, "onResponse: " + response);
                             if (response != null && !response.equals("0")) {
                                 //返回列表页面并刷新
-                                backToInfo();
+                                    backToInfo();
                             } else {
                                 Toast.makeText(StarRatingBarActivity.this, "操作失败", Toast.LENGTH_SHORT).show();
                             }
@@ -640,7 +640,7 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
 
 
     }
-    //获取评语备注
+//获取评语备注
     private void getComment() {
 //获取key
         Map<String,Object> commentMap=fieldSet.get(2);
@@ -651,25 +651,25 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
     }
 
     //获取点选checkBox后得到的id们
-    public void getCommitCheckBox(){
+   public void getCommitCheckBox(){
 //获取key
-        Map<String,Object> checkMap=fieldSet.get(3);
-        String checkKey=String.valueOf(checkMap.get(Constant.primKey))+"_dicMany";//此key多了一个dicMany
+       Map<String,Object> checkMap=fieldSet.get(3);
+       String checkKey=String.valueOf(checkMap.get(Constant.primKey))+"_dicMany";//此key多了一个dicMany
 //获取值
-        List<String> value=new ArrayList<>();
-        for(Map.Entry<String, CheckBox> entry:mapCheckBox.entrySet()){
+       List<String> value=new ArrayList<>();
+       for(Map.Entry<String, CheckBox> entry:mapCheckBox.entrySet()){
 
-            entry.getValue().isChecked();
-            if (entry.getValue().isChecked()) {
-                value.add(entry.getKey());
-            }
-        }
+           entry.getValue().isChecked();
+           if (entry.getValue().isChecked()) {
+               value.add(entry.getKey());
+           }
+       }
 
-        String value1=DataProcess.listToString(value);
+     String value1=DataProcess.listToString(value);
 //最后将id放进参数
-        commitMap.put(checkKey,value1);
-        Log.e(TAG, "getCommitCheckBox: commitMap " +commitMap.toString());
-    }
+         commitMap.put(checkKey,value1);
+       Log.e(TAG, "getCommitCheckBox: commitMap " +commitMap.toString());
+   }
 
 
 }
