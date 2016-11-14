@@ -36,7 +36,6 @@ import butterknife.ButterKnife;
 import okhttp3.Call;
 
 
-
 public class CourseRatingBarFragment extends Fragment {
     @Bind(R.id.lv)
     ListView mListView;
@@ -72,6 +71,7 @@ public class CourseRatingBarFragment extends Fragment {
         getData();
         return view;
     }
+
     //初始化SwipeRefreshLayout
     private void initRefreshLayout() {
         mRefreshLayout.setLoadMore(true);
@@ -85,7 +85,7 @@ public class CourseRatingBarFragment extends Fragment {
             @Override
             public void onRefreshLoadMore(MaterialRefreshLayout materialRefreshLayout) {
 
-                if (mAdapter!=null&&mAdapter.getCount() < totalNum) {
+                if (mAdapter != null && mAdapter.getCount() < totalNum) {
 
                     loadMoreData();
                 } else {
@@ -97,7 +97,7 @@ public class CourseRatingBarFragment extends Fragment {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String itemData=JSON.toJSONString(mAdapter.getItem(i));
+                String itemData = JSON.toJSONString(mAdapter.getItem(i));
                 toItem(itemData);
             }
         });
@@ -108,6 +108,7 @@ public class CourseRatingBarFragment extends Fragment {
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
+
     /**
      * 接收菜单传递过来的模块数据包
      */
@@ -163,7 +164,7 @@ public class CourseRatingBarFragment extends Fragment {
 
                         @Override
                         public void onResponse(String response, int id) {
-                            Log.e(TAG, "onResponse: " + "  id  " + id);
+                            Log.e(TAG, "onResponse: " + "  id  " + response);
 
                             setStore(response);
                         }
@@ -298,15 +299,15 @@ public class CourseRatingBarFragment extends Fragment {
 
     public void normalRequest() {
         Log.e(TAG, "normalRequest: ");
-        Log.e(TAG, "normalRequest: datas "+datas.toString());
-        mAdapter = new CourseRatingBarAdapter(getActivity(),datas);
+        Log.e(TAG, "normalRequest: datas " + datas.toString());
+        mAdapter = new CourseRatingBarAdapter(getActivity(), datas);
         mListView.setAdapter(mAdapter);
         ((BaseActivity) getActivity()).dialog.dismiss();
         if (totalNum == 0) {
             Snackbar.make(mListView, "本页无数据", Snackbar.LENGTH_SHORT).show();
 
-        }else{
-            Snackbar.make(mListView, "加载完成，共"+totalNum+"条", Snackbar.LENGTH_SHORT).show();
+        } else {
+            Snackbar.make(mListView, "加载完成，共" + totalNum + "条", Snackbar.LENGTH_SHORT).show();
         }
 
     }
