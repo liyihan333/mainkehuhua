@@ -11,6 +11,8 @@
         android:background="?attr/colorPrimary"
         app:isShowTitle="true">
     </com.kwsoft.kehuhua.widget.CommonToolbar>
+
+
     <VideoView
         android:id="@+id/video_view"
         android:layout_width="match_parent"
