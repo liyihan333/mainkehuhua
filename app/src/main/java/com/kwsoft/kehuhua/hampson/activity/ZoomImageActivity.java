@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.backends.pipeline.PipelineDraweeControllerBuilder;
@@ -53,8 +54,6 @@ public class ZoomImageActivity extends BaseActivity {
         mToolbar = (CommonToolbar) findViewById(R.id.common_toolbar);
         mToolbar.setTitle("大图模式");
         mToolbar.setBackgroundColor(getResources().getColor(topBarColor));
-        //左侧返回按钮
-        mToolbar.setRightButtonIcon(getResources().getDrawable(R.mipmap.often_more));
         mToolbar.setLeftButtonOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,21 +63,25 @@ public class ZoomImageActivity extends BaseActivity {
 
         final PhotoDraweeView my_image_view=(PhotoDraweeView)findViewById(R.id.my_image_view);
         Uri uri = Uri.parse(imgPaths);
-        PipelineDraweeControllerBuilder controller = Fresco.newDraweeControllerBuilder();
-        controller.setUri(uri);
-        controller.setOldController(my_image_view.getController());
-        controller.setControllerListener(new BaseControllerListener<ImageInfo>() {
-            @Override
-            public void onFinalImageSet(String id, ImageInfo imageInfo, Animatable animatable) {
-                super.onFinalImageSet(id, imageInfo, animatable);
-                if (imageInfo == null || my_image_view == null) {
-                    return;
+        try {
+            PipelineDraweeControllerBuilder controller = Fresco.newDraweeControllerBuilder();
+            controller.setUri(uri);
+            controller.setOldController(my_image_view.getController());
+            controller.setControllerListener(new BaseControllerListener<ImageInfo>() {
+                @Override
+                public void onFinalImageSet(String id, ImageInfo imageInfo, Animatable animatable) {
+                    super.onFinalImageSet(id, imageInfo, animatable);
+                    if (imageInfo == null) {
+                        return;
+                    }
+                    my_image_view.update(imageInfo.getWidth(), imageInfo.getHeight());
                 }
-                my_image_view.update(imageInfo.getWidth(), imageInfo.getHeight());
-            }
-        });
-        my_image_view.setController(controller.build());
-
+            });
+            my_image_view.setController(controller.build());
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, "文件读取失败", Toast.LENGTH_SHORT).show();
+        }
 
 
 
