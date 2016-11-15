@@ -33,7 +33,9 @@ import com.kwsoft.kehuhua.urlCnn.EdusStringCallback;
 import com.kwsoft.kehuhua.urlCnn.ErrorToast;
 import com.kwsoft.kehuhua.utils.DataProcess;
 import com.kwsoft.kehuhua.zxing.CaptureActivity;
+import com.kwsoft.version.ResetPwdActivity;
 import com.kwsoft.version.StuInfoActivity;
+import com.kwsoft.version.StuLoginActivity;
 import com.kwsoft.version.StuMainActivity;
 import com.kwsoft.version.androidRomType.AndtoidRomUtil;
 import com.kwsoft.version.view.StudyGridView;
@@ -108,6 +110,12 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
         //mRollViewPager.setHintView(new IconHintView(this, R.drawable.point_focus, R.drawable.point_normal));
         mRollViewPager.setHintView(new ColorPointHintView(getActivity(), getResources().getColor(R.color.text6), getResources().getColor(R.color.text5)));
         mRollViewPager.setHintPadding(0, 0, 0, 40);
+        mRollViewPager.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
         homeGridView = (StudyGridView) view.findViewById(R.id.home_grid);
         homeGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -359,9 +367,28 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
 
 
         @Override
-        public View getView(ViewGroup container, int position) {
+        public View getView(ViewGroup container, final int position) {
             ImageView view = new ImageView(container.getContext());
             view.setImageResource(imgs[position]);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (position==0){
+                        Intent intent = new Intent(getActivity(), StuLoginActivity.class);
+                        startActivity(intent);
+                    }else if (position==1){
+                        Intent intent = new Intent(getActivity(), ResetPwdActivity.class);
+                        startActivity(intent);
+                    }else if (position==2){
+                        Intent intent = new Intent(getActivity(), ResetPwdActivity.class);
+                        startActivity(intent);
+                    }else if (position==3){
+                        Intent intent = new Intent(getActivity(), ResetPwdActivity.class);
+                        startActivity(intent);
+                    }
+                }
+            });
+
             view.setScaleType(ImageView.ScaleType.CENTER_CROP);
             view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             return view;
