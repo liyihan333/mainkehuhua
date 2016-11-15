@@ -41,7 +41,7 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
     private String menuDataMap;//看板数据、课程表数据、主菜单数据
     private CommonToolbar mToolbar;
     private String hideMenuList;//获取我的界面中的tableid pageid 个人资料
-    private String homePageList;//首页标题
+    private String homePageList;//今明日课表
     private String feedbackInfoList;//反馈信息
 
     @Override

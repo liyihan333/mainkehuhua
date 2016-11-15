@@ -340,14 +340,7 @@ public class StuLoginActivity extends BaseActivity implements View.OnClickListen
 //            List<Map<String, Object>> menuListMap3 = (List<Map<String, Object>>) menuMap.get("hideMenuList");
             List<Map<String, Object>> menuListMap3 = (List<Map<String, Object>>) menuMap.get("personInfoList");//个人资料
             List<Map<String, Object>> menuListMap5 = (List<Map<String, Object>>) menuMap.get("feedbackInfoList");//反馈信息
-
-
-            List<Map<String, Object>> menuListMap4 =null;
-            if (menuMap.containsKey("homePageList")){
-                menuListMap4 = (List<Map<String, Object>>) menuMap.get("homePageList");
-                Log.e("menuListMap3",JSON.toJSONString(menuListMap4));
-            }
-            Log.e("menuListMap5",JSON.toJSONString(menuListMap5));
+            List<Map<String, Object>> menuListMap6 = (List<Map<String, Object>>) menuMap.get("homePageList");//今日课表、明日课表
 
 
             Intent intent = new Intent();
@@ -355,8 +348,8 @@ public class StuLoginActivity extends BaseActivity implements View.OnClickListen
             intent.putExtra("jsonArray", JSON.toJSONString(menuListMap1));
             intent.putExtra("menuDataMap", JSON.toJSONString(menuListMap2));
             intent.putExtra("hideMenuList", JSON.toJSONString(menuListMap3));
-            intent.putExtra("homePageList",JSON.toJSONString(menuListMap4));
             intent.putExtra("feedbackInfoList",JSON.toJSONString(menuListMap5));
+            intent.putExtra("homePageList",JSON.toJSONString(menuListMap6));//今明日课表
             startActivity(intent);
             finish();
             dialog.dismiss();

@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.hampson.adapter.CourseAdapter;
+import com.kwsoft.kehuhua.urlCnn.EdusStringCallback;
+import com.kwsoft.version.TodayCourseTableActivity;
 import com.kwsoft.version.fragment.StuInfoAdapter;
 
 import java.util.ArrayList;
@@ -24,7 +26,7 @@ public class TodayCourseTabAdapter extends BaseAdapter {
     public List<Map<String, String>> list = new ArrayList<>();
     public Context context;
 
-    public TodayCourseTabAdapter(List<Map<String, String>> list, Context context) {
+    public TodayCourseTabAdapter(List<Map<String, String>> list, TodayCourseTableActivity context) {
         this.list = list;
         this.context = context;
     }
