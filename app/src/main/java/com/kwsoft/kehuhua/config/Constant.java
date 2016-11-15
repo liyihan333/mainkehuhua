@@ -85,6 +85,11 @@ public class Constant {
     public static String teachBackPAGEID = "";
     public static String teachBackTABLEID = "";
 
+    public static String stuPerPAGEID = "";
+    public static String stuPerTABLEID = "";
+    public static String stuBackPAGEID = "";
+    public static String stuBackTABLEID = "";
+
     public static int menuIsAlter = 0;
     public static String menuAlterTime = "";
 

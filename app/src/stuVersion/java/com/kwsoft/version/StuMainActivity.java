@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.kwsoft.kehuhua.adcustom.MessagAlertActivity;
 import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.adcustom.base.BaseActivity;
@@ -47,6 +49,8 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
     SharedPreferences sPreferences;
     private String useridOld;
     AssortFragment menuFragment;
+    private String hideMenuList;//获取我的界面中的tableid pageid 个人资料
+    private String feedbackInfoList;//反馈信息
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,9 +105,11 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
         Intent intent = getIntent();
         arrStr = intent.getStringExtra("jsonArray");
         menuList = intent.getStringExtra("menuList");
-
+        hideMenuList = intent.getStringExtra("hideMenuList");
         menuDataMap = intent.getStringExtra("menuDataMap");
-
+        feedbackInfoList=intent.getStringExtra("feedbackInfoList");
+        Log.e("hidemel", JSON.toJSONString(hideMenuList));
+        Log.e("feedb",JSON.toJSONString(feedbackInfoList));
 
         mToolbar = (CnToolbar) findViewById(R.id.stu_toolbar);
 //        Resources resources = mContext.getResources().getDrawable(R.drawable.nav_news);
@@ -153,6 +159,11 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
         Bundle menuBundle = new Bundle();
         menuBundle.putString("menuDataMap", menuDataMap);
         menuFragment.setArguments(menuBundle);
+
+        Bundle meBundle = new Bundle();
+        meBundle.putString("hideMenuList", hideMenuList);
+        meBundle.putString("feedbackInfoList",feedbackInfoList);
+        meFragment.setArguments(meBundle);
 
         List<Fragment> mFragments = new ArrayList<>();
         mFragments.add(studyFragment);
