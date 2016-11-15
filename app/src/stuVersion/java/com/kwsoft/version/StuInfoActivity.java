@@ -18,6 +18,7 @@ import com.kwsoft.kehuhua.urlCnn.EdusStringCallback;
 import com.kwsoft.kehuhua.urlCnn.ErrorToast;
 import com.kwsoft.kehuhua.utils.Utils;
 import com.kwsoft.kehuhua.widget.CommonToolbar;
+import com.kwsoft.version.fragment.StuInfoAdapter;
 import com.zhy.http.okhttp.OkHttpUtils;
 
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ public class StuInfoActivity extends BaseActivity {
 
     @Bind(R.id.stu_info_lv)
     ListView stuInfoLv;
-    private SimpleAdapter adapter;
+    //private SimpleAdapter adapter;
     private SwipeRefreshLayout swipeRefreshLayout;
     private List<Map<String, String>> stuInfo;
     //下拉刷新handler
@@ -131,8 +132,8 @@ public class StuInfoActivity extends BaseActivity {
             Log.e("TAG", "学员端请求个人信息地址：" + volleyUrl);
             //参数
             Map<String, String> paramsMap = new HashMap<>();
-            paramsMap.put(tableId, StuPra.stuInfoTableId);
-            paramsMap.put(Constant.pageId, StuPra.stuInfoPageId);
+            paramsMap.put(tableId, Constant.stuPerTABLEID);
+            paramsMap.put(Constant.pageId, Constant.stuPerPAGEID);
             //请求
             OkHttpUtils
                     .post()
@@ -164,7 +165,7 @@ public class StuInfoActivity extends BaseActivity {
         }
     }
     List<Map<String, Object>> fieldSet = new ArrayList<>();
-
+    private StuInfoAdapter adapter;
     @SuppressWarnings("unchecked")
     private void setStore(String jsonData) {
         String jsonData1 = jsonData.replaceAll("00:00:00", "");
@@ -184,20 +185,22 @@ public class StuInfoActivity extends BaseActivity {
 //            dataList.remove(dataList.size()-1);
             if (stuInfo == null) {
                 stuInfo = unionAnalysis(dataList);
-                stuInfo.remove(stuInfo.size() - 1);
-
-                stuInfo.remove(stuInfo.size() - 1);
+//                stuInfo.remove(stuInfo.size() - 1);
+//
+//                stuInfo.remove(stuInfo.size() - 1);
                 Log.e("TAG", "=================" + stuInfo.toString());
                 //设置适配器
-                adapter = new SimpleAdapter(StuInfoActivity.this, stuInfo, R.layout.activity_info_item,
-                        new String[]{"fieldCnName", "fieldCnName2"}, new int[]{R.id.tv_name,
-                        R.id.tv_entity_name});
+//                adapter = new SimpleAdapter(StuInfoActivity.this, stuInfo, R.layout.activity_info_item,
+//                        new String[]{"fieldCnName", "fieldCnName2"}, new int[]{R.id.tv_name,
+//                        R.id.tv_entity_name});
+//                stuInfoLv.setAdapter(adapter);
+                adapter = new StuInfoAdapter(stuInfo,StuInfoActivity.this);
                 stuInfoLv.setAdapter(adapter);
             } else {
                 stuInfo.removeAll(stuInfo);
                 stuInfo.addAll(unionAnalysis(dataList));
-                stuInfo.remove(stuInfo.size() - 1);
-                stuInfo.remove(stuInfo.size() - 1);
+//                stuInfo.remove(stuInfo.size() - 1);
+//                stuInfo.remove(stuInfo.size() - 1);
             }
         }
     }

@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.config.Constant;
 import com.kwsoft.kehuhua.urlCnn.EdusStringCallback;
@@ -24,10 +26,10 @@ import com.kwsoft.version.ResetPwdActivity;
 import com.kwsoft.kehuhua.hampson.activity.StarRatingBarActivity;
 import com.kwsoft.version.StuInfoActivity;
 import com.kwsoft.version.StuLoginActivity;
-import com.kwsoft.version.StuPra;
 import com.pgyersdk.update.PgyUpdateManager;
 import com.zhy.http.okhttp.OkHttpUtils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,8 +79,78 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        Bundle meBundle = getArguments();
+        String meStr = meBundle.getString("hideMenuList");//个人资料
+        String feedbackInfoListstr = meBundle.getString("feedbackInfoList");//反馈信息
+
+        List<Map<String, Object>> meListMap = new ArrayList<>();
+        Log.e(TAG, "initData: " + meStr);
+        getMeTableId(meStr, meListMap);
+
+        List<Map<String, Object>> feedbackListMap = new ArrayList<>();
+        Log.e(TAG, "feedbackInfoListstr: " + feedbackInfoListstr);
+        if (feedbackInfoListstr != null) {
+            try {
+                feedbackListMap = JSON.parseObject(feedbackInfoListstr,
+                        new TypeReference<List<Map<String, Object>>>() {
+                        });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            if (feedbackListMap != null && feedbackListMap.size() > 0) {
+                for (int i = 0; i < feedbackListMap.size(); i++) {
+                    Map<String, Object> map = feedbackListMap.get(i);
+                    String menuName = map.get("menuName").toString();
+                    if (menuName.contains("反馈")) {
+                        Constant.stuBackPAGEID = map.get("pageId").toString();
+                        Constant.stuBackTABLEID = map.get("tableId").toString();
+                        Log.e("backtableid", Constant.stuBackPAGEID + "/" + Constant.stuBackTABLEID);
+                        break;
+                    }
+                }
+
+            } else {
+                Toast.makeText(getActivity(), "无菜单数据", Toast.LENGTH_SHORT).show();
+            }
+            Log.e("TAG", "获得学员端菜单数据：" + meStr);
+
+        }
 //获取校区
-        requestSet();
+      //  requestSet();
+    }
+
+    private void getMeTableId(String meStr, List<Map<String, Object>> meListMap) {
+        if (meStr != null) {
+            try {
+                meListMap = JSON.parseObject(meStr,
+                        new TypeReference<List<Map<String, Object>>>() {
+                        });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            if (meListMap != null && meListMap.size() > 0) {
+                for (int i = 0; i < meListMap.size(); i++) {
+                    Map<String, Object> map = meListMap.get(i);
+                    String menuName = map.get("menuName").toString();
+                    if (menuName.contains("个人资料")) {
+                        Constant.stuPerPAGEID = map.get("pageId").toString();
+                        Constant.stuPerTABLEID = map.get("tableId").toString();
+                        Log.e("pagetable", Constant.stuPerPAGEID + "/" + Constant.stuPerTABLEID);
+                        break;
+                    }
+//                    else if (menuName.contains("反馈信息")){
+//                        Constant.stuBackPAGEID = map.get("pageId").toString();
+//                        Constant.stuBackTABLEID = map.get("tableId").toString();
+//                    }
+                }
+                 requestSet();
+            } else {
+                Toast.makeText(getActivity(), "无菜单数据", Toast.LENGTH_SHORT).show();
+            }
+            Log.e("TAG", "获得学员端菜单数据：" + meStr);
+
+        }
     }
 
     public void requestSet() {
@@ -88,8 +160,8 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
         //参数
         Map<String, String> paramsMap = new HashMap<>();
-        paramsMap.put(tableId, StuPra.stuInfoTableId);
-        paramsMap.put(Constant.pageId, StuPra.stuInfoPageId);
+        paramsMap.put(tableId, Constant.stuPerTABLEID);
+        paramsMap.put(Constant.pageId, Constant.stuPerPAGEID);
         //请求
         OkHttpUtils
                 .post()
@@ -131,7 +203,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
             for (int i = 0; i < pageSet.size(); i++) {
                 Map<String, Object> map = pageSet.get(i);
                 fieldCnName = map.get("fieldCnName") + "";
-                if (fieldCnName.equals("校区")) {
+                if (fieldCnName.contains("校区")) {
                     fieldAliasName = map.get("fieldAliasName") + "";
                     break;
                 }

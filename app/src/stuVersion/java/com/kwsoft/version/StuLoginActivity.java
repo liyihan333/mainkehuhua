@@ -332,11 +332,18 @@ public class StuLoginActivity extends BaseActivity implements View.OnClickListen
             sPreferences.edit().putString("userid", userid).apply();
             List<Map<String, Object>> menuListMap1 = (List<Map<String, Object>>) menuMap.get("roleFollowList");
             List<Map<String, Object>> menuListMap2 = (List<Map<String, Object>>) menuMap.get("menuList");
+            List<Map<String, Object>> menuListMap3 = (List<Map<String, Object>>) menuMap.get("personInfoList");//个人资料
+            List<Map<String, Object>> menuListMap5 = (List<Map<String, Object>>) menuMap.get("feedbackInfoList");//反馈信息
+
 
             Intent intent = new Intent();
             intent.setClass(StuLoginActivity.this, StuMainActivity.class);
             intent.putExtra("jsonArray", JSON.toJSONString(menuListMap1));
             intent.putExtra("menuDataMap", JSON.toJSONString(menuListMap2));
+            intent.putExtra("hideMenuList", JSON.toJSONString(menuListMap3));
+            intent.putExtra("feedbackInfoList",JSON.toJSONString(menuListMap5));
+            Log.e("hidemel", JSON.toJSONString(menuListMap3));
+            Log.e("feedb",JSON.toJSONString(menuListMap5));
             startActivity(intent);
             finish();
             dialog.dismiss();

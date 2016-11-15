@@ -145,7 +145,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 //                        Constant.teachBackTABLEID = map.get("tableId").toString();
 //                    }
                 }
-               // requestSet();
+                // requestSet();
             } else {
                 Toast.makeText(getActivity(), "无菜单数据", Toast.LENGTH_SHORT).show();
             }
@@ -237,7 +237,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         ButterKnife.unbind(this);
     }
 
-    @OnClick({R.id.stu_head_image, R.id.stu_log_out, R.id.stu_resetPwd, R.id.stu_info_data, R.id.ll_stu_clear_cache, R.id.ll_stu_feedback,R.id.ll_stu_version_check})
+    @OnClick({R.id.stu_head_image, R.id.stu_log_out, R.id.stu_resetPwd, R.id.stu_info_data, R.id.ll_stu_clear_cache, R.id.ll_stu_feedback, R.id.ll_stu_version_check})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.stu_head_image:
