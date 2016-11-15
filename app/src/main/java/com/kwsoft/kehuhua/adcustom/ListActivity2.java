@@ -447,7 +447,7 @@ public class ListActivity2 extends BaseActivity {
                 if (mAdapter != null) {
 
                     mAdapter.clearData();
-                    mAdapter.addData(datas);
+                    mAdapter.addData(datas,childTab);
                     mRecyclerView.scrollToPosition(0);
                     mRefreshLayout.finishRefresh();
                     if (datas.size() == 0) {
@@ -461,7 +461,7 @@ public class ListActivity2 extends BaseActivity {
                 break;
             case STATE_MORE:
                 if (mAdapter != null) {
-                    mAdapter.addData(mAdapter.getDatas().size(), datas);
+                    mAdapter.addData(mAdapter.getDatas().size(), datas,childTab);
                     mRecyclerView.scrollToPosition(mAdapter.getDatas().size());
                     mRefreshLayout.finishRefreshLoadMore();
                     Snackbar.make(mRecyclerView, "更新了" + datas.size() + "条数据", Snackbar.LENGTH_SHORT).show();

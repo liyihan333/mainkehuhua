@@ -17,8 +17,8 @@ import com.kwsoft.kehuhua.adcustom.R;
 public class ListViewHolder extends RecyclerView.ViewHolder {
     final View mView;
     final TextView studentName,
-            left1, left2, left3, left4, left5, left6,
-            right1, right2, right3, right4, right5, right6,
+            left1, left2, left3, left4, //left5, left6,
+            right1, right2, right3, right4, //right5, right6,
             click_open_btn;
     RelativeLayout click_open;
     LinearLayout dash_ll;
@@ -35,15 +35,15 @@ public class ListViewHolder extends RecyclerView.ViewHolder {
         left2 = (TextView) view.findViewById(R.id.left2);
         left3 = (TextView) view.findViewById(R.id.left3);
         left4 = (TextView) view.findViewById(R.id.left4);
-        left5 = (TextView) view.findViewById(R.id.left5);
-        left6 = (TextView) view.findViewById(R.id.left6);
+//        left5 = (TextView) view.findViewById(left5);
+//        left6 = (TextView) view.findViewById(left6);
 
         right1 = (TextView) view.findViewById(R.id.right1);
         right2 = (TextView) view.findViewById(R.id.right2);
         right3 = (TextView) view.findViewById(R.id.right3);
         right4 = (TextView) view.findViewById(R.id.right4);
-        right5 = (TextView) view.findViewById(R.id.right5);
-        right6 = (TextView) view.findViewById(R.id.right6);
+//        right5 = (TextView) view.findViewById(right5);
+//        right6 = (TextView) view.findViewById(right6);
 
         click_open = (RelativeLayout) view.findViewById(R.id.click_open);
         click_open_btn = (TextView) view.findViewById(R.id.click_open_btn);

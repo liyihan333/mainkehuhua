@@ -81,6 +81,7 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         return new ListViewHolder(view);
     }
 
+    private static final String TAG = "ListAdapter2";
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder thisHolder, int position) {
         if (thisHolder instanceof ListViewHolder) {
@@ -122,46 +123,51 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 String right4Title = item.get(4).get("fieldCnName2");
                 holder.right4.setText(!right4Title.equals("null") ? right4Title : "");
                 holder.right4.setVisibility(View.VISIBLE);
-//左5
-                String left5Title = item.get(5).get("fieldCnName");
-                holder.left5.setText(!left5Title.equals("null") ? left5Title : "");
-                holder.left5.setVisibility(View.VISIBLE);
-
-                String right5Title = item.get(5).get("fieldCnName2");
-                holder.right5.setText(!right5Title.equals("null") ? right5Title : "");
-                holder.right5.setVisibility(View.VISIBLE);
-//左6
-                String left6Title = item.get(6).get("fieldCnName");
-                holder.left6.setText(!left6Title.equals("null") ? left6Title : "");
-                holder.left6.setVisibility(View.VISIBLE);
-
-                String right6Title = item.get(6).get("fieldCnName2");
-                holder.right6.setText(!right6Title.equals("null") ? right6Title : "");
-                holder.right6.setVisibility(View.VISIBLE);
+////左5
+//                String left5Title = item.get(5).get("fieldCnName");
+//                holder.left5.setText(!left5Title.equals("null") ? left5Title : "");
+//                holder.left5.setVisibility(View.VISIBLE);
+//
+//                String right5Title = item.get(5).get("fieldCnName2");
+//                holder.right5.setText(!right5Title.equals("null") ? right5Title : "");
+//                holder.right5.setVisibility(View.VISIBLE);
+////左6
+//                String left6Title = item.get(6).get("fieldCnName");
+//                holder.left6.setText(!left6Title.equals("null") ? left6Title : "");
+//                holder.left6.setVisibility(View.VISIBLE);
+//
+//                String right6Title = item.get(6).get("fieldCnName2");
+//                holder.right6.setText(!right6Title.equals("null") ? right6Title : "");
+//                holder.right6.setVisibility(View.VISIBLE);
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
 
 //判断跳转子表格
-            final String titleName = item.get(0).get("fieldCnName2");
-            final String mainId = item.get(0).get("mainId");
-            if (childTab.size() > 0) {
-                holder.dash_ll.setVisibility(View.VISIBLE);
-                holder.click_open.setVisibility(View.VISIBLE);
-                holder.click_open_btn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent();
-                        intent.setClass(mContext, TabActivity.class);
-                        intent.putExtra("mainId", mainId);
-                        intent.putExtra("childTab", JSON.toJSONString(childTab));
-                        intent.putExtra("titleName", titleName);
-                        mContext.startActivity(intent);
-//                        holder.click_open_btn.setAlpha(new Float(0.75));
+            try {
+                            final String titleName = item.get(0).get("fieldCnName2");
+                            final String mainId = item.get(0).get("mainId");
+                            Log.e(TAG, "onBindViewHolder: childTab "+childTab.toString());
+                            if (childTab.size() > 0) {
+                                holder.dash_ll.setVisibility(View.VISIBLE);
+                                holder.click_open.setVisibility(View.VISIBLE);
+                                holder.click_open_btn.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent intent = new Intent();
+                                        intent.setClass(mContext, TabActivity.class);
+                                        intent.putExtra("mainId", mainId);
+                                        intent.putExtra("childTab", JSON.toJSONString(childTab));
+                                        intent.putExtra("titleName", titleName);
+                                        mContext.startActivity(intent);
+                                        //                        holder.click_open_btn.setAlpha(new Float(0.75));
 
-                    }
-                });
+                                    }
+                    });
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
 //判断显示按钮
@@ -262,16 +268,16 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     /**
      * 下拉刷新更新数据
      */
-    public void addData(List<List<Map<String, String>>> datas) {
+    public void addData(List<List<Map<String, String>>> datas,List<Map<String, Object>> childTab) {
 
-        addData(0, datas);
+        addData(0, datas,childTab);
     }
 
     /**
      * 上拉加载添加数据的方法
      */
-    public void addData(int position, List<List<Map<String, String>>> datas) {
-
+    public void addData(int position, List<List<Map<String, String>>> datas, List<Map<String, Object>> childTab) {
+this.childTab=childTab;
         if (datas != null && datas.size() > 0) {
 
             mDatas.addAll(datas);
