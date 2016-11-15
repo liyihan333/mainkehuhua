@@ -395,7 +395,7 @@ public class CourseFragment extends Fragment implements OnDataListener, WeekDate
             setCourseDataInTable();
         } else {
             // stopAnim();
-            Toast.makeText(getActivity(), "无课表数据", Toast.LENGTH_SHORT).show();
+          //  Toast.makeText(getActivity(), "无课表数据", Toast.LENGTH_SHORT).show();
         }
     }
 
