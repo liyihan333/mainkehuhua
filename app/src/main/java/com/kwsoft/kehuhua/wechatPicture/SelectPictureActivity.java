@@ -444,13 +444,7 @@ int num=0;
 
                         @Override
                         public void inProgress(float progress, long total, int id) {
-//                            if ((int) (100 * progress) == 100) {
-//                                waveProgress.setVisibility(View.GONE);
-//                                Log.e("total", total + "");
-//                            } else {
-//                                waveProgress.setProgress((int) (100 * progress));
-//                                Log.e("progress", progress + "");
-//                            }
+
                         }
                     });
 //        }else {
@@ -462,6 +456,14 @@ int num=0;
 List<String> codeList=new ArrayList<>();
     //解析文件上传成功的code值
     private void getFileCode(String response) {
+
+                                    if (num+1 == myFile.size()) {
+                                waveProgress.setVisibility(View.GONE);
+                                Log.e("total", myFile.size() + "");
+                            } else {
+                                waveProgress.setProgress((int) (100 * (num)/myFile.size()));
+                                Log.e("progress", (100 * (num)/myFile.size()) + "");
+                            }
         Log.e("TAG", "uploadMethod2:" + response);
         Toast.makeText(SelectPictureActivity.this, "上传成功", Toast.LENGTH_SHORT).show();
 
