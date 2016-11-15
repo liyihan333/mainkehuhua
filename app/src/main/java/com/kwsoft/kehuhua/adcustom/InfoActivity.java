@@ -234,14 +234,16 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
                                         case 12://修改页面
                                         case 18://关联添加页面
 //mainPageId=2293, mainTableId=126, mainId=242, pageId=3020, tableId=262
-                                          String nextPageId=String.valueOf(operaButtonSetMap.get("startTurnPage"));
-                                            String nextTable=String.valueOf(operaButtonSetMap.get("tableId"));
-                                            boolean  isPingJia=tableId.equals("126")&&pageId.equals("2293")
-                                                    &&mainId.equals("242")&&nextPageId.equals("3020")&&nextTable.equals("262");
+//                                          String nextPageId=String.valueOf(operaButtonSetMap.get("startTurnPage"));
+//                                            String nextTable=String.valueOf(operaButtonSetMap.get("tableId"));
+//                                            boolean  isPingJia=tableId.equals("126")&&pageId.equals("2293")
+//                                                    &&mainId.equals("242")&&nextPageId.equals("3020")&&nextTable.equals("262");
+//
+//                                            Log.e(TAG, "onItemClick: operaButtonSetMapStr "+operaButtonSetMapStr);
+//                                            Log.e(TAG, "onItemClick: isPingJia "+isPingJia+"/"+buttonType);
+                                            String buttonName=String.valueOf(operaButtonSetMap.get("startTurnPage"));
 
-                                            Log.e(TAG, "onItemClick: operaButtonSetMapStr "+operaButtonSetMapStr);
-                                            Log.e(TAG, "onItemClick: isPingJia "+isPingJia+"/"+buttonType);
-                                            if (buttonType==18&&isPingJia) {
+                                            if (buttonName.contains("确认下课")) {
                                                 Intent mIntentEdit = new Intent(mContext, StarRatingBarActivity.class);
                                                 mIntentEdit.putExtra("itemSet", operaButtonSetMapStr);
                                                 startActivity(mIntentEdit);
