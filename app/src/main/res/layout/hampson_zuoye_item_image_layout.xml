@@ -15,6 +15,6 @@
         android:id="@+id/voice_file"
         android:layout_width="65dp"
         android:layout_height="65dp"
-        android:background="@mipmap/voice_icon"
+        android:background="@drawable/ic_launcher"
         android:visibility="gone"/>
 </LinearLayout>

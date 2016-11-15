@@ -9,15 +9,16 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.kwsoft.kehuhua.adcustom.R;
-import com.kwsoft.kehuhua.hampson.view.AutoNextLineLinearlayout;
 import com.kwsoft.kehuhua.hampson.view.FlexBoxLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+
 /**
  * Created by Administrator on 2016/11/8 0008.
+ *
  */
 
 public class CourseRatingBarAdapter extends BaseAdapter {
@@ -85,7 +86,8 @@ public class CourseRatingBarAdapter extends BaseAdapter {
             holder.star3 = view.findViewById(R.id.star3);
             holder.star4 = view.findViewById(R.id.star4);
             //满意度，字段选择
-            // holder.ll_cb_layout = (AutoNextLineLinearlayout) view.findViewById(R.id.autolayout);
+            holder.ll_cb_layout = (FlexBoxLayout) view.findViewById(R.id.autolayout);
+           // holder.ll_cb_layout = (AutoNextLineLinearlayout) view.findViewById(R.id.autolayout);
 
             //将每个convertView对象中设置这个持有类对象
             view.setTag(holder);
@@ -95,9 +97,9 @@ public class CourseRatingBarAdapter extends BaseAdapter {
 
         }
         //满意度，字段选择
-        FlexBoxLayout ll_cb_layout = (FlexBoxLayout) view.findViewById(R.id.autolayout);
-        ll_cb_layout.setHorizontalSpace(17);
-        ll_cb_layout.setVerticalSpace(10);
+//        FlexBoxLayout ll_cb_layout = (FlexBoxLayout) view.findViewById(R.id.autolayout);
+        holder.ll_cb_layout.setHorizontalSpace(17);
+        holder.ll_cb_layout.setVerticalSpace(10);
         //然后可以直接使用这个类中的控件，对控件进行操作，而不用重复去findViewById了
         //课程名称
         holder.tv_title.setText(map.get(1).get("fieldCnName2"));
@@ -105,15 +107,16 @@ public class CourseRatingBarAdapter extends BaseAdapter {
         holder.my_ping_jia.setText(map.get(2).get("fieldCnName"));
 
         String pingJiaMiaoShu = map.get(5).get("fieldCnName2");
-        ll_cb_layout.removeAllViews();
+//
         if (pingJiaMiaoShu != null && pingJiaMiaoShu.length() > 0) {
             String[] tags = pingJiaMiaoShu.split(",");//注意，这里的逗号为中文的
             Log.e(TAG, "getView: pingJiaMiaoShu " + pingJiaMiaoShu);
+            holder.ll_cb_layout.removeAllViews();
             for (String tag : tags) {
                 TextView textview = (TextView) LayoutInflater.from(mContext).inflate(R.layout.assess_list_cb_item, null);
                 Log.e("tag", tag + "?" + tags.length);
                 textview.setText(tag);
-                ll_cb_layout.addView(textview);
+                holder.ll_cb_layout.addView(textview);
             }
         }
 
@@ -192,6 +195,7 @@ public class CourseRatingBarAdapter extends BaseAdapter {
     class ViewHolder {
         TextView tv_title, tv_teach_name, tv_teach_content, teach_name_title, my_ping_jia;
         View star0, star1, star2, star3, star4;
+        FlexBoxLayout ll_cb_layout;
         //RatingBar ratingbar;
         //AutoNextLineLinearlayout ll_cb_layout;
     }

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
@@ -59,7 +60,7 @@ public class CourseHpsFragment extends Fragment {
     private static final int STATE_MORE = 2;
     private int state = STATE_NORMAL;
 
-
+    private TextView empty_text;
     private String operaButtonSet;
     private List<List<Map<String, String>>> datas;
     private CourseAdapter mAdapter;
@@ -70,7 +71,9 @@ public class CourseHpsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_course_list, container, false);
         ButterKnife.bind(this, view);
+
         ((BaseActivity) getActivity()).dialog.show();
+       empty_text= (TextView) view.findViewById(R.id.empty_text);
         getDataIntent();//获取初始化数据
         initRefreshLayout();
         getData();
@@ -79,6 +82,7 @@ public class CourseHpsFragment extends Fragment {
     }
     //初始化SwipeRefreshLayout
     private void initRefreshLayout() {
+
         mRefreshLayout.setLoadMore(true);
         mRefreshLayout.setMaterialRefreshListener(new MaterialRefreshListener() {
             @Override
@@ -309,8 +313,10 @@ public class CourseHpsFragment extends Fragment {
         ((BaseActivity) getActivity()).dialog.dismiss();
         if (totalNum == 0) {
             Snackbar.make(mListView, "本页无数据", Snackbar.LENGTH_SHORT).show();
+            empty_text.setVisibility(View.VISIBLE);
 
         }else{
+            empty_text.setVisibility(View.GONE);
             Snackbar.make(mListView, "加载完成，共"+totalNum+"条", Snackbar.LENGTH_SHORT).show();
         }
 

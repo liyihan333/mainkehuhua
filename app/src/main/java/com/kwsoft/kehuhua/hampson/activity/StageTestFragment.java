@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
@@ -61,7 +62,7 @@ public class StageTestFragment extends Fragment {
     private static final int STATE_MORE = 2;
     private int state = STATE_NORMAL;
 
-
+    private TextView empty_text;
     private String operaButtonSet;
     private List<List<Map<String, String>>> datas;
     private StageTestAdapter mAdapter;
@@ -73,6 +74,7 @@ public class StageTestFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         ((BaseActivity) getActivity()).dialog.show();
+        empty_text= (TextView) view.findViewById(R.id.empty_text);
         getDataIntent();//获取初始化数据
         initRefreshLayout();
         getData();
@@ -310,8 +312,10 @@ public class StageTestFragment extends Fragment {
         ((BaseActivity) getActivity()).dialog.dismiss();
         if (totalNum == 0) {
             Snackbar.make(mListView, "本页无数据", Snackbar.LENGTH_SHORT).show();
+            empty_text.setVisibility(View.VISIBLE);
 
         }else{
+            empty_text.setVisibility(View.GONE);
             Snackbar.make(mListView, "加载完成，共"+totalNum+"条", Snackbar.LENGTH_SHORT).show();
         }
 

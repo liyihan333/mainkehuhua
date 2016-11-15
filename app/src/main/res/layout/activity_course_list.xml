@@ -28,13 +28,14 @@
 
 
         <TextView
-            android:id="@android:id/empty"
+            android:id="@+id/empty_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="无相关数据"
+            android:text="没有相关数据"
             android:textColor="@color/gray"
             android:textSize="22sp"
             android:gravity="center"
+            android:visibility="gone"
             android:textAppearance="?android:attr/textAppearanceMedium" />
     </com.cjj.MaterialRefreshLayout>
 </RelativeLayout>
