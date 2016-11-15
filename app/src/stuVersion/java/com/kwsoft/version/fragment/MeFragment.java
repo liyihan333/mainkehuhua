@@ -22,6 +22,7 @@ import com.kwsoft.kehuhua.urlCnn.EdusStringCallback;
 import com.kwsoft.kehuhua.urlCnn.ErrorToast;
 import com.kwsoft.kehuhua.utils.Utils;
 import com.kwsoft.version.Common.DataCleanManager;
+import com.kwsoft.version.FeedbackActivity;
 import com.kwsoft.version.ResetPwdActivity;
 import com.kwsoft.kehuhua.hampson.activity.StarRatingBarActivity;
 import com.kwsoft.version.StuInfoActivity;
@@ -243,17 +244,22 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.stu_info_data:
-                Intent intentStuInfo = new Intent(getActivity(), StuInfoActivity.class);
-                startActivity(intentStuInfo);
+                if (!Constant.stuPerTABLEID.equals("") && !Constant.stuPerPAGEID.equals("")) {
+                    Intent intentStuInfo = new Intent(getActivity(), StuInfoActivity.class);
+                    startActivity(intentStuInfo);
+                } else {
+                    Toast.makeText(getActivity().getApplicationContext(), "无个人资料信息", Toast.LENGTH_SHORT).show();
+                }
+//                Intent intentStuInfo = new Intent(getActivity(), StuInfoActivity.class);
+//                startActivity(intentStuInfo);
                 break;
             case R.id.ll_stu_clear_cache:
                 dialog1();
                 break;
             case R.id.ll_stu_feedback:
-//                Intent intent1 = new Intent(getActivity(), FeedbackActivity.class);
-//                startActivity(intent1);
-                Intent intent1 = new Intent(getActivity(), StarRatingBarActivity.class);
+                Intent intent1 = new Intent(getActivity(), FeedbackActivity.class);
                 startActivity(intent1);
+
                 break;
             case R.id.stu_version_layout:
                 //检测更新
