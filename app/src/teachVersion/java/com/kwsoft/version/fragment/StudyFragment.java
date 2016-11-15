@@ -78,6 +78,7 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
     public String arrStr;
     public Bundle arrBundle;
     public String teachUrl, homePageListstr;
+    private String todayPageId, tomorrowPageId, todayTableid, tomorrowTableId;//金明日课表page/table
 
     @Nullable
     @Override
@@ -187,30 +188,33 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
         setKanbanAdapter(parentList);
     }
 
-    private void setMenuModel() {
+    private void getTodyTomorTP() {
         //菜单列表中的gridview数据
         if ((homePageListstr != null) && (homePageListstr.length() > 0)) {
             List<Map<String, Object>> listMap = JSON.parseObject(homePageListstr,
                     new TypeReference<List<Map<String, Object>>>() {
                     });
             if ((listMap != null) && (listMap.size() > 0)) {
-                int leg;
-                menuListAll.clear();
+                String menuName;
                 for (int i = 0; i < listMap.size(); i++) {
                     Map<String, Object> map = listMap.get(i);
-                    leg = (map.get("menuName").toString()).length();
-                    map.put("menuName", map.get("menuName").toString().substring(0, leg - 5));
-                    map.put("image", image[i]);
-                    menuListAll.add(map);
+                    menuName = map.get("menuName").toString();
+                    if (menuName.contains("今日课表")) {
+                        todayPageId = map.get("pageId").toString();
+                        todayTableid = map.get("tableId").toString();
+                        continue;
+                    } else if (menuName.contains("明日课表")) {
+                        tomorrowPageId = map.get("pageId").toString();
+                        tomorrowTableId = map.get("tableId").toString();
+                        continue;
+                    }
                 }
-            } else {
-                initModel();
+                Log.e("tda",todayPageId+"/"+todayTableid+"/"+tomorrowPageId+"/"+tomorrowTableId);
             }
         } else {
-            initModel();
+            Toast.makeText(getActivity(), "无今明日课表", Toast.LENGTH_SHORT).show();
 
         }
-        setMenuAdapter(menuListAll);
     }
 
     private void initModel() {
@@ -238,6 +242,7 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
         arrStr = arrBundle.getString("arrStr");
         homePageListstr = arrBundle.getString("homePageList");
         Log.e("homePageListstr", homePageListstr);
+        getTodyTomorTP();
     }
 
     public void setMenuAdapter(final List<Map<String, Object>> menuListMaps) {
@@ -251,11 +256,17 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
                 if (i == 0) {
                     //今日课表
                     Intent intent = new Intent(getActivity(), TodayCourseTableActivity.class);
+                    intent.putExtra("todayPageId", todayPageId);
+                    intent.putExtra("todayTableid", todayTableid);
+                    intent.putExtra("isToday", "1");
                     intent.putExtra("titleName", String.valueOf(menuListMaps.get(i).get("menuName")));
                     startActivity(intent);
                 } else if (i == 1) {
                     //明日课表
                     Intent intent = new Intent(getActivity(), TodayCourseTableActivity.class);
+                    intent.putExtra("tomorrowPageId", tomorrowPageId);
+                    intent.putExtra("tomorrowTableId", tomorrowTableId);
+                    intent.putExtra("isToday", "2");
                     intent.putExtra("titleName", String.valueOf(menuListMaps.get(i).get("menuName")));
                     startActivity(intent);
                 } else if (i == 2) {
