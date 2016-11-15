@@ -434,7 +434,7 @@ holder.addGeneral.setOnClickListener(new View.OnClickListener() {
     }
 });
 
-                } else if (fieldRole == 19) {
+                } else if (fieldRole == 19||fieldRole == 18) {
 /**
  *
  * 添加作业附件
@@ -448,6 +448,7 @@ holder.addGeneral.setOnClickListener(new View.OnClickListener() {
                             public void onClick(View view) {
                                 Intent intent = new Intent(mActivity, SelectPictureActivity.class);
                                 intent.putExtra("position", position + "");
+                                intent.putExtra("fieldRole", fieldRole + "");
                                 mActivity.startActivityForResult(intent, 2);
                             }
                         });
@@ -460,7 +461,7 @@ holder.addGeneral.setOnClickListener(new View.OnClickListener() {
 
                             String[] numPicArray = numPic.split(",");
                             int picLength = numPicArray.length;
-                            String picContent = "已选" + picLength + "张图片";
+                            String picContent = "已选" + picLength + "个文件";
                             holder.picNumber.setText(picContent);
                         } else {
                             holder.picNumber.setText("尚无附件");

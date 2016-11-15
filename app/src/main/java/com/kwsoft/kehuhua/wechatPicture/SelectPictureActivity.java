@@ -55,7 +55,7 @@ import static com.kwsoft.kehuhua.config.Constant.topBarColor;
 
 public class SelectPictureActivity extends BaseActivity implements View.OnClickListener {
     private CommonToolbar mToolbar;
-    String position;
+    String position,fieldRole;
     @Bind(R.id.gridView)
     GridView gridView;
     private ArrayList<String> imgPaths = new ArrayList<>();
@@ -79,18 +79,34 @@ public class SelectPictureActivity extends BaseActivity implements View.OnClickL
         setContentView(R.layout.activity_select_picture_layout);
         ButterKnife.bind(this);
         initView();
+        getIntentData();
 //        initData();
 //        setListener();
         //展示音频
         initAudioView();
     }
 
+    private void getIntentData() {
+
+
+    }
+
     public void initView() {
         Intent intent = getIntent();
         position = intent.getStringExtra("position");
+        fieldRole=intent.getStringExtra("fieldRole");
+
+
+
 
         mToolbar = (CommonToolbar) findViewById(R.id.common_toolbar);
-        mToolbar.setTitle("作业");
+        if (fieldRole.equals("18")) {
+            mToolbar.setTitle("单文件选择");
+        }else if(fieldRole.equals("19")){
+            mToolbar.setTitle("多文件选择");
+        }
+
+
         mToolbar.setBackgroundColor(getResources().getColor(topBarColor));
         //左侧返回按钮
         mToolbar.setRightButtonIcon(getResources().getDrawable(R.mipmap.nav_scan_file));
@@ -106,9 +122,24 @@ public class SelectPictureActivity extends BaseActivity implements View.OnClickL
         mToolbar.setRightButtonOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                waveProgress.setVisibility(View.VISIBLE);
-                waveProgress.setProgress(0);
-                upload();
+                getFile();//收集文件
+                if (fieldRole.equals("18")) {
+                    if (myFile.size()==1) {
+                        uploadMethod(myFile);
+                    }else if(myFile.size()==0){
+                        Toast.makeText(SelectPictureActivity.this, "请选择一个文件", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(SelectPictureActivity.this, "最多只允许上传一个文件", Toast.LENGTH_SHORT).show();
+                    }
+                }else if(fieldRole.equals("19")){
+                    if (myFile.size()>0) {
+                        uploadMethod(myFile);
+                    }else{
+                        Toast.makeText(SelectPictureActivity.this, "请至少选择一个文件", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+
             }
         });
 
@@ -330,10 +361,14 @@ public class SelectPictureActivity extends BaseActivity implements View.OnClickL
 
     Map<String, File> myFile = new HashMap<>();
 
-    //上传文件
-    public void upload() {
 
-        String url = sysUrl + pictureUrl;
+
+
+    //上传文件
+    public void getFile() {
+        waveProgress.setVisibility(View.VISIBLE);
+        waveProgress.setProgress(0);
+
         //待上传的两个文件
 
 
@@ -357,7 +392,8 @@ public class SelectPictureActivity extends BaseActivity implements View.OnClickL
         }
         Log.e(TAG, "uploadMethod: 开始上传文件 " + myFile.toString());
         //上传文件
-        uploadMethod(url, myFile);
+
+
 
 //        else {
 //            Toast.makeText(SelectPictureActivity.this, "您尚未选择图片", Toast.LENGTH_SHORT).show();
@@ -368,7 +404,8 @@ public class SelectPictureActivity extends BaseActivity implements View.OnClickL
 
     }
 
-    public void uploadMethod(String url, Map<String, File> files) {
+    public void uploadMethod(Map<String, File> files) {
+        String url = sysUrl + pictureUrl;
         Log.e(TAG, "uploadMethod: 开始上传文件" + files.toString());
         if (files.size() > 0) {
             OkHttpUtils.post()//
@@ -396,18 +433,15 @@ public class SelectPictureActivity extends BaseActivity implements View.OnClickL
                                 waveProgress.setVisibility(View.GONE);
                                 Log.e("total", total + "");
                             } else {
-
                                 waveProgress.setProgress((int) (100 * progress));
                                 Log.e("progress", progress + "");
                             }
                         }
-
                     });
         }else {
             Toast.makeText(SelectPictureActivity.this, "您尚未选择图片。音频", Toast.LENGTH_SHORT).show();
 //          //  parseAudo();
             waveProgress.setVisibility(View.GONE);
-
         }
     }
 
