@@ -9,7 +9,7 @@ android {
         minSdkVersion 17
         targetSdkVersion 25
         versionCode 1
-        versionName "1.2.9"
+        versionName "1.0.0"
     }
     buildTypes {
         release {
@@ -39,14 +39,14 @@ android {
 
         teachVersion {
             applicationId "com.kwsoft.version.teachVersion"
-            resValue "string", "app_name", "教师端"
-            versionName "1.2.2"
+            resValue "string", "app_name", "汉普森教师端"
+            versionName "1.0.0"
         }
 
         stuVersion {
             applicationId "com.kwsoft.version.stuVersion"
-            resValue "string", "app_name", "学员端"
-            versionName "1.0.2"
+            resValue "string", "app_name", "汉普森学员端"
+            versionName "1.0.0"
         }
     }
 //    lintOptions {
