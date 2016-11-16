@@ -54,13 +54,13 @@ import static com.kwsoft.kehuhua.config.Constant.topBarColor;
 
 public class SelectPictureActivity extends BaseActivity implements View.OnClickListener {
     private CommonToolbar mToolbar;
-    String position,fieldRole;
+    String position, fieldRole;
     @Bind(R.id.gridView)
     GridView gridView;
     private ArrayList<String> imgPaths = new ArrayList<>();
     private PhotoPickerAdapter adapter;
 
-    String codeListStr="";
+    String codeListStr = "";
     private static final String TAG = "SelectPictureActivity";
     private WaterWaveProgress waveProgress;
 
@@ -93,15 +93,13 @@ public class SelectPictureActivity extends BaseActivity implements View.OnClickL
     public void initView() {
         Intent intent = getIntent();
         position = intent.getStringExtra("position");
-        fieldRole=intent.getStringExtra("fieldRole");
-
-
+        fieldRole = intent.getStringExtra("fieldRole");
 
 
         mToolbar = (CommonToolbar) findViewById(R.id.common_toolbar);
         if (fieldRole.equals("18")) {
             mToolbar.setTitle("单文件选择");
-        }else if(fieldRole.equals("19")){
+        } else if (fieldRole.equals("19")) {
             mToolbar.setTitle("多文件选择");
         }
 
@@ -122,21 +120,22 @@ public class SelectPictureActivity extends BaseActivity implements View.OnClickL
             @Override
             public void onClick(View view) {
                 getFile();//收集文件
+                Log.e("fieldRoale", fieldRole);
                 if (fieldRole.equals("18")) {
-                    if (myFile.size()==1) {
+                    if (myFile.size() == 1) {
                         uploadMethod();
-                    }else if(myFile.size()==0){
+                    } else if (myFile.size() == 0) {
                         Toast.makeText(SelectPictureActivity.this, "请选择一个文件", Toast.LENGTH_SHORT).show();
-                    }else{
+                    } else {
                         Toast.makeText(SelectPictureActivity.this, "最多只允许上传一个文件", Toast.LENGTH_SHORT).show();
                     }
-                }else if(fieldRole.equals("19")){
-                    if (myFile.size()>0) {
+                } else if (fieldRole.equals("19")) {
+                    if (myFile.size() > 0) {
 //                        uploadMethod(myFile);
 
-                            uploadMethod();
+                        uploadMethod();
 
-                    }else{
+                    } else {
                         Toast.makeText(SelectPictureActivity.this, "请至少选择一个文件", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -267,6 +266,7 @@ public class SelectPictureActivity extends BaseActivity implements View.OnClickL
      * 上传音频一
      */
     private void uploadAudioFirst() {
+
         Recorder recorder = mDatas.get(0);
         String path = recorder.getFilePathString();
         uploadAudio(path);
@@ -364,8 +364,6 @@ public class SelectPictureActivity extends BaseActivity implements View.OnClickL
     List<File> myFile = new ArrayList<>();
 
 
-
-
     //上传文件
     public void getFile() {
         waveProgress.setVisibility(View.VISIBLE);
@@ -373,25 +371,26 @@ public class SelectPictureActivity extends BaseActivity implements View.OnClickL
 
         //待上传的两个文件
 
-
+        //图片
         if (img_Paths.size() >= 0) {
             for (int i = 0; i < img_Paths.size(); i++) {
                 File file = new File(img_Paths.get(i));
 
-                    myFile.add(file);
+                myFile.add(file);
 
             }
         }
-
+        //音频
         if (mDatas != null && mDatas.size() > 0) {
             Recorder recorder = mDatas.get(0);
             String path = recorder.getFilePathString();
             File audioFile = new File(path);
             myFile.add(audioFile);
         }
-        Log.e(TAG, "uploadMethod: 开始上传文件 " + myFile.toString());
-        //上传文件
 
+
+        Log.e(TAG, "uploadMethod: 开始上传文件 " + mDatas.size() + "/" + myFile.toString());
+        //上传文件
 
 
 //        else {
@@ -402,75 +401,81 @@ public class SelectPictureActivity extends BaseActivity implements View.OnClickL
 //        }
 
     }
-int num=0;
+
+    int num = 0;
+
     public void uploadMethod() {
 
         String url = sysUrl + pictureUrl;
         Log.e(TAG, "uploadMethod: 开始上传文件" + myFile.get(num).toString());
 //        if (files.size() > 0) {
-            OkHttpUtils.post()//
-                    .addFile("myFile",myFile.get(num).getName(),myFile.get(num))
-                    .url(url)
-                    .build()
-                    .execute(new EdusStringCallback(SelectPictureActivity.this) {
-                        @Override
-                        public void onError(Call call, Exception e, int id) {
-                            ErrorToast.errorToast(mContext, e);
-                            waveProgress.setVisibility(View.GONE);
-                        }
+        OkHttpUtils.post()//
+                .addFile("myFile", myFile.get(num).getName(), myFile.get(num))
+                .url(url)
+                .build()
+                .execute(new EdusStringCallback(SelectPictureActivity.this) {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        ErrorToast.errorToast(mContext, e);
+                        waveProgress.setVisibility(View.GONE);
+                    }
 
-                        @Override
-                        public void onResponse(String response, int id) {
-                            try {
-                                if (num+1<myFile.size()) {//一直请求到最后一个
-                                    num++;
-                                    Log.e(TAG, "onResponse: 上传成功"+(num+1)+"个");
-                                    getFileCode(response);
-                                    uploadMethod();
-                                }else{//已达上限，返回关联添加页面
-                                    Log.e(TAG, "onResponse: 已达上限，返回关联添加页面");
-                                    jump2Activity();
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                Log.e(TAG, "onResponse: 上传成功"+(num+1)+"个");
+                    @Override
+                    public void onResponse(String response, int id) {
+                        try {
+                            if (num + 1 < myFile.size()) {//一直请求到最后一个
+                                num++;
+                                Log.e(TAG, "onResponse: 上传成功" + (num + 1) + "个");
+                                getFileCode(response);
+                                uploadMethod();
+                            } else {//已达上限，返回关联添加页面
+                                Log.e(TAG, "onResponse: 已达上限，返回关联添加页面");
+                                getFileCode(response);
+                                jump2Activity();
                             }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Log.e(TAG, "onResponse: 上传成功" + (num + 1) + "个");
+                        }
 
 
 //                            getFileCode(response);
-                            //解析音频
-                            // parseAudo();
-                        }
+                        //解析音频
+                        // parseAudo();
+                    }
 
-                        @Override
-                        public void inProgress(float progress, long total, int id) {
+                    @Override
+                    public void inProgress(float progress, long total, int id) {
 
-                        }
-                    });
+                    }
+                });
 //        }else {
 //            Toast.makeText(SelectPictureActivity.this, "您尚未选择图片。音频", Toast.LENGTH_SHORT).show();
 ////          //  parseAudo();
 //            waveProgress.setVisibility(View.GONE);
 //        }
     }
-List<String> codeList=new ArrayList<>();
+
+    List<String> codeList = new ArrayList<>();
+
     //解析文件上传成功的code值
     private void getFileCode(String response) {
 
-                                    if (num+1 == myFile.size()) {
-                                waveProgress.setVisibility(View.GONE);
-                                Log.e("total", myFile.size() + "");
-                            } else {
-                                waveProgress.setProgress((int) (100 * (num)/myFile.size()));
-                                Log.e("progress", (100 * (num)/myFile.size()) + "");
-                            }
+        if (num + 1 == myFile.size()) {
+            waveProgress.setProgress(100);
+            waveProgress.setVisibility(View.GONE);
+            Log.e("total", myFile.size() + "");
+        } else {
+            waveProgress.setProgress((int) (100 * (num) / myFile.size()));
+            Log.e("progress", (100 * (num) / myFile.size()) + "");
+        }
         Log.e("TAG", "uploadMethod2:" + response);
         Toast.makeText(SelectPictureActivity.this, "上传成功", Toast.LENGTH_SHORT).show();
 
-                String[] valueTemp1 = response.split(":");
-                String valueCode = valueTemp1[1];
+        String[] valueTemp1 = response.split(":");
+        String valueCode = valueTemp1[1];
         codeList.add(valueCode);
-        Log.e(TAG, "getFileCode: codeList "+codeList.toString());
+        Log.e(TAG, "getFileCode: codeList " + codeList.toString());
 
     }
 
@@ -519,7 +524,7 @@ List<String> codeList=new ArrayList<>();
     private void jump2Activity() {
 
 
-      codeListStr=DataProcess.listToString(codeList);
+        codeListStr = DataProcess.listToString(codeList);
 
 
         Intent intentTree = new Intent();
