@@ -32,7 +32,7 @@
         android:paddingRight="2dp"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:maxLines="4"
+        android:maxLines="3"
         android:ellipsize="end"
         android:textSize="@dimen/text_size_13"
         android:textColor="@color/white"

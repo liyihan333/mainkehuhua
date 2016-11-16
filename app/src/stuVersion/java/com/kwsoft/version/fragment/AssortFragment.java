@@ -38,7 +38,6 @@ import okhttp3.Call;
 
 /**
  * Created by Administrator on 2016/9/19 0019.
- *
  */
 public class AssortFragment extends Fragment {
 
@@ -63,6 +62,17 @@ public class AssortFragment extends Fragment {
                         Toast.makeText(getActivity(), "数据已刷新", Toast.LENGTH_SHORT).show();
                     }
                     break;
+                case 0x102:
+                    Log.e("TAG", "学员端开始handler通知跳转后 ");
+                    if (swipeRefreshLayout.isRefreshing()) {
+                        adapter = new SimpleAdapter(getActivity(), menuListMap,
+                                R.layout.fragment_assort_item, new String[]{"image", "menuName"},
+                                new int[]{R.id.iv_item, R.id.tv_item});
+                        homeGridView.setAdapter(adapter);
+                        swipeRefreshLayout.setRefreshing(false);//设置不刷新
+                        Toast.makeText(getActivity(), "数据已刷新", Toast.LENGTH_SHORT).show();
+                    }
+                    break;
             }
         }
     };
@@ -76,7 +86,7 @@ public class AssortFragment extends Fragment {
         homeGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               // adapter.getItem(position.)
+                // adapter.getItem(position.)
                 DataProcess.toList(getActivity(), menuListMap.get(position));
 
             }
@@ -106,7 +116,7 @@ public class AssortFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-       // new LoadDataThread().start();
+        // new LoadDataThread().start();
     }
 
 
@@ -124,8 +134,12 @@ public class AssortFragment extends Fragment {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            Log.e("TAG", "学员端开始handler通知 ");
-            handler.sendEmptyMessage(0x101);//通过handler发送一个更新数据的标记，适配器进行dataSetChange，然后停止刷新动画
+            if (menuListMap != null && menuListMap.size() > 0) {
+                Log.e("TAG", "学员端开始handler通知 ");
+                handler.sendEmptyMessage(0x101);//通过handler发送一个更新数据的标记，适配器进行dataSetChange，然后停止刷新动画
+            } else {
+                handler.sendEmptyMessage(0x102);
+            }
         }
     }
 
@@ -136,17 +150,21 @@ public class AssortFragment extends Fragment {
     private void getIntentData() {
         Bundle menuBundle = getArguments();
         String menuStr = menuBundle.getString("menuDataMap");
-        menuListAll = JSON.parseObject(menuStr,
-                new TypeReference<List<Map<String, Object>>>() {
-                });
-        menuListMap = DataProcess.toStuParentList(menuListAll);
+        if (menuStr != null && menuStr.length() > 0) {
+            menuListAll = JSON.parseObject(menuStr,
+                    new TypeReference<List<Map<String, Object>>>() {
+                    });
+            menuListMap = DataProcess.toStuParentList(menuListAll);
 
-        Log.e("TAG", "menuListMap初始值 " + menuListMap.toString());
-        adapter = new SimpleAdapter(getActivity(), menuListMap,
-                R.layout.fragment_assort_item, new String[]{"image", "menuName"},
-                new int[]{R.id.iv_item, R.id.tv_item});
-        homeGridView.setAdapter(adapter);
-        homeGridView.setOnScrollListener(new SwipeListViewOnScrollListener(swipeRefreshLayout));
+            Log.e("TAG", "menuListMap初始值 " + menuListMap.toString());
+            adapter = new SimpleAdapter(getActivity(), menuListMap,
+                    R.layout.fragment_assort_item, new String[]{"image", "menuName"},
+                    new int[]{R.id.iv_item, R.id.tv_item});
+            homeGridView.setAdapter(adapter);
+            homeGridView.setOnScrollListener(new SwipeListViewOnScrollListener(swipeRefreshLayout));
+        } else {
+            Toast.makeText(getActivity(), "暂无数据", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -192,7 +210,6 @@ public class AssortFragment extends Fragment {
                         @Override
                         public void onError(Call call, Exception e, int id) {
                             ErrorToast.errorToast(mContext, e);
-
                             ((BaseActivity) getActivity()).dialog.dismiss();
                         }
 
@@ -214,13 +231,15 @@ public class AssortFragment extends Fragment {
     @SuppressWarnings("unchecked")
     private void check(String menuData) {
         Map<String, Object> stuMenuMap = Utils.str2map(menuData);
-        menuListAll = (List<Map<String, Object>>) stuMenuMap.get("menuList");
-        Log.e("TAG", "sessionId=" + menuListAll.toString());
-
-        menuListMap.removeAll(menuListMap);
-        menuListMap.addAll(DataProcess.toStuParentList(menuListAll));
-        Log.e("TAG", "刷新后的父类菜单数据=" + menuListMap.toString());
-
+        if (stuMenuMap.containsKey("menuList")) {
+            menuListAll = (List<Map<String, Object>>) stuMenuMap.get("menuList");
+            Log.e("TAG", "sessionId=" + menuListAll.toString());
+            menuListMap.removeAll(menuListMap);
+            if (menuListAll != null && menuListAll.size() > 0) {
+                menuListMap.addAll(DataProcess.toStuParentList(menuListAll));
+                Log.e("TAG", "刷新后的父类菜单数据=" + menuListMap.toString());
+            }
+        }
 //        int leg = menuListMap.size() % 3;
 //        if (leg == 1) {
 //            Map<String, Object> map = new HashMap<>();

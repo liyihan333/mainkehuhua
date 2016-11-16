@@ -68,7 +68,7 @@ public class StuLoginActivity extends BaseActivity implements View.OnClickListen
         setContentView(R.layout.activity_stu_login_sec);
         CloseActivityClass.activityList.add(this);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        dialog=new LoadingDialog(mContext,"正在登录中...");
+        dialog = new LoadingDialog(mContext, "正在登录中...");
         initJudgeSave();
         initView();
         initPermission();
@@ -236,6 +236,7 @@ public class StuLoginActivity extends BaseActivity implements View.OnClickListen
      * 返回后直接传递给主页面
      **/
     private static final String TAG = "StuLoginActivity";
+
     public void postLogin1() {
         if (!hasInternetConnected()) {
             Toast.makeText(this, "当前网络不可用，请检查网络！", Toast.LENGTH_SHORT).show();
@@ -251,12 +252,12 @@ public class StuLoginActivity extends BaseActivity implements View.OnClickListen
                 String volleyUrl = Constant.sysUrl + Constant.projectLoginUrl;
                 Log.e("TAG", "学员端登陆地址 " + Constant.sysUrl + Constant.projectLoginUrl);
                 //参数
-                 Map<String, String> map = new HashMap<>();
-                        map.put(Constant.USER_NAME, nameValue);
-                        map.put(Constant.PASSWORD, pwdValue);
-                        map.put(Constant.proIdName, Constant.proId);
-                        map.put(Constant.timeName, Constant.menuAlterTime);
-                        map.put(Constant.sourceName, Constant.sourceInt);
+                Map<String, String> map = new HashMap<>();
+                map.put(Constant.USER_NAME, nameValue);
+                map.put(Constant.PASSWORD, pwdValue);
+                map.put(Constant.proIdName, Constant.proId);
+                map.put(Constant.timeName, Constant.menuAlterTime);
+                map.put(Constant.sourceName, Constant.sourceInt);
                 //请求
                 OkHttpUtils
                         .post()
@@ -266,13 +267,13 @@ public class StuLoginActivity extends BaseActivity implements View.OnClickListen
                         .execute(new EdusStringCallback(StuLoginActivity.this) {
                             @Override
                             public void onError(Call call, Exception e, int id) {
-                                ErrorToast.errorToast(mContext,e);
+                                ErrorToast.errorToast(mContext, e);
                                 dialog.dismiss();
                             }
 
                             @Override
                             public void onResponse(String response, int id) {
-                                Log.e(TAG, "onResponse: "+"  id  "+id);
+                                Log.e(TAG, "onResponse: " + "  id  " + id);
                                 check(response);
                             }
                         });
@@ -282,7 +283,6 @@ public class StuLoginActivity extends BaseActivity implements View.OnClickListen
             }
         }
     }
-
 
 
     //解析获得的data数据中的error值，如果它为1
@@ -326,24 +326,67 @@ public class StuLoginActivity extends BaseActivity implements View.OnClickListen
                     new TypeReference<Map<String, Object>>() {
                     });
             Map<String, Object> loginfo = (Map<String, Object>) menuMap.get("loginInfo");
-          Log.e("loginf-",loginfo.toString());
+            Log.e("loginf-", loginfo.toString());
             String userid = String.valueOf(loginfo.get("USERID"));
             Constant.USERID = String.valueOf(loginfo.get("USERID"));
             sPreferences.edit().putString("userid", userid).apply();
-            List<Map<String, Object>> menuListMap1 = (List<Map<String, Object>>) menuMap.get("roleFollowList");
-            List<Map<String, Object>> menuListMap2 = (List<Map<String, Object>>) menuMap.get("menuList");
-            List<Map<String, Object>> menuListMap3 = (List<Map<String, Object>>) menuMap.get("personInfoList");//个人资料
-            List<Map<String, Object>> menuListMap5 = (List<Map<String, Object>>) menuMap.get("feedbackInfoList");//反馈信息
+
+            List<Map<String, Object>> menuListMap1 = null;
+            if (menuMap.containsKey("roleFollowList")) {
+                menuListMap1 = (List<Map<String, Object>>) menuMap.get("roleFollowList");
+                Log.e("menuListMap1", JSON.toJSONString(menuListMap1));
+            }
+
+            List<Map<String, Object>> menuListMap2 = null;
+            if (menuMap.containsKey("menuList")) {
+                menuListMap2 = (List<Map<String, Object>>) menuMap.get("menuList");
+                Log.e("menuListMap2", JSON.toJSONString(menuListMap2));
+            }
+            List<Map<String, Object>> menuListMap3 = null;//个人资料
+            if (menuMap.containsKey("personInfoList")) {
+                menuListMap3 = (List<Map<String, Object>>) menuMap.get("personInfoList");
+                Log.e("menuListMap3", JSON.toJSONString(menuListMap3));
+            }
+            List<Map<String, Object>> menuListMap5 = null;//反馈信息
+            if (menuMap.containsKey("feedbackInfoList")) {
+                menuListMap5 = (List<Map<String, Object>>) menuMap.get("feedbackInfoList");
+                Log.e("menuListMap5", JSON.toJSONString(menuListMap5));
+            }
+
+//            List<Map<String, Object>> menuListMap1 = (List<Map<String, Object>>) menuMap.get("roleFollowList");
+//            List<Map<String, Object>> menuListMap2 = (List<Map<String, Object>>) menuMap.get("menuList");
+//            List<Map<String, Object>> menuListMap3 = (List<Map<String, Object>>) menuMap.get("personInfoList");//个人资料
+//            List<Map<String, Object>> menuListMap5 = (List<Map<String, Object>>) menuMap.get("feedbackInfoList");//反馈信息
 
 
             Intent intent = new Intent();
             intent.setClass(StuLoginActivity.this, StuMainActivity.class);
-            intent.putExtra("jsonArray", JSON.toJSONString(menuListMap1));
-            intent.putExtra("menuDataMap", JSON.toJSONString(menuListMap2));
-            intent.putExtra("hideMenuList", JSON.toJSONString(menuListMap3));
-            intent.putExtra("feedbackInfoList",JSON.toJSONString(menuListMap5));
+            if (menuListMap1 != null && menuListMap1.size() > 0) {
+                intent.putExtra("jsonArray", JSON.toJSONString(menuListMap1));
+            } else {
+                intent.putExtra("jsonArray", "");
+            }
+            if (menuListMap2 != null && menuListMap2.size() > 0) {
+                intent.putExtra("menuDataMap", JSON.toJSONString(menuListMap2));
+            } else {
+                intent.putExtra("menuDataMap", "");
+            }
+            if (menuListMap3 != null && menuListMap3.size() > 0) {
+                intent.putExtra("hideMenuList", JSON.toJSONString(menuListMap3));
+            } else {
+                intent.putExtra("hideMenuList", "");
+            }
+            if (menuListMap5 != null && menuListMap5.size() > 0) {
+                intent.putExtra("feedbackInfoList", JSON.toJSONString(menuListMap5));
+            } else {
+                intent.putExtra("feedbackInfoList", "");
+            }
+//            intent.putExtra("jsonArray", JSON.toJSONString(menuListMap1));
+//            intent.putExtra("menuDataMap", JSON.toJSONString(menuListMap2));
+//            intent.putExtra("hideMenuList", JSON.toJSONString(menuListMap3));
+//            intent.putExtra("feedbackInfoList",JSON.toJSONString(menuListMap5));
             Log.e("hidemel", JSON.toJSONString(menuListMap3));
-            Log.e("feedb",JSON.toJSONString(menuListMap5));
+            Log.e("feedb", JSON.toJSONString(menuListMap5));
             startActivity(intent);
             finish();
             dialog.dismiss();
@@ -382,6 +425,7 @@ public class StuLoginActivity extends BaseActivity implements View.OnClickListen
             }
         }
     }
+
     public void toSetIpPortProject(View view) {
         Intent intent = new Intent();
         intent.setClass(StuLoginActivity.this, SetIpPortActivity.class);

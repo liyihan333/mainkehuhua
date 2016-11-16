@@ -162,10 +162,12 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
         // initData();
 
     }
-    public int isResume=0;
+
+    public int isResume = 0;
+
     @Override
     public void onResume() {
-        isResume=1;
+        isResume = 1;
         Log.e("isLogin=", isLogin + "");
         super.onResume();
         if (!isLogin) {
@@ -179,11 +181,13 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
 
     public void initData() {
         parentList = getkanbanData(arrStr);
-        setKanbanAdapter(parentList);
-        Log.e("isLogin=", isLogin + "");
+        if (parentList != null && parentList.size() > 0) {
+            setKanbanAdapter(parentList);
+            Log.e("isLogin=", isLogin + "");
+        }
         //菜单列表中的gridview数据
 
-        if (menuStr != null) {
+        if (menuStr != null && menuStr.length() > 0) {
             menuListAll = JSON.parseObject(menuStr,
                     new TypeReference<List<Map<String, Object>>>() {
                     });
@@ -242,33 +246,36 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
     @SuppressWarnings("unchecked")
     public List<Map<String, Object>> getkanbanData(String arrStr) {
         List<Map<String, Object>> parentLists = new ArrayList<>();
-        try {
-            List<Map<String, Object>> listMap = JSON.parseObject(arrStr,
-                    new TypeReference<List<Map<String, Object>>>() {
-                    });
-            String cnName;
-            for (int i = 0; i < listMap.size(); i++) {
-                Map<String, Object> map = new HashMap<>();
-                cnName = String.valueOf(listMap.get(i).get("cnName"));
-                map.put("ctType", "3");
-                map.put("cnName", cnName);
-                int j = i % 4;
-                map.put("image", imgs2[j]);
-                map.put("SourceDataId", listMap.get(i).get("homeSetId") + "_" + listMap.get(i).get("index"));
-                map.put("penetratePageId", listMap.get(i).get("phonePageId"));
-                map.put("tableId", listMap.get(i).get("tableId"));
-                List<Map<String, Object>> listMap1 = (List<Map<String, Object>>) listMap.get(i).get("valueMap");
-                String name = "";
-                if (listMap1.size() > 0) {
-                    if (listMap1.get(0) != null && listMap1.get(0).size() > 0) {
-                        name = String.valueOf(listMap1.get(0).get("name"));
+        if (arrStr != null && arrStr.length() > 0) {
+
+            try {
+                List<Map<String, Object>> listMap = JSON.parseObject(arrStr,
+                        new TypeReference<List<Map<String, Object>>>() {
+                        });
+                String cnName;
+                for (int i = 0; i < listMap.size(); i++) {
+                    Map<String, Object> map = new HashMap<>();
+                    cnName = String.valueOf(listMap.get(i).get("cnName"));
+                    map.put("ctType", "3");
+                    map.put("cnName", cnName);
+                    int j = i % 4;
+                    map.put("image", imgs2[j]);
+                    map.put("SourceDataId", listMap.get(i).get("homeSetId") + "_" + listMap.get(i).get("index"));
+                    map.put("penetratePageId", listMap.get(i).get("phonePageId"));
+                    map.put("tableId", listMap.get(i).get("tableId"));
+                    List<Map<String, Object>> listMap1 = (List<Map<String, Object>>) listMap.get(i).get("valueMap");
+                    String name = "";
+                    if (listMap1.size() > 0) {
+                        if (listMap1.get(0) != null && listMap1.get(0).size() > 0) {
+                            name = String.valueOf(listMap1.get(0).get("name"));
+                        }
                     }
+                    map.put("name", name);
+                    parentLists.add(map);
                 }
-                map.put("name", name);
-                parentLists.add(map);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
         return parentLists;
     }
@@ -373,16 +380,16 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (position==0){
+                    if (position == 0) {
                         Intent intent = new Intent(getActivity(), StuLoginActivity.class);
                         startActivity(intent);
-                    }else if (position==1){
+                    } else if (position == 1) {
                         Intent intent = new Intent(getActivity(), ResetPwdActivity.class);
                         startActivity(intent);
-                    }else if (position==2){
+                    } else if (position == 2) {
                         Intent intent = new Intent(getActivity(), ResetPwdActivity.class);
                         startActivity(intent);
-                    }else if (position==3){
+                    } else if (position == 3) {
                         Intent intent = new Intent(getActivity(), ResetPwdActivity.class);
                         startActivity(intent);
                     }
@@ -452,17 +459,35 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
                     });
             Map<String, Object> loginfo = (Map<String, Object>) menuMap.get("loginInfo");
             Constant.USERID = String.valueOf(loginfo.get("USERID"));
-            List<Map<String, Object>> menuListMap1 = (List<Map<String, Object>>) menuMap.get("roleFollowList");
-            List<Map<String, Object>> menuListMap2 = (List<Map<String, Object>>) menuMap.get("menuList");
+//            List<Map<String, Object>> menuListMap1 = (List<Map<String, Object>>) menuMap.get("roleFollowList");
+//            List<Map<String, Object>> menuListMap2 = (List<Map<String, Object>>) menuMap.get("menuList");
+            List<Map<String, Object>> menuListMap1 = null;
+            if (menuMap.containsKey("roleFollowList")) {
+                menuListMap1 = (List<Map<String, Object>>) menuMap.get("roleFollowList");
+                Log.e("menuListMap1", JSON.toJSONString(menuListMap1));
+            }
+
+            List<Map<String, Object>> menuListMap2 = null;
+            if (menuMap.containsKey("menuList")) {
+                menuListMap2 = (List<Map<String, Object>>) menuMap.get("menuList");
+                Log.e("menuListMap2", JSON.toJSONString(menuListMap2));
+            }
 //看板模块数据
-            String arrStr = JSON.toJSONString(menuListMap1);
+            String arrStr = "";
+            if (menuListMap1 != null && menuListMap1.size() > 0) {
+                arrStr = JSON.toJSONString(menuListMap1);
+            }
             parentList.clear();
             parentList = getkanbanData(arrStr);
-            setKanbanAdapter(parentList);
-
+            if (parentList != null && parentList.size() > 0) {
+                setKanbanAdapter(parentList);
+            }
             //菜单列表中的gridview数据
-            String menuStr = JSON.toJSONString(menuListMap2);
-            if (menuStr != null) {
+            String menuStr = "";
+            if (menuListMap2 != null && menuListMap2.size() > 0) {
+                menuStr = JSON.toJSONString(menuListMap2);
+            }
+            if (menuStr != null && menuStr.length() > 0) {
                 menuListAll.clear();
                 menuListAll = JSON.parseObject(menuStr,
                         new TypeReference<List<Map<String, Object>>>() {
@@ -482,12 +507,17 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
                 // Call onRefreshComplete when the list has been refreshed.
                 //在更新UI后，无需其它Refresh操作，系统会自己加载新的listView
                 pull_refresh_scrollview.onRefreshComplete();
-                if (isResume==0) {
+                if (isResume == 0) {
                     Toast.makeText(getActivity(), "数据已刷新", Toast.LENGTH_SHORT).show();
                 }
-
+            } else {
+                pull_refresh_scrollview.onRefreshComplete();
+                Log.e("无数据","无数据");
+//                if (isResume == 0) {
+//                    Toast.makeText(getActivity(), "暂无数据", Toast.LENGTH_SHORT).show();
+//                }
             }
-            isResume=0;
+            isResume = 0;
         } catch (Exception e) {
             e.printStackTrace();
         }

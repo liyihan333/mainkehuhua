@@ -91,7 +91,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
         List<Map<String, Object>> feedbackListMap = new ArrayList<>();
         Log.e(TAG, "feedbackInfoListstr: " + feedbackInfoListstr);
-        if (feedbackInfoListstr != null) {
+        if (feedbackInfoListstr != null&&feedbackInfoListstr.length()>0) {
             try {
                 feedbackListMap = JSON.parseObject(feedbackInfoListstr,
                         new TypeReference<List<Map<String, Object>>>() {
@@ -116,13 +116,15 @@ public class MeFragment extends Fragment implements View.OnClickListener {
             }
             Log.e("TAG", "获得学员端菜单数据：" + meStr);
 
+        }else {
+            Toast.makeText(getActivity(),"暂无个人数据",Toast.LENGTH_SHORT).show();
         }
 //获取校区
       //  requestSet();
     }
 
     private void getMeTableId(String meStr, List<Map<String, Object>> meListMap) {
-        if (meStr != null) {
+        if (meStr != null&&meStr.length()>0) {
             try {
                 meListMap = JSON.parseObject(meStr,
                         new TypeReference<List<Map<String, Object>>>() {
@@ -151,6 +153,8 @@ public class MeFragment extends Fragment implements View.OnClickListener {
             }
             Log.e("TAG", "获得学员端菜单数据：" + meStr);
 
+        }else {
+            Toast.makeText(getActivity(),"暂无个人数据",Toast.LENGTH_SHORT).show();
         }
     }
 

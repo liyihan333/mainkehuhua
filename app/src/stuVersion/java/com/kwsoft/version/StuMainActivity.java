@@ -104,7 +104,8 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
 
         Intent intent = getIntent();
         arrStr = intent.getStringExtra("jsonArray");
-        menuList = intent.getStringExtra("menuList");
+//        menuList = intent.getStringExtra("menuList");
+        menuList = "";
         hideMenuList = intent.getStringExtra("hideMenuList");
         menuDataMap = intent.getStringExtra("menuDataMap");
         feedbackInfoList=intent.getStringExtra("feedbackInfoList");
