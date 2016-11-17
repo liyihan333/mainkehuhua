@@ -5,8 +5,6 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.RadioGroup;
 
-import com.kwsoft.kehuhua.fragments.FragmentTabAdapter;
-
 import java.util.List;
 
 /**
