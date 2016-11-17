@@ -34,7 +34,6 @@ import static com.kwsoft.kehuhua.config.Constant.topBarColor;
 
 /**
  * Created by Administrator on 2016/11/8 0008.
- *
  */
 
 public class StarRatingBarActivity extends BaseActivity implements View.OnClickListener {
@@ -51,7 +50,7 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
     private String ratingBar, rbDetailStr, assessStr, contentStr;//星级、星级对应的评价、备注内容
     private TextView tv_assess;//教师点评
 
-    Map<String,String> commitMap=new HashMap<>();
+    Map<String, String> commitMap = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +72,7 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
         Intent intent = getIntent();
         String buttonSetItemStr = intent.getStringExtra("itemSet");
         Map<String, Object> buttonSetItem = JSON.parseObject(buttonSetItemStr);
-        Log.e(TAG, "getIntentData: buttonSetItem "+buttonSetItem.toString());
+        Log.e(TAG, "getIntentData: buttonSetItem " + buttonSetItem.toString());
         //赋值页面标题
 
         //获取参数并添加
@@ -91,17 +90,17 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
         paramsMap.put(Constant.pageId, pageId);
         //dataId：在对列表操作的时候是没有的，只有行级操作的时候才有
         dataId = String.valueOf(buttonSetItem.get("dataId"));
-        if (dataId!=null&&!dataId.equals("null")) {
+        if (dataId != null && !dataId.equals("null")) {
 
             paramsMap.put(mainId, dataId);
         }
-        Log.e(TAG, "getIntentData: paramsMap "+paramsMap.toString());
+        Log.e(TAG, "getIntentData: paramsMap " + paramsMap.toString());
     }
 
 
     private void getData() {
         //不同页面类型请求Url不一样
-        String volleyUrl= Constant.sysUrl + Constant.requestRowsAdd;
+        String volleyUrl = Constant.sysUrl + Constant.requestRowsAdd;
         //请求
         OkHttpUtils
                 .post()
@@ -111,13 +110,13 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
                 .execute(new EdusStringCallback(StarRatingBarActivity.this) {
                     @Override
                     public void onError(Call call, Exception e, int id) {
-                        ErrorToast.errorToast(mContext,e);
+                        ErrorToast.errorToast(mContext, e);
                         dialog.dismiss();
                     }
 
                     @Override
                     public void onResponse(String response, int id) {
-                        Log.e(TAG, "onResponse: "+response+"  id  "+id);
+                        Log.e(TAG, "onResponse: " + response + "  id  " + id);
                         setStore(response);
                     }
                 });
@@ -137,16 +136,16 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
 //获取fieldSet
             Map<String, Object> pageSet = (Map<String, Object>) buttonSet.get("pageSet");
             fieldSet = (List<Map<String, Object>>) pageSet.get("fieldSet");
-            Log.e(TAG, "setStore: fieldSet "+fieldSet.toString());
+            Log.e(TAG, "setStore: fieldSet " + fieldSet.toString());
 //判断添加还是修改，keyRelation赋值不一样
 
-                    if (pageSet.get("relationFieldId") != null) {
-                        Constant.relationFieldId = String.valueOf(pageSet.get("relationFieldId"));
+            if (pageSet.get("relationFieldId") != null) {
+                Constant.relationFieldId = String.valueOf(pageSet.get("relationFieldId"));
 
-                        keyRelation = "t0_au_" + tableId + "_" + pageId + "_" + Constant.relationFieldId + "=" + dataId;
-                    }
+                keyRelation = "t0_au_" + tableId + "_" + pageId + "_" + Constant.relationFieldId + "=" + dataId;
+            }
 
-                    Log.e(TAG, "setStore: keyRelation "+keyRelation);
+            Log.e(TAG, "setStore: keyRelation " + keyRelation);
 
 
             Log.e("TAG", "keyRelation " + keyRelation);
@@ -156,7 +155,6 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
                 List<Map<String, Object>> hideFieldSet = (List<Map<String, Object>>) pageSet.get("hideFieldSet");
                 hideFieldParagram += DataProcess.toHidePageSet(hideFieldSet);
             }
-
 
 
         } catch (Exception e) {
@@ -230,31 +228,30 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
         btnAdd.setOnClickListener(this);
 
 
-
     }
 
     private void initRateBarListener() {
-        Log.e(TAG, "initRateBarListener: fieldSet "+fieldSet.toString() );
-        Map<String,Object> xingJiMap=fieldSet.get(0);
-        Map<String,Object> xingJiMap1=fieldSet.get(1);
+        Log.e(TAG, "initRateBarListener: fieldSet " + fieldSet.toString());
+        Map<String, Object> xingJiMap = fieldSet.get(0);
+        Map<String, Object> xingJiMap1 = fieldSet.get(1);
 
         //获取提交的key
-        String xingJiKey=String.valueOf(xingJiMap.get(Constant.primKey));
-        String xingJiKey1=String.valueOf(xingJiMap1.get(Constant.primKey));
+        String xingJiKey = String.valueOf(xingJiMap.get(Constant.primKey));
+        String xingJiKey1 = String.valueOf(xingJiMap1.get(Constant.primKey));
 
         //获取不到key时所用的默认值
-        if (xingJiKey.equals("")||xingJiKey.equals("null")) {
-            xingJiKey="t0_au_262_3020_4651";
+        if (xingJiKey.equals("") || xingJiKey.equals("null")) {
+            xingJiKey = "t0_au_262_3020_4651";
 
         }
-        if (xingJiKey1.equals("")||xingJiKey1.equals("null")) {
-            xingJiKey1="t0_au_262_3020_4671";
+        if (xingJiKey1.equals("") || xingJiKey1.equals("null")) {
+            xingJiKey1 = "t0_au_262_3020_4671";
 
         }
         //获取星级字典id列表
-        final List<Map<String,String>> xingJiDicList= (List<Map<String, String>>) xingJiMap.get("dicList");
+        final List<Map<String, String>> xingJiDicList = (List<Map<String, String>>) xingJiMap.get("dicList");
         //获取星级对应文字列表
-        final List<Map<String,String>> xingJiDicList1= (List<Map<String, String>>) xingJiMap1.get("dicList");
+        final List<Map<String, String>> xingJiDicList1 = (List<Map<String, String>>) xingJiMap1.get("dicList");
 
         final String finalXingJiKey = xingJiKey;
         final String finalXingJiKey1 = xingJiKey1;
@@ -269,37 +266,55 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
         ll_cb_forth.setVisibility(View.GONE);
         ll_cb_fifth.setVisibility(View.VISIBLE);
         tv_assess.setText(xingJiDicList1.get(0).get("DIC_NAME"));
-        commitMap.put(finalXingJiKey,xingJiDicList.get(0).get("DIC_ID"));
-        commitMap.put(finalXingJiKey1,xingJiDicList1.get(0).get("DIC_ID"));
+        commitMap.put(finalXingJiKey, xingJiDicList.get(0).get("DIC_ID"));
+        commitMap.put(finalXingJiKey1, xingJiDicList1.get(0).get("DIC_ID"));
         //开始监听按钮状态变化
         ratebar1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    clearCheckBox();
                 ratebar1.setChecked(true);
-                if (b) {
-                    if (!ratebar5.isChecked() && !ratebar4.isChecked() && !ratebar3.isChecked() && !ratebar2.isChecked()) {
-                        clearCheckBox();
-                        ll_cb_first.setVisibility(View.VISIBLE);
-                        ll_cb_sec.setVisibility(View.GONE);
-                        ll_cb_third.setVisibility(View.GONE);
-                        ll_cb_forth.setVisibility(View.GONE);
-                        ll_cb_fifth.setVisibility(View.GONE);
-                        tv_assess.setText(xingJiDicList1.get(4).get("DIC_NAME"));
-                        commitMap.put(finalXingJiKey,xingJiDicList.get(4).get("DIC_ID"));
-                        commitMap.put(finalXingJiKey1,xingJiDicList1.get(4).get("DIC_ID"));
-
-                        Log.e(TAG, "onCheckedChanged: commitMap "+commitMap.toString());
-                    } else {
-                        clearCheckBox();
-                        ll_cb_first.setVisibility(View.GONE);
-                    }
+                // if (b) {
+//                    if (!ratebar5.isChecked() && !ratebar4.isChecked() && !ratebar3.isChecked() && !ratebar2.isChecked()) {
+//
+//                        Log.e(TAG, "onCheckedChanged: commitMap "+commitMap.toString());
+//                    } else
+                if (ratebar2.isChecked()) {
+                    ratebar2.setChecked(false);
+                    ratebar3.setChecked(false);
+                    ratebar4.setChecked(false);
+                    ratebar5.setChecked(false);
+//                    } else {
+//                        ratebar1.setChecked(true);
+//                    }
                 }
+                ll_cb_first.setVisibility(View.VISIBLE);
+                ll_cb_sec.setVisibility(View.GONE);
+                ll_cb_third.setVisibility(View.GONE);
+                ll_cb_forth.setVisibility(View.GONE);
+                ll_cb_fifth.setVisibility(View.GONE);
+                tv_assess.setText(xingJiDicList1.get(4).get("DIC_NAME"));
+                commitMap.put(finalXingJiKey, xingJiDicList.get(4).get("DIC_ID"));
+                commitMap.put(finalXingJiKey1, xingJiDicList1.get(4).get("DIC_ID"));
+//                    {
+//                        clearCheckBox();
+//                        ll_cb_first.setVisibility(View.GONE);
+//                    }
             }
         });
 
         ratebar2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                clearCheckBox();
+                ratebar2.setChecked(true);
+
+                if (ratebar3.isChecked()) {
+                    ratebar3.setChecked(false);
+                    ratebar4.setChecked(false);
+                    ratebar5.setChecked(false);
+                }
+
                 if (b) {
                     ratebar1.setChecked(true);
                     if (!ratebar5.isChecked() && !ratebar4.isChecked() && !ratebar3.isChecked()) {
@@ -310,9 +325,9 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
                         ll_cb_forth.setVisibility(View.GONE);
                         ll_cb_fifth.setVisibility(View.GONE);
                         tv_assess.setText(xingJiDicList1.get(3).get("DIC_NAME"));
-                        commitMap.put(finalXingJiKey,xingJiDicList.get(3).get("DIC_ID"));
-                        commitMap.put(finalXingJiKey1,xingJiDicList1.get(3).get("DIC_ID"));
-                        Log.e(TAG, "onCheckedChanged: commitMap "+commitMap.toString());
+                        commitMap.put(finalXingJiKey, xingJiDicList.get(3).get("DIC_ID"));
+                        commitMap.put(finalXingJiKey1, xingJiDicList1.get(3).get("DIC_ID"));
+                        Log.e(TAG, "onCheckedChanged: commitMap " + commitMap.toString());
                     }
                 } else {
                     clearCheckBox();
@@ -322,154 +337,155 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
                     ll_cb_sec.setVisibility(View.GONE);
                     ll_cb_first.setVisibility(View.VISIBLE);
                     tv_assess.setText(xingJiDicList1.get(4).get("DIC_NAME"));
-                    commitMap.put(finalXingJiKey,xingJiDicList.get(4).get("DIC_ID"));
-                    commitMap.put(finalXingJiKey1,xingJiDicList1.get(4).get("DIC_ID"));
-                    Log.e(TAG, "onCheckedChanged: commitMap "+commitMap.toString());
+                    commitMap.put(finalXingJiKey, xingJiDicList.get(4).get("DIC_ID"));
+                    commitMap.put(finalXingJiKey1, xingJiDicList1.get(4).get("DIC_ID"));
+                    Log.e(TAG, "onCheckedChanged: commitMap " + commitMap.toString());
                 }
             }
         });
-        ratebar3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b) {
-                    if (!ratebar5.isChecked() && !ratebar4.isChecked()) {
-                        clearCheckBox();
-                        ll_cb_first.setVisibility(View.GONE);
-                        ll_cb_sec.setVisibility(View.GONE);
-                        ll_cb_third.setVisibility(View.VISIBLE);
-                        ll_cb_forth.setVisibility(View.GONE);
-                        ll_cb_fifth.setVisibility(View.GONE);
-                        tv_assess.setText(xingJiDicList1.get(2).get("DIC_NAME"));
-                        commitMap.put(finalXingJiKey,xingJiDicList.get(2).get("DIC_ID"));
-                        commitMap.put(finalXingJiKey1,xingJiDicList1.get(2).get("DIC_ID"));
-                        Log.e(TAG, "onCheckedChanged: commitMap "+commitMap.toString());
-                    }
-                    ratebar1.setChecked(true);
-                    ratebar2.setChecked(true);
-                } else {
-                    clearCheckBox();
-                    ratebar4.setChecked(false);
-                    ratebar5.setChecked(false);
-                    ll_cb_third.setVisibility(View.GONE);
-                    if (ratebar2.isChecked()) {
-                        ll_cb_sec.setVisibility(View.VISIBLE);
-                        tv_assess.setText(xingJiDicList1.get(3).get("DIC_NAME"));
-                        commitMap.put(finalXingJiKey,xingJiDicList.get(3).get("DIC_ID"));
-                        commitMap.put(finalXingJiKey1,xingJiDicList1.get(3).get("DIC_ID"));
-                        Log.e(TAG, "onCheckedChanged: commitMap "+commitMap.toString());
-                    }
-                }
-            }
-        });
-        ratebar4.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b) {
-                    clearCheckBox();
-                    if (!ratebar5.isChecked()) {
-                        ll_cb_first.setVisibility(View.GONE);
-                        ll_cb_sec.setVisibility(View.GONE);
-                        ll_cb_third.setVisibility(View.GONE);
-                        ll_cb_forth.setVisibility(View.VISIBLE);
-                        ll_cb_fifth.setVisibility(View.GONE);
-                        tv_assess.setText(xingJiDicList1.get(1).get("DIC_NAME"));
-                        commitMap.put(finalXingJiKey,xingJiDicList.get(1).get("DIC_ID"));
-                        commitMap.put(finalXingJiKey1,xingJiDicList1.get(1).get("DIC_ID"));
-                        Log.e(TAG, "onCheckedChanged: commitMap "+commitMap.toString());
-                    }
-                    ratebar1.setChecked(true);
-                    ratebar2.setChecked(true);
-                    ratebar3.setChecked(true);
-                } else {
-                    clearCheckBox();
-                    ratebar5.setChecked(false);
-                    ll_cb_forth.setVisibility(View.GONE);
-                    if (ratebar3.isChecked()) {
-                        ll_cb_third.setVisibility(View.VISIBLE);
-                        tv_assess.setText(xingJiDicList1.get(2).get("DIC_NAME"));
-                        commitMap.put(finalXingJiKey,xingJiDicList.get(2).get("DIC_ID"));
-                        commitMap.put(finalXingJiKey1,xingJiDicList1.get(2).get("DIC_ID"));
-                        Log.e(TAG, "onCheckedChanged: commitMap "+commitMap.toString());
-                    }
-                }
-            }
-        });
-        ratebar5.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-
-                if (b) {
-                    clearCheckBox();
-                    ratebar1.setChecked(true);
-                    ratebar2.setChecked(true);
-                    ratebar3.setChecked(true);
-                    ratebar4.setChecked(true);
-                    ll_cb_first.setVisibility(View.GONE);
-                    ll_cb_sec.setVisibility(View.GONE);
-                    ll_cb_third.setVisibility(View.GONE);
-                    ll_cb_forth.setVisibility(View.GONE);
-                    ll_cb_fifth.setVisibility(View.VISIBLE);
-                    tv_assess.setText(xingJiDicList1.get(0).get("DIC_NAME"));
-                    commitMap.put(finalXingJiKey,xingJiDicList.get(0).get("DIC_ID"));
-                    commitMap.put(finalXingJiKey1,xingJiDicList1.get(0).get("DIC_ID"));
-                    Log.e(TAG, "onCheckedChanged: commitMap "+commitMap.toString());
-                } else {
-                    clearCheckBox();
-                    ll_cb_fifth.setVisibility(View.GONE);
-                    if (ratebar4.isChecked()) {
-                        ll_cb_forth.setVisibility(View.VISIBLE);
-                        tv_assess.setText(xingJiDicList1.get(1).get("DIC_NAME"));
-                        commitMap.put(finalXingJiKey,xingJiDicList.get(1).get("DIC_ID"));
-                        commitMap.put(finalXingJiKey1,xingJiDicList1.get(1).get("DIC_ID"));
-                        Log.e(TAG, "onCheckedChanged: commitMap "+commitMap.toString());
-                    }
-                }
-            }
-        });
+//        ratebar3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+//                if (b) {
+//                    if (!ratebar5.isChecked() && !ratebar4.isChecked()) {
+//                        clearCheckBox();
+//                        ll_cb_first.setVisibility(View.GONE);
+//                        ll_cb_sec.setVisibility(View.GONE);
+//                        ll_cb_third.setVisibility(View.VISIBLE);
+//                        ll_cb_forth.setVisibility(View.GONE);
+//                        ll_cb_fifth.setVisibility(View.GONE);
+//                        tv_assess.setText(xingJiDicList1.get(2).get("DIC_NAME"));
+//                        commitMap.put(finalXingJiKey, xingJiDicList.get(2).get("DIC_ID"));
+//                        commitMap.put(finalXingJiKey1, xingJiDicList1.get(2).get("DIC_ID"));
+//                        Log.e(TAG, "onCheckedChanged: commitMap " + commitMap.toString());
+//                    }
+//                    ratebar1.setChecked(true);
+//                    ratebar2.setChecked(true);
+//                } else {
+//                    clearCheckBox();
+//                    ratebar4.setChecked(false);
+//                    ratebar5.setChecked(false);
+//                    ll_cb_third.setVisibility(View.GONE);
+//                    if (ratebar2.isChecked()) {
+//                        ll_cb_sec.setVisibility(View.VISIBLE);
+//                        tv_assess.setText(xingJiDicList1.get(3).get("DIC_NAME"));
+//                        commitMap.put(finalXingJiKey, xingJiDicList.get(3).get("DIC_ID"));
+//                        commitMap.put(finalXingJiKey1, xingJiDicList1.get(3).get("DIC_ID"));
+//                        Log.e(TAG, "onCheckedChanged: commitMap " + commitMap.toString());
+//                    }
+//                }
+//            }
+//        });
+//        ratebar4.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+//                if (b) {
+//                    clearCheckBox();
+//                    if (!ratebar5.isChecked()) {
+//                        ll_cb_first.setVisibility(View.GONE);
+//                        ll_cb_sec.setVisibility(View.GONE);
+//                        ll_cb_third.setVisibility(View.GONE);
+//                        ll_cb_forth.setVisibility(View.VISIBLE);
+//                        ll_cb_fifth.setVisibility(View.GONE);
+//                        tv_assess.setText(xingJiDicList1.get(1).get("DIC_NAME"));
+//                        commitMap.put(finalXingJiKey, xingJiDicList.get(1).get("DIC_ID"));
+//                        commitMap.put(finalXingJiKey1, xingJiDicList1.get(1).get("DIC_ID"));
+//                        Log.e(TAG, "onCheckedChanged: commitMap " + commitMap.toString());
+//                    }
+//                    ratebar1.setChecked(true);
+//                    ratebar2.setChecked(true);
+//                    ratebar3.setChecked(true);
+//                } else {
+//                    clearCheckBox();
+//                    ratebar5.setChecked(false);
+//                    ll_cb_forth.setVisibility(View.GONE);
+//                    if (ratebar3.isChecked()) {
+//                        ll_cb_third.setVisibility(View.VISIBLE);
+//                        tv_assess.setText(xingJiDicList1.get(2).get("DIC_NAME"));
+//                        commitMap.put(finalXingJiKey, xingJiDicList.get(2).get("DIC_ID"));
+//                        commitMap.put(finalXingJiKey1, xingJiDicList1.get(2).get("DIC_ID"));
+//                        Log.e(TAG, "onCheckedChanged: commitMap " + commitMap.toString());
+//                    }
+//                }
+//            }
+//        });
+//        ratebar5.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+//
+//                if (b) {
+//                    clearCheckBox();
+//                    ratebar1.setChecked(true);
+//                    ratebar2.setChecked(true);
+//                    ratebar3.setChecked(true);
+//                    ratebar4.setChecked(true);
+//                    ll_cb_first.setVisibility(View.GONE);
+//                    ll_cb_sec.setVisibility(View.GONE);
+//                    ll_cb_third.setVisibility(View.GONE);
+//                    ll_cb_forth.setVisibility(View.GONE);
+//                    ll_cb_fifth.setVisibility(View.VISIBLE);
+//                    tv_assess.setText(xingJiDicList1.get(0).get("DIC_NAME"));
+//                    commitMap.put(finalXingJiKey, xingJiDicList.get(0).get("DIC_ID"));
+//                    commitMap.put(finalXingJiKey1, xingJiDicList1.get(0).get("DIC_ID"));
+//                    Log.e(TAG, "onCheckedChanged: commitMap " + commitMap.toString());
+//                } else {
+//                    clearCheckBox();
+//                    ll_cb_fifth.setVisibility(View.GONE);
+//                    if (ratebar4.isChecked()) {
+//                        ll_cb_forth.setVisibility(View.VISIBLE);
+//                        tv_assess.setText(xingJiDicList1.get(1).get("DIC_NAME"));
+//                        commitMap.put(finalXingJiKey, xingJiDicList.get(1).get("DIC_ID"));
+//                        commitMap.put(finalXingJiKey1, xingJiDicList1.get(1).get("DIC_ID"));
+//                        Log.e(TAG, "onCheckedChanged: commitMap " + commitMap.toString());
+//                    }
+//                }
+//            }
+//        });
 
         initChoise();
     }
 
-    Map<String,CheckBox> mapCheckBox;
-    //将checkBox加上标签，以便提交的时候直接遍历获取id
-    public void addTag(){
+    Map<String, CheckBox> mapCheckBox;
 
-        mapCheckBox=new HashMap<>();
+    //将checkBox加上标签，以便提交的时候直接遍历获取id
+    public void addTag() {
+
+        mapCheckBox = new HashMap<>();
         //一星五个
-        mapCheckBox.put("893",cb_first_rb1);
-        mapCheckBox.put("894",cb_first_rb2);
-        mapCheckBox.put("895",cb_first_rb3);
-        mapCheckBox.put("896",cb_first_rb4);
-        mapCheckBox.put("897",cb_first_rb5);
+        mapCheckBox.put("893", cb_first_rb1);
+        mapCheckBox.put("894", cb_first_rb2);
+        mapCheckBox.put("895", cb_first_rb3);
+        mapCheckBox.put("896", cb_first_rb4);
+        mapCheckBox.put("897", cb_first_rb5);
 //二星三个
-        mapCheckBox.put("898",cb_sec_rb1);
-        mapCheckBox.put("899",cb_sec_rb2);
-        mapCheckBox.put("900",cb_sec_rb3);
+        mapCheckBox.put("898", cb_sec_rb1);
+        mapCheckBox.put("899", cb_sec_rb2);
+        mapCheckBox.put("900", cb_sec_rb3);
 //三星四个
-        mapCheckBox.put("901",cb_third_rb1);
-        mapCheckBox.put("902",cb_third_rb2);
-        mapCheckBox.put("903",cb_third_rb3);
-        mapCheckBox.put("904",cb_third_rb4);
+        mapCheckBox.put("901", cb_third_rb1);
+        mapCheckBox.put("902", cb_third_rb2);
+        mapCheckBox.put("903", cb_third_rb3);
+        mapCheckBox.put("904", cb_third_rb4);
 //四星6个
-        mapCheckBox.put("905",cb_forth_rb1);
-        mapCheckBox.put("906",cb_forth_rb2);
-        mapCheckBox.put("907",cb_forth_rb3);
-        mapCheckBox.put("908",cb_forth_rb4);
-        mapCheckBox.put("909",cb_forth_rb5);
-        mapCheckBox.put("910",cb_forth_rb6);
+        mapCheckBox.put("905", cb_forth_rb1);
+        mapCheckBox.put("906", cb_forth_rb2);
+        mapCheckBox.put("907", cb_forth_rb3);
+        mapCheckBox.put("908", cb_forth_rb4);
+        mapCheckBox.put("909", cb_forth_rb5);
+        mapCheckBox.put("910", cb_forth_rb6);
 //五星五个
-        mapCheckBox.put("911",cb_fifth_rb1);
-        mapCheckBox.put("912",cb_fifth_rb2);
-        mapCheckBox.put("913",cb_fifth_rb3);
-        mapCheckBox.put("914",cb_fifth_rb4);
-        mapCheckBox.put("915",cb_fifth_rb5);
+        mapCheckBox.put("911", cb_fifth_rb1);
+        mapCheckBox.put("912", cb_fifth_rb2);
+        mapCheckBox.put("913", cb_fifth_rb3);
+        mapCheckBox.put("914", cb_fifth_rb4);
+        mapCheckBox.put("915", cb_fifth_rb5);
     }
 
 
 //每次点击五星都要清除选择的checkBox
 
-    public  void  clearCheckBox(){
-        for(Map.Entry<String, CheckBox> entry:mapCheckBox.entrySet()){
+    public void clearCheckBox() {
+        for (Map.Entry<String, CheckBox> entry : mapCheckBox.entrySet()) {
 
             if (entry.getValue().isChecked()) {
                 entry.getValue().setChecked(false);
@@ -477,7 +493,6 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
         }
 
     }
-
 
 
     private void initChoise() {
@@ -490,7 +505,7 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
             ratingBar = "三星";
         } else if (ratebar4.isChecked() && (!ratebar5.isChecked())) {
             ratingBar = "四星";
-        } else if (ratebar5.isChecked()){
+        } else if (ratebar5.isChecked()) {
             ratingBar = "五星";
         }
         //获取星级介绍
@@ -499,7 +514,7 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
         //获取星级对应评价
         //1星
         if (ll_cb_first.getVisibility() == View.VISIBLE) {
-            Log.e("TAG",cb_first_rb1.isChecked()+"");
+            Log.e("TAG", cb_first_rb1.isChecked() + "");
             if (cb_first_rb1.isChecked()) {
                 assessStr = cb_first_rb1.getText().toString();
             } else if (cb_first_rb2.isChecked()) {
@@ -511,7 +526,7 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
             } else if (cb_first_rb5.isChecked()) {
                 assessStr = cb_first_rb5.getText().toString();
             }
-         //2星
+            //2星
         } else if (ll_cb_sec.getVisibility() == View.VISIBLE) {
             if (cb_sec_rb1.isChecked()) {
                 assessStr = cb_sec_rb1.getText().toString();
@@ -547,7 +562,7 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
                 assessStr = cb_forth_rb6.getText().toString();
             }
             //5星
-        } else if (ll_cb_fifth.getVisibility() == View.VISIBLE){
+        } else if (ll_cb_fifth.getVisibility() == View.VISIBLE) {
             if (cb_fifth_rb1.isChecked()) {
                 assessStr = cb_fifth_rb1.getText().toString();
             } else if (cb_fifth_rb2.isChecked()) {
@@ -573,7 +588,7 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
             pingJiaValue += entry.getKey() + "=" + entry.getValue() + "&";
         }
 
-        if (pingJiaValue.length()>0) {
+        if (pingJiaValue.length() > 0) {
             pingJiaValue = pingJiaValue.substring(0, pingJiaValue.length() - 1);
         }
 
@@ -603,7 +618,7 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
                             Log.e(TAG, "onResponse: " + response);
                             if (response != null && !response.equals("0")) {
                                 //返回列表页面并刷新
-                                    backToInfo();
+                                backToInfo();
                             } else {
                                 Toast.makeText(StarRatingBarActivity.this, "操作失败", Toast.LENGTH_SHORT).show();
                             }
@@ -615,6 +630,7 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
 
 
     }
+
     public void backToInfo() {
         Toast.makeText(this, "评价成功", Toast.LENGTH_SHORT).show();
         dialog.dismiss();
@@ -627,9 +643,9 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
             case R.id.btn_add:
                 getCommitCheckBox();//点选评语
                 getComment();//打字评语
-                if (commitMap.size()>0) {
+                if (commitMap.size() > 0) {
                     getCommit();
-                }else{
+                } else {
                     Toast.makeText(this, "请至少选择一项", Toast.LENGTH_SHORT).show();
                 }
 
@@ -640,36 +656,37 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
 
 
     }
-//获取评语备注
+
+    //获取评语备注
     private void getComment() {
 //获取key
-        Map<String,Object> commentMap=fieldSet.get(2);
-        String commentKey=String.valueOf(commentMap.get(Constant.primKey));
+        Map<String, Object> commentMap = fieldSet.get(2);
+        String commentKey = String.valueOf(commentMap.get(Constant.primKey));
 //获取值
-        commitMap.put(commentKey,et_content.getText().toString());
-        Log.e(TAG, "getComment: commitMap " +commitMap.toString());
+        commitMap.put(commentKey, et_content.getText().toString());
+        Log.e(TAG, "getComment: commitMap " + commitMap.toString());
     }
 
     //获取点选checkBox后得到的id们
-   public void getCommitCheckBox(){
+    public void getCommitCheckBox() {
 //获取key
-       Map<String,Object> checkMap=fieldSet.get(3);
-       String checkKey=String.valueOf(checkMap.get(Constant.primKey))+"_dicMany";//此key多了一个dicMany
+        Map<String, Object> checkMap = fieldSet.get(3);
+        String checkKey = String.valueOf(checkMap.get(Constant.primKey)) + "_dicMany";//此key多了一个dicMany
 //获取值
-       List<String> value=new ArrayList<>();
-       for(Map.Entry<String, CheckBox> entry:mapCheckBox.entrySet()){
+        List<String> value = new ArrayList<>();
+        for (Map.Entry<String, CheckBox> entry : mapCheckBox.entrySet()) {
 
-           entry.getValue().isChecked();
-           if (entry.getValue().isChecked()) {
-               value.add(entry.getKey());
-           }
-       }
+            entry.getValue().isChecked();
+            if (entry.getValue().isChecked()) {
+                value.add(entry.getKey());
+            }
+        }
 
-     String value1=DataProcess.listToString(value);
+        String value1 = DataProcess.listToString(value);
 //最后将id放进参数
-         commitMap.put(checkKey,value1);
-       Log.e(TAG, "getCommitCheckBox: commitMap " +commitMap.toString());
-   }
+        commitMap.put(checkKey, value1);
+        Log.e(TAG, "getCommitCheckBox: commitMap " + commitMap.toString());
+    }
 
 
 }

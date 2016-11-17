@@ -26,7 +26,7 @@ public class CnToolbar extends Toolbar {
     private View mView;
     private TextView mTextTitle;
     private EditText mSearchView;
-    private ImageButton mRightImageButton,mLeftImageButton;
+    private ImageButton mRightImageButton;//,mLeftImageButton
     private ImageView mOften_drop,mOften_collect;
     public CnToolbar(Context context) {
        this(context,null);
@@ -83,7 +83,7 @@ public class CnToolbar extends Toolbar {
 
 
             mRightImageButton = (ImageButton) mView.findViewById(R.id.toolbar_rightButton);
-            mLeftImageButton = (ImageButton) mView.findViewById(R.id.toolbar_leftButton);
+//            mLeftImageButton = (ImageButton) mView.findViewById(R.id.toolbar_leftButton);
             LayoutParams lp = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL);
             addView(mView, lp);
         }
@@ -94,10 +94,10 @@ public class CnToolbar extends Toolbar {
 
         mRightImageButton.setOnClickListener(li);
     }
-    public  void setLeftButtonOnClickListener(OnClickListener li){
-
-        mLeftImageButton.setOnClickListener(li);
-    }
+//    public  void setLeftButtonOnClickListener(OnClickListener li){
+//
+//        mLeftImageButton.setOnClickListener(li);
+//    }
 
 
 
