@@ -24,7 +24,6 @@ import com.kwsoft.kehuhua.utils.Utils;
 import com.kwsoft.version.Common.DataCleanManager;
 import com.kwsoft.version.FeedbackActivity;
 import com.kwsoft.version.ResetPwdActivity;
-import com.kwsoft.kehuhua.hampson.activity.StarRatingBarActivity;
 import com.kwsoft.version.StuInfoActivity;
 import com.kwsoft.version.StuLoginActivity;
 import com.pgyersdk.update.PgyUpdateManager;
