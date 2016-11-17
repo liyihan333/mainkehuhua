@@ -57,7 +57,7 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_centerHorizontal="true"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@mipmap/icon" />
 
     <Button
         android:id="@+id/btn_close"
@@ -66,5 +66,5 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="3dp"
         android:layout_marginTop="3dp"
-        android:background="@mipmap/ic_launcher" />
+        android:background="@mipmap/icon" />
 </RelativeLayout>

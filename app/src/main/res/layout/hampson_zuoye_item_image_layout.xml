@@ -7,7 +7,7 @@
         android:id="@+id/my_image_view"
         android:layout_width="65dp"
         android:layout_height="65dp"
-        fresco:placeholderImage="@drawable/ic_launcher"
+        fresco:placeholderImage="@drawable/icon"
         android:visibility="gone"
         />
     <TextView
@@ -15,6 +15,6 @@
         android:id="@+id/voice_file"
         android:layout_width="65dp"
         android:layout_height="65dp"
-        android:background="@drawable/ic_launcher"
+        android:background="@drawable/icon"
         android:visibility="gone"/>
 </LinearLayout>
