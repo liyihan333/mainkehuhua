@@ -85,11 +85,11 @@ public class TabActivity extends FragmentActivity implements ViewPager.OnPageCha
 
     private void getIntentData() {
         Intent intent = getIntent();
-        String titleName = intent.getStringExtra("titleName");
-        String mainId=intent.getStringExtra("mainId");
+        String titleName = intent.getStringExtra("titleName");//第一个获取的参数
+        String mainId=intent.getStringExtra("mainId");//第二个获取的参数
         Log.e("TAG", "tab页中的mainId："+mainId);
         mToolbar.setTitle(titleName);
-        String childTab = intent.getStringExtra("childTab");
+        String childTab = intent.getStringExtra("childTab");//第三个获取的参数
         List<Map<String, Object>> childTabList = JSON.parseObject(childTab,
                 new TypeReference<List<Map<String, Object>>>() {
                 });

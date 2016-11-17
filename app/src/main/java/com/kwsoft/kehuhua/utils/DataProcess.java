@@ -6,8 +6,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONArray;
-import com.kwsoft.kehuhua.adcustom.CourseActivity;
-import com.kwsoft.kehuhua.adcustom.ListActivity3;
+import com.kwsoft.kehuhua.adcustom.ListActivity4;
 import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.config.Constant;
 
@@ -356,7 +355,7 @@ public class DataProcess {
         return newData;
     }
 
-
+    private static final String TAG = "DataProcess";
     /**
      * 跳转到list页面，分至此不分有无菜单情况
      */
@@ -373,18 +372,19 @@ public class DataProcess {
         }
         //转换整项为字符串准备发送
         String itemDataString = JSONArray.toJSONString(itemData);
-        Log.e("itemDate-", itemDataString);
+        Log.e(TAG, "toList: itemDataString "+itemDataString);
         //转换子列表对象为字符串准备发送
         String childString = JSONArray.toJSONString(childList);
+        Log.e(TAG, "toList: childString "+childString);
         Intent intent = new Intent();
 //        if ((itemData.get("menuName").toString()).contains("评价")) {
 //            intent.setClass(mActivity, AssessActivity.class);
 //        } else {
-            if (itemData.get("menuPageUrl") == null) {
-                intent.setClass(mActivity, ListActivity3.class);
-            } else {
-                intent.setClass(mActivity, CourseActivity.class);
-            }
+//            if (itemData.get("menuPageUrl") == null) {
+                intent.setClass(mActivity, ListActivity4.class);
+//            } else {
+//                intent.setClass(mActivity, CourseActivity.class);
+//            }
 //        }
         intent.putExtra("itemData", itemDataString);
         intent.putExtra("childData", childString);

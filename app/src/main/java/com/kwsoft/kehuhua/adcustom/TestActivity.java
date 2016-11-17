@@ -29,7 +29,7 @@ public class TestActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_test_activity);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         tv_title=(TextView)findViewById(R.id.tv_title);
         tv_content=(TextView)findViewById(R.id.tv_content);
         tv_date=(TextView)findViewById(R.id.tv_date);

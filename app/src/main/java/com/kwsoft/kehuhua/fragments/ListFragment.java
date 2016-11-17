@@ -20,7 +20,7 @@ import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
 import com.kwsoft.kehuhua.adapter.ListAdapter2;
 import com.kwsoft.kehuhua.adcustom.InfoActivity;
-import com.kwsoft.kehuhua.adcustom.ListActivity3;
+import com.kwsoft.kehuhua.adcustom.ListActivity4;
 import com.kwsoft.kehuhua.adcustom.OperateDataActivity;
 import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.adcustom.base.BaseActivity;
@@ -83,13 +83,17 @@ public class ListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
         ButterKnife.bind(this, view);
+        Log.e(TAG, "onCreateView: dialog开始 ");
         ((BaseActivity)getActivity()).dialog.show();
-        initRefreshLayout();//初始化空间
+        Log.e(TAG, "onCreateView: dialog结束 ");
+        initRefreshLayout();//初始化控件
+        Log.e(TAG, "onCreateView: 初始化控件 ");
         getDataIntent();//获取初始化数据
         getData();
 
         return view;
     }
+
 
     //初始化SwipeRefreshLayout
     private void initRefreshLayout() {
@@ -133,6 +137,7 @@ public class ListFragment extends Fragment {
         pageId=paramsMap.get(Constant.pageId);
         Constant.mainTableIdValue =tableId;
         Constant.mainPageIdValue =pageId;
+        Log.e(TAG, "getDataIntent: 接收list4传递过来的listFragmentData");
     }
 
     private static final String TAG = "ListFragment";
@@ -280,16 +285,16 @@ public class ListFragment extends Fragment {
                             Constant.buttonSet.get(i).put("pageIdList", pageId);
                         }
 
-                    ((ListActivity3)getActivity()).mToolbar.showRightImageButton();
-                    ((ListActivity3)getActivity()).mToolbar.setRightButtonOnClickListener(new View.OnClickListener() {
+                    ((ListActivity4)getActivity()).mToolbar.showRightImageButton();
+                    ((ListActivity4)getActivity()).mToolbar.setRightButtonOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            ((ListActivity3)getActivity()).buttonList();
+                            ((ListActivity4)getActivity()).buttonList();
                         }
                     });
 
                 } else {
-                    ((ListActivity3)getActivity()).mToolbar.hideRightImageButton();
+                    ((ListActivity4)getActivity()).mToolbar.hideRightImageButton();
                 }
 
 
