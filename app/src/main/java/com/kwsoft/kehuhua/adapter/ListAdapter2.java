@@ -13,12 +13,12 @@ import com.alibaba.fastjson.JSON;
 import com.kwsoft.kehuhua.adcustom.OperateDataActivity;
 import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.adcustom.TabActivity;
+import com.kwsoft.kehuhua.config.Constant;
+import com.kwsoft.kehuhua.hampson.activity.StarRatingBarActivity;
 import com.kwsoft.version.StuPra;
 
 import java.util.List;
 import java.util.Map;
-
-import static com.kwsoft.kehuhua.config.Constant.mainId;
 
 
 public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
@@ -179,63 +179,89 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
                 holder.list_opera_layout.setVisibility(View.VISIBLE);
                 try {
+                    String mainId = item.get(0).get("mainId");
+
+
+
                     //第1个按钮
-                    String buttonName1 = String.valueOf(operaButton.get(0).get("buttonName"));
+                    final String buttonName1 = String.valueOf(operaButton.get(0).get("buttonName"));
                     holder.list_opera0.setText(!buttonName1.equals("null") ? buttonName1 : "");
                     holder.list_opera0.setVisibility(View.VISIBLE);
 
                     operaButton.get(0).put("dataId", mainId);
+                    operaButton.get(0).put("tableIdList", Constant.mainTableIdValue);
+                    operaButton.get(0).put("pageIdList", Constant.mainPageIdValue);
                     final String operaButtonSetMapStr=JSON.toJSONString(operaButton.get(0));
                     holder.list_opera0.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Intent mIntentEdit = new Intent(mContext, OperateDataActivity.class);
-                            mIntentEdit.putExtra("itemSet", operaButtonSetMapStr);
-                            mContext.startActivity(mIntentEdit);
+
+                            Log.e(TAG, "onItemClick: buttonName "+buttonName1);
+                            if (buttonName1.contains("确认下课")) {
+                                Intent mIntentEdit = new Intent(mContext, StarRatingBarActivity.class);
+                                mIntentEdit.putExtra("itemSet", operaButtonSetMapStr);
+                                mContext.startActivity(mIntentEdit);
+                            }else{
+                                Intent mIntentEdit = new Intent(mContext, OperateDataActivity.class);
+                                mIntentEdit.putExtra("itemSet", operaButtonSetMapStr);
+                                mContext.startActivity(mIntentEdit);
+                            }
                         }
                     });
 
                     //第2个按钮
-                    String buttonName2 = String.valueOf(operaButton.get(1).get("buttonName"));
+                    final String buttonName2 = String.valueOf(operaButton.get(1).get("buttonName"));
                     holder.list_opera1.setText(!buttonName2.equals("null") ? buttonName2 : "");
                     holder.list_opera1.setVisibility(View.VISIBLE);
-
+                    Log.e(TAG, "onBindViewHolder: operaButton.get(1) "+operaButton.get(1).toString());
                     operaButton.get(1).put("dataId", mainId);
+                    operaButton.get(1).put("tableIdList", Constant.mainTableIdValue);
+                    operaButton.get(1).put("pageIdList", Constant.mainPageIdValue);
+                    Log.e(TAG, "onBindViewHolder: operaButton.get(1) "+operaButton.get(1).toString());
                     final String operaButtonSetMapStr1=JSON.toJSONString(operaButton.get(1));
+
+
                     holder.list_opera1.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Intent mIntentEdit = new Intent(mContext, OperateDataActivity.class);
-                            mIntentEdit.putExtra("itemSet", operaButtonSetMapStr1);
-                            mContext.startActivity(mIntentEdit);
+                            if (buttonName2.contains("确认下课")) {
+                                Intent mIntentEdit = new Intent(mContext, StarRatingBarActivity.class);
+                                mIntentEdit.putExtra("itemSet", operaButtonSetMapStr1);
+                                mContext.startActivity(mIntentEdit);
+                            }else{
+                                Intent mIntentEdit = new Intent(mContext, OperateDataActivity.class);
+                                mIntentEdit.putExtra("itemSet", operaButtonSetMapStr1);
+                                mContext.startActivity(mIntentEdit);
+                            }
                         }
                     });
                     //第3个按钮
-                    String buttonName3 = String.valueOf(operaButton.get(2).get("buttonName"));
+                    final String buttonName3 = String.valueOf(operaButton.get(2).get("buttonName"));
                     holder.list_opera2.setText(!buttonName3.equals("null") ? buttonName3 : "");
                     holder.list_opera2.setVisibility(View.VISIBLE);
 
                     operaButton.get(2).put("dataId", mainId);
+                    operaButton.get(2).put("tableIdList", Constant.mainTableIdValue);
+                    operaButton.get(2).put("pageIdList", Constant.mainPageIdValue);
                     final String operaButtonSetMapStr2=JSON.toJSONString(operaButton.get(2));
                     holder.list_opera2.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Intent mIntentEdit = new Intent(mContext, OperateDataActivity.class);
-                            mIntentEdit.putExtra("itemSet", operaButtonSetMapStr2);
-                            mContext.startActivity(mIntentEdit);
+                            if (buttonName3.contains("确认下课")) {
+                                Intent mIntentEdit = new Intent(mContext, StarRatingBarActivity.class);
+                                mIntentEdit.putExtra("itemSet", operaButtonSetMapStr2);
+                                mContext.startActivity(mIntentEdit);
+                            }else{
+                                Intent mIntentEdit = new Intent(mContext, OperateDataActivity.class);
+                                mIntentEdit.putExtra("itemSet", operaButtonSetMapStr2);
+                                mContext.startActivity(mIntentEdit);
+                            }
                         }
                     });
-
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-
             }
-
-
-
-
             holder.itemView.setTag(item);
         }
 
