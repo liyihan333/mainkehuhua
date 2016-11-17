@@ -105,7 +105,7 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
 
 
                     infoDataList.get(0).get("allItemData");
-
+                    //筛选button show
                     //循环保留显示按钮
 
                     for (int i=0;i<operaButtonSet0.size();i++) {
@@ -114,11 +114,8 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
 
                     }
 
-
-
-
-
                     operaButtonSet=operaButtonSet0;
+
                     Log.e("TAG", "详情页operaButtonSet " +operaButtonSet.toString());
                 }
             } else {
@@ -205,6 +202,7 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
                     }
                 });
 
+
                 final SimpleAdapter adapter = new SimpleAdapter(
                         this,
                         operaButtonSet,
@@ -255,36 +253,6 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
                                             break;
                                     }
 
-//                                    switch (buttonType) {
-//                                        case 12://修改页面
-//                                            Intent mIntentEdit = new Intent(InfoActivity.this, RowsEditActivity.class);
-//                                            String requestUrl = Constant.sysUrl + Constant.requestEdit;
-//                                            mIntentEdit.putExtra("itemSet", operaButtonSetMapStr);
-//                                            mIntentEdit.putExtra("isReadOnly", String.valueOf(buttonType));
-//                                            delMapParams.put("buttonType", String.valueOf(operaButtonSetMap.get("buttonType")));
-//                                            startActivity(mIntentEdit);
-//                                            break;
-//                                        case 18://关联添加类型操作
-//                                            Intent mIntentRowAdd = new Intent(InfoActivity.this, RowsAddActivity.class);
-//                                            mIntentRowAdd.putExtra("addSet", operaButtonSetMapStr);
-//                                            startActivity(mIntentRowAdd);
-//                                            break;
-//                                        case 15://查看
-//                                            Intent mIntentOnlySee = new Intent(InfoActivity.this, RowsEditActivity.class);
-//                                            mIntentOnlySee.putExtra("itemSet", operaButtonSetMapStr);
-//                                            mIntentOnlySee.putExtra("isReadOnly", String.valueOf(buttonType));
-//                                            delMapParams.put("buttonType", String.valueOf(operaButtonSetMap.get("buttonType")));
-//                                            startActivity(mIntentOnlySee);
-//                                            break;
-//
-//                                        case 13://单项删除操作
-//                                            delMapParams.put(Constant.tableId, tableId);
-//                                            delMapParams.put(Constant.pageId, String.valueOf(operaButtonSetMap.get("startTurnPage")));
-//                                            delMapParams.put(Constant.delIds, String.valueOf(operaButtonSetMap.get("dataId")));
-//                                            delMapParams.put("buttonType", String.valueOf(operaButtonSetMap.get("buttonType")));
-//                                            toDelete();
-//                                            break;
-//                                    }
                                     // 隐藏弹出窗口
                                     if (popupWindow != null && popupWindow.isShowing()) {
                                         popupWindow.dismiss();
@@ -409,3 +377,37 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
     }
 
 }
+
+
+
+
+//                                    switch (buttonType) {
+//                                        case 12://修改页面
+//                                            Intent mIntentEdit = new Intent(InfoActivity.this, RowsEditActivity.class);
+//                                            String requestUrl = Constant.sysUrl + Constant.requestEdit;
+//                                            mIntentEdit.putExtra("itemSet", operaButtonSetMapStr);
+//                                            mIntentEdit.putExtra("isReadOnly", String.valueOf(buttonType));
+//                                            delMapParams.put("buttonType", String.valueOf(operaButtonSetMap.get("buttonType")));
+//                                            startActivity(mIntentEdit);
+//                                            break;
+//                                        case 18://关联添加类型操作
+//                                            Intent mIntentRowAdd = new Intent(InfoActivity.this, RowsAddActivity.class);
+//                                            mIntentRowAdd.putExtra("addSet", operaButtonSetMapStr);
+//                                            startActivity(mIntentRowAdd);
+//                                            break;
+//                                        case 15://查看
+//                                            Intent mIntentOnlySee = new Intent(InfoActivity.this, RowsEditActivity.class);
+//                                            mIntentOnlySee.putExtra("itemSet", operaButtonSetMapStr);
+//                                            mIntentOnlySee.putExtra("isReadOnly", String.valueOf(buttonType));
+//                                            delMapParams.put("buttonType", String.valueOf(operaButtonSetMap.get("buttonType")));
+//                                            startActivity(mIntentOnlySee);
+//                                            break;
+//
+//                                        case 13://单项删除操作
+//                                            delMapParams.put(Constant.tableId, tableId);
+//                                            delMapParams.put(Constant.pageId, String.valueOf(operaButtonSetMap.get("startTurnPage")));
+//                                            delMapParams.put(Constant.delIds, String.valueOf(operaButtonSetMap.get("dataId")));
+//                                            delMapParams.put("buttonType", String.valueOf(operaButtonSetMap.get("buttonType")));
+//                                            toDelete();
+//                                            break;
+//                                    }

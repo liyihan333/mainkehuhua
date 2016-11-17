@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.kwsoft.kehuhua.adcustom.OperateDataActivity;
 import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.adcustom.TabActivity;
@@ -17,6 +18,7 @@ import com.kwsoft.kehuhua.config.Constant;
 import com.kwsoft.kehuhua.hampson.activity.StarRatingBarActivity;
 import com.kwsoft.version.StuPra;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -175,92 +177,121 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
 //判断显示按钮
 
+            //首先过滤不能显示的按钮，将不显示的按钮删除
+
+
+
+
+
+
             if (operaButton!=null&&operaButton.size()>0) {
+                Log.e(TAG, "onBindViewHolder: operaButton "+operaButton.toString());
+                List<Map<String, Object>> operaButtonNow=new ArrayList<>();//不能在原来的上面改，需要新建，否则后面的会得到错误的集合
+                Log.e(TAG, "onBindViewHolder: item.get(0) "+item.get(0).toString());
+                String itemDataStr=item.get(0).get("allItemData");
+                Map<String,Object>  itemDataMap = JSON.parseObject(itemDataStr,
+                        new TypeReference<Map<String, Object>>() {
+                        });
 
-                holder.list_opera_layout.setVisibility(View.VISIBLE);
-                try {
-                    String mainId = item.get(0).get("mainId");
+                for (int i=0;i<operaButton.size();i++) {
 
+                   String buttonId= String.valueOf(operaButton.get(i).get("buttonId"));
+                   String buttonKey="BTN_SHOW_"+buttonId;
+                    String isShow=String.valueOf(itemDataMap.get(buttonKey));
 
-
-                    //第1个按钮
-                    final String buttonName1 = String.valueOf(operaButton.get(0).get("buttonName"));
-                    holder.list_opera0.setText(!buttonName1.equals("null") ? buttonName1 : "");
-                    holder.list_opera0.setVisibility(View.VISIBLE);
-
-                    operaButton.get(0).put("dataId", mainId);
-                    operaButton.get(0).put("tableIdList", Constant.mainTableIdValue);
-                    operaButton.get(0).put("pageIdList", Constant.mainPageIdValue);
-                    final String operaButtonSetMapStr=JSON.toJSONString(operaButton.get(0));
-                    holder.list_opera0.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-
-                            Log.e(TAG, "onItemClick: buttonName "+buttonName1);
-                            if (buttonName1.contains("确认下课")) {
-                                Intent mIntentEdit = new Intent(mContext, StarRatingBarActivity.class);
-                                mIntentEdit.putExtra("itemSet", operaButtonSetMapStr);
-                                mContext.startActivity(mIntentEdit);
-                            }else{
-                                Intent mIntentEdit = new Intent(mContext, OperateDataActivity.class);
-                                mIntentEdit.putExtra("itemSet", operaButtonSetMapStr);
-                                mContext.startActivity(mIntentEdit);
-                            }
-                        }
-                    });
-
-                    //第2个按钮
-                    final String buttonName2 = String.valueOf(operaButton.get(1).get("buttonName"));
-                    holder.list_opera1.setText(!buttonName2.equals("null") ? buttonName2 : "");
-                    holder.list_opera1.setVisibility(View.VISIBLE);
-                    Log.e(TAG, "onBindViewHolder: operaButton.get(1) "+operaButton.get(1).toString());
-                    operaButton.get(1).put("dataId", mainId);
-                    operaButton.get(1).put("tableIdList", Constant.mainTableIdValue);
-                    operaButton.get(1).put("pageIdList", Constant.mainPageIdValue);
-                    Log.e(TAG, "onBindViewHolder: operaButton.get(1) "+operaButton.get(1).toString());
-                    final String operaButtonSetMapStr1=JSON.toJSONString(operaButton.get(1));
-
-
-                    holder.list_opera1.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            if (buttonName2.contains("确认下课")) {
-                                Intent mIntentEdit = new Intent(mContext, StarRatingBarActivity.class);
-                                mIntentEdit.putExtra("itemSet", operaButtonSetMapStr1);
-                                mContext.startActivity(mIntentEdit);
-                            }else{
-                                Intent mIntentEdit = new Intent(mContext, OperateDataActivity.class);
-                                mIntentEdit.putExtra("itemSet", operaButtonSetMapStr1);
-                                mContext.startActivity(mIntentEdit);
-                            }
-                        }
-                    });
-                    //第3个按钮
-                    final String buttonName3 = String.valueOf(operaButton.get(2).get("buttonName"));
-                    holder.list_opera2.setText(!buttonName3.equals("null") ? buttonName3 : "");
-                    holder.list_opera2.setVisibility(View.VISIBLE);
-
-                    operaButton.get(2).put("dataId", mainId);
-                    operaButton.get(2).put("tableIdList", Constant.mainTableIdValue);
-                    operaButton.get(2).put("pageIdList", Constant.mainPageIdValue);
-                    final String operaButtonSetMapStr2=JSON.toJSONString(operaButton.get(2));
-                    holder.list_opera2.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            if (buttonName3.contains("确认下课")) {
-                                Intent mIntentEdit = new Intent(mContext, StarRatingBarActivity.class);
-                                mIntentEdit.putExtra("itemSet", operaButtonSetMapStr2);
-                                mContext.startActivity(mIntentEdit);
-                            }else{
-                                Intent mIntentEdit = new Intent(mContext, OperateDataActivity.class);
-                                mIntentEdit.putExtra("itemSet", operaButtonSetMapStr2);
-                                mContext.startActivity(mIntentEdit);
-                            }
-                        }
-                    });
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    if (isShow.equals("1")) {
+                        operaButtonNow.add(operaButton.get(i));
+                    }
                 }
+                Log.e(TAG, "onBindViewHolder: operaButtonNow "+operaButtonNow.toString());
+
+                if (operaButtonNow.size()>0) {
+                    holder.list_opera_layout.setVisibility(View.VISIBLE);
+                    try {
+                        String mainId = item.get(0).get("mainId");
+
+
+
+                        //第1个按钮
+                        final String buttonName1 = String.valueOf(operaButtonNow.get(0).get("buttonName"));
+                        holder.list_opera0.setText(!buttonName1.equals("null") ? buttonName1 : "");
+                        holder.list_opera0.setVisibility(View.VISIBLE);
+
+                        operaButtonNow.get(0).put("dataId", mainId);
+                        operaButtonNow.get(0).put("tableIdList", Constant.mainTableIdValue);
+                        operaButtonNow.get(0).put("pageIdList", Constant.mainPageIdValue);
+                        final String operaButtonSetMapStr=JSON.toJSONString(operaButton.get(0));
+                        holder.list_opera0.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+
+                                Log.e(TAG, "onItemClick: buttonName "+buttonName1);
+                                if (buttonName1.contains("确认下课")) {
+                                    Intent mIntentEdit = new Intent(mContext, StarRatingBarActivity.class);
+                                    mIntentEdit.putExtra("itemSet", operaButtonSetMapStr);
+                                    mContext.startActivity(mIntentEdit);
+                                }else{
+                                    Intent mIntentEdit = new Intent(mContext, OperateDataActivity.class);
+                                    mIntentEdit.putExtra("itemSet", operaButtonSetMapStr);
+                                    mContext.startActivity(mIntentEdit);
+                                }
+                            }
+                        });
+
+                        //第2个按钮
+                        final String buttonName2 = String.valueOf(operaButtonNow.get(1).get("buttonName"));
+                        holder.list_opera1.setText(!buttonName2.equals("null") ? buttonName2 : "");
+                        holder.list_opera1.setVisibility(View.VISIBLE);
+                        Log.e(TAG, "onBindViewHolder: operaButton.get(1) "+operaButtonNow.get(1).toString());
+                        operaButtonNow.get(1).put("dataId", mainId);
+                        operaButtonNow.get(1).put("tableIdList", Constant.mainTableIdValue);
+                        operaButtonNow.get(1).put("pageIdList", Constant.mainPageIdValue);
+                        Log.e(TAG, "onBindViewHolder: operaButton.get(1) "+operaButtonNow.get(1).toString());
+                        final String operaButtonSetMapStr1=JSON.toJSONString(operaButtonNow.get(1));
+
+
+                        holder.list_opera1.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                if (buttonName2.contains("确认下课")) {
+                                    Intent mIntentEdit = new Intent(mContext, StarRatingBarActivity.class);
+                                    mIntentEdit.putExtra("itemSet", operaButtonSetMapStr1);
+                                    mContext.startActivity(mIntentEdit);
+                                }else{
+                                    Intent mIntentEdit = new Intent(mContext, OperateDataActivity.class);
+                                    mIntentEdit.putExtra("itemSet", operaButtonSetMapStr1);
+                                    mContext.startActivity(mIntentEdit);
+                                }
+                            }
+                        });
+                        //第3个按钮
+                        final String buttonName3 = String.valueOf(operaButtonNow.get(2).get("buttonName"));
+                        holder.list_opera2.setText(!buttonName3.equals("null") ? buttonName3 : "");
+                        holder.list_opera2.setVisibility(View.VISIBLE);
+
+                        operaButtonNow.get(2).put("dataId", mainId);
+                        operaButtonNow.get(2).put("tableIdList", Constant.mainTableIdValue);
+                        operaButtonNow.get(2).put("pageIdList", Constant.mainPageIdValue);
+                        final String operaButtonSetMapStr2=JSON.toJSONString(operaButtonNow.get(2));
+                        holder.list_opera2.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                if (buttonName3.contains("确认下课")) {
+                                    Intent mIntentEdit = new Intent(mContext, StarRatingBarActivity.class);
+                                    mIntentEdit.putExtra("itemSet", operaButtonSetMapStr2);
+                                    mContext.startActivity(mIntentEdit);
+                                }else{
+                                    Intent mIntentEdit = new Intent(mContext, OperateDataActivity.class);
+                                    mIntentEdit.putExtra("itemSet", operaButtonSetMapStr2);
+                                    mContext.startActivity(mIntentEdit);
+                                }
+                            }
+                        });
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
             }
             holder.itemView.setTag(item);
         }
