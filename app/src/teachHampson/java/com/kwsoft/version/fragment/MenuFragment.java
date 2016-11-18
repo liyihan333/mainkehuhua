@@ -18,11 +18,9 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.TypeReference;
 import com.kwsoft.kehuhua.adcustom.CourseActivity;
-import com.kwsoft.kehuhua.adcustom.ListActivity3;
+import com.kwsoft.kehuhua.adcustom.ListActivity4;
 import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.utils.DataProcess;
-import com.kwsoft.version.StuPra;
-import com.kwsoft.version.TextAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +33,7 @@ import java.util.Map;
 public class MenuFragment extends Fragment {
     private ListView regionListView;
     private GridView nextMenu;
-    //    private TextView rightView;
+//    private TextView rightView;
 //    private ArrayList<String> groups = new ArrayList<String>();
     private TextAdapter earaListViewAdapter;
     private List<Map<String, Object>> parentList;
@@ -138,7 +136,7 @@ public class MenuFragment extends Fragment {
             try {
                 String itemDataString = JSONArray.toJSONString(itemData);
                 Intent intent = new Intent();
-                intent.setClass(getActivity(), ListActivity3.class);
+                intent.setClass(getActivity(), ListActivity4.class);
                 Log.e("TAG", "itemData" + itemDataString);
                 intent.putExtra("itemData", itemDataString);
                 startActivity(intent);
