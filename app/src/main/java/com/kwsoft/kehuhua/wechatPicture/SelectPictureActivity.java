@@ -219,6 +219,7 @@ public class SelectPictureActivity extends BaseActivity implements View.OnClickL
                 button.setVisibility(View.GONE);
                 mlistview.setVisibility(View.VISIBLE);
             }
+
         });
 
         mAdapter = new RecorderAdapter(this, mDatas);

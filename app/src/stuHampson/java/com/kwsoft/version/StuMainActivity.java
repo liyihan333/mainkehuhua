@@ -126,17 +126,17 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
             }
         });
 
-        mToolbar.setLeftButtonOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                PermissionGen.with(StuMainActivity.this)
-                        .addRequestCode(105)
-                        .permissions(
-                                Manifest.permission.CAMERA,
-                                Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                        .request();
-            }
-        });
+//        mToolbar.setLeftButtonOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                PermissionGen.with(StuMainActivity.this)
+//                        .addRequestCode(105)
+//                        .permissions(
+//                                Manifest.permission.CAMERA,
+//                                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+//                        .request();
+//            }
+//        });
 
     }
 

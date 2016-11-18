@@ -3,31 +3,37 @@ package com.kwsoft.kehuhua.hampson.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.BaseAdapter;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.kwsoft.kehuhua.adcustom.R;
-import com.kwsoft.kehuhua.config.Constant;
-import com.kwsoft.kehuhua.hampson.activity.PlayAudioActivity;
-import com.kwsoft.kehuhua.hampson.activity.ZoomImageActivity;
+import com.kwsoft.kehuhua.adcustom.base.BaseActivity;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.FileCallBack;
 
+import java.io.File;
 import java.util.List;
+import java.util.Locale;
 
+import okhttp3.Call;
 
 
 /**
  * Created by Administrator on 2016/11/14 0014.
+ *
  */
 
 public class ZuoYeGridViewAdapter extends BaseAdapter {
-    Context context;
-    List<String> datas;
-    List<String> fileNames;
+    private Context context;
+    private List<String> datas;
+    private List<String> fileNames;
 
     public ZuoYeGridViewAdapter(Context context, List<String> datas,List<String> fileNames) {
         this.context=context;
@@ -53,68 +59,83 @@ public class ZuoYeGridViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, View view, ViewGroup viewGroup) {
 
         view = LayoutInflater.from(context).inflate(R.layout.hampson_zuoye_item_image_layout, null);
-
-
-        TextView  voice_file=(TextView)view.findViewById(R.id.voice_file);
         SimpleDraweeView my_image_view=(SimpleDraweeView)view.findViewById(R.id.my_image_view);
-        final String url= Constant.sysUrl+Constant.downLoadFileStr+datas.get(i);
-        final String filename=fileNames.get(i);
-        if (fileNames.get(i).endsWith(".JPG")||fileNames.get(i).endsWith(".JPEG")
-        ||fileNames.get(i).endsWith(".GIF")||fileNames.get(i).endsWith(".PNG")
-                ||fileNames.get(i).endsWith(".BMP")||fileNames.get(i).endsWith(".WBMP")
-        ||fileNames.get(i).endsWith(".jpg")||fileNames.get(i).endsWith(".jpeg")
-                ||fileNames.get(i).endsWith(".gif")||fileNames.get(i).endsWith(".png")
-                ||fileNames.get(i).endsWith(".bmp")||fileNames.get(i).endsWith(".wbmp")
-                ) {
             my_image_view.setVisibility(View.VISIBLE);
-
-            Uri uri = Uri.parse(url);
+//          final String prefix=fileNames.get(i).substring(fileNames.get(i).lastIndexOf(".")+1);
+            Uri uri = Uri.parse(datas.get(i));
             my_image_view.setImageURI(uri);
             my_image_view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("imgPaths", url);
-                    goToActivity(context, ZoomImageActivity.class, bundle);
+                    ((BaseActivity)context).dialog.show();
+                    try {
+                        showProgressiveJPEGs(datas.get(i),fileNames.get(i));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             });
-        }else if(fileNames.get(i).endsWith(".MP3")||fileNames.get(i).endsWith(".M4A")
-                ||fileNames.get(i).endsWith(".WAV")||fileNames.get(i).endsWith(".AMR")
-                ||fileNames.get(i).endsWith(".AWB")||fileNames.get(i).endsWith(".WMA")
-                ||fileNames.get(i).endsWith(".OGG")||fileNames.get(i).endsWith(".3GPP")
-             ||fileNames.get(i).endsWith(".mp3")||fileNames.get(i).endsWith(".m4a")
-                ||fileNames.get(i).endsWith(".wav")||fileNames.get(i).endsWith(".amr")
-                ||fileNames.get(i).endsWith(".awb")||fileNames.get(i).endsWith(".wma")
-                ||fileNames.get(i).endsWith(".ogg")||fileNames.get(i).endsWith(".3gpp")
-        ){
-
-            voice_file.setVisibility(View.VISIBLE);
-            voice_file.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("imgPaths", url);
-                    bundle.putString("fileName", filename);
-                    goToActivity(context, PlayAudioActivity.class, bundle);
-                }
-            });
-
-
-        }
 
         return view;
     }
 
+    private static final String TAG = "ZuoYeGridViewAdapter";
+    /**
+     * 演示：逐渐加载的图片，即，从模糊逐渐清晰。需要图片本身也支持这种方式
+     */
+    private void showProgressiveJPEGs(String url,String fileName) {
+        final String path= Environment.getExternalStorageDirectory().getPath();
+        OkHttpUtils.get()//
+                .url(url)
+                .tag(this)//
+                .build()
+                .execute(new FileCallBack(path, fileName) {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
 
-    public void goToActivity(Context context, Class<?> cls, Bundle bundle) {
-        Intent intent = new Intent(context, cls);
-        if (bundle == null) {
-            bundle = new Bundle();
+                    }
+
+                    @Override
+                    public void onResponse(File response, int id) {
+                        //Activity mActivity,final String filePath
+                        Log.e(TAG, "onResponse: 下载成功"+response.getName());
+                        openFile(path+"/"+response.getName());
+                    }
+
+                    @Override
+                    public void inProgress(float progress, long total, int id) {
+                        super.inProgress(progress, total, id);
+                    }
+                });
+    }
+
+    /**
+
+     */
+    private void openFile(final String filePath)
+    {
+        String ext = filePath.substring(filePath.lastIndexOf('.')).toLowerCase(Locale.US);
+        try
+        {
+            MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+            String temp = ext.substring(1);
+            String mime = mimeTypeMap.getMimeTypeFromExtension(temp);
+
+            Intent intent = new Intent();
+            intent.setAction(android.content.Intent.ACTION_VIEW);
+            File file = new File(filePath);
+            intent.setDataAndType(Uri.fromFile(file), mime);
+            context.startActivity(intent);
+            ((BaseActivity)context).dialog.dismiss();
         }
-        intent.putExtras(bundle);
-        context.startActivity(intent);
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            Toast.makeText(context, "无法打开后缀名为." + ext + "的文件！",
+                    Toast.LENGTH_LONG).show();
+        }
     }
 }

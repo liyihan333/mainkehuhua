@@ -185,9 +185,7 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
 
             if (operaButton!=null&&operaButton.size()>0) {
-                Log.e(TAG, "onBindViewHolder: operaButton "+operaButton.toString());
                 List<Map<String, Object>> operaButtonNow=new ArrayList<>();//不能在原来的上面改，需要新建，否则后面的会得到错误的集合
-                Log.e(TAG, "onBindViewHolder: item.get(0) "+item.get(0).toString());
                 String itemDataStr=item.get(0).get("allItemData");
                 Map<String,Object>  itemDataMap = JSON.parseObject(itemDataStr,
                         new TypeReference<Map<String, Object>>() {
