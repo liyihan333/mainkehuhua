@@ -43,12 +43,18 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
     public CheckBox cb_forth_rb1, cb_forth_rb2, cb_forth_rb3, cb_forth_rb4, cb_forth_rb5, cb_forth_rb6;//四颗星
     public CheckBox cb_fifth_rb1, cb_fifth_rb2, cb_fifth_rb3, cb_fifth_rb4, cb_fifth_rb5;//五颗星
     public EditText et_content;
-    public CheckBox ratebar1, ratebar2, ratebar3, ratebar4, ratebar5;
+    public Button ratebar1, ratebar2, ratebar22, ratebar3, ratebar33, ratebar4, ratebar44, ratebar5, ratebar55;
     public LinearLayout ll_cb_first, ll_cb_sec, ll_cb_third, ll_cb_forth, ll_cb_fifth;
     private CommonToolbar mToolbar;
     private Button btnAdd;
     private String ratingBar, rbDetailStr, assessStr, contentStr;//星级、星级对应的评价、备注内容
     private TextView tv_assess;//教师点评
+    //获取星级字典id列表
+    List<Map<String, String>> xingJiDicList = new ArrayList<>();
+    //获取星级对应文字列表
+    List<Map<String, String>> xingJiDicList1 = new ArrayList<>();
+    String finalXingJiKey, finalXingJiKey1, ratingbarNum = "5";
+
 
     Map<String, String> commitMap = new HashMap<>();
 
@@ -181,11 +187,24 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
         });
 
 
-        ratebar1 = (CheckBox) findViewById(R.id.ratebar1);
-        ratebar2 = (CheckBox) findViewById(R.id.ratebar2);
-        ratebar3 = (CheckBox) findViewById(R.id.ratebar3);
-        ratebar4 = (CheckBox) findViewById(R.id.ratebar4);
-        ratebar5 = (CheckBox) findViewById(R.id.ratebar5);
+        ratebar1 = (Button) findViewById(R.id.ratebar1);
+        ratebar2 = (Button) findViewById(R.id.ratebar2);
+        ratebar3 = (Button) findViewById(R.id.ratebar3);
+        ratebar4 = (Button) findViewById(R.id.ratebar4);
+        ratebar5 = (Button) findViewById(R.id.ratebar5);
+        ratebar22 = (Button) findViewById(R.id.ratebar22);
+        ratebar33 = (Button) findViewById(R.id.ratebar33);
+        ratebar44 = (Button) findViewById(R.id.ratebar44);
+        ratebar55 = (Button) findViewById(R.id.ratebar55);
+        ratebar1.setOnClickListener(this);
+        ratebar2.setOnClickListener(this);
+        ratebar3.setOnClickListener(this);
+        ratebar4.setOnClickListener(this);
+        ratebar5.setOnClickListener(this);
+        ratebar22.setOnClickListener(this);
+        ratebar33.setOnClickListener(this);
+        ratebar44.setOnClickListener(this);
+        ratebar55.setOnClickListener(this);
 
         tv_assess = (TextView) findViewById(R.id.tv_assess);
 
@@ -249,17 +268,13 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
 
         }
         //获取星级字典id列表
-        final List<Map<String, String>> xingJiDicList = (List<Map<String, String>>) xingJiMap.get("dicList");
+        xingJiDicList = (List<Map<String, String>>) xingJiMap.get("dicList");
         //获取星级对应文字列表
-        final List<Map<String, String>> xingJiDicList1 = (List<Map<String, String>>) xingJiMap1.get("dicList");
+        xingJiDicList1 = (List<Map<String, String>>) xingJiMap1.get("dicList");
 
-        final String finalXingJiKey = xingJiKey;
-        final String finalXingJiKey1 = xingJiKey1;
+        String finalXingJiKey = xingJiKey;
+        String finalXingJiKey1 = xingJiKey1;
         //默认好评，不选择任何项，直接提交评价为五星好评
-        ratebar1.setChecked(true);
-        ratebar2.setChecked(true);
-        ratebar3.setChecked(true);
-        ratebar4.setChecked(true);
         ll_cb_first.setVisibility(View.GONE);
         ll_cb_sec.setVisibility(View.GONE);
         ll_cb_third.setVisibility(View.GONE);
@@ -268,166 +283,11 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
         tv_assess.setText(xingJiDicList1.get(0).get("DIC_NAME"));
         commitMap.put(finalXingJiKey, xingJiDicList.get(0).get("DIC_ID"));
         commitMap.put(finalXingJiKey1, xingJiDicList1.get(0).get("DIC_ID"));
-        //开始监听按钮状态变化
-        ratebar1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                ratebar1.setChecked(true);
-                if (b) {
-                    if (!ratebar5.isChecked() && !ratebar4.isChecked() && !ratebar3.isChecked() && !ratebar2.isChecked()) {
-                        clearCheckBox();
-                        ll_cb_first.setVisibility(View.VISIBLE);
-                        ll_cb_sec.setVisibility(View.GONE);
-                        ll_cb_third.setVisibility(View.GONE);
-                        ll_cb_forth.setVisibility(View.GONE);
-                        ll_cb_fifth.setVisibility(View.GONE);
-                        tv_assess.setText(xingJiDicList1.get(4).get("DIC_NAME"));
-                        commitMap.put(finalXingJiKey, xingJiDicList.get(4).get("DIC_ID"));
-                        commitMap.put(finalXingJiKey1, xingJiDicList1.get(4).get("DIC_ID"));
 
-                        Log.e(TAG, "onCheckedChanged: commitMap " + commitMap.toString());
-                    } else {
-                        clearCheckBox();
-                        ll_cb_first.setVisibility(View.GONE);
-                    }
-                }
-            }
-        });
-
-        ratebar2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b) {
-                    ratebar1.setChecked(true);
-                    if (!ratebar5.isChecked() && !ratebar4.isChecked() && !ratebar3.isChecked()) {
-                        clearCheckBox();
-                        ll_cb_first.setVisibility(View.GONE);
-                        ll_cb_sec.setVisibility(View.VISIBLE);
-                        ll_cb_third.setVisibility(View.GONE);
-                        ll_cb_forth.setVisibility(View.GONE);
-                        ll_cb_fifth.setVisibility(View.GONE);
-                        tv_assess.setText(xingJiDicList1.get(3).get("DIC_NAME"));
-                        commitMap.put(finalXingJiKey, xingJiDicList.get(3).get("DIC_ID"));
-                        commitMap.put(finalXingJiKey1, xingJiDicList1.get(3).get("DIC_ID"));
-                        Log.e(TAG, "onCheckedChanged: commitMap " + commitMap.toString());
-                    }
-                } else {
-                    clearCheckBox();
-                    ratebar3.setChecked(false);
-                    ratebar4.setChecked(false);
-                    ratebar5.setChecked(false);
-                    ll_cb_sec.setVisibility(View.GONE);
-                    ll_cb_first.setVisibility(View.VISIBLE);
-                    tv_assess.setText(xingJiDicList1.get(4).get("DIC_NAME"));
-                    commitMap.put(finalXingJiKey, xingJiDicList.get(4).get("DIC_ID"));
-                    commitMap.put(finalXingJiKey1, xingJiDicList1.get(4).get("DIC_ID"));
-                    Log.e(TAG, "onCheckedChanged: commitMap " + commitMap.toString());
-                }
-            }
-        });
-        ratebar3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b) {
-                    if (!ratebar5.isChecked() && !ratebar4.isChecked()) {
-                        clearCheckBox();
-                        ll_cb_first.setVisibility(View.GONE);
-                        ll_cb_sec.setVisibility(View.GONE);
-                        ll_cb_third.setVisibility(View.VISIBLE);
-                        ll_cb_forth.setVisibility(View.GONE);
-                        ll_cb_fifth.setVisibility(View.GONE);
-                        tv_assess.setText(xingJiDicList1.get(2).get("DIC_NAME"));
-                        commitMap.put(finalXingJiKey, xingJiDicList.get(2).get("DIC_ID"));
-                        commitMap.put(finalXingJiKey1, xingJiDicList1.get(2).get("DIC_ID"));
-                        Log.e(TAG, "onCheckedChanged: commitMap " + commitMap.toString());
-                    }
-                    ratebar1.setChecked(true);
-                    ratebar2.setChecked(true);
-                } else {
-                    clearCheckBox();
-                    ratebar4.setChecked(false);
-                    ratebar5.setChecked(false);
-                    ll_cb_third.setVisibility(View.GONE);
-                    if (ratebar2.isChecked()) {
-                        ll_cb_sec.setVisibility(View.VISIBLE);
-                        tv_assess.setText(xingJiDicList1.get(3).get("DIC_NAME"));
-                        commitMap.put(finalXingJiKey, xingJiDicList.get(3).get("DIC_ID"));
-                        commitMap.put(finalXingJiKey1, xingJiDicList1.get(3).get("DIC_ID"));
-                        Log.e(TAG, "onCheckedChanged: commitMap " + commitMap.toString());
-                    }
-                }
-            }
-        });
-        ratebar4.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b) {
-                    clearCheckBox();
-                    if (!ratebar5.isChecked()) {
-                        ll_cb_first.setVisibility(View.GONE);
-                        ll_cb_sec.setVisibility(View.GONE);
-                        ll_cb_third.setVisibility(View.GONE);
-                        ll_cb_forth.setVisibility(View.VISIBLE);
-                        ll_cb_fifth.setVisibility(View.GONE);
-                        tv_assess.setText(xingJiDicList1.get(1).get("DIC_NAME"));
-                        commitMap.put(finalXingJiKey, xingJiDicList.get(1).get("DIC_ID"));
-                        commitMap.put(finalXingJiKey1, xingJiDicList1.get(1).get("DIC_ID"));
-                        Log.e(TAG, "onCheckedChanged: commitMap " + commitMap.toString());
-                    }
-                    ratebar1.setChecked(true);
-                    ratebar2.setChecked(true);
-                    ratebar3.setChecked(true);
-                } else {
-                    clearCheckBox();
-                    ratebar5.setChecked(false);
-                    ll_cb_forth.setVisibility(View.GONE);
-                    if (ratebar3.isChecked()) {
-                        ll_cb_third.setVisibility(View.VISIBLE);
-                        tv_assess.setText(xingJiDicList1.get(2).get("DIC_NAME"));
-                        commitMap.put(finalXingJiKey, xingJiDicList.get(2).get("DIC_ID"));
-                        commitMap.put(finalXingJiKey1, xingJiDicList1.get(2).get("DIC_ID"));
-                        Log.e(TAG, "onCheckedChanged: commitMap " + commitMap.toString());
-                    }
-                }
-            }
-        });
-        ratebar5.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-
-                if (b) {
-                    clearCheckBox();
-                    ratebar1.setChecked(true);
-                    ratebar2.setChecked(true);
-                    ratebar3.setChecked(true);
-                    ratebar4.setChecked(true);
-                    ll_cb_first.setVisibility(View.GONE);
-                    ll_cb_sec.setVisibility(View.GONE);
-                    ll_cb_third.setVisibility(View.GONE);
-                    ll_cb_forth.setVisibility(View.GONE);
-                    ll_cb_fifth.setVisibility(View.VISIBLE);
-                    tv_assess.setText(xingJiDicList1.get(0).get("DIC_NAME"));
-                    commitMap.put(finalXingJiKey, xingJiDicList.get(0).get("DIC_ID"));
-                    commitMap.put(finalXingJiKey1, xingJiDicList1.get(0).get("DIC_ID"));
-                    Log.e(TAG, "onCheckedChanged: commitMap " + commitMap.toString());
-                } else {
-                    clearCheckBox();
-                    ll_cb_fifth.setVisibility(View.GONE);
-                    if (ratebar4.isChecked()) {
-                        ll_cb_forth.setVisibility(View.VISIBLE);
-                        tv_assess.setText(xingJiDicList1.get(1).get("DIC_NAME"));
-                        commitMap.put(finalXingJiKey, xingJiDicList.get(1).get("DIC_ID"));
-                        commitMap.put(finalXingJiKey1, xingJiDicList1.get(1).get("DIC_ID"));
-                        Log.e(TAG, "onCheckedChanged: commitMap " + commitMap.toString());
-                    }
-                }
-            }
-        });
-
-        initChoise();
+        //  initChoise();
     }
 
-    Map<String, CheckBox> mapCheckBox;
+    Map<String, CheckBox> mapCheckBox = new HashMap<>();
 
     //将checkBox加上标签，以便提交的时候直接遍历获取id
     public void addTag() {
@@ -477,89 +337,89 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
     }
 
 
-    private void initChoise() {
-//获取星级
-        if (ratebar1.isChecked() && (!ratebar2.isChecked())) {
-            ratingBar = "一星";
-        } else if (ratebar2.isChecked() && (!ratebar3.isChecked())) {
-            ratingBar = "两星";
-        } else if (ratebar3.isChecked() && (!ratebar4.isChecked())) {
-            ratingBar = "三星";
-        } else if (ratebar4.isChecked() && (!ratebar5.isChecked())) {
-            ratingBar = "四星";
-        } else if (ratebar5.isChecked()) {
-            ratingBar = "五星";
-        }
-        //获取星级介绍
-        rbDetailStr = tv_assess.getText().toString();
-
-        //获取星级对应评价
-        //1星
-        if (ll_cb_first.getVisibility() == View.VISIBLE) {
-            Log.e("TAG", cb_first_rb1.isChecked() + "");
-            if (cb_first_rb1.isChecked()) {
-                assessStr = cb_first_rb1.getText().toString();
-            } else if (cb_first_rb2.isChecked()) {
-                assessStr = cb_first_rb2.getText().toString();
-            } else if (cb_first_rb3.isChecked()) {
-                assessStr = cb_first_rb3.getText().toString();
-            } else if (cb_first_rb4.isChecked()) {
-                assessStr = cb_first_rb4.getText().toString();
-            } else if (cb_first_rb5.isChecked()) {
-                assessStr = cb_first_rb5.getText().toString();
-            }
-            //2星
-        } else if (ll_cb_sec.getVisibility() == View.VISIBLE) {
-            if (cb_sec_rb1.isChecked()) {
-                assessStr = cb_sec_rb1.getText().toString();
-            } else if (cb_sec_rb2.isChecked()) {
-                assessStr = cb_sec_rb2.getText().toString();
-            } else if (cb_sec_rb3.isChecked()) {
-                assessStr = cb_sec_rb3.getText().toString();
-            }
-            //3星
-        } else if (ll_cb_third.getVisibility() == View.VISIBLE) {
-            if (cb_third_rb1.isChecked()) {
-                assessStr = cb_third_rb1.getText().toString();
-            } else if (cb_third_rb2.isChecked()) {
-                assessStr = cb_third_rb2.getText().toString();
-            } else if (cb_third_rb3.isChecked()) {
-                assessStr = cb_third_rb3.getText().toString();
-            } else if (cb_third_rb4.isChecked()) {
-                assessStr = cb_third_rb4.getText().toString();
-            }
-            //4星
-        } else if (ll_cb_forth.getVisibility() == View.VISIBLE) {
-            if (cb_forth_rb1.isChecked()) {
-                assessStr = cb_forth_rb1.getText().toString();
-            } else if (cb_forth_rb2.isChecked()) {
-                assessStr = cb_forth_rb2.getText().toString();
-            } else if (cb_forth_rb3.isChecked()) {
-                assessStr = cb_forth_rb3.getText().toString();
-            } else if (cb_forth_rb4.isChecked()) {
-                assessStr = cb_forth_rb4.getText().toString();
-            } else if (cb_forth_rb5.isChecked()) {
-                assessStr = cb_forth_rb5.getText().toString();
-            } else if (cb_forth_rb6.isChecked()) {
-                assessStr = cb_forth_rb6.getText().toString();
-            }
-            //5星
-        } else if (ll_cb_fifth.getVisibility() == View.VISIBLE) {
-            if (cb_fifth_rb1.isChecked()) {
-                assessStr = cb_fifth_rb1.getText().toString();
-            } else if (cb_fifth_rb2.isChecked()) {
-                assessStr = cb_fifth_rb2.getText().toString();
-            } else if (cb_fifth_rb3.isChecked()) {
-                assessStr = cb_fifth_rb3.getText().toString();
-            } else if (cb_fifth_rb4.isChecked()) {
-                assessStr = cb_fifth_rb4.getText().toString();
-            } else if (cb_fifth_rb5.isChecked()) {
-                assessStr = cb_fifth_rb5.getText().toString();
-            }
-        }
-
-
-    }
+//    private void initChoise() {
+////获取星级
+//        if (ratebar1.isChecked() && (!ratebar2.isChecked())) {
+//            ratingBar = "一星";
+//        } else if (ratebar2.isChecked() && (!ratebar3.isChecked())) {
+//            ratingBar = "两星";
+//        } else if (ratebar3.isChecked() && (!ratebar4.isChecked())) {
+//            ratingBar = "三星";
+//        } else if (ratebar4.isChecked() && (!ratebar5.isChecked())) {
+//            ratingBar = "四星";
+//        } else if (ratebar5.isChecked()) {
+//            ratingBar = "五星";
+//        }
+//        //获取星级介绍
+//        rbDetailStr = tv_assess.getText().toString();
+//
+//        //获取星级对应评价
+//        //1星
+//        if (ll_cb_first.getVisibility() == View.VISIBLE) {
+//            Log.e("TAG", cb_first_rb1.isChecked() + "");
+//            if (cb_first_rb1.isChecked()) {
+//                assessStr = cb_first_rb1.getText().toString();
+//            } else if (cb_first_rb2.isChecked()) {
+//                assessStr = cb_first_rb2.getText().toString();
+//            } else if (cb_first_rb3.isChecked()) {
+//                assessStr = cb_first_rb3.getText().toString();
+//            } else if (cb_first_rb4.isChecked()) {
+//                assessStr = cb_first_rb4.getText().toString();
+//            } else if (cb_first_rb5.isChecked()) {
+//                assessStr = cb_first_rb5.getText().toString();
+//            }
+//            //2星
+//        } else if (ll_cb_sec.getVisibility() == View.VISIBLE) {
+//            if (cb_sec_rb1.isChecked()) {
+//                assessStr = cb_sec_rb1.getText().toString();
+//            } else if (cb_sec_rb2.isChecked()) {
+//                assessStr = cb_sec_rb2.getText().toString();
+//            } else if (cb_sec_rb3.isChecked()) {
+//                assessStr = cb_sec_rb3.getText().toString();
+//            }
+//            //3星
+//        } else if (ll_cb_third.getVisibility() == View.VISIBLE) {
+//            if (cb_third_rb1.isChecked()) {
+//                assessStr = cb_third_rb1.getText().toString();
+//            } else if (cb_third_rb2.isChecked()) {
+//                assessStr = cb_third_rb2.getText().toString();
+//            } else if (cb_third_rb3.isChecked()) {
+//                assessStr = cb_third_rb3.getText().toString();
+//            } else if (cb_third_rb4.isChecked()) {
+//                assessStr = cb_third_rb4.getText().toString();
+//            }
+//            //4星
+//        } else if (ll_cb_forth.getVisibility() == View.VISIBLE) {
+//            if (cb_forth_rb1.isChecked()) {
+//                assessStr = cb_forth_rb1.getText().toString();
+//            } else if (cb_forth_rb2.isChecked()) {
+//                assessStr = cb_forth_rb2.getText().toString();
+//            } else if (cb_forth_rb3.isChecked()) {
+//                assessStr = cb_forth_rb3.getText().toString();
+//            } else if (cb_forth_rb4.isChecked()) {
+//                assessStr = cb_forth_rb4.getText().toString();
+//            } else if (cb_forth_rb5.isChecked()) {
+//                assessStr = cb_forth_rb5.getText().toString();
+//            } else if (cb_forth_rb6.isChecked()) {
+//                assessStr = cb_forth_rb6.getText().toString();
+//            }
+//            //5星
+//        } else if (ll_cb_fifth.getVisibility() == View.VISIBLE) {
+//            if (cb_fifth_rb1.isChecked()) {
+//                assessStr = cb_fifth_rb1.getText().toString();
+//            } else if (cb_fifth_rb2.isChecked()) {
+//                assessStr = cb_fifth_rb2.getText().toString();
+//            } else if (cb_fifth_rb3.isChecked()) {
+//                assessStr = cb_fifth_rb3.getText().toString();
+//            } else if (cb_fifth_rb4.isChecked()) {
+//                assessStr = cb_fifth_rb4.getText().toString();
+//            } else if (cb_fifth_rb5.isChecked()) {
+//                assessStr = cb_fifth_rb5.getText().toString();
+//            }
+//        }
+//
+//
+//    }
 
     private static final String TAG = "StarRatingBarActivity";
 
@@ -632,12 +492,137 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
                 }
 
                 break;
+            case R.id.ratebar1:
+                if (ratebar2.getVisibility() == View.VISIBLE) {
+                    ratebar2.setVisibility(View.GONE);
+                    ratebar3.setVisibility(View.GONE);
+                    ratebar4.setVisibility(View.GONE);
+                    ratebar5.setVisibility(View.GONE);
+                    ratebar22.setVisibility(View.VISIBLE);
+                    ratebar33.setVisibility(View.VISIBLE);
+                    ratebar44.setVisibility(View.VISIBLE);
+                    ratebar55.setVisibility(View.VISIBLE);
+                }
+                clearCheckBox();
+                ll_cb_first.setVisibility(View.VISIBLE);
+                ll_cb_sec.setVisibility(View.GONE);
+                ll_cb_third.setVisibility(View.GONE);
+                ll_cb_forth.setVisibility(View.GONE);
+                ll_cb_fifth.setVisibility(View.GONE);
+                tv_assess.setText("差");
+                ratingbarNum = "1";
+//                commitMap.put(finalXingJiKey, xingJiDicList.get(4).get("DIC_ID"));
+//                commitMap.put(finalXingJiKey1, xingJiDicList1.get(4).get("DIC_ID"));
+
+                //  Log.e(TAG, "onCheckedChanged: commitMap " + commitMap.toString());
+                break;
+            case R.id.ratebar2:
+            case R.id.ratebar22:
+                if (ratebar3.getVisibility() == View.VISIBLE) {
+                    ratebar3.setVisibility(View.GONE);
+                    ratebar4.setVisibility(View.GONE);
+                    ratebar5.setVisibility(View.GONE);
+                    ratebar33.setVisibility(View.VISIBLE);
+                    ratebar44.setVisibility(View.VISIBLE);
+                    ratebar55.setVisibility(View.VISIBLE);
+                } else {
+                    ratebar2.setVisibility(View.VISIBLE);
+                    ratebar22.setVisibility(View.GONE);
+                }
+                clearCheckBox();
+                ll_cb_first.setVisibility(View.GONE);
+                ll_cb_sec.setVisibility(View.VISIBLE);
+                ll_cb_third.setVisibility(View.GONE);
+                ll_cb_forth.setVisibility(View.GONE);
+                ll_cb_fifth.setVisibility(View.GONE);
+                tv_assess.setText("不满意");
+                ratingbarNum = "2";
+//                commitMap.put(finalXingJiKey, xingJiDicList.get(3).get("DIC_ID"));
+//                commitMap.put(finalXingJiKey1, xingJiDicList1.get(3).get("DIC_ID"));
+//                Log.e(TAG, "onCheckedChanged: commitMap " + commitMap.toString());
+                break;
+            case R.id.ratebar3:
+            case R.id.ratebar33:
+                if (ratebar4.getVisibility() == View.VISIBLE) {
+                    ratebar4.setVisibility(View.GONE);
+                    ratebar5.setVisibility(View.GONE);
+                    ratebar44.setVisibility(View.VISIBLE);
+                    ratebar55.setVisibility(View.VISIBLE);
+                } else {
+                    ratebar2.setVisibility(View.VISIBLE);
+                    ratebar22.setVisibility(View.GONE);
+                    ratebar3.setVisibility(View.VISIBLE);
+                    ratebar33.setVisibility(View.GONE);
+                }
+                clearCheckBox();
+                ll_cb_first.setVisibility(View.GONE);
+                ll_cb_sec.setVisibility(View.GONE);
+                ll_cb_third.setVisibility(View.VISIBLE);
+                ll_cb_forth.setVisibility(View.GONE);
+                ll_cb_fifth.setVisibility(View.GONE);
+                tv_assess.setText("一般，需进步");
+                ratingbarNum = "3";
+//                commitMap.put(finalXingJiKey, xingJiDicList.get(2).get("DIC_ID"));
+//                commitMap.put(finalXingJiKey1, xingJiDicList1.get(2).get("DIC_ID"));
+//                Log.e(TAG, "onCheckedChanged: commitMap " + commitMap.toString());
+                break;
+            case R.id.ratebar4:
+            case R.id.ratebar44:
+                clearCheckBox();
+                if (ratebar5.getVisibility() == View.VISIBLE) {
+                    ratebar5.setVisibility(View.GONE);
+                    ratebar55.setVisibility(View.VISIBLE);
+                } else {
+                    ratebar2.setVisibility(View.VISIBLE);
+                    ratebar22.setVisibility(View.GONE);
+                    ratebar3.setVisibility(View.VISIBLE);
+                    ratebar33.setVisibility(View.GONE);
+                    ratebar4.setVisibility(View.VISIBLE);
+                    ratebar44.setVisibility(View.GONE);
+                }
+                ll_cb_first.setVisibility(View.GONE);
+                ll_cb_sec.setVisibility(View.GONE);
+                ll_cb_third.setVisibility(View.GONE);
+                ll_cb_forth.setVisibility(View.VISIBLE);
+                ll_cb_fifth.setVisibility(View.GONE);
+                tv_assess.setText("满意，仍需进步");
+                ratingbarNum = "4";
+//                commitMap.put(finalXingJiKey, xingJiDicList.get(1).get("DIC_ID"));
+//                commitMap.put(finalXingJiKey1, xingJiDicList1.get(1).get("DIC_ID"));
+//                Log.e(TAG, "onCheckedChanged: commitMap " + commitMap.toString());
+                break;
+            case R.id.ratebar5:
+                break;
+            case R.id.ratebar55:
+                clearCheckBox();
+                ratebar2.setVisibility(View.VISIBLE);
+                ratebar22.setVisibility(View.GONE);
+                ratebar3.setVisibility(View.VISIBLE);
+                ratebar33.setVisibility(View.GONE);
+                ratebar4.setVisibility(View.VISIBLE);
+                ratebar44.setVisibility(View.GONE);
+                ratebar5.setVisibility(View.VISIBLE);
+                ratebar55.setVisibility(View.GONE);
+
+                ll_cb_first.setVisibility(View.GONE);
+                ll_cb_sec.setVisibility(View.GONE);
+                ll_cb_third.setVisibility(View.GONE);
+                ll_cb_forth.setVisibility(View.GONE);
+                ll_cb_fifth.setVisibility(View.VISIBLE);
+
+                tv_assess.setText("非常满意，无可挑剔");
+                ratingbarNum = "5";
+//                commitMap.put(finalXingJiKey, xingJiDicList.get(0).get("DIC_ID"));
+//                commitMap.put(finalXingJiKey1, xingJiDicList1.get(0).get("DIC_ID"));
+//                Log.e(TAG, "onCheckedChanged: commitMap " + commitMap.toString());
+                break;
             default:
                 break;
         }
 
 
     }
+
 
     //获取评语备注
     private void getComment() {
@@ -669,6 +654,4 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
         commitMap.put(checkKey, value1);
         Log.e(TAG, "getCommitCheckBox: commitMap " + commitMap.toString());
     }
-
-
 }
