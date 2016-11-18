@@ -70,6 +70,7 @@ public class AssortFragment extends Fragment {
                                 new int[]{R.id.iv_item, R.id.tv_item});
                         homeGridView.setAdapter(adapter);
                         swipeRefreshLayout.setRefreshing(false);//设置不刷新
+
                         Toast.makeText(getActivity(), "数据已刷新", Toast.LENGTH_SHORT).show();
                     }
                     break;

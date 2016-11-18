@@ -6,7 +6,6 @@
       <module fileurl="file://$PROJECT_DIR$/datetimepicker-library/datetimepicker-library.iml" filepath="$PROJECT_DIR$/datetimepicker-library/datetimepicker-library.iml" />
       <module fileurl="file://$PROJECT_DIR$/kehuhuanew.iml" filepath="$PROJECT_DIR$/kehuhuanew.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
-      <module fileurl="file://$PROJECT_DIR$/nice-spinner-master/nice-spinner-master.iml" filepath="$PROJECT_DIR$/nice-spinner-master/nice-spinner-master.iml" />
       <module fileurl="file://$PROJECT_DIR$/weekcalendar/weekcalendar.iml" filepath="$PROJECT_DIR$/weekcalendar/weekcalendar.iml" />
     </modules>
   </component>

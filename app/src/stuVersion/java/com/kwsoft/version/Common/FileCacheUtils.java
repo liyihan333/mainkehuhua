@@ -1,32 +1,27 @@
 package com.kwsoft.version.Common;
 
+/**
+ * 文 件 名:  FileCacheUtils.java
+ *  描    述:  主要功能有清除内/外缓存，清除数据库，清除sharedPreference，清除files和清除自定义目录
+ * */
+
+import java.io.File;
+import java.math.BigDecimal;
+
 import android.content.Context;
 import android.os.Environment;
 import android.text.TextUtils;
-import android.util.Log;
-
-import com.android.volley.toolbox.DiskBasedCache;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.math.BigDecimal;
 
 /**
- * Created by Administrator on 2016/9/27 0027.
+ * Created by Administrator on 2016/11/17 0017.
  */
 
-public class DataCleanManager {
-    private static File cacheDir;
-    private static DiskBasedCache diskBasedCache;
+public class FileCacheUtils {
     /**
      * * 清除本应用内部缓存(/data/data/com.xxx.xxx/cache) * *
      *
      * @param context
      */
-
-    private static final String DEFAULT_CACHE_DIR = "volley";//Volley默认缓存路径
-
-
     public static void cleanInternalCache(Context context) {
         deleteFilesByDirectory(context.getCacheDir());
     }
@@ -81,12 +76,11 @@ public class DataCleanManager {
             deleteFilesByDirectory(context.getExternalCacheDir());
         }
     }
-
     /**
      * * 清除自定义路径下的文件，使用需小心，请不要误删。而且只支持目录下的文件删除 * *
      *
      * @param filePath
-     */
+     * */
     public static void cleanCustomCache(String filePath) {
         deleteFilesByDirectory(new File(filePath));
     }
@@ -124,22 +118,6 @@ public class DataCleanManager {
         }
     }
 
-    /**
-     * 获取缓存大小
-     *
-     * @param context
-     * @return
-     * @throws Exception
-     */
-    public static String getTotalCacheSize(Context context) throws Exception {
-        long cacheSize = getFolderSize(context.getCacheDir());
-        Log.e("cachdir",cacheSize+"/"+context.getCacheDir());
-        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            cacheSize += getFolderSize(context.getExternalCacheDir());
-        }
-        return getFormatSize(cacheSize);
-    }
-
     // 获取文件
     //Context.getExternalFilesDir() --> SDCard/Android/data/你的应用的包名/files/ 目录，一般放一些长时间保存的数据
     //Context.getExternalCacheDir() --> SDCard/Android/data/你的应用包名/cache/目录，一般存放临时缓存数据
@@ -165,6 +143,7 @@ public class DataCleanManager {
      * 删除指定目录下文件及目录
      *
      * @param deleteThisPath
+     * @param
      * @return
      */
     public static void deleteFolderFile(String filePath, boolean deleteThisPath) {
@@ -195,7 +174,6 @@ public class DataCleanManager {
 
     /**
      * 格式化单位
-     *
      * @param size
      * @return
      */
@@ -230,49 +208,13 @@ public class DataCleanManager {
                 + "TB";
     }
 
-
-    public static String getCacheSize(File file) throws Exception {
-        return getFormatSize(getFolderSize(file));
-    }
-
-    public static String getVolleyCache(Context context) {
-        cacheDir = new File(context.getCacheDir(), DEFAULT_CACHE_DIR);//实例化缓存路径
-        String size = "";
-        try {
-            size = getCacheSize(cacheDir);
-//        Double  legth=new Double(cacheDir.length()+"");
-//        size = getFormatSize(legth);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return size;
-    }
-
-    public static void clearVolleyCache(Context context) {
-        cacheDir = new File(context.getCacheDir(), DEFAULT_CACHE_DIR);//实例化缓存路径
-        if (cacheDir.exists()) {
-            diskBasedCache = new DiskBasedCache(cacheDir);//实例化磁盘缓存类，用于清除缓存用
-            diskBasedCache.clear();
-        }
-    }
-
-    /**
-     * 获取指定文件大小
-     *
-     * @param
+    /***
+     * 获取应用缓存大小
+     * @param file
      * @return
      * @throws Exception
      */
-    private static long getFileSize(File file) throws Exception {
-        long size = 0;
-        if (file.exists()) {
-            FileInputStream fis = null;
-            fis = new FileInputStream(file);
-            size = fis.available();
-        } else {
-            file.createNewFile();
-            Log.e("获取文件大小", "文件不存在!");
-        }
-        return size;
+    public static String getCacheSize(File file) throws Exception {
+        return getFormatSize(getFolderSize(file));
     }
 }
