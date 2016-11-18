@@ -47,49 +47,78 @@
                     android:gravity="center_horizontal"
                     android:orientation="horizontal">
 
-                    <CheckBox
+                    <Button
                         android:id="@+id/ratebar1"
                         android:layout_width="29dp"
                         android:layout_height="29dp"
-                        android:background="@drawable/cb_sel_bg_ratingbar"
-                        android:button="@null"
-                        android:checked="true" />
+                        android:background="@mipmap/star_ratingbar_full"
+                        android:button="@null" />
 
-                    <CheckBox
+                    <Button
                         android:id="@+id/ratebar2"
                         android:layout_width="29dp"
                         android:layout_height="29dp"
                         android:layout_marginLeft="10dp"
-                        android:background="@drawable/cb_sel_bg_ratingbar"
-                        android:button="@null"
-                        android:checked="true" />
+                        android:background="@mipmap/star_ratingbar_full"
+                        android:button="@null" />
+                    <Button
+                        android:id="@+id/ratebar22"
+                        android:layout_width="29dp"
+                        android:layout_height="29dp"
+                        android:layout_marginLeft="10dp"
+                        android:visibility="gone"
+                        android:background="@mipmap/star_ratingbar_empty"
+                        android:button="@null" />
 
-                    <CheckBox
+                    <Button
                         android:id="@+id/ratebar3"
                         android:layout_width="29dp"
                         android:layout_height="29dp"
                         android:layout_marginLeft="10dp"
-                        android:background="@drawable/cb_sel_bg_ratingbar"
-                        android:button="@null"
-                        android:checked="true" />
+                        android:background="@mipmap/star_ratingbar_full"
+                        android:button="@null" />
+                    <Button
+                        android:id="@+id/ratebar33"
+                        android:layout_width="29dp"
+                        android:layout_height="29dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@mipmap/star_ratingbar_empty"
+                        android:visibility="gone"
+                        android:button="@null" />
 
-                    <CheckBox
+                    <Button
                         android:id="@+id/ratebar4"
                         android:layout_width="29dp"
                         android:layout_height="29dp"
                         android:layout_marginLeft="10dp"
-                        android:background="@drawable/cb_sel_bg_ratingbar"
+                        android:background="@mipmap/star_ratingbar_full"
                         android:button="@null"
-                        android:checked="true" />
+                        />
+                    <Button
+                        android:id="@+id/ratebar44"
+                        android:layout_width="29dp"
+                        android:layout_height="29dp"
+                        android:layout_marginLeft="10dp"
+                        android:visibility="gone"
+                        android:background="@mipmap/star_ratingbar_empty"
+                        android:button="@null"
+                        />
 
-                    <CheckBox
+                    <Button
                         android:id="@+id/ratebar5"
                         android:layout_width="29dp"
                         android:layout_height="29dp"
                         android:layout_marginLeft="10dp"
-                        android:background="@drawable/cb_sel_bg_ratingbar"
+                        android:background="@mipmap/star_ratingbar_full"
+                        android:button="@null" />
+                    <Button
+                        android:id="@+id/ratebar55"
+                        android:layout_width="29dp"
+                        android:layout_height="29dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@mipmap/star_ratingbar_empty"
                         android:button="@null"
-                        android:checked="true" />
+                        android:visibility="gone"/>
 
                 </LinearLayout>
                 <!--<RatingBar-->
