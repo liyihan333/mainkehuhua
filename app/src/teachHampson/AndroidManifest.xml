@@ -43,7 +43,7 @@
         <activity android:name="com.kwsoft.version.TodayCourseTableActivity"/>
         <meta-data
             android:name="PGYER_APPID"
-            android:value="622664928098a297e2579e1bdfa22f9f" >
+            android:value="f6c68a067dd85f7a31460c706c5af11e" >
         </meta-data>
 </application>
 
