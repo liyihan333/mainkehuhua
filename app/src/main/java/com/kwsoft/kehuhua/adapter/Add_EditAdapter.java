@@ -80,6 +80,7 @@ public class Add_EditAdapter extends BaseAdapter {
                            Map<String, String> paramsMap) {
         this.mActivity = (Activity) context;
         Log.e("TAG", "适配器初始化开始");
+        Log.e("TAG", "适配器初始化开始");
         this.mActivity = (Activity) context;
         if (mActivity instanceof AddItemsActivity) {
             Constant.jumpNum = 1;
