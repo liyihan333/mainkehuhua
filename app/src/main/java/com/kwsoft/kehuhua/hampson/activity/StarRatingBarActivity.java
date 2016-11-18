@@ -272,49 +272,31 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
         ratebar1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    clearCheckBox();
                 ratebar1.setChecked(true);
-                // if (b) {
-//                    if (!ratebar5.isChecked() && !ratebar4.isChecked() && !ratebar3.isChecked() && !ratebar2.isChecked()) {
-//
-//                        Log.e(TAG, "onCheckedChanged: commitMap "+commitMap.toString());
-//                    } else
-                if (ratebar2.isChecked()) {
-                    ratebar2.setChecked(false);
-                    ratebar3.setChecked(false);
-                    ratebar4.setChecked(false);
-                    ratebar5.setChecked(false);
-//                    } else {
-//                        ratebar1.setChecked(true);
-//                    }
+                if (b) {
+                    if (!ratebar5.isChecked() && !ratebar4.isChecked() && !ratebar3.isChecked() && !ratebar2.isChecked()) {
+                        clearCheckBox();
+                        ll_cb_first.setVisibility(View.VISIBLE);
+                        ll_cb_sec.setVisibility(View.GONE);
+                        ll_cb_third.setVisibility(View.GONE);
+                        ll_cb_forth.setVisibility(View.GONE);
+                        ll_cb_fifth.setVisibility(View.GONE);
+                        tv_assess.setText(xingJiDicList1.get(4).get("DIC_NAME"));
+                        commitMap.put(finalXingJiKey, xingJiDicList.get(4).get("DIC_ID"));
+                        commitMap.put(finalXingJiKey1, xingJiDicList1.get(4).get("DIC_ID"));
+
+                        Log.e(TAG, "onCheckedChanged: commitMap " + commitMap.toString());
+                    } else {
+                        clearCheckBox();
+                        ll_cb_first.setVisibility(View.GONE);
+                    }
                 }
-                ll_cb_first.setVisibility(View.VISIBLE);
-                ll_cb_sec.setVisibility(View.GONE);
-                ll_cb_third.setVisibility(View.GONE);
-                ll_cb_forth.setVisibility(View.GONE);
-                ll_cb_fifth.setVisibility(View.GONE);
-                tv_assess.setText(xingJiDicList1.get(4).get("DIC_NAME"));
-                commitMap.put(finalXingJiKey, xingJiDicList.get(4).get("DIC_ID"));
-                commitMap.put(finalXingJiKey1, xingJiDicList1.get(4).get("DIC_ID"));
-//                    {
-//                        clearCheckBox();
-//                        ll_cb_first.setVisibility(View.GONE);
-//                    }
             }
         });
 
         ratebar2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                clearCheckBox();
-                ratebar2.setChecked(true);
-
-                if (ratebar3.isChecked()) {
-                    ratebar3.setChecked(false);
-                    ratebar4.setChecked(false);
-                    ratebar5.setChecked(false);
-                }
-
                 if (b) {
                     ratebar1.setChecked(true);
                     if (!ratebar5.isChecked() && !ratebar4.isChecked() && !ratebar3.isChecked()) {
@@ -343,104 +325,104 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
                 }
             }
         });
-//        ratebar3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-//                if (b) {
-//                    if (!ratebar5.isChecked() && !ratebar4.isChecked()) {
-//                        clearCheckBox();
-//                        ll_cb_first.setVisibility(View.GONE);
-//                        ll_cb_sec.setVisibility(View.GONE);
-//                        ll_cb_third.setVisibility(View.VISIBLE);
-//                        ll_cb_forth.setVisibility(View.GONE);
-//                        ll_cb_fifth.setVisibility(View.GONE);
-//                        tv_assess.setText(xingJiDicList1.get(2).get("DIC_NAME"));
-//                        commitMap.put(finalXingJiKey, xingJiDicList.get(2).get("DIC_ID"));
-//                        commitMap.put(finalXingJiKey1, xingJiDicList1.get(2).get("DIC_ID"));
-//                        Log.e(TAG, "onCheckedChanged: commitMap " + commitMap.toString());
-//                    }
-//                    ratebar1.setChecked(true);
-//                    ratebar2.setChecked(true);
-//                } else {
-//                    clearCheckBox();
-//                    ratebar4.setChecked(false);
-//                    ratebar5.setChecked(false);
-//                    ll_cb_third.setVisibility(View.GONE);
-//                    if (ratebar2.isChecked()) {
-//                        ll_cb_sec.setVisibility(View.VISIBLE);
-//                        tv_assess.setText(xingJiDicList1.get(3).get("DIC_NAME"));
-//                        commitMap.put(finalXingJiKey, xingJiDicList.get(3).get("DIC_ID"));
-//                        commitMap.put(finalXingJiKey1, xingJiDicList1.get(3).get("DIC_ID"));
-//                        Log.e(TAG, "onCheckedChanged: commitMap " + commitMap.toString());
-//                    }
-//                }
-//            }
-//        });
-//        ratebar4.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-//                if (b) {
-//                    clearCheckBox();
-//                    if (!ratebar5.isChecked()) {
-//                        ll_cb_first.setVisibility(View.GONE);
-//                        ll_cb_sec.setVisibility(View.GONE);
-//                        ll_cb_third.setVisibility(View.GONE);
-//                        ll_cb_forth.setVisibility(View.VISIBLE);
-//                        ll_cb_fifth.setVisibility(View.GONE);
-//                        tv_assess.setText(xingJiDicList1.get(1).get("DIC_NAME"));
-//                        commitMap.put(finalXingJiKey, xingJiDicList.get(1).get("DIC_ID"));
-//                        commitMap.put(finalXingJiKey1, xingJiDicList1.get(1).get("DIC_ID"));
-//                        Log.e(TAG, "onCheckedChanged: commitMap " + commitMap.toString());
-//                    }
-//                    ratebar1.setChecked(true);
-//                    ratebar2.setChecked(true);
-//                    ratebar3.setChecked(true);
-//                } else {
-//                    clearCheckBox();
-//                    ratebar5.setChecked(false);
-//                    ll_cb_forth.setVisibility(View.GONE);
-//                    if (ratebar3.isChecked()) {
-//                        ll_cb_third.setVisibility(View.VISIBLE);
-//                        tv_assess.setText(xingJiDicList1.get(2).get("DIC_NAME"));
-//                        commitMap.put(finalXingJiKey, xingJiDicList.get(2).get("DIC_ID"));
-//                        commitMap.put(finalXingJiKey1, xingJiDicList1.get(2).get("DIC_ID"));
-//                        Log.e(TAG, "onCheckedChanged: commitMap " + commitMap.toString());
-//                    }
-//                }
-//            }
-//        });
-//        ratebar5.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-//
-//                if (b) {
-//                    clearCheckBox();
-//                    ratebar1.setChecked(true);
-//                    ratebar2.setChecked(true);
-//                    ratebar3.setChecked(true);
-//                    ratebar4.setChecked(true);
-//                    ll_cb_first.setVisibility(View.GONE);
-//                    ll_cb_sec.setVisibility(View.GONE);
-//                    ll_cb_third.setVisibility(View.GONE);
-//                    ll_cb_forth.setVisibility(View.GONE);
-//                    ll_cb_fifth.setVisibility(View.VISIBLE);
-//                    tv_assess.setText(xingJiDicList1.get(0).get("DIC_NAME"));
-//                    commitMap.put(finalXingJiKey, xingJiDicList.get(0).get("DIC_ID"));
-//                    commitMap.put(finalXingJiKey1, xingJiDicList1.get(0).get("DIC_ID"));
-//                    Log.e(TAG, "onCheckedChanged: commitMap " + commitMap.toString());
-//                } else {
-//                    clearCheckBox();
-//                    ll_cb_fifth.setVisibility(View.GONE);
-//                    if (ratebar4.isChecked()) {
-//                        ll_cb_forth.setVisibility(View.VISIBLE);
-//                        tv_assess.setText(xingJiDicList1.get(1).get("DIC_NAME"));
-//                        commitMap.put(finalXingJiKey, xingJiDicList.get(1).get("DIC_ID"));
-//                        commitMap.put(finalXingJiKey1, xingJiDicList1.get(1).get("DIC_ID"));
-//                        Log.e(TAG, "onCheckedChanged: commitMap " + commitMap.toString());
-//                    }
-//                }
-//            }
-//        });
+        ratebar3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    if (!ratebar5.isChecked() && !ratebar4.isChecked()) {
+                        clearCheckBox();
+                        ll_cb_first.setVisibility(View.GONE);
+                        ll_cb_sec.setVisibility(View.GONE);
+                        ll_cb_third.setVisibility(View.VISIBLE);
+                        ll_cb_forth.setVisibility(View.GONE);
+                        ll_cb_fifth.setVisibility(View.GONE);
+                        tv_assess.setText(xingJiDicList1.get(2).get("DIC_NAME"));
+                        commitMap.put(finalXingJiKey, xingJiDicList.get(2).get("DIC_ID"));
+                        commitMap.put(finalXingJiKey1, xingJiDicList1.get(2).get("DIC_ID"));
+                        Log.e(TAG, "onCheckedChanged: commitMap " + commitMap.toString());
+                    }
+                    ratebar1.setChecked(true);
+                    ratebar2.setChecked(true);
+                } else {
+                    clearCheckBox();
+                    ratebar4.setChecked(false);
+                    ratebar5.setChecked(false);
+                    ll_cb_third.setVisibility(View.GONE);
+                    if (ratebar2.isChecked()) {
+                        ll_cb_sec.setVisibility(View.VISIBLE);
+                        tv_assess.setText(xingJiDicList1.get(3).get("DIC_NAME"));
+                        commitMap.put(finalXingJiKey, xingJiDicList.get(3).get("DIC_ID"));
+                        commitMap.put(finalXingJiKey1, xingJiDicList1.get(3).get("DIC_ID"));
+                        Log.e(TAG, "onCheckedChanged: commitMap " + commitMap.toString());
+                    }
+                }
+            }
+        });
+        ratebar4.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    clearCheckBox();
+                    if (!ratebar5.isChecked()) {
+                        ll_cb_first.setVisibility(View.GONE);
+                        ll_cb_sec.setVisibility(View.GONE);
+                        ll_cb_third.setVisibility(View.GONE);
+                        ll_cb_forth.setVisibility(View.VISIBLE);
+                        ll_cb_fifth.setVisibility(View.GONE);
+                        tv_assess.setText(xingJiDicList1.get(1).get("DIC_NAME"));
+                        commitMap.put(finalXingJiKey, xingJiDicList.get(1).get("DIC_ID"));
+                        commitMap.put(finalXingJiKey1, xingJiDicList1.get(1).get("DIC_ID"));
+                        Log.e(TAG, "onCheckedChanged: commitMap " + commitMap.toString());
+                    }
+                    ratebar1.setChecked(true);
+                    ratebar2.setChecked(true);
+                    ratebar3.setChecked(true);
+                } else {
+                    clearCheckBox();
+                    ratebar5.setChecked(false);
+                    ll_cb_forth.setVisibility(View.GONE);
+                    if (ratebar3.isChecked()) {
+                        ll_cb_third.setVisibility(View.VISIBLE);
+                        tv_assess.setText(xingJiDicList1.get(2).get("DIC_NAME"));
+                        commitMap.put(finalXingJiKey, xingJiDicList.get(2).get("DIC_ID"));
+                        commitMap.put(finalXingJiKey1, xingJiDicList1.get(2).get("DIC_ID"));
+                        Log.e(TAG, "onCheckedChanged: commitMap " + commitMap.toString());
+                    }
+                }
+            }
+        });
+        ratebar5.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+                if (b) {
+                    clearCheckBox();
+                    ratebar1.setChecked(true);
+                    ratebar2.setChecked(true);
+                    ratebar3.setChecked(true);
+                    ratebar4.setChecked(true);
+                    ll_cb_first.setVisibility(View.GONE);
+                    ll_cb_sec.setVisibility(View.GONE);
+                    ll_cb_third.setVisibility(View.GONE);
+                    ll_cb_forth.setVisibility(View.GONE);
+                    ll_cb_fifth.setVisibility(View.VISIBLE);
+                    tv_assess.setText(xingJiDicList1.get(0).get("DIC_NAME"));
+                    commitMap.put(finalXingJiKey, xingJiDicList.get(0).get("DIC_ID"));
+                    commitMap.put(finalXingJiKey1, xingJiDicList1.get(0).get("DIC_ID"));
+                    Log.e(TAG, "onCheckedChanged: commitMap " + commitMap.toString());
+                } else {
+                    clearCheckBox();
+                    ll_cb_fifth.setVisibility(View.GONE);
+                    if (ratebar4.isChecked()) {
+                        ll_cb_forth.setVisibility(View.VISIBLE);
+                        tv_assess.setText(xingJiDicList1.get(1).get("DIC_NAME"));
+                        commitMap.put(finalXingJiKey, xingJiDicList.get(1).get("DIC_ID"));
+                        commitMap.put(finalXingJiKey1, xingJiDicList1.get(1).get("DIC_ID"));
+                        Log.e(TAG, "onCheckedChanged: commitMap " + commitMap.toString());
+                    }
+                }
+            }
+        });
 
         initChoise();
     }
