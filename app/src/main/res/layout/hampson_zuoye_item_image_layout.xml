@@ -5,9 +5,11 @@
     android:layout_height="match_parent">
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/my_image_view"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        fresco:placeholderImage="@drawable/icon"
+        android:layout_width="85dp"
+        android:layout_height="85dp"
+        fresco:failureImage="@mipmap/jiazaishibai"
+        fresco:progressBarImage="@mipmap/jiazaizhong"
+        fresco:progressBarAutoRotateInterval="5000"
         android:visibility="gone"
         />
     <TextView

@@ -9,15 +9,15 @@
         android:id="@+id/common_toolbar"
         android:layout_width="fill_parent"
         android:layout_height="45dp"
-        android:background="?attr/colorPrimary"
+        android:background="@android:color/transparent"
         app:isShowTitle="true">
     </com.kwsoft.kehuhua.widget.CommonToolbar>
 
-        <me.relex.photodraweeview.PhotoDraweeView
-            android:id="@+id/my_image_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            fresco:placeholderImage="@drawable/ic_launcher"
-            />
+    <me.relex.photodraweeview.PhotoDraweeView
+        android:id="@+id/photo_drawee_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/blue"
+        android:layout_weight="1"/>
 
 </LinearLayout>

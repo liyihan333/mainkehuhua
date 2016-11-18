@@ -21,6 +21,8 @@ import com.kwsoft.kehuhua.adcustom.CourseActivity;
 import com.kwsoft.kehuhua.adcustom.ListActivity4;
 import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.utils.DataProcess;
+import com.kwsoft.version.StuPra;
+import com.kwsoft.version.TextAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
