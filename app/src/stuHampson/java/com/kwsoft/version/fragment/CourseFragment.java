@@ -44,6 +44,8 @@ import noman.weekcalendar.WeekDateChaListener;
 import noman.weekcalendar.listener.OnDateClickListener;
 import okhttp3.Call;
 
+import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
+
 /**
  * Created by Administrator on 2016/9/6 0006.
  */
@@ -99,9 +101,8 @@ public class CourseFragment extends Fragment implements OnDataListener, WeekDate
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.e(TAG, "onCreateView: 初始化布局");
         View view = inflater.inflate(R.layout.stu_course_fragment_layout, container, false);
-        Log.e(TAG, "onCreateView: 初始化布局完成");
+
         getIntentData();
         initView(view);
         url = Constant.sysUrl + "dataPlAdd_interfaceShowDateCourse.do";
@@ -111,7 +112,6 @@ public class CourseFragment extends Fragment implements OnDataListener, WeekDate
         return view;
     }
 
-    private static final String TAG = "CourseFragment";
     public void initView(View view) {
 
 //        RelativeLayout  add_item_title=(RelativeLayout) view.findViewById(R.id.add_item_title);

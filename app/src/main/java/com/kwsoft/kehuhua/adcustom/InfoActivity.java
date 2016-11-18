@@ -103,18 +103,27 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
                 //判断按钮数据非空
                 if (operaButtonSet0.size()!=0) {
 
-
-                    infoDataList.get(0).get("allItemData");
-                    //筛选button show
-                    //循环保留显示按钮
+                    List<Map<String, Object>> operaButtonNow=new ArrayList<>();//不能在原来的上面改，需要新建，否则后面的会得到错误的集合
+                    String itemDataStr=infoDataList.get(0).get("allItemData");
+                    Map<String,Object>  itemDataMap = JSON.parseObject(itemDataStr,
+                            new TypeReference<Map<String, Object>>() {
+                            });
 
                     for (int i=0;i<operaButtonSet0.size();i++) {
 
+                        String buttonId= String.valueOf(operaButtonSet0.get(i).get("buttonId"));
+                        String buttonKey="BTN_SHOW_"+buttonId;
+                        String isShow=String.valueOf(itemDataMap.get(buttonKey));
 
-
+                        if (isShow.equals("1")) {
+                            operaButtonNow.add(operaButtonSet0.get(i));
+                        }
                     }
+                    Log.e(TAG, "onBindViewHolder: operaButtonNow "+operaButtonNow.toString());
 
-                    operaButtonSet=operaButtonSet0;
+                    //operaButtonNow
+
+                    operaButtonSet=operaButtonNow;
 
                     Log.e("TAG", "详情页operaButtonSet " +operaButtonSet.toString());
                 }

@@ -67,13 +67,13 @@ public class StageTestAdapter extends BaseAdapter {
         //然后可以直接使用这个类中的控件，对控件进行操作，而不用重复去findViewById了
 
         //成绩标题
-        holder.tv_title.setText(map.get(1).get("fieldCnName2"));
+        holder.tv_title.setText(map.get(0).get("fieldCnName2"));
         //分数
-        holder.tv_score.setText(map.get(2).get("fieldCnName2"));
+        holder.tv_score.setText(map.get(1).get("fieldCnName2"));
 
         //成绩描述
-        holder.tv_content_title.setText(map.get(0).get("fieldCnName"));
-        holder.tv_content.setText(map.get(0).get("fieldCnName2"));
+        holder.tv_content_title.setText(map.get(2).get("fieldCnName"));
+        holder.tv_content.setText(map.get(2).get("fieldCnName2"));
 
        //考试日期
 

@@ -17,7 +17,7 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.kwsoft.kehuhua.adcustom.MessagAlertActivity;
 import com.kwsoft.kehuhua.adcustom.R;
-import com.kwsoft.kehuhua.adcustom.base.CourseBaseActivity;
+import com.kwsoft.kehuhua.adcustom.base.BaseActivity;
 import com.kwsoft.kehuhua.config.Constant;
 import com.kwsoft.kehuhua.utils.CloseActivityClass;
 import com.kwsoft.kehuhua.widget.CnToolbar;
@@ -40,7 +40,7 @@ import kr.co.namee.permissiongen.PermissionSuccess;
  * 学员端看板界面
  * wyl
  */
-public class StuMainActivity extends CourseBaseActivity implements View.OnClickListener {
+public class StuMainActivity extends BaseActivity implements View.OnClickListener {
     StuFragmentTabAdapter stutabAdapter;
     private RadioGroup radioGroup;
     private RadioButton radio3;
