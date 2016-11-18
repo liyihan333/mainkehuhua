@@ -55,7 +55,7 @@ public class DialogManager {
 			mVoice.setVisibility(View.VISIBLE);
 			mLable.setVisibility(View.VISIBLE);
 
-			mIcon.setImageResource(R.mipmap.recorder);
+//			mIcon.setImageResource(R.mipmap.recorder);
 			mLable.setText(R.string.shouzhishanghua);
 		}
 	}
