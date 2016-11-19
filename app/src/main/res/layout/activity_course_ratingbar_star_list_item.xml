@@ -181,7 +181,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp"
-            android:layout_marginTop="22dp"
             android:text="李明费李明费李明费李明费李明费李明费李明费李明费"
             android:textColor="@color/list_item_left"
             android:textSize="14sp" />
