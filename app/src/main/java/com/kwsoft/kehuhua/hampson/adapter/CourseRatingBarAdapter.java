@@ -96,97 +96,97 @@ public class CourseRatingBarAdapter extends BaseAdapter {
             holder = (ViewHolder) view.getTag();
 
         }
-        //满意度，字段选择
+        try {
+            //满意度，字段选择
 //        FlexBoxLayout ll_cb_layout = (FlexBoxLayout) view.findViewById(R.id.autolayout);
-        holder.ll_cb_layout.setHorizontalSpace(17);
-        holder.ll_cb_layout.setVerticalSpace(10);
-        //然后可以直接使用这个类中的控件，对控件进行操作，而不用重复去findViewById了
-        //课程名称
-        holder.tv_title.setText(map.get(1).get("fieldCnName2"));
-        //我的评价
-        holder.my_ping_jia.setText(map.get(2).get("fieldCnName"));
-
-        String pingJiaMiaoShu = map.get(6).get("fieldCnName2");
-//
-        if (pingJiaMiaoShu != null && pingJiaMiaoShu.length() > 0) {
-            String[] tags = pingJiaMiaoShu.split(",");//注意，这里的逗号为中文的
-            Log.e(TAG, "getView: pingJiaMiaoShu " + pingJiaMiaoShu);
-            holder.ll_cb_layout.removeAllViews();
-            for (String tag : tags) {
-                TextView textview = (TextView) LayoutInflater.from(mContext).inflate(R.layout.assess_list_cb_item, null);
-                Log.e("tag", tag + "?" + tags.length);
-                textview.setText(tag);
-                holder.ll_cb_layout.addView(textview);
+            holder.ll_cb_layout.setHorizontalSpace(17);
+            holder.ll_cb_layout.setVerticalSpace(10);
+            //然后可以直接使用这个类中的控件，对控件进行操作，而不用重复去findViewById了
+            //课程名称
+            holder.tv_title.setText(map.get(1).get("fieldCnName2"));
+            //我的评价
+            holder.my_ping_jia.setText(map.get(2).get("fieldCnName"));
+            //老师标题和老师名字
+            holder.teach_name_title.setText(map.get(0).get("fieldCnName"));
+            holder.tv_teach_name.setText(map.get(0).get("fieldCnName2"));
+            String pingJiaMiaoShu = map.get(6).get("fieldCnName2");
+  Log.e(TAG, "getView: 总数 "+(map.size()-1)+" 现在执行到 pingJiaMiaoShu");
+            if (pingJiaMiaoShu != null && pingJiaMiaoShu.length() > 0) {
+                String[] tags = pingJiaMiaoShu.split(",");
+                Log.e(TAG, "getView: pingJiaMiaoShu " + pingJiaMiaoShu);
+                holder.ll_cb_layout.removeAllViews();
+                for (String tag : tags) {
+                    TextView textview = (TextView) LayoutInflater.from(mContext).inflate(R.layout.assess_list_cb_item, null);
+                    Log.e("tag", tag + "?" + tags.length);
+                    textview.setText(tag);
+                    holder.ll_cb_layout.addView(textview);
+                }
             }
+
+            Log.e(TAG, "getView:  xingJi " +map.get(2).toString());
+            //获取星级汉字
+            String xingJi = map.get(2).get("fieldCnName2");
+            Log.e(TAG, "getView:  " +map.get(2).toString());
+
+            switch (xingJi) {
+
+
+                case "五星":
+                    holder.star0.setBackgroundResource(R.mipmap.star_ratingbar_full);
+                    holder.star1.setBackgroundResource(R.mipmap.star_ratingbar_full);
+                    holder.star2.setBackgroundResource(R.mipmap.star_ratingbar_full);
+                    holder.star3.setBackgroundResource(R.mipmap.star_ratingbar_full);
+                    holder.star4.setBackgroundResource(R.mipmap.star_ratingbar_full);
+                    break;
+                case "四星":
+                    holder.star0.setBackgroundResource(R.mipmap.star_ratingbar_full);
+                    holder.star1.setBackgroundResource(R.mipmap.star_ratingbar_full);
+                    holder.star2.setBackgroundResource(R.mipmap.star_ratingbar_full);
+                    holder.star3.setBackgroundResource(R.mipmap.star_ratingbar_full);
+                    holder.star4.setBackgroundResource(R.mipmap.star_ratingbar_empty);
+
+                    break;
+                case "三星":
+                    holder.star0.setBackgroundResource(R.mipmap.star_ratingbar_full);
+                    holder.star1.setBackgroundResource(R.mipmap.star_ratingbar_full);
+                    holder.star2.setBackgroundResource(R.mipmap.star_ratingbar_full);
+                    holder.star3.setBackgroundResource(R.mipmap.star_ratingbar_empty);
+                    holder.star4.setBackgroundResource(R.mipmap.star_ratingbar_empty);
+                    break;
+                case "两星":
+                    holder.star0.setBackgroundResource(R.mipmap.star_ratingbar_full);
+                    holder.star1.setBackgroundResource(R.mipmap.star_ratingbar_full);
+                    holder.star2.setBackgroundResource(R.mipmap.star_ratingbar_empty);
+                    holder.star3.setBackgroundResource(R.mipmap.star_ratingbar_empty);
+                    holder.star4.setBackgroundResource(R.mipmap.star_ratingbar_empty);
+                    break;
+                case "一星":
+                    holder.star0.setBackgroundResource(R.mipmap.star_ratingbar_full);
+                    holder.star1.setBackgroundResource(R.mipmap.star_ratingbar_empty);
+                    holder.star2.setBackgroundResource(R.mipmap.star_ratingbar_empty);
+                    holder.star3.setBackgroundResource(R.mipmap.star_ratingbar_empty);
+                    holder.star4.setBackgroundResource(R.mipmap.star_ratingbar_empty);
+                    break;
+                default:
+                    holder.star0.setBackgroundResource(R.mipmap.star_ratingbar_empty);
+                    holder.star1.setBackgroundResource(R.mipmap.star_ratingbar_empty);
+                    holder.star2.setBackgroundResource(R.mipmap.star_ratingbar_empty);
+                    holder.star3.setBackgroundResource(R.mipmap.star_ratingbar_empty);
+                    holder.star4.setBackgroundResource(R.mipmap.star_ratingbar_empty);
+
+
+                    break;
+
+            }
+            Log.e(TAG, "getView: 总数 "+(map.size()-1)+" 现在执行到 tv_teach_content");
+            //获取评价描述
+            holder.tv_teach_content.setText(map.get(4).get("fieldCnName2"));
+            //  holder.ll_cb_layout.removeAllViews();
+
+            Log.e(TAG, "getView: 总数 "+(map.size()-1)+" 现在执行到 "+i);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-
-        //获取星级汉字
-        String xingJi = map.get(2).get("fieldCnName2");
-
-
-        switch (xingJi) {
-
-
-            case "五星":
-                holder.star0.setBackgroundResource(R.mipmap.star_ratingbar_full);
-                holder.star1.setBackgroundResource(R.mipmap.star_ratingbar_full);
-                holder.star2.setBackgroundResource(R.mipmap.star_ratingbar_full);
-                holder.star3.setBackgroundResource(R.mipmap.star_ratingbar_full);
-                holder.star4.setBackgroundResource(R.mipmap.star_ratingbar_full);
-                break;
-            case "四星":
-                holder.star0.setBackgroundResource(R.mipmap.star_ratingbar_full);
-                holder.star1.setBackgroundResource(R.mipmap.star_ratingbar_full);
-                holder.star2.setBackgroundResource(R.mipmap.star_ratingbar_full);
-                holder.star3.setBackgroundResource(R.mipmap.star_ratingbar_full);
-                holder.star4.setBackgroundResource(R.mipmap.star_ratingbar_empty);
-
-                break;
-            case "三星":
-                holder.star0.setBackgroundResource(R.mipmap.star_ratingbar_full);
-                holder.star1.setBackgroundResource(R.mipmap.star_ratingbar_full);
-                holder.star2.setBackgroundResource(R.mipmap.star_ratingbar_full);
-                holder.star3.setBackgroundResource(R.mipmap.star_ratingbar_empty);
-                holder.star4.setBackgroundResource(R.mipmap.star_ratingbar_empty);
-                break;
-            case "两星":
-                holder.star0.setBackgroundResource(R.mipmap.star_ratingbar_full);
-                holder.star1.setBackgroundResource(R.mipmap.star_ratingbar_full);
-                holder.star2.setBackgroundResource(R.mipmap.star_ratingbar_empty);
-                holder.star3.setBackgroundResource(R.mipmap.star_ratingbar_empty);
-                holder.star4.setBackgroundResource(R.mipmap.star_ratingbar_empty);
-                break;
-            case "一星":
-                holder.star0.setBackgroundResource(R.mipmap.star_ratingbar_full);
-                holder.star1.setBackgroundResource(R.mipmap.star_ratingbar_empty);
-                holder.star2.setBackgroundResource(R.mipmap.star_ratingbar_empty);
-                holder.star3.setBackgroundResource(R.mipmap.star_ratingbar_empty);
-                holder.star4.setBackgroundResource(R.mipmap.star_ratingbar_empty);
-                break;
-            default:
-                holder.star0.setBackgroundResource(R.mipmap.star_ratingbar_empty);
-                holder.star1.setBackgroundResource(R.mipmap.star_ratingbar_empty);
-                holder.star2.setBackgroundResource(R.mipmap.star_ratingbar_empty);
-                holder.star3.setBackgroundResource(R.mipmap.star_ratingbar_empty);
-                holder.star4.setBackgroundResource(R.mipmap.star_ratingbar_empty);
-
-
-                break;
-
-        }
-
-
-        //老师标题和老师名字
-        holder.teach_name_title.setText(map.get(0).get("fieldCnName"));
-        holder.tv_teach_name.setText(map.get(0).get("fieldCnName2"));
-        //获取评价信息
-
-        //获取备注
-        holder.tv_teach_content.setText(map.get(4).get("fieldCnName2"));
-        //  holder.ll_cb_layout.removeAllViews();
-
-
         return view;
     }
 

@@ -615,17 +615,23 @@ public class SelectPictureActivity extends BaseActivity implements View.OnClickL
         super.onDestroy();
         MediaManager.release();
     }
-   ImageView soundFile;
-    private void showListView(final String path, String fileName, String voiceSecond){
+   ImageView soundFile,clear_music;
+    LinearLayout sound_listen_layout;
+
+
+
+
+    private void showListView(final String path, final String fileName, String voiceSecond){
+
+     sound_listen_layout= (LinearLayout) findViewById(R.id.sound_listen_layout);
+
         soundFile=(ImageView)findViewById(R.id.soundFile);
-
-
+        clear_music=(ImageView)findViewById(R.id.clear_music);
         final File file=new File(path+fileName);
+        myFile.add(file);
         if(file.exists()) {
-
-            soundFile.setVisibility(View.VISIBLE);
-            String soundName = file.getName();
-
+            voiceButton.setVisibility(View.GONE);
+            sound_listen_layout.setVisibility(View.VISIBLE);
             soundFile.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -633,30 +639,29 @@ public class SelectPictureActivity extends BaseActivity implements View.OnClickL
                         soundFile.setBackgroundColor(getResources().getColor(R.color.blue));
                         MediaPlayer player = new MediaPlayer();
                        try {
-                            player.setDataSource(path);
+                           Log.e(TAG, "onTouch: path+fileName "+path+fileName);
+                            player.setDataSource(path+fileName);
                             player.prepare();
                             player.start();
-                       } catch (IllegalArgumentException e) {
+                       } catch (IllegalArgumentException | SecurityException | IllegalStateException | IOException e) {
                            // TODO Auto-generated catch block
                             e.printStackTrace();
-                           } catch (SecurityException e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
-                            } catch (IllegalStateException e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
-                            } catch (IOException e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
-                            }
-                        } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                           }
+                    } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
 
                         soundFile.setBackgroundColor(getResources().getColor(R.color.white));
                       }
                     return true;
                 }
             });
-
+            clear_music.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    myFile.remove(file);//点击叉号，移除刚才录取的文件
+                    sound_listen_layout.setVisibility(View.GONE);
+                    voiceButton.setVisibility(View.VISIBLE);
+                }
+            });
 
 
         }
