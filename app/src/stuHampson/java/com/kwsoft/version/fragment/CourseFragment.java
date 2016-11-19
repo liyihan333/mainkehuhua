@@ -38,6 +38,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import noman.weekcalendar.WeekCalendar;
 import noman.weekcalendar.WeekDateChaListener;
@@ -221,6 +223,8 @@ public class CourseFragment extends Fragment implements OnDataListener, WeekDate
         paramsMap.put("tableId", tableId);
         paramsMap.put("minDate", thisWeekFirstDate);//thisWeekFirstDate
         paramsMap.put("maxDate", thisWeekLastDate);//thisWeekLastDate
+
+        Log.e(TAG, Constant.USERID + "//" + tableId);
     }
 
     //选中日期时，底部显示的高亮view
@@ -369,7 +373,7 @@ public class CourseFragment extends Fragment implements OnDataListener, WeekDate
                     @Override
                     public void onResponse(String response, int id) {
                         Log.e(TAG, "onResponse: " + "  id  " + id);
-                        Log.e("onres=",response);
+                        Log.e("onres=", response);
                         setStore(response);
                     }
                 });
@@ -394,7 +398,7 @@ public class CourseFragment extends Fragment implements OnDataListener, WeekDate
             setCourseDataInTable();
         } else {
             // stopAnim();
-          //  Toast.makeText(getActivity(), "无课表数据", Toast.LENGTH_SHORT).show();
+            //  Toast.makeText(getActivity(), "无课表数据", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -447,6 +451,8 @@ public class CourseFragment extends Fragment implements OnDataListener, WeekDate
                 //上边距
                 float marginTop = (left - 480) * oneMinWidth + topLineSumHeight;
                 CourseView courseView = new CourseView(getActivity());
+                TextView textView = (TextView) courseView.findViewById(R.id.tv_course_name);
+                // courseView.setBackgroundColor(getResources().getColor(R.color.blue));
                 //课程高度跨过的横线条数总和的高度像素
                 float chLineSumHeight = ((right - left) / 30) * lineHeight;
                 //课程高度
@@ -456,15 +462,26 @@ public class CourseFragment extends Fragment implements OnDataListener, WeekDate
 //               if (week==7){
 //                   layoutParams=new RelativeLayout.LayoutParams((int)courseInfoWidth-5,(int)courseHeight);
 //               }
-                layoutParams.setMargins((int) marginLeft, (int) marginTop, 0, 0);
+                layoutParams.setMargins((int) marginLeft + 2, (int) marginTop, 0, 0);
 //                courseView.getTopRightIv().setAdjustViewBounds(true);
 //                courseView.getTopRightIv().setMaxWidth((int)(courseInfoWidth/2));
 //                courseView.getTopRightIv().setMaxHeight((int)(courseInfoWidth/2));
                 courseView.setLayoutParams(layoutParams);
-                Log.e("TAG", "课程表检测3。1"+marginLeft+"//"+marginTop);
+                Log.e("TAG", "课程表检测3。1" + marginLeft + "//" + marginTop);
                 String courseName = "";
                 if (list.get(i).get("SHOW_CONTENT") != null) {
-                    courseName = String.valueOf(list.get(i).get("SHOW_CONTENT"));
+                    String courseNameStr = String.valueOf(list.get(i).get("SHOW_CONTENT"));
+                    String[] coursNameArr = courseNameStr.split(",");
+                    courseName = coursNameArr[coursNameArr.length - 1];
+                    //courseName = "English chnie dsd ds dsf";
+                }
+                if (!isContainChinese(courseName)) {
+                    courseName.replaceAll(" ", "\n");
+                    textView.setTextSize(9);
+                    textView.setPadding(9, 0, 9, 0);
+                } else {
+                    textView.setTextSize(11);
+                    textView.setPadding(9, 0, 9, 0);
                 }
                 Log.e("TAG", "课程表检测3。2");
                 courseView.setBackgroundResource(R.drawable.couse_bg);
@@ -493,5 +510,16 @@ public class CourseFragment extends Fragment implements OnDataListener, WeekDate
 
         }
         // stopAnim();
+    }
+
+    public boolean isContainChinese(String str) {
+
+
+        Pattern p = Pattern.compile("[\u4e00-\u9fa5]");
+        Matcher m = p.matcher(str);
+        if (m.find()) {
+            return true;
+        }
+        return false;
     }
 }
