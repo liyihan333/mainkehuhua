@@ -34,7 +34,7 @@
         android:layout_centerHorizontal="true"
         android:maxLines="3"
         android:ellipsize="end"
-        android:textSize="@dimen/text_size_13"
+        android:textSize="@dimen/text_size_10"
         android:textColor="@color/white"
         android:layout_centerInParent="true"
         />
