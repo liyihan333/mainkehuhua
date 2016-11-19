@@ -33,6 +33,7 @@ import com.kwsoft.kehuhua.fragments.ListFragment;
 import com.kwsoft.kehuhua.hampson.activity.CourseHpsFragment;
 import com.kwsoft.kehuhua.hampson.activity.CourseRatingBarFragment;
 import com.kwsoft.kehuhua.hampson.activity.StageTestFragment;
+import com.kwsoft.kehuhua.hampson.activity.StuClassTchFragment;
 import com.kwsoft.kehuhua.utils.CloseActivityClass;
 import com.kwsoft.kehuhua.widget.CommonToolbar;
 
@@ -207,6 +208,11 @@ public class ListActivity4 extends BaseActivity implements ViewPager.OnPageChang
                     courseRatingBarFragment.setArguments(listBundle);
                     fragmentList.add(courseRatingBarFragment);
                     Log.e(TAG, "refreshPage: 学员端走定制化评价列表展示页面");
+                }else if(menuNamePanDuan.contains("学员课程教师")){
+                    Fragment stuClassTchFragment = new StuClassTchFragment();
+                    stuClassTchFragment.setArguments(listBundle);
+                    fragmentList.add(stuClassTchFragment);
+                    Log.e(TAG, "refreshPage: 学员端走学员课程教师列表展示页面");
                 }else {
                     Fragment listFragment = new ListFragment();
                     listFragment.setArguments(listBundle);
@@ -263,6 +269,9 @@ public class ListActivity4 extends BaseActivity implements ViewPager.OnPageChang
             }else if(titleName.contains("评价")){
                 xFragment = new CourseRatingBarFragment();
                 Log.e(TAG, "refreshPage单个: 学员端走定制化评价列表展示页面");
+            }else if(titleName.contains("学员课程教师")){
+                xFragment = new StuClassTchFragment();
+                Log.e(TAG, "refreshPage单个: 学员端走定制化学员课程教师列表展示页面");
             }else {
                 xFragment = new ListFragment();
             }
