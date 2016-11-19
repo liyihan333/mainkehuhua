@@ -106,7 +106,7 @@ public class CourseRatingBarAdapter extends BaseAdapter {
         //我的评价
         holder.my_ping_jia.setText(map.get(2).get("fieldCnName"));
 
-        String pingJiaMiaoShu = map.get(5).get("fieldCnName2");
+        String pingJiaMiaoShu = map.get(6).get("fieldCnName2");
 //
         if (pingJiaMiaoShu != null && pingJiaMiaoShu.length() > 0) {
             String[] tags = pingJiaMiaoShu.split(",");//注意，这里的逗号为中文的
@@ -183,7 +183,7 @@ public class CourseRatingBarAdapter extends BaseAdapter {
         //获取评价信息
 
         //获取备注
-        holder.tv_teach_content.setText(map.get(3).get("fieldCnName2"));
+        holder.tv_teach_content.setText(map.get(4).get("fieldCnName2"));
         //  holder.ll_cb_layout.removeAllViews();
 
 

@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -248,16 +247,17 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
 
 
     }
-
+    String xingJiKey,xingJiKey1,xingJiKey2;
     private void initRateBarListener() {
         Log.e(TAG, "initRateBarListener: fieldSet " + fieldSet.toString());
         Map<String, Object> xingJiMap = fieldSet.get(0);
         Map<String, Object> xingJiMap1 = fieldSet.get(1);
+        Map<String, Object> xingJiMapNum = fieldSet.get(fieldSet.size()-1);
 
         //获取提交的key
-        String xingJiKey = String.valueOf(xingJiMap.get(Constant.primKey));
-        String xingJiKey1 = String.valueOf(xingJiMap1.get(Constant.primKey));
-
+        xingJiKey = String.valueOf(xingJiMap.get(Constant.primKey));
+        xingJiKey1 = String.valueOf(xingJiMap1.get(Constant.primKey));
+        xingJiKey2 = String.valueOf(xingJiMapNum.get(Constant.primKey));
         //获取不到key时所用的默认值
         if (xingJiKey.equals("") || xingJiKey.equals("null")) {
             xingJiKey = "t0_au_262_3020_4651";
@@ -281,9 +281,9 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
         ll_cb_forth.setVisibility(View.GONE);
         ll_cb_fifth.setVisibility(View.VISIBLE);
         tv_assess.setText(xingJiDicList1.get(0).get("DIC_NAME"));
-        commitMap.put(finalXingJiKey, xingJiDicList.get(0).get("DIC_ID"));
-        commitMap.put(finalXingJiKey1, xingJiDicList1.get(0).get("DIC_ID"));
-
+        commitMap.put(xingJiKey, xingJiDicList.get(0).get("DIC_ID"));
+        commitMap.put(xingJiKey1, xingJiDicList1.get(0).get("DIC_ID"));
+        commitMap.put(xingJiKey2, "5");
         //  initChoise();
     }
 
@@ -335,91 +335,6 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
         }
 
     }
-
-
-//    private void initChoise() {
-////获取星级
-//        if (ratebar1.isChecked() && (!ratebar2.isChecked())) {
-//            ratingBar = "一星";
-//        } else if (ratebar2.isChecked() && (!ratebar3.isChecked())) {
-//            ratingBar = "两星";
-//        } else if (ratebar3.isChecked() && (!ratebar4.isChecked())) {
-//            ratingBar = "三星";
-//        } else if (ratebar4.isChecked() && (!ratebar5.isChecked())) {
-//            ratingBar = "四星";
-//        } else if (ratebar5.isChecked()) {
-//            ratingBar = "五星";
-//        }
-//        //获取星级介绍
-//        rbDetailStr = tv_assess.getText().toString();
-//
-//        //获取星级对应评价
-//        //1星
-//        if (ll_cb_first.getVisibility() == View.VISIBLE) {
-//            Log.e("TAG", cb_first_rb1.isChecked() + "");
-//            if (cb_first_rb1.isChecked()) {
-//                assessStr = cb_first_rb1.getText().toString();
-//            } else if (cb_first_rb2.isChecked()) {
-//                assessStr = cb_first_rb2.getText().toString();
-//            } else if (cb_first_rb3.isChecked()) {
-//                assessStr = cb_first_rb3.getText().toString();
-//            } else if (cb_first_rb4.isChecked()) {
-//                assessStr = cb_first_rb4.getText().toString();
-//            } else if (cb_first_rb5.isChecked()) {
-//                assessStr = cb_first_rb5.getText().toString();
-//            }
-//            //2星
-//        } else if (ll_cb_sec.getVisibility() == View.VISIBLE) {
-//            if (cb_sec_rb1.isChecked()) {
-//                assessStr = cb_sec_rb1.getText().toString();
-//            } else if (cb_sec_rb2.isChecked()) {
-//                assessStr = cb_sec_rb2.getText().toString();
-//            } else if (cb_sec_rb3.isChecked()) {
-//                assessStr = cb_sec_rb3.getText().toString();
-//            }
-//            //3星
-//        } else if (ll_cb_third.getVisibility() == View.VISIBLE) {
-//            if (cb_third_rb1.isChecked()) {
-//                assessStr = cb_third_rb1.getText().toString();
-//            } else if (cb_third_rb2.isChecked()) {
-//                assessStr = cb_third_rb2.getText().toString();
-//            } else if (cb_third_rb3.isChecked()) {
-//                assessStr = cb_third_rb3.getText().toString();
-//            } else if (cb_third_rb4.isChecked()) {
-//                assessStr = cb_third_rb4.getText().toString();
-//            }
-//            //4星
-//        } else if (ll_cb_forth.getVisibility() == View.VISIBLE) {
-//            if (cb_forth_rb1.isChecked()) {
-//                assessStr = cb_forth_rb1.getText().toString();
-//            } else if (cb_forth_rb2.isChecked()) {
-//                assessStr = cb_forth_rb2.getText().toString();
-//            } else if (cb_forth_rb3.isChecked()) {
-//                assessStr = cb_forth_rb3.getText().toString();
-//            } else if (cb_forth_rb4.isChecked()) {
-//                assessStr = cb_forth_rb4.getText().toString();
-//            } else if (cb_forth_rb5.isChecked()) {
-//                assessStr = cb_forth_rb5.getText().toString();
-//            } else if (cb_forth_rb6.isChecked()) {
-//                assessStr = cb_forth_rb6.getText().toString();
-//            }
-//            //5星
-//        } else if (ll_cb_fifth.getVisibility() == View.VISIBLE) {
-//            if (cb_fifth_rb1.isChecked()) {
-//                assessStr = cb_fifth_rb1.getText().toString();
-//            } else if (cb_fifth_rb2.isChecked()) {
-//                assessStr = cb_fifth_rb2.getText().toString();
-//            } else if (cb_fifth_rb3.isChecked()) {
-//                assessStr = cb_fifth_rb3.getText().toString();
-//            } else if (cb_fifth_rb4.isChecked()) {
-//                assessStr = cb_fifth_rb4.getText().toString();
-//            } else if (cb_fifth_rb5.isChecked()) {
-//                assessStr = cb_fifth_rb5.getText().toString();
-//            }
-//        }
-//
-//
-//    }
 
     private static final String TAG = "StarRatingBarActivity";
 
@@ -503,18 +418,20 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
                     ratebar44.setVisibility(View.VISIBLE);
                     ratebar55.setVisibility(View.VISIBLE);
                 }
+                tv_assess.setText(xingJiDicList1.get(4).get("DIC_NAME"));
+                commitMap.put(xingJiKey, xingJiDicList.get(4).get("DIC_ID"));
+                commitMap.put(xingJiKey1, xingJiDicList1.get(4).get("DIC_ID"));
+                commitMap.put(xingJiKey2, "1");
                 clearCheckBox();
                 ll_cb_first.setVisibility(View.VISIBLE);
                 ll_cb_sec.setVisibility(View.GONE);
                 ll_cb_third.setVisibility(View.GONE);
                 ll_cb_forth.setVisibility(View.GONE);
                 ll_cb_fifth.setVisibility(View.GONE);
-                tv_assess.setText("差");
-                ratingbarNum = "1";
 //                commitMap.put(finalXingJiKey, xingJiDicList.get(4).get("DIC_ID"));
 //                commitMap.put(finalXingJiKey1, xingJiDicList1.get(4).get("DIC_ID"));
 
-                //  Log.e(TAG, "onCheckedChanged: commitMap " + commitMap.toString());
+                  Log.e(TAG, "onCheckedChanged: commitMap " + commitMap.toString());
                 break;
             case R.id.ratebar2:
             case R.id.ratebar22:
@@ -525,21 +442,22 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
                     ratebar33.setVisibility(View.VISIBLE);
                     ratebar44.setVisibility(View.VISIBLE);
                     ratebar55.setVisibility(View.VISIBLE);
+
                 } else {
                     ratebar2.setVisibility(View.VISIBLE);
                     ratebar22.setVisibility(View.GONE);
                 }
+                tv_assess.setText(xingJiDicList1.get(3).get("DIC_NAME"));
+                commitMap.put(xingJiKey, xingJiDicList.get(3).get("DIC_ID"));
+                commitMap.put(xingJiKey1, xingJiDicList1.get(3).get("DIC_ID"));
+                commitMap.put(xingJiKey2, "2");
                 clearCheckBox();
                 ll_cb_first.setVisibility(View.GONE);
                 ll_cb_sec.setVisibility(View.VISIBLE);
                 ll_cb_third.setVisibility(View.GONE);
                 ll_cb_forth.setVisibility(View.GONE);
                 ll_cb_fifth.setVisibility(View.GONE);
-                tv_assess.setText("不满意");
-                ratingbarNum = "2";
-//                commitMap.put(finalXingJiKey, xingJiDicList.get(3).get("DIC_ID"));
-//                commitMap.put(finalXingJiKey1, xingJiDicList1.get(3).get("DIC_ID"));
-//                Log.e(TAG, "onCheckedChanged: commitMap " + commitMap.toString());
+                Log.e(TAG, "onCheckedChanged: commitMap " + commitMap.toString());
                 break;
             case R.id.ratebar3:
             case R.id.ratebar33:
@@ -548,27 +466,28 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
                     ratebar5.setVisibility(View.GONE);
                     ratebar44.setVisibility(View.VISIBLE);
                     ratebar55.setVisibility(View.VISIBLE);
+
                 } else {
                     ratebar2.setVisibility(View.VISIBLE);
                     ratebar22.setVisibility(View.GONE);
                     ratebar3.setVisibility(View.VISIBLE);
                     ratebar33.setVisibility(View.GONE);
                 }
+                tv_assess.setText(xingJiDicList1.get(2).get("DIC_NAME"));
+                commitMap.put(xingJiKey, xingJiDicList.get(2).get("DIC_ID"));
+                commitMap.put(xingJiKey1, xingJiDicList1.get(2).get("DIC_ID"));
+                commitMap.put(xingJiKey2, "3");
                 clearCheckBox();
                 ll_cb_first.setVisibility(View.GONE);
                 ll_cb_sec.setVisibility(View.GONE);
                 ll_cb_third.setVisibility(View.VISIBLE);
                 ll_cb_forth.setVisibility(View.GONE);
                 ll_cb_fifth.setVisibility(View.GONE);
-                tv_assess.setText("一般，需进步");
-                ratingbarNum = "3";
-//                commitMap.put(finalXingJiKey, xingJiDicList.get(2).get("DIC_ID"));
-//                commitMap.put(finalXingJiKey1, xingJiDicList1.get(2).get("DIC_ID"));
-//                Log.e(TAG, "onCheckedChanged: commitMap " + commitMap.toString());
+                Log.e(TAG, "onCheckedChanged: commitMap " + commitMap.toString());
                 break;
             case R.id.ratebar4:
             case R.id.ratebar44:
-                clearCheckBox();
+
                 if (ratebar5.getVisibility() == View.VISIBLE) {
                     ratebar5.setVisibility(View.GONE);
                     ratebar55.setVisibility(View.VISIBLE);
@@ -580,16 +499,18 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
                     ratebar4.setVisibility(View.VISIBLE);
                     ratebar44.setVisibility(View.GONE);
                 }
+                tv_assess.setText(xingJiDicList1.get(1).get("DIC_NAME"));
+                commitMap.put(xingJiKey, xingJiDicList.get(1).get("DIC_ID"));
+                commitMap.put(xingJiKey1, xingJiDicList1.get(1).get("DIC_ID"));
+                commitMap.put(xingJiKey2, "4");
+
+                clearCheckBox();
                 ll_cb_first.setVisibility(View.GONE);
                 ll_cb_sec.setVisibility(View.GONE);
                 ll_cb_third.setVisibility(View.GONE);
                 ll_cb_forth.setVisibility(View.VISIBLE);
                 ll_cb_fifth.setVisibility(View.GONE);
-                tv_assess.setText("满意，仍需进步");
-                ratingbarNum = "4";
-//                commitMap.put(finalXingJiKey, xingJiDicList.get(1).get("DIC_ID"));
-//                commitMap.put(finalXingJiKey1, xingJiDicList1.get(1).get("DIC_ID"));
-//                Log.e(TAG, "onCheckedChanged: commitMap " + commitMap.toString());
+                Log.e(TAG, "onCheckedChanged: commitMap " + commitMap.toString());
                 break;
             case R.id.ratebar5:
                 break;
@@ -609,12 +530,11 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
                 ll_cb_third.setVisibility(View.GONE);
                 ll_cb_forth.setVisibility(View.GONE);
                 ll_cb_fifth.setVisibility(View.VISIBLE);
-
-                tv_assess.setText("非常满意，无可挑剔");
-                ratingbarNum = "5";
-//                commitMap.put(finalXingJiKey, xingJiDicList.get(0).get("DIC_ID"));
-//                commitMap.put(finalXingJiKey1, xingJiDicList1.get(0).get("DIC_ID"));
-//                Log.e(TAG, "onCheckedChanged: commitMap " + commitMap.toString());
+                tv_assess.setText(xingJiDicList1.get(0).get("DIC_NAME"));
+                commitMap.put(xingJiKey, xingJiDicList.get(0).get("DIC_ID"));
+                commitMap.put(xingJiKey1, xingJiDicList1.get(0).get("DIC_ID"));
+                commitMap.put(xingJiKey2, "5");
+                Log.e(TAG, "onCheckedChanged: commitMap " + commitMap.toString());
                 break;
             default:
                 break;

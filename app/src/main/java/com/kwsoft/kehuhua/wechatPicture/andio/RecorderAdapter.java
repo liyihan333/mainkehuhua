@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.kwsoft.kehuhua.adcustom.R;
-import com.kwsoft.kehuhua.wechatPicture.SelectPictureActivity;
 
 import java.util.List;
 
@@ -52,12 +51,12 @@ public class RecorderAdapter extends ArrayAdapter<Recorder> {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.item_icon_right.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SelectPictureActivity.hideListView();
-            }
-        });
+//        viewHolder.item_icon_right.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                SelectPictureActivity.hideListView();
+//            }
+//        });
 
         viewHolder.seconds.setText(Math.round(getItem(position).time) + "\"");
         ViewGroup.LayoutParams lParams = viewHolder.length.getLayoutParams();

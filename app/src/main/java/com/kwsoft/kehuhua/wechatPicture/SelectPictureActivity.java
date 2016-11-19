@@ -3,17 +3,18 @@ package com.kwsoft.kehuhua.wechatPicture;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -21,18 +22,22 @@ import android.widget.Toast;
 import com.kwsoft.kehuhua.adcustom.OperateDataActivity;
 import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.adcustom.base.BaseActivity;
+import com.kwsoft.kehuhua.audiorecorder.AudioRecorder2Mp3Util;
+import com.kwsoft.kehuhua.audiorecorder.IRecordButton;
+import com.kwsoft.kehuhua.audiorecorder.RecordButton;
 import com.kwsoft.kehuhua.urlCnn.EdusStringCallback;
 import com.kwsoft.kehuhua.urlCnn.ErrorToast;
 import com.kwsoft.kehuhua.utils.DataProcess;
-import com.kwsoft.kehuhua.wechatPicture.andio.AudioRecordButton;
 import com.kwsoft.kehuhua.wechatPicture.andio.MediaManager;
 import com.kwsoft.kehuhua.wechatPicture.andio.Recorder;
-import com.kwsoft.kehuhua.wechatPicture.andio.RecorderAdapter;
 import com.kwsoft.kehuhua.widget.CommonToolbar;
 import com.zhy.http.okhttp.OkHttpUtils;
 
 import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
@@ -64,13 +69,11 @@ public class SelectPictureActivity extends BaseActivity implements View.OnClickL
     private static final String TAG = "SelectPictureActivity";
     private WaterWaveProgress waveProgress;
 
-    //录制视频参数
-    public static AudioRecordButton button;
-    public static ListView mlistview;
-    private ArrayAdapter<Recorder> mAdapter;
-    private View viewanim;
-    private List<Recorder> mDatas = new ArrayList<Recorder>();
-    private Button btn_up;
+    //录音按钮
+    private RecordButton voiceButton;
+    //文件保存路径
+    private String BasePath = Environment.getExternalStorageDirectory().toString() + "/voicerecord";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -187,91 +190,139 @@ public class SelectPictureActivity extends BaseActivity implements View.OnClickL
     }
 
     private void initAudioView() {
-        //展示音频
+        voiceButton = (RecordButton) findViewById(R.id.record);
         mlistview = (ListView) findViewById(R.id.listview);
-        button = (AudioRecordButton) findViewById(R.id.recordButton);
-        btn_up = (Button) findViewById(R.id.btn_up);
-//        btn_up.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                uploadAudioFirst();
-//            }
-//        });
+        // 录音事件监听
+        voiceButton.setAudioRecord(new IRecordButton() {
+            private String fileName;
+            private AudioRecorder2Mp3Util audioRecoder;
+            private boolean canClean = false;
 
-        PermissionGen.with(SelectPictureActivity.this)
-                .addRequestCode(106)
-                .permissions(
-                        Manifest.permission.RECORD_AUDIO,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .request();
-
-        button.setAudioFinishRecorderListener(new AudioRecordButton.AudioFinishRecorderListener() {
-
+            /**
+             * 释放资源
+             */
             @Override
-            public void onFinished(float seconds, String filePath) {
-                // TODO Auto-generated method stub
-                Log.e("filepath=", filePath);
-                mDatas.clear();
-                Recorder recorder = new Recorder(seconds, filePath);
-                mDatas.add(recorder);
-                mAdapter.notifyDataSetChanged();
-                mlistview.setSelection(mDatas.size() - 1);
-                button.setVisibility(View.GONE);
-                mlistview.setVisibility(View.VISIBLE);
+            public void stop() {
+                Log.d("gmyboy", "------------stop-------------");
+                audioRecoder.stopRecordingAndConvertFile();
+                audioRecoder.cleanFile(AudioRecorder2Mp3Util.RAW);
+                audioRecoder.close();
+                audioRecoder = null;
             }
 
-        });
-
-        mAdapter = new RecorderAdapter(this, mDatas);
-        mlistview.setAdapter(mAdapter);
-
-
-        mlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            /**
+             * 开始录音
+             */
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                // 播放动画
-                if (viewanim != null) {//让第二个播放的时候第一个停止播放
-                    // viewanim.setBackgroundResource(R.id.id_recorder_anim);
-                    //  viewanim.setBackgroundResource(R.mipmap.adj);
-                    viewanim.setBackgroundResource(R.mipmap.radio_voice_wifi);
-                    viewanim = null;
+            public void start() {
+                Log.d("gmyboy", "------------start-------------");
+                if (canClean) {
+                    audioRecoder.cleanFile(AudioRecorder2Mp3Util.MP3
+                            | AudioRecorder2Mp3Util.RAW);
                 }
-                viewanim = view.findViewById(R.id.id_recorder_anim);
-                viewanim.setBackgroundResource(R.drawable.play);
-                AnimationDrawable drawable = (AnimationDrawable) viewanim
-                        .getBackground();
-                drawable.start();
-                // 播放音频
-                MediaManager.playSound(mDatas.get(i).filePathString,
-                        new MediaPlayer.OnCompletionListener() {
+                audioRecoder.startRecording();
+                canClean = true;
+            }
 
-                            @Override
-                            public void onCompletion(MediaPlayer mp) {
-                                // viewanim.setBackgroundResource(R.id.id_recorder_anim);
-                                viewanim.setBackgroundResource(R.mipmap.radio_voice_wifi);
-                            }
-                        });
+            /**
+             * 准备工作
+             */
+            @Override
+            public void ready() {
+                Log.d("gmyboy", "------------ready-------------");
+                File file = new File(BasePath);
+                if (!file.exists()) {
+                    file.mkdir();
+                }
+                fileName = getCurrentDate();
+                if (audioRecoder == null) {
+                    audioRecoder = new AudioRecorder2Mp3Util(null,
+                            getFilePath() + fileName + ".raw", getFilePath()
+                            + fileName + ".mp3");
+                }
+
+            }
+
+            /**
+             * 获取保存路径
+             */
+            @Override
+            public String getFilePath() {
+                return BasePath + "/";
+            }
+
+            @Override
+            public double getAmplitude() {
+                //这里就放了一个随机数
+                return Math.random() * 20000;
+            }
+
+            /**
+             * 删除本地保存文件
+             */
+            @Override
+            public void deleteOldFile() {
+                Log.d("gmyboy", "------------deleteOldFile-------------");
+                File file = new File(getFilePath() + fileName + ".mp3");
+                if (file.exists())
+                    file.delete();
+            }
+
+            /**
+             * 录音完成，执行后面操作（发送）
+             */
+            @Override
+            public void complite(float time) {
+                Log.d("gmyboy", "------------complite-------------");
+                Toast.makeText(SelectPictureActivity.this, "voicePath = " + getFilePath() + fileName + ".mp3" + "\n" + "voiceTime = " + String.valueOf((int) time), Toast.LENGTH_LONG).show();
+                String path=getFilePath();
+                String fileName1=fileName + ".mp3";
+                String voiceSecond=String.valueOf((int) time);
+                showListView(path,fileName1,voiceSecond);
+
             }
         });
+        // 以当前时间作为录音文件名
 
     }
-
-
-    public static void hideListView() {
-        Log.e("hidel", "hidelistview");
-        button.setVisibility(View.VISIBLE);
-        mlistview.setVisibility(View.GONE);
-    }
-
     /**
-     * 上传音频一
+     * 获取当前系统时间作为音频文件名
+     * @return
      */
-    private void uploadAudioFirst() {
-
-        Recorder recorder = mDatas.get(0);
-        String path = recorder.getFilePathString();
-        uploadAudio(path);
+    private String getCurrentDate() {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_HHmmss");
+        Date curDate = new Date(System.currentTimeMillis());// 获取当前时间
+        String str = formatter.format(curDate);
+        return str;
     }
+    public  ListView mlistview;
+    private ArrayAdapter<Recorder> mAdapter;
+    private List<Recorder> mDatas = new ArrayList<Recorder>();
+//显示并展现列表
+//        public  void showListView(String path,String fileName,String voiceSecond) {
+//        Log.e("hidel", "hidelistview");
+//        voiceButton.setVisibility(View.GONE);
+//        mlistview.setVisibility(View.GONE);
+//    }
+
+
+
+//
+//    public static void hideListView() {
+//        Log.e("hidel", "hidelistview");
+//        button.setVisibility(View.VISIBLE);
+//        mlistview.setVisibility(View.GONE);
+//    }
+
+//    /**
+//     * 上传音频一
+//     */
+//    private void uploadAudioFirst() {
+//
+//        Recorder recorder = mDatas.get(0);
+//        String path = recorder.getFilePathString();
+//        uploadAudio(path);
+//    }
 
     /**
      * 上传音频
@@ -382,15 +433,15 @@ public class SelectPictureActivity extends BaseActivity implements View.OnClickL
             }
         }
         //音频
-        if (mDatas != null && mDatas.size() > 0) {
-            Recorder recorder = mDatas.get(0);
-            String path = recorder.getFilePathString();
-            File audioFile = new File(path);
-            myFile.add(audioFile);
-        }
-
-
-        Log.e(TAG, "uploadMethod: 开始上传文件 " + mDatas.size() + "/" + myFile.toString());
+//        if (mDatas != null && mDatas.size() > 0) {
+//            Recorder recorder = mDatas.get(0);
+//            String path = recorder.getFilePathString();
+//            File audioFile = new File(path);
+//            myFile.add(audioFile);
+//        }
+//
+//
+//        Log.e(TAG, "uploadMethod: 开始上传文件 " + mDatas.size() + "/" + myFile.toString());
         //上传文件
 
 
@@ -512,14 +563,14 @@ public class SelectPictureActivity extends BaseActivity implements View.OnClickL
 //        }
         Log.e("TAG", "文件上传码codeListStr:" + codeListStr);
     }
-
-    private void parseAudo() {
-        if (mDatas != null && mDatas.size() > 0) {
-            uploadAudioFirst();
-        } else {
-            Toast.makeText(SelectPictureActivity.this, "您尚未录制音频", Toast.LENGTH_SHORT).show();
-        }
-    }
+//
+//    private void parseAudo() {
+//        if (mDatas != null && mDatas.size() > 0) {
+//            uploadAudioFirst();
+//        } else {
+//            Toast.makeText(SelectPictureActivity.this, "您尚未录制音频", Toast.LENGTH_SHORT).show();
+//        }
+//    }
 
 
     private void jump2Activity() {
@@ -564,4 +615,54 @@ public class SelectPictureActivity extends BaseActivity implements View.OnClickL
         super.onDestroy();
         MediaManager.release();
     }
+   ImageView soundFile;
+    private void showListView(final String path, String fileName, String voiceSecond){
+        soundFile=(ImageView)findViewById(R.id.soundFile);
+
+
+        final File file=new File(path+fileName);
+        if(file.exists()) {
+
+            soundFile.setVisibility(View.VISIBLE);
+            String soundName = file.getName();
+
+            soundFile.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                        soundFile.setBackgroundColor(getResources().getColor(R.color.blue));
+                        MediaPlayer player = new MediaPlayer();
+                       try {
+                            player.setDataSource(path);
+                            player.prepare();
+                            player.start();
+                       } catch (IllegalArgumentException e) {
+                           // TODO Auto-generated catch block
+                            e.printStackTrace();
+                           } catch (SecurityException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                            } catch (IllegalStateException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                            } catch (IOException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                            }
+                        } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+
+                        soundFile.setBackgroundColor(getResources().getColor(R.color.white));
+                      }
+                    return true;
+                }
+            });
+
+
+
+        }
+
+
+
+    }
+
 }

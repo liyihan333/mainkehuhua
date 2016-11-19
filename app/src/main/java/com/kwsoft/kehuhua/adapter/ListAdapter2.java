@@ -227,6 +227,7 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                                 if (buttonName1.contains("确认下课")) {
                                     Intent mIntentEdit = new Intent(mContext, StarRatingBarActivity.class);
                                     mIntentEdit.putExtra("itemSet", operaButtonSetMapStr);
+                                    Log.e(TAG, "onClick: operaButtonSetMapStr "+operaButtonSetMapStr);
                                     mContext.startActivity(mIntentEdit);
                                 }else{
                                     Intent mIntentEdit = new Intent(mContext, OperateDataActivity.class);
