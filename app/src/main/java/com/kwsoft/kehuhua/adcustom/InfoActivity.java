@@ -30,6 +30,7 @@ import com.kwsoft.kehuhua.urlCnn.EdusStringCallback;
 import com.kwsoft.kehuhua.urlCnn.ErrorToast;
 import com.kwsoft.kehuhua.utils.CloseActivityClass;
 import com.kwsoft.kehuhua.widget.CommonToolbar;
+import com.kwsoft.version.StuPra;
 import com.zhy.http.okhttp.OkHttpUtils;
 
 import java.util.ArrayList;
@@ -158,6 +159,7 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
         //mTextViewTitle.setText(listMap.get(0).get("fieldCnName2")+"");
         mToolbar = (CommonToolbar) findViewById(R.id.common_toolbar);
         mToolbar.setTitle(titleName);
+
         mToolbar.setBackgroundColor(getResources().getColor(topBarColor));
         //左侧返回按钮
         mToolbar.setRightButtonIcon(getResources().getDrawable(R.mipmap.often_more));
@@ -242,7 +244,7 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
                                         case 18://关联添加页面
                                             String buttonName=String.valueOf(operaButtonSetMap.get("buttonName"));
                                             Log.e(TAG, "onItemClick: buttonName "+buttonName);
-                                            if (buttonName.contains("确认下课")) {
+                                            if (buttonName.contains("确认下课")&& StuPra.studentProId.equals("57159822f07e75084cb8a1fe")) {
                                                 Intent mIntentEdit = new Intent(mContext, StarRatingBarActivity.class);
                                                 mIntentEdit.putExtra("itemSet", operaButtonSetMapStr);
                                                 startActivity(mIntentEdit);

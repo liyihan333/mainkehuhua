@@ -36,6 +36,7 @@ import com.kwsoft.kehuhua.hampson.activity.StageTestFragment;
 import com.kwsoft.kehuhua.hampson.activity.StuClassTchFragment;
 import com.kwsoft.kehuhua.utils.CloseActivityClass;
 import com.kwsoft.kehuhua.widget.CommonToolbar;
+import com.kwsoft.version.StuPra;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -188,14 +189,14 @@ public class ListActivity4 extends BaseActivity implements ViewPager.OnPageChang
 
                 String menuNamePanDuan=String.valueOf(childList.get(i).get("menuName"));
 
-                if (menuNamePanDuan.contains("成长轨迹")) {
+                if (menuNamePanDuan.contains("成长轨迹")&& StuPra.studentProId.equals("57159822f07e75084cb8a1fe")) {
                     Fragment stageTestFragment = new StageTestFragment();
                     stageTestFragment.setArguments(listBundle);
                     fragmentList.add(stageTestFragment);
 //                    transaction.add(R.id.fragment_container,stageTestFragment);
                     Log.e(TAG, "refreshPage: 学员端走定制化阶段测评页面");
 
-                }else if (menuNamePanDuan.contains("教学日志")) {
+                }else if (menuNamePanDuan.contains("教学日志")&& StuPra.studentProId.equals("57159822f07e75084cb8a1fe")) {
 
                     Fragment courseHpsFragment = new CourseHpsFragment();
                     courseHpsFragment.setArguments(listBundle);
@@ -203,12 +204,12 @@ public class ListActivity4 extends BaseActivity implements ViewPager.OnPageChang
 //                    transaction.add(R.id.fragment_container, courseHpsFragment);
                     Log.e(TAG, "refreshPage: 学员端走定制化课堂内容（一对一教学日志）页面");
 //评价列表有数据之后在空串后加数字，共2个地方需要修改 //Log.e("评价列表：",)
-                }else if(menuNamePanDuan.contains("评价")){
+                }else if(menuNamePanDuan.contains("评价")&& StuPra.studentProId.equals("57159822f07e75084cb8a1fe")){
                     Fragment courseRatingBarFragment = new CourseRatingBarFragment();
                     courseRatingBarFragment.setArguments(listBundle);
                     fragmentList.add(courseRatingBarFragment);
                     Log.e(TAG, "refreshPage: 学员端走定制化评价列表展示页面");
-                }else if(menuNamePanDuan.contains("学员课程教师")){
+                }else if(menuNamePanDuan.contains("学员课程教师")&& StuPra.studentProId.equals("57159822f07e75084cb8a1fe")){
                     Fragment stuClassTchFragment = new StuClassTchFragment();
                     stuClassTchFragment.setArguments(listBundle);
                     fragmentList.add(stuClassTchFragment);

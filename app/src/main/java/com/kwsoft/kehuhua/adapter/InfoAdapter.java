@@ -12,12 +12,14 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.hampson.activity.ReadFileActivity;
+import com.kwsoft.version.StuPra;
 
 import java.util.List;
 import java.util.Map;
 
 /**
  * Created by Administrator on 2016/11/14 0014.
+ *
  */
 
 public class InfoAdapter extends BaseAdapter {
@@ -25,8 +27,9 @@ public class InfoAdapter extends BaseAdapter {
     private List<Map<String, String>> fieldSet;
     private Context context;
     private LayoutInflater inflater = null;
-
-
+    private static final String TAG = "InfoAdapter";
+public static  int is8=0;
+    public static  int is9=0;
     public InfoAdapter(Context context, List<Map<String, String>> fieldSet) {
         this.context = context;
         this.fieldSet = fieldSet;
@@ -48,26 +51,65 @@ public class InfoAdapter extends BaseAdapter {
         return i;
     }
 
-    private static final String TAG = "InfoAdapter";
-
     @Override
     public View getView(final int i, View view, ViewGroup viewGroup) {
-
-
         view = inflater.inflate(R.layout.activity_info_item, null);
-
         TextView tv_name = (TextView) view.findViewById(R.id.tv_name);
         TextView tv_entity_name = (TextView) view.findViewById(R.id.tv_entity_name);
-//        ZuoYeImageGridView zuoYeImageGridView=(ZuoYeImageGridView)view.findViewById(R.id.zuoYeImageGridView);
+       View info_item_line =view.findViewById(R.id.info_item_line);
         Map<String, String> itemMap = fieldSet.get(i);
         Log.e(TAG, "getView: itemMap " + itemMap.toString());
         String name = itemMap.get("fieldCnName");
         String value = itemMap.get("fieldCnName2");
-
         tv_name.setText(name);
-        if (name.contains("附件")) {
 
+        if (name.contains("附件")&& StuPra.studentProId.equals("57159822f07e75084cb8a1fe")) {
             tv_entity_name.setVisibility(View.VISIBLE);
+            String downLoadId="";
+            if (name.equals("作业附件")) {
+                is8=1;
+                        downLoadId = fieldSet.get(9).get("fieldCnName2");
+                        Log.e(TAG, "getView: downLoadId1 "+downLoadId);
+
+                }else if(name.equals("完成附件")){
+                is9=1;
+                      downLoadId = fieldSet.get(8).get("fieldCnName2");
+                Log.e(TAG, "getView: downLoadId2 "+downLoadId);
+                }
+            if (!value.equals("")) {
+                String[] valueArr = value.split(",");
+                String fileNum = valueArr.length + "个附件";
+                Log.e(TAG, "getView: fileNum "+fileNum);
+                tv_entity_name.setText(fileNum);
+                final String fieldSetString = JSON.toJSONString(fieldSet);
+                final String finalDownLoadId = downLoadId;
+                tv_entity_name.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(context, ReadFileActivity.class);
+                        intent.putExtra("position", i+"");
+                        intent.putExtra("fieldSet", fieldSetString);
+                        intent.putExtra("downLoadId", finalDownLoadId);
+                        context.startActivity(intent);
+                    }
+                });
+            }else {
+                tv_entity_name.setText("无附件");
+            }
+        }else {
+            tv_entity_name.setText(value);
+        }
+        if (is8==1||is9==1) {
+            if (i>7) {
+                tv_name.setVisibility(View.GONE);
+                tv_entity_name.setVisibility(View.GONE);
+                info_item_line.setVisibility(View.GONE);
+                Log.e(TAG, "getView: i "+i);
+            }
+        }
+        return view;
+    }
+}
 //            zuoYeImageGridView.setVisibility(View.VISIBLE);
 //
 //            //获取mongoDB字符串
@@ -96,76 +138,3 @@ public class InfoAdapter extends BaseAdapter {
 
 
 //            List<String> fileNames=new ArrayList<>();
-            String downLoadId="";
-            if (name.contains("作业附件")) {
-                for (int k = 0; k < fieldSet.size(); k++) {
-
-                    String fieldCnName = fieldSet.get(k).get("fieldCnName");
-
-                    if (fieldCnName.contains("mongodbid")) {
-                        downLoadId = fieldSet.get(k).get("fieldCnName2");
-                    }
-
-                }
-
-            }else if(name.contains("完成附件")){
-
-                for (int k = 0; k < fieldSet.size(); k++) {
-
-                    String fieldCnName = fieldSet.get(k).get("fieldCnName");
-
-                    if (fieldCnName.contains("完成作业mongodbID")) {
-                        downLoadId = fieldSet.get(k).get("fieldCnName2");
-                    }
-
-                }
-
-            }
-            if (!value.equals("")) {
-                String[] valueArr = value.split(",");
-//                for (int m=0;m<valueArr.length;m++) {
-//                    fileNames.add(valueArr[m]);
-//                }
-                String fileNum = valueArr.length + "个附件";
-                Log.e(TAG, "getView: fileNum "+fileNum);
-                tv_entity_name.setText(fileNum);
-                final String fieldSetString = JSON.toJSONString(fieldSet);
-                final String finalDownLoadId = downLoadId;
-                tv_entity_name.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(context, ReadFileActivity.class);
-                        intent.putExtra("position", i+"");
-                        intent.putExtra("fieldSet", fieldSetString);
-                        intent.putExtra("downLoadId", finalDownLoadId);
-
-                        context.startActivity(intent);
-                    }
-                });
-
-
-            }else {
-                tv_entity_name.setText("无附件");
-
-            }
-//
-//            if (mongoIds.size()>0) {
-//                Log.e(TAG, "getView: mongoIds "+mongoIds);
-//                ZuoYeGridViewAdapter gridViewAdapter=new ZuoYeGridViewAdapter(context, mongoIds,fileNames);
-//                zuoYeImageGridView.setAdapter(gridViewAdapter);
-//            }
-//        }else {
-//
-//
-//            tv_entity_name.setText(value);
-//
-//        }
-
-
-        }else {
-            tv_entity_name.setText(value);
-
-        }
-        return view;
-    }
-}
