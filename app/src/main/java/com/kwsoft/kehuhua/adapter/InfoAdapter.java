@@ -65,7 +65,8 @@ public class InfoAdapter extends BaseAdapter {
         String value = itemMap.get("fieldCnName2");
 
         tv_name.setText(name);
-        if (name.contains("作业附件")) {
+        if (name.contains("附件")) {
+
             tv_entity_name.setVisibility(View.VISIBLE);
 //            zuoYeImageGridView.setVisibility(View.VISIBLE);
 //
@@ -95,27 +96,55 @@ public class InfoAdapter extends BaseAdapter {
 
 
 //            List<String> fileNames=new ArrayList<>();
+            String downLoadId="";
+            if (name.contains("作业附件")) {
+                for (int k = 0; k < fieldSet.size(); k++) {
 
+                    String fieldCnName = fieldSet.get(k).get("fieldCnName");
+
+                    if (fieldCnName.contains("mongodbid")) {
+                        downLoadId = fieldSet.get(k).get("fieldCnName2");
+                    }
+
+                }
+
+            }else if(name.contains("完成附件")){
+
+                for (int k = 0; k < fieldSet.size(); k++) {
+
+                    String fieldCnName = fieldSet.get(k).get("fieldCnName");
+
+                    if (fieldCnName.contains("完成作业mongodbID")) {
+                        downLoadId = fieldSet.get(k).get("fieldCnName2");
+                    }
+
+                }
+
+            }
             if (!value.equals("")) {
                 String[] valueArr = value.split(",");
 //                for (int m=0;m<valueArr.length;m++) {
 //                    fileNames.add(valueArr[m]);
 //                }
                 String fileNum = valueArr.length + "个附件";
+                Log.e(TAG, "getView: fileNum "+fileNum);
                 tv_entity_name.setText(fileNum);
                 final String fieldSetString = JSON.toJSONString(fieldSet);
+                final String finalDownLoadId = downLoadId;
                 tv_entity_name.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent(context, ReadFileActivity.class);
                         intent.putExtra("position", i+"");
                         intent.putExtra("fieldSet", fieldSetString);
+                        intent.putExtra("downLoadId", finalDownLoadId);
+
                         context.startActivity(intent);
                     }
                 });
 
 
-            } else {
+            }else {
                 tv_entity_name.setText("无附件");
 
             }

@@ -136,7 +136,6 @@ public class CourseRatingBarAdapter extends BaseAdapter {
                     ll_cb_layout.addView(textview);
                 }
             }
-            Log.e(TAG, "getView: ll_cb_layout "+ll_cb_layout.toString());
             ll_cb_layout.setVisibility(View.VISIBLE);
             //获取星级汉字
             String xingJi = map.get(2).get("fieldCnName2");
