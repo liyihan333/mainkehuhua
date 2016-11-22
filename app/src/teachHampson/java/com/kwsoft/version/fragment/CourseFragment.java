@@ -39,6 +39,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import noman.weekcalendar.WeekCalendar;
 import noman.weekcalendar.WeekDateChaListener;
@@ -79,7 +81,7 @@ public class CourseFragment extends Fragment implements OnDataListener, WeekDate
     //课程表日期的布局
     private RelativeLayout rl_top;
     //选中日期时添加的view
-    private View selectView, selectViewButtom;
+    //   private View selectView, selectViewButtom;
     //添加课程信息的布局
     private RelativeLayout courseInfoLayout;
     //课程信息的背景布局
@@ -97,19 +99,19 @@ public class CourseFragment extends Fragment implements OnDataListener, WeekDate
     String url;
     private Bundle menuListBundle;
     private LinearLayout layout_title;
+    private TextView tv_year;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.e("oncreate", "oncreat1");
-        View view = inflater.inflate(R.layout.stu_course_fragment_layout, container, false);
-        Log.e("oncreate", "oncreat2");
-//        getIntentData();
-//        initView(view);
-//        url = Constant.sysUrl + "dataPlAdd_interfaceShowDateCourse.do";
-//        //?mainId=73&tableId=19&minDate=2016-05-26&maxDate=2016-06-26
-//
-//        requestCourseData(url);
+        View view = inflater.inflate(R.layout.teach_course_fragment_layout, container, false);
+
+        getIntentData();
+        initView(view);
+        url = Constant.sysUrl + "dataPlAdd_interfaceShowDateCourse.do";
+        //?mainId=73&tableId=19&minDate=2016-05-26&maxDate=2016-06-26
+        Log.e("url=", url);
+        requestCourseData(url);
         return view;
     }
 
@@ -140,6 +142,7 @@ public class CourseFragment extends Fragment implements OnDataListener, WeekDate
         oneMinWidth = leftTextViewHeight / 30;
         sharedPreferences = getActivity().getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         tv_date = (TextView) view.findViewById(R.id.tv_date);
+        tv_year = (TextView) view.findViewById(R.id.tv_year);
         IV_back_list_item_tadd = (ImageView) view.findViewById(R.id.IV_back_list_item_tadd);
 
 //        if (VersionSetting.versionNum==1){
@@ -155,7 +158,9 @@ public class CourseFragment extends Fragment implements OnDataListener, WeekDate
         layout_date = (RelativeLayout) view.findViewById(R.id.layout_date);
         currentDateTime = new DateTime();
         Log.e("TAG", "课程表监测点2");
-        tv_date.setText(currentDateTime.getMonthOfYear() + "月");
+        // tv_date.setText(currentDateTime.getMonthOfYear() + "月");
+        tv_date.setText(currentDateTime.getMonthOfYear() + "");
+        tv_year.setText(currentDateTime.getYear() + "");
         layout_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -176,6 +181,7 @@ public class CourseFragment extends Fragment implements OnDataListener, WeekDate
                                 }
 
                                 tv_date.setText(monthNew);
+                                tv_year.setText(year + "");
 //                                addGeneral.setText(year + "-" + monthNew + "-" + dayNew);
                                 Log.i("123", "date===>" + year + "-" + monthNew + "-" + dayNew);
                                 String dateStr = year + "-" + monthNew + "-" + dayNew;
@@ -218,6 +224,8 @@ public class CourseFragment extends Fragment implements OnDataListener, WeekDate
         paramsMap.put("tableId", tableId);
         paramsMap.put("minDate", thisWeekFirstDate);//thisWeekFirstDate
         paramsMap.put("maxDate", thisWeekLastDate);//thisWeekLastDate
+
+        Log.e(TAG, Constant.USERID + "//" + tableId);
     }
 
     //选中日期时，底部显示的高亮view
@@ -231,23 +239,23 @@ public class CourseFragment extends Fragment implements OnDataListener, WeekDate
 
         RelativeLayout.LayoutParams lpButtom = new RelativeLayout.LayoutParams((int) courseInfoWidth, ViewGroup.LayoutParams.MATCH_PARENT);
         lpButtom.setMargins((int) marginLeft, 0, 0, 0);
-        if (selectView == null) {
-            selectView = new View(getActivity());
-            selectView.setBackgroundResource(R.color.selectColor);
-        } else {
-            rl_top.removeView(selectView);
-        }
-        selectView.setLayoutParams(layoutParams);
-        rl_top.addView(selectView);
-
-        if (selectViewButtom == null) {
-            selectViewButtom = new View(getContext());
-            selectViewButtom.setBackgroundResource(R.color.selectColorButtom);
-        } else {
-            layout_course_bg.removeView(selectViewButtom);
-        }
-        selectViewButtom.setLayoutParams(lpButtom);
-        layout_course_bg.addView(selectViewButtom);
+//        if (selectView == null) {
+//            selectView = new View(getActivity());
+//            selectView.setBackgroundResource(R.color.selectColor);
+//        } else {
+//            rl_top.removeView(selectView);
+//        }
+//        selectView.setLayoutParams(layoutParams);
+//        rl_top.addView(selectView);
+//
+//        if (selectViewButtom == null) {
+//            selectViewButtom = new View(getContext());
+//            selectViewButtom.setBackgroundResource(R.color.selectColorButtom);
+//        } else {
+//            layout_course_bg.removeView(selectViewButtom);
+//        }
+//        selectViewButtom.setLayoutParams(lpButtom);
+//        layout_course_bg.addView(selectViewButtom);
     }
 
     private void getIntentData() {
@@ -261,9 +269,9 @@ public class CourseFragment extends Fragment implements OnDataListener, WeekDate
 //            String[] jieGuo1 = urlHalf.split("tableId=");
 //            String[] jieGuo2 = jieGuo1[1].split("&");
 //            tableId = jieGuo2[0];
-            tableId = Constant.stuCourseTableId;
-            Log.e("tableds=", Constant.teachCourseTableId);
-            Log.e("useridds=", Constant.USERID);
+            tableId = Constant.teachCourseTableId;
+            Log.e("tableidsd", Constant.teachCourseTableId);
+            Log.e("useidsd", Constant.USERID);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -296,7 +304,9 @@ public class CourseFragment extends Fragment implements OnDataListener, WeekDate
     @Override
     public void getDate(DateTime dateTime) {
         currentDateTime = dateTime;
-        tv_date.setText(currentDateTime.getMonthOfYear() + "月");
+//        tv_date.setText(currentDateTime.getMonthOfYear()+"月");
+        tv_date.setText(currentDateTime.getMonthOfYear() + "");
+        tv_year.setText(currentDateTime.getYear() + "");
         DateTime midDate = dateTime.withDayOfWeek(DateTimeConstants.THURSDAY);
         DateTime startDate = midDate.plusDays(-3);
         DateTime endDate = midDate.plusDays(3);
@@ -359,12 +369,12 @@ public class CourseFragment extends Fragment implements OnDataListener, WeekDate
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         ErrorToast.errorToast(mContext, e);
-                        Log.e(TAG, "onError: Call  " + call + "  id  " + id);
                     }
 
                     @Override
                     public void onResponse(String response, int id) {
                         Log.e(TAG, "onResponse: " + "  id  " + id);
+                        Log.e("onres=", response);
                         setStore(response);
                     }
                 });
@@ -389,7 +399,7 @@ public class CourseFragment extends Fragment implements OnDataListener, WeekDate
             setCourseDataInTable();
         } else {
             // stopAnim();
-            Toast.makeText(getActivity(), "无课表数据", Toast.LENGTH_SHORT).show();
+            //  Toast.makeText(getActivity(), "无课表数据", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -431,26 +441,48 @@ public class CourseFragment extends Fragment implements OnDataListener, WeekDate
                 int week = week(date);
                 //左边距
                 float marginLeft = ((week - 1) * courseInfoWidth) + leftTextViewWidth + lineHeight * 2;
+                if (week == 7) {
+                    Log.e(week + "7", courseInfoWidth + "");
+                } else {
+                    Log.e(week + "1-6", courseInfoWidth + "");
+                }
+
                 //上边距跨过横线的条数总和的高度像素
                 float topLineSumHeight = ((left - 480) / 30) * lineHeight;
                 //上边距
                 float marginTop = (left - 480) * oneMinWidth + topLineSumHeight;
                 CourseView courseView = new CourseView(getActivity());
+                TextView textView = (TextView) courseView.findViewById(R.id.tv_course_name);
+                // courseView.setBackgroundColor(getResources().getColor(R.color.blue));
                 //课程高度跨过的横线条数总和的高度像素
                 float chLineSumHeight = ((right - left) / 30) * lineHeight;
                 //课程高度
                 Log.e("TAG", "课程表检测3");
                 float courseHeight = (right - left) * oneMinWidth + chLineSumHeight;
                 RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams((int) courseInfoWidth, (int) courseHeight);
-                layoutParams.setMargins((int) marginLeft, (int) marginTop, 0, 0);
+//               if (week==7){
+//                   layoutParams=new RelativeLayout.LayoutParams((int)courseInfoWidth-5,(int)courseHeight);
+//               }
+                layoutParams.setMargins((int) marginLeft + 2, (int) marginTop, 0, 0);
 //                courseView.getTopRightIv().setAdjustViewBounds(true);
 //                courseView.getTopRightIv().setMaxWidth((int)(courseInfoWidth/2));
 //                courseView.getTopRightIv().setMaxHeight((int)(courseInfoWidth/2));
                 courseView.setLayoutParams(layoutParams);
-                Log.e("TAG", "课程表检测3。1");
+                Log.e("TAG", "课程表检测3。1" + marginLeft + "//" + marginTop);
                 String courseName = "";
                 if (list.get(i).get("SHOW_CONTENT") != null) {
-                    courseName = String.valueOf(list.get(i).get("SHOW_CONTENT"));
+                    String courseNameStr = String.valueOf(list.get(i).get("SHOW_CONTENT"));
+                    String[] coursNameArr = courseNameStr.split(",");
+                    courseName = coursNameArr[coursNameArr.length - 1].substring(3);
+                    //courseName = "English chnie dsd ds dsf";
+                }
+                if (!isContainChinese(courseName)) {
+                    courseName.replaceAll(" ", "\n");
+                    textView.setTextSize(9);
+                    textView.setPadding(9, 0, 9, 0);
+                } else {
+                    textView.setTextSize(11);
+                    textView.setPadding(9, 0, 9, 0);
                 }
                 Log.e("TAG", "课程表检测3。2");
                 courseView.setBackgroundResource(R.drawable.couse_bg);
@@ -479,5 +511,16 @@ public class CourseFragment extends Fragment implements OnDataListener, WeekDate
 
         }
         // stopAnim();
+    }
+
+    public boolean isContainChinese(String str) {
+
+
+        Pattern p = Pattern.compile("[\u4e00-\u9fa5]");
+        Matcher m = p.matcher(str);
+        if (m.find()) {
+            return true;
+        }
+        return false;
     }
 }
