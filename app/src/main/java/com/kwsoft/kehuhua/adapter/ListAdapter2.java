@@ -224,7 +224,7 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                             public void onClick(View view) {
 
                                 Log.e(TAG, "onItemClick: buttonName "+buttonName1);
-                                if (buttonName1.contains("确认下课")) {
+                                if (buttonName1.contains("确认下课")&& StuPra.studentProId.equals("57159822f07e75084cb8a1fe")) {
                                     Intent mIntentEdit = new Intent(mContext, StarRatingBarActivity.class);
                                     mIntentEdit.putExtra("itemSet", operaButtonSetMapStr);
                                     Log.e(TAG, "onClick: operaButtonSetMapStr "+operaButtonSetMapStr);
@@ -252,7 +252,7 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                         holder.list_opera1.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                if (buttonName2.contains("确认下课")) {
+                                if (buttonName2.contains("确认下课")&& StuPra.studentProId.equals("57159822f07e75084cb8a1fe")) {
                                     Intent mIntentEdit = new Intent(mContext, StarRatingBarActivity.class);
                                     mIntentEdit.putExtra("itemSet", operaButtonSetMapStr1);
                                     mContext.startActivity(mIntentEdit);
@@ -275,7 +275,7 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                         holder.list_opera2.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                if (buttonName3.contains("确认下课")) {
+                                if (buttonName3.contains("确认下课")&& StuPra.studentProId.equals("57159822f07e75084cb8a1fe")) {
                                     Intent mIntentEdit = new Intent(mContext, StarRatingBarActivity.class);
                                     mIntentEdit.putExtra("itemSet", operaButtonSetMapStr2);
                                     mContext.startActivity(mIntentEdit);

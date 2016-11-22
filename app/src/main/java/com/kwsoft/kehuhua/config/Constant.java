@@ -154,7 +154,7 @@ public class Constant {
     public static String pictureStr = "";//上传图片路径
     public static ArrayList<String> img_Paths = new ArrayList<>();//上传图片路径
     public final static String pictureUrl = "servlet/OmFileUploadServlet";
-
+    public  static String infoTitle = "";
     public static int topBarColor;
 
 

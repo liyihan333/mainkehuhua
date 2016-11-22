@@ -128,7 +128,6 @@ public class ListFragment extends Fragment {
     public void getDataIntent() {
         listDataBundle = getArguments();
        String paramsStr = listDataBundle.getString("listFragmentData");
-
         paramsMap = JSON.parseObject(paramsStr,
                 new TypeReference<Map<String, String>>() {
                 });

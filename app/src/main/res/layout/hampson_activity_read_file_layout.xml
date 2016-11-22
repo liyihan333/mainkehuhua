@@ -60,15 +60,10 @@
                 android:id="@+id/ll_layout_audio"
                 android:layout_below="@+id/ll_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginTop="11dp"
                 android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="114dp"
-                    android:background="@color/white"
-                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -81,37 +76,15 @@
 
                     <ListView
                         android:id="@+id/listview"
-                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="25dp"
                         android:background="@color/white">
 
                     </ListView>
-                </LinearLayout>
 
 
-            </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerInParent="true"
-                android:layout_centerVertical="true"
-                android:orientation="horizontal"
-                android:paddingTop="40dp">
-
-                <com.kwsoft.kehuhua.wechatPicture.WaterWaveProgress
-                    android:id="@+id/waterWaveProgress1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"
-                    android:layout_weight="1"
-                    android:visibility="gone"
-                    tools:maxProgress="100"
-                    tools:progress="0" />
             </LinearLayout>
         </RelativeLayout>
     </ScrollView>

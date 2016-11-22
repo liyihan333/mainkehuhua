@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.kwsoft.kehuhua.adcustom.R;
@@ -19,6 +18,7 @@ import java.util.Map;
 
 /**
  * Created by Administrator on 2016/11/8 0008.
+ *
  */
 
 public class CourseRatingBarAdapter extends BaseAdapter {
@@ -112,11 +112,9 @@ public class CourseRatingBarAdapter extends BaseAdapter {
             FlexBoxLayout ll_cb_layout = (FlexBoxLayout) view.findViewById(R.id.autolayout);
             //满意度，字段选择
 //        FlexBoxLayout ll_cb_layout = (FlexBoxLayout) view.findViewById(R.id.autolayout);
+            ll_cb_layout.setHorizontalSpace(17);
+            ll_cb_layout.setVerticalSpace(10);
             ll_cb_layout.removeAllViews();
-            ll_cb_layout.destroyDrawingCache();
-            ll_cb_layout.setHorizontalSpace(10);
-            ll_cb_layout.setVerticalSpace(8);
-            //  ll_cb_layout.removeAllViews();
             //然后可以直接使用这个类中的控件，对控件进行操作，而不用重复去findViewById了
             //课程名称
             tv_title.setText(map.get(1).get("fieldCnName2"));
@@ -126,23 +124,18 @@ public class CourseRatingBarAdapter extends BaseAdapter {
             teach_name_title.setText(map.get(0).get("fieldCnName"));
             tv_teach_name.setText(map.get(0).get("fieldCnName2"));
             String pingJiaMiaoShu = map.get(6).get("fieldCnName2");
-            Log.e(TAG, "getView: 总数 " + (map.size() - 1) + " 现在执行到 pingJiaMiaoShu");
-            int tagcount = 0;
+            Log.e(TAG, "getView: 总数 "+(map.size()-1)+" 现在执行到 pingJiaMiaoShu");
             if (pingJiaMiaoShu != null && pingJiaMiaoShu.length() > 0) {
                 String[] tags = pingJiaMiaoShu.split(",");
-                tagcount = tags.length;
                 Log.e(TAG, "getView: pingJiaMiaoShu " + pingJiaMiaoShu);
 //                ll_cb_layout.removeAllViews();
-                for (int j = 0; j < tags.length; j++) {
-                    //for (int j = 0; j < 3; j++) {
-
+                for (String tag : tags) {
                     TextView textview = (TextView) LayoutInflater.from(mContext).inflate(R.layout.assess_list_cb_item, null);
-                    //  Log.e("tag", tag + "?" + tags.length);
-                    textview.setText(tags[j]);
+                    Log.e("tag", tag + "?" + tags.length);
+                    textview.setText(tag);
                     ll_cb_layout.addView(textview);
                 }
             }
-            Log.e(TAG, "getView: ll_cb_layout " + ll_cb_layout.toString());
             ll_cb_layout.setVisibility(View.VISIBLE);
             //获取星级汉字
             String xingJi = map.get(2).get("fieldCnName2");
@@ -193,18 +186,10 @@ public class CourseRatingBarAdapter extends BaseAdapter {
 
             }
             //获取最底层评价描述
-            String pingjiaMiaoShu = String.valueOf(map.get(4).get("fieldCnName2"));
-
-            if (tagcount == 3) {
-                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                layoutParams.setMargins(0, 11, 0, 0);//4个参数按顺序分别是左上右下
-                tv_teach_content.setLayoutParams(layoutParams);
-            }
-
-
-            if (!pingjiaMiaoShu.equals("") || !pingjiaMiaoShu.equals("null")) {
+            String pingjiaMiaoShu=String.valueOf(map.get(4).get("fieldCnName2"));
+            if (!pingjiaMiaoShu.equals("")||!pingjiaMiaoShu.equals("null")) {
                 tv_teach_content.setText(map.get(4).get("fieldCnName2"));
-            } else {
+            }else{
                 tv_teach_content.setText("无评价内容");
             }
         } catch (Exception e) {
@@ -223,17 +208,16 @@ public class CourseRatingBarAdapter extends BaseAdapter {
 //        //AutoNextLineLinearlayout ll_cb_layout;
 //    }
 
-    public void clear() {
+    public void clear(){
         list.removeAll(list);
         notifyDataSetChanged();
     }
-
-    public void addData(List<List<Map<String, String>>> addData) {
+    public void addData(List<List<Map<String, String>>> addData){
         list.addAll(addData);
         notifyDataSetChanged();
     }
 
-    public List<List<Map<String, String>>> getDatas() {
+    public List<List<Map<String, String>>> getDatas(){
         return list;
 
     }
