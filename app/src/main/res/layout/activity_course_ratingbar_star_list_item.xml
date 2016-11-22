@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="#f7f7f7"
     android:orientation="vertical">
 
@@ -50,7 +50,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="25dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="16dp"
             android:orientation="vertical">
@@ -161,8 +161,8 @@
             android:id="@+id/ll_cb_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:orientation="vertical"
             android:paddingTop="11dp">
             <com.kwsoft.kehuhua.hampson.view.FlexBoxLayout
@@ -177,11 +177,12 @@
 
         <TextView
             android:id="@+id/tv_teach_content"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp"
-            android:layout_marginTop="22dp"
+            android:paddingRight="20dp"
+            android:paddingLeft="20dp"
+            android:layout_marginTop="11dp"
+            android:gravity="top"
             android:text="李明费李明费李明费李明费李明费李明费李明费李明费"
             android:textColor="@color/list_item_left"
             android:textSize="14sp" />

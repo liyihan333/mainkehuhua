@@ -23,6 +23,7 @@
             android:id="@+id/lv"
             android:focusable="false"
             android:layout_width="match_parent"
+            android:dividerHeight="18sp"
             android:layout_height="wrap_content"
             tools:listitem="@layout/activity_course_ratingbar_star_list_item"
             />

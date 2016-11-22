@@ -37,8 +37,6 @@ import butterknife.ButterKnife;
 import okhttp3.Call;
 
 
-
-
 /**
 
  */
@@ -74,12 +72,15 @@ public class StageTestFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         ((BaseActivity) getActivity()).dialog.show();
-        empty_text= (TextView) view.findViewById(R.id.empty_text);
+        empty_text = (TextView) view.findViewById(R.id.empty_text);
+        Log.e("oncreate", "oncreat1");
         getDataIntent();//获取初始化数据
+        Log.e("oncreate", "oncreat2");
         initRefreshLayout();
-        getData();
+        Log.e("oncreate", "oncreat3");
         return view;
     }
+
     //初始化SwipeRefreshLayout
     private void initRefreshLayout() {
         mRefreshLayout.setLoadMore(true);
@@ -93,7 +94,7 @@ public class StageTestFragment extends Fragment {
             @Override
             public void onRefreshLoadMore(MaterialRefreshLayout materialRefreshLayout) {
 
-                if (mAdapter!=null&&mAdapter.getCount() < totalNum) {
+                if (mAdapter != null && mAdapter.getCount() < totalNum) {
 
                     loadMoreData();
                 } else {
@@ -105,7 +106,7 @@ public class StageTestFragment extends Fragment {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String itemData=JSON.toJSONString(mAdapter.getItem(i));
+                String itemData = JSON.toJSONString(mAdapter.getItem(i));
                 toItem(itemData);
             }
         });
@@ -116,6 +117,7 @@ public class StageTestFragment extends Fragment {
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
+
     /**
      * 接收菜单传递过来的模块数据包
      */
@@ -126,15 +128,18 @@ public class StageTestFragment extends Fragment {
     public void getDataIntent() {
         listDataBundle = getArguments();
         String paramsStr = listDataBundle.getString("listFragmentData");
-
-        paramsMap = JSON.parseObject(paramsStr,
-                new TypeReference<Map<String, String>>() {
-                });
-
-        tableId = paramsMap.get(Constant.tableId);
-        pageId = paramsMap.get(Constant.pageId);
-        Constant.mainTableIdValue = tableId;
-        Constant.mainPageIdValue = pageId;
+        if (paramsStr != null && paramsStr.length() > 0) {
+            paramsMap = JSON.parseObject(paramsStr,
+                    new TypeReference<Map<String, String>>() {
+                    });
+            if (paramsMap != null && paramsMap.size() > 0) {
+                tableId = paramsMap.get(Constant.tableId);
+                pageId = paramsMap.get(Constant.pageId);
+                Constant.mainTableIdValue = tableId;
+                Constant.mainPageIdValue = pageId;
+                getData();
+            }
+        }
     }
 
     /**
@@ -172,8 +177,9 @@ public class StageTestFragment extends Fragment {
                         @Override
                         public void onResponse(String response, int id) {
                             Log.e(TAG, "onResponse: " + "  id  " + id);
-
-                            setStore(response);
+                            if (response != null && response.length() > 0) {
+                                setStore(response);
+                            }
                         }
                     });
         } else {
@@ -208,37 +214,39 @@ public class StageTestFragment extends Fragment {
             Map<String, Object> setMap = JSON.parseObject(jsonData,
                     new TypeReference<Map<String, Object>>() {
                     });
+            if (setMap != null && setMap.size() > 0) {
+
 //获取各项总配置pageSet父级
-            Map<String, Object> pageSet = (Map<String, Object>) setMap.get("pageSet");
+                Map<String, Object> pageSet = (Map<String, Object>) setMap.get("pageSet");
 //获取条目总数
-            totalNum = Integer.valueOf(String.valueOf(setMap.get("dataCount")));
+                totalNum = Integer.valueOf(String.valueOf(setMap.get("dataCount")));
 
 //获取子项内部按钮
-            if (pageSet.get("operaButtonSet") != null) {
-                try {
-                    operaButtonSetList = (List<Map<String, Object>>) pageSet.get("operaButtonSet");
+                if (pageSet.get("operaButtonSet") != null) {
+                    try {
+                        operaButtonSetList = (List<Map<String, Object>>) pageSet.get("operaButtonSet");
 
-                    if (operaButtonSetList.size() > 0) {
-                        for (int i = 0; i < operaButtonSetList.size(); i++) {
-                            operaButtonSetList.get(i).put("tableIdList", tableId);
-                            operaButtonSetList.get(i).put("pageIdList", pageId);
+                        if (operaButtonSetList.size() > 0) {
+                            for (int i = 0; i < operaButtonSetList.size(); i++) {
+                                operaButtonSetList.get(i).put("tableIdList", tableId);
+                                operaButtonSetList.get(i).put("pageIdList", pageId);
+                            }
                         }
-                    }
-                    operaButtonSet = JSONArray.toJSONString(operaButtonSetList);
-                    Log.e("TAG", "获取operaButtonSet" + operaButtonSet);
+                        operaButtonSet = JSONArray.toJSONString(operaButtonSetList);
+                        Log.e("TAG", "获取operaButtonSet" + operaButtonSet);
 
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
 
 //数据左侧配置数据
-            fieldSet = (List<Map<String, Object>>) pageSet.get("fieldSet");
-            Log.e("TAG", "获取fieldSet" + fieldSet.toString());
+                fieldSet = (List<Map<String, Object>>) pageSet.get("fieldSet");
+                Log.e("TAG", "获取fieldSet" + fieldSet.toString());
 //获取dataList
-            dataList = (List<Map<String, Object>>) setMap.get("dataList");
-            Log.e("TAG", "获取dataList" + dataList);
-
+                dataList = (List<Map<String, Object>>) setMap.get("dataList");
+                Log.e("TAG", "获取dataList" + dataList);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             ((BaseActivity) getActivity()).dialog.dismiss();
@@ -306,17 +314,17 @@ public class StageTestFragment extends Fragment {
 
     public void normalRequest() {
         Log.e(TAG, "normalRequest: ");
-        Log.e(TAG, "normalRequest: datas "+datas.toString());
-        mAdapter = new StageTestAdapter(getActivity(),datas);
+        Log.e(TAG, "normalRequest: datas " + datas.toString());
+        mAdapter = new StageTestAdapter(getActivity(), datas);
         mListView.setAdapter(mAdapter);
         ((BaseActivity) getActivity()).dialog.dismiss();
         if (totalNum == 0) {
             Snackbar.make(mListView, "本页无数据", Snackbar.LENGTH_SHORT).show();
             empty_text.setVisibility(View.VISIBLE);
 
-        }else{
+        } else {
             empty_text.setVisibility(View.GONE);
-            Snackbar.make(mListView, "加载完成，共"+totalNum+"条", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(mListView, "加载完成，共" + totalNum + "条", Snackbar.LENGTH_SHORT).show();
         }
 
     }

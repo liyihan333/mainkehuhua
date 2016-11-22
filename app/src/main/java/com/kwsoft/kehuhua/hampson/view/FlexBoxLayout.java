@@ -2,6 +2,7 @@ package com.kwsoft.kehuhua.hampson.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -36,6 +37,7 @@ public class FlexBoxLayout extends ViewGroup {
 
         //测量子View的宽高
         int childCount = getChildCount();
+        Log.e("chidcount",childCount+"");
         View child = null;
         //子view摆放的起始位置
         int left = getPaddingLeft();
@@ -49,10 +51,13 @@ public class FlexBoxLayout extends ViewGroup {
             measureChild(child, widthMeasureSpec, heightMeasureSpec);
             //两两对比，取得一行中最大的高度
             if (child.getMeasuredHeight() + child.getPaddingTop() + child.getPaddingBottom() > maxHeightInLine) {
-                maxHeightInLine = child.getMeasuredHeight() + child.getPaddingTop() + child.getPaddingBottom();
+               // maxHeightInLine = child.getMeasuredHeight() + child.getPaddingTop() + child.getPaddingBottom();
+                maxHeightInLine = child.getMeasuredHeight();
             }
-            left += child.getMeasuredWidth() + dip2px(horizontalSpace) + child.getPaddingLeft() + child.getPaddingRight();
-            if (left >= widthSize - getPaddingRight() - getPaddingLeft()) {//换行
+           // left += child.getMeasuredWidth() + dip2px(horizontalSpace) + child.getPaddingLeft() + child.getPaddingRight();
+            left += child.getMeasuredWidth() + dip2px(horizontalSpace);
+           if (left >= widthSize - getPaddingRight() - getPaddingLeft()) {//换行
+      //      if (i >= 3) {//换行
                 left = getPaddingLeft();
                 //累积行的总高度
                 allHeight += maxHeightInLine + dip2px(verticalSpace);
@@ -63,7 +68,8 @@ public class FlexBoxLayout extends ViewGroup {
         //再加上最后一行的高度,因为之前的高度累积条件是换行
         //最后一行没有换行操作，所以高度应该再加上
         allHeight += maxHeightInLine;
-
+        Log.e("allheighy",allHeight+"");
+        //allHeight = allHeight-maxHeightInLine;
         if (widthMode != MeasureSpec.EXACTLY) {
             widthSize = mScreenWidth;//如果没有指定宽，则默认为屏幕宽
         }
@@ -138,4 +144,5 @@ public class FlexBoxLayout extends ViewGroup {
     public void setVerticalSpace(int verticalSpace) {
         this.verticalSpace = verticalSpace;
     }
+
 }

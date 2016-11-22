@@ -1,6 +1,7 @@
 package com.kwsoft.version;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ import com.kwsoft.version.fragment.CourseFragment;
 import com.kwsoft.version.fragment.MeFragment;
 import com.kwsoft.version.fragment.StuFragmentTabAdapter;
 import com.kwsoft.version.fragment.StudyFragment;
+import com.kwsoft.version.view.CustomDialog;
 import com.pgyersdk.update.PgyUpdateManager;
 
 import java.util.ArrayList;
@@ -63,33 +65,34 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
 
         initView();
         initFragment();
+        Log.e("olduserid",Constant.USERID+"/"+useridOld);
         if (!Constant.USERID.equals(useridOld)){
-            initDialog();
-            sPreferences.edit().putString("useridOld", Constant.USERID).apply();
+           initDialog();
+           sPreferences.edit().putString("useridOld", Constant.USERID).apply();
         }
         PgyUpdateManager.register(this);
     }
 
     public void initDialog() {
 
-//        com.kwsoft.version.CustomDialog.Builder builder = new com.kwsoft.version.CustomDialog.Builder(StuMainActivity.this);
-////                builder.setMessage("这个就是自定义的提示框");
-//        builder.setTitle("入园须知");
-//        builder.setPositiveButton("我知道了!", new DialogInterface.OnClickListener() {
-//            public void onClick(DialogInterface dialog, int which) {
-//                dialog.dismiss();
-//                //设置你的操作事项
-//            }
-//        });
-//
-//        builder.setNegativeButton("",
-//                new android.content.DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        dialog.dismiss();
-//                    }
-//                });
-//
-//        builder.create().show();
+        CustomDialog.Builder builder = new CustomDialog.Builder(StuMainActivity.this);
+//                builder.setMessage("这个就是自定义的提示框");
+        builder.setTitle("入园须知");
+        builder.setPositiveButton("我知道了!", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                //设置你的操作事项
+            }
+        });
+
+        builder.setNegativeButton("",
+                new android.content.DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+        builder.create().show();
     }
 
     @Override
