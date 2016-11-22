@@ -386,7 +386,7 @@ public class DataProcess {
 //                intent.setClass(mActivity, CourseActivity.class);
 //            }
 //        }
-        intent.putExtra("itemData", itemDataString);
+        intent.putExtra("itemData", itemDataString);//父级菜单数据
         intent.putExtra("childData", childString);
         mActivity.startActivity(intent);
     }

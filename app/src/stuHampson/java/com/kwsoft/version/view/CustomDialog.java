@@ -1,4 +1,4 @@
-package com.kwsoft.version;
+package com.kwsoft.version.view;
 
 import android.app.Dialog;
 import android.content.Context;

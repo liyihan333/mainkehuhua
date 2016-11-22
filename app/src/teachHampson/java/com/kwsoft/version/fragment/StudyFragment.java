@@ -79,6 +79,7 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
     public Bundle arrBundle;
     public String teachUrl, homePageListstr;
     private String todayPageId, tomorrowPageId, todayTableid, tomorrowTableId;//金明日课表page/table
+    private List<Map<String, Object>> homePagelistMap = new ArrayList<>();
 
     @Nullable
     @Override
@@ -153,9 +154,44 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
         //mScrollView = mPullRefreshScrollView.getRefreshableView();
         getData();
         //菜单列表中的gridview数据
-        // setMenuModel();
+        setMenuModel();
         // initData();
-        initModel();
+        //  initModel();
+    }
+
+    private void setMenuModel() {
+        //菜单列表中的gridview数据
+        if ((homePageListstr != null) && (homePageListstr.length() > 0)) {
+            homePagelistMap = JSON.parseObject(homePageListstr,
+                    new TypeReference<List<Map<String, Object>>>() {
+                    });
+            if ((homePagelistMap != null) && (homePagelistMap.size() > 0)) {
+                menuListAll.clear();
+                String menuName;
+                for (int i = 0; i < homePagelistMap.size(); i++) {
+                    Map<String, Object> map = homePagelistMap.get(i);
+                    menuName = map.get("menuName").toString();
+                    map.put("menuName", map.get("menuName").toString().replace("手机端", ""));
+                    map.put("image", image[i]);
+                    menuListAll.add(map);
+                    if (menuName.contains("今日课表")) {
+                        todayPageId = map.get("pageId").toString();
+                        todayTableid = map.get("tableId").toString();
+                        continue;
+                    } else if (menuName.contains("明日课表")) {
+                        tomorrowPageId = map.get("pageId").toString();
+                        tomorrowTableId = map.get("tableId").toString();
+                        continue;
+                    }
+                }
+            } else {
+                initModel();
+            }
+        } else {
+            initModel();
+
+        }
+        setMenuAdapter(menuListAll);
     }
 
     private void initDateWeek() {
@@ -188,53 +224,52 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
         setKanbanAdapter(parentList);
     }
 
-    private void getTodyTomorTP() {
-        //菜单列表中的gridview数据
-        if ((homePageListstr != null) && (homePageListstr.length() > 0)) {
-            List<Map<String, Object>> listMap = JSON.parseObject(homePageListstr,
-                    new TypeReference<List<Map<String, Object>>>() {
-                    });
-            if ((listMap != null) && (listMap.size() > 0)) {
-                String menuName;
-                for (int i = 0; i < listMap.size(); i++) {
-                    Map<String, Object> map = listMap.get(i);
-                    menuName = map.get("menuName").toString();
-                    if (menuName.contains("今日课表")) {
-                        todayPageId = map.get("pageId").toString();
-                        todayTableid = map.get("tableId").toString();
-                        continue;
-                    } else if (menuName.contains("明日课表")) {
-                        tomorrowPageId = map.get("pageId").toString();
-                        tomorrowTableId = map.get("tableId").toString();
-                        continue;
-                    }
-                }
-                Log.e("tda",todayPageId+"/"+todayTableid+"/"+tomorrowPageId+"/"+tomorrowTableId);
-            }
-        } else {
-            Toast.makeText(getActivity(), "无今明日课表", Toast.LENGTH_SHORT).show();
-
-        }
-    }
+//    private void getTodyTomorTP() {
+//        //菜单列表中的gridview数据
+//        if ((homePageListstr != null) && (homePageListstr.length() > 0)) {
+//            List<Map<String, Object>> listMap = JSON.parseObject(homePageListstr,
+//                    new TypeReference<List<Map<String, Object>>>() {
+//                    });
+//            if ((listMap != null) && (listMap.size() > 0)) {
+//                String menuName;
+//                for (int i = 0; i < listMap.size(); i++) {
+//                    Map<String, Object> map = listMap.get(i);
+//                    menuName = map.get("menuName").toString();
+//                    if (menuName.contains("今日课表")) {
+//                        todayPageId = map.get("pageId").toString();
+//                        todayTableid = map.get("tableId").toString();
+//                        continue;
+//                    } else if (menuName.contains("明日课表")) {
+//                        tomorrowPageId = map.get("pageId").toString();
+//                        tomorrowTableId = map.get("tableId").toString();
+//                        continue;
+//                    }
+//                }
+//                Log.e("tda", todayPageId + "/" + todayTableid + "/" + tomorrowPageId + "/" + tomorrowTableId);
+//            }
+//        } else {
+//            Toast.makeText(getActivity(), "无今明日课表", Toast.LENGTH_SHORT).show();
+//
+//        }
+//    }
 
     private void initModel() {
         Map<String, Object> map = new HashMap<>();
-        map.put("menuName", "今日课表");
+        map.put("menuName", "扫码考勤");
         map.put("image", image[0]);
         menuListAll.add(map);
         map = new HashMap<>();
-        map.put("menuName", "明日课表");
+        map.put("menuName", "报表管理");
         map.put("image", image[1]);
         menuListAll.add(map);
         map = new HashMap<>();
-        map.put("menuName", "扫码考勤");
+        map.put("menuName", "消息提醒");
         map.put("image", image[2]);
         menuListAll.add(map);
         map = new HashMap<>();
-        map.put("menuName", "消息提醒");
+        map.put("menuName", "系统设置");
         map.put("image", image[3]);
         menuListAll.add(map);
-        setMenuAdapter(menuListAll);
     }
 
     private void getData() {
@@ -242,52 +277,71 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
         arrStr = arrBundle.getString("arrStr");
         homePageListstr = arrBundle.getString("homePageList");
         Log.e("homePageListstr", homePageListstr);
-        getTodyTomorTP();
+        //getTodyTomorTP();
     }
 
     public void setMenuAdapter(final List<Map<String, Object>> menuListMaps) {
-        SimpleAdapter simpleAdapter = new SimpleAdapter(getActivity(), menuListMaps,
+        final SimpleAdapter simpleAdapter = new SimpleAdapter(getActivity(), menuListMaps,
                 R.layout.fragment_study_gridview_item, new String[]{"image", "menuName"},
                 new int[]{R.id.itemImage, R.id.itemName});
         gridView.setAdapter(simpleAdapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if (i == 0) {
-                    //今日课表
-                    Intent intent = new Intent(getActivity(), TodayCourseTableActivity.class);
-                    intent.putExtra("todayPageId", todayPageId);
-                    intent.putExtra("todayTableid", todayTableid);
-                    intent.putExtra("isToday", "1");
-                    intent.putExtra("titleName", String.valueOf(menuListMaps.get(i).get("menuName")));
-                    startActivity(intent);
-                } else if (i == 1) {
-                    //明日课表
-                    Intent intent = new Intent(getActivity(), TodayCourseTableActivity.class);
-                    intent.putExtra("tomorrowPageId", tomorrowPageId);
-                    intent.putExtra("tomorrowTableId", tomorrowTableId);
-                    intent.putExtra("isToday", "2");
-                    intent.putExtra("titleName", String.valueOf(menuListMaps.get(i).get("menuName")));
-                    startActivity(intent);
-                } else if (i == 2) {
-                    PermissionGen.needPermission(StudyFragment.this, 106,
-                            new String[]{
-                                    Manifest.permission.CAMERA,
-                                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-                            }
-                    );
-                } else if (i == 3) {
-                    Intent intent = new Intent(getActivity(), MessagAlertActivity.class);
-                    startActivity(intent);
-                }
-            }
-        });
+                                            @Override
+                                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                                if (homePagelistMap != null && homePagelistMap.size() > 0) {
+                                                    Map<String, Object> map = menuListMaps.get(i);
+                                                    String menuName = map.get("menuName") + "";
+                                                    if ("今日课表".equals(menuName)) {
+                                                        //今日课表
+                                                        Intent intent = new Intent(getActivity(), TodayCourseTableActivity.class);
+                                                        intent.putExtra("todayPageId", todayPageId);
+                                                        intent.putExtra("todayTableid", todayTableid);
+                                                        intent.putExtra("isToday", "1");
+                                                        intent.putExtra("titleName", String.valueOf(menuListMaps.get(i).get("menuName")));
+                                                        startActivity(intent);
+                                                    } else if ("明日课表".equals(menuName)) {
+                                                        //明日课表
+                                                        Intent intent = new Intent(getActivity(), TodayCourseTableActivity.class);
+                                                        intent.putExtra("tomorrowPageId", tomorrowPageId);
+                                                        intent.putExtra("tomorrowTableId", tomorrowTableId);
+                                                        intent.putExtra("isToday", "2");
+                                                        intent.putExtra("titleName", String.valueOf(menuListMaps.get(i).get("menuName")));
+                                                        startActivity(intent);
+                                                    } else {
+                                                        DataProcess.toList(getActivity(), menuListMaps.get(i));
+                                                    }
+                                                } else {
+                                                    if (i == 0) {
+                                                        PermissionGen.needPermission(StudyFragment.this, 106,
+                                                                new String[]{
+                                                                        Manifest.permission.CAMERA,
+                                                                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                                                                }
+                                                        );
+                                                    } else if (i == 1) {
+                                                        Intent intent = new Intent(getActivity(), ChartActivity.class);
+                                                        intent.putExtra("titleName", String.valueOf(menuListMaps.get(i).get("menuName")));
+                                                        startActivity(intent);
+                                                    } else if (i == 2) {
+                                                        Intent intent = new Intent(getActivity(), MessagAlertActivity.class);
+                                                        startActivity(intent);
+                                                    } else if (i == 3) {
+                                                        Intent intent = new Intent(getActivity(), BlankActivity.class);
+                                                        intent.putExtra("titleName", String.valueOf(menuListMaps.get(i).get("menuName")));
+                                                        startActivity(intent);
+                                                    }
+                                                }
+                                            }
+                                        }
+
+        );
     }
 
     private static final String TAG = "StudyFragment";
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
     }
 

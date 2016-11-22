@@ -108,10 +108,11 @@ public class StuInfoActivity extends BaseActivity {
         @Override
         public void run() {
             //下载数据，重新设定dataList
-            requestSet();
+            requestRefreshSet();
             //防止数据加载过快动画效果差
             try {
                 Thread.sleep(2000);
+                Log.e("LoadDataThread","LoadDataThread");
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -121,6 +122,7 @@ public class StuInfoActivity extends BaseActivity {
     }
 
     private static final String TAG = "StuInfoActivity";
+
     /**
      * 3、获取字段接口数据,如果没有网络或者其他情况则读取本地
      */
@@ -142,16 +144,16 @@ public class StuInfoActivity extends BaseActivity {
                     .execute(new EdusStringCallback(StuInfoActivity.this) {
                         @Override
                         public void onError(Call call, Exception e, int id) {
-                            ErrorToast.errorToast(mContext,e);
+                            ErrorToast.errorToast(mContext, e);
                         }
 
                         @Override
                         public void onResponse(String response, int id) {
-                            Log.e(TAG, "onResponse: "+"  id  "+id);
+                            Log.e(TAG, "onResponse: " + "  id  " + id);
                             setStore(response);
                         }
                     });
-        }else{
+        } else {
             try {
                 Looper.prepare();
                 Toast.makeText(getApplicationContext(), "无网络！", Toast.LENGTH_SHORT).show();
@@ -163,8 +165,75 @@ public class StuInfoActivity extends BaseActivity {
 
         }
     }
+
+    public void requestRefreshSet() {
+        if (hasInternetConnected()) {
+            String volleyUrl = Constant.sysUrl + Constant.requestListSet;
+            Log.e("TAG", "学员端请求个人信息地址：" + volleyUrl);
+            //参数
+            Map<String, String> paramsMap = new HashMap<>();
+            paramsMap.put(tableId, Constant.stuPerTABLEID);
+            paramsMap.put(Constant.pageId, Constant.stuPerPAGEID);
+            //请求
+            OkHttpUtils
+                    .post()
+                    .params(paramsMap)
+                    .url(volleyUrl)
+                    .build()
+                    .execute(new EdusStringCallback(StuInfoActivity.this) {
+                        @Override
+                        public void onError(Call call, Exception e, int id) {
+                            ErrorToast.errorToast(mContext, e);
+                        }
+
+                        @Override
+                        public void onResponse(String response, int id) {
+                            Log.e(TAG, "onResponse: " + "  id  " + id);
+                            String jsonData1 = response.replaceAll("00:00:00", "");
+                            Map<String, Object> stuInfoMap = Utils.str2map(jsonData1);
+                            List<Map<String, Object>> dataList = new ArrayList<>();
+                            Map<String, Object> pageSet;
+                            try {
+                                dataList = (List<Map<String, Object>>) stuInfoMap.get("dataList");
+                                pageSet = (Map<String, Object>) stuInfoMap.get("pageSet");
+                                fieldSet = (List<Map<String, Object>>) pageSet.get("fieldSet");
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+                            if (dataList.size() > 0) {
+//            dataList.remove(dataList.size()-1);
+//            dataList.remove(dataList.size()-1);
+                                if (stuInfo == null) {
+                                    stuInfo = unionAnalysis(dataList);
+//                stuInfo.remove(stuInfo.size() - 1);
+//
+//                stuInfo.remove(stuInfo.size() - 1);
+                                } else {
+                                    stuInfo.removeAll(stuInfo);
+                                    stuInfo.addAll(unionAnalysis(dataList));
+//                stuInfo.remove(stuInfo.size() - 1);
+//                stuInfo.remove(stuInfo.size() - 1);
+                                }
+                            }
+                        }
+                    });
+        } else {
+            try {
+                Looper.prepare();
+                Toast.makeText(getApplicationContext(), "无网络！", Toast.LENGTH_SHORT).show();
+                Looper.loop();
+                swipeRefreshLayout.setRefreshing(false);//设置不刷新
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
     List<Map<String, Object>> fieldSet = new ArrayList<>();
     private StuInfoAdapter adapter;
+
     @SuppressWarnings("unchecked")
     private void setStore(String jsonData) {
         String jsonData1 = jsonData.replaceAll("00:00:00", "");
@@ -193,7 +262,7 @@ public class StuInfoActivity extends BaseActivity {
 //                        new String[]{"fieldCnName", "fieldCnName2"}, new int[]{R.id.tv_name,
 //                        R.id.tv_entity_name});
 //                stuInfoLv.setAdapter(adapter);
-                adapter = new StuInfoAdapter(stuInfo,StuInfoActivity.this);
+                adapter = new StuInfoAdapter(stuInfo, StuInfoActivity.this);
                 stuInfoLv.setAdapter(adapter);
             } else {
                 stuInfo.removeAll(stuInfo);
