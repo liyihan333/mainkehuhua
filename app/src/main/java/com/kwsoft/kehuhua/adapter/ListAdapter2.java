@@ -14,7 +14,6 @@ import com.alibaba.fastjson.TypeReference;
 import com.kwsoft.kehuhua.adcustom.OperateDataActivity;
 import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.adcustom.TabActivity;
-import com.kwsoft.kehuhua.config.Constant;
 import com.kwsoft.kehuhua.hampson.activity.StarRatingBarActivity;
 import com.kwsoft.version.StuPra;
 
@@ -180,9 +179,7 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             //首先过滤不能显示的按钮，将不显示的按钮删除
 
 
-
-
-
+            Log.e(TAG, "onBindViewHolder: operaButton "+operaButton.toString());
 
             if (operaButton!=null&&operaButton.size()>0) {
                 List<Map<String, Object>> operaButtonNow=new ArrayList<>();//不能在原来的上面改，需要新建，否则后面的会得到错误的集合
@@ -216,8 +213,6 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                         holder.list_opera0.setVisibility(View.VISIBLE);
 
                         operaButtonNow.get(0).put("dataId", mainId);
-                        operaButtonNow.get(0).put("tableIdList", Constant.mainTableIdValue);
-                        operaButtonNow.get(0).put("pageIdList", Constant.mainPageIdValue);
                         final String operaButtonSetMapStr=JSON.toJSONString(operaButton.get(0));
                         holder.list_opera0.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -232,6 +227,7 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                                 }else{
                                     Intent mIntentEdit = new Intent(mContext, OperateDataActivity.class);
                                     mIntentEdit.putExtra("itemSet", operaButtonSetMapStr);
+                                    Log.e(TAG, "onClick: operaButtonSetMapStr "+operaButtonSetMapStr);
                                     mContext.startActivity(mIntentEdit);
                                 }
                             }
@@ -243,8 +239,6 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                         holder.list_opera1.setVisibility(View.VISIBLE);
                         Log.e(TAG, "onBindViewHolder: operaButton.get(1) "+operaButtonNow.get(1).toString());
                         operaButtonNow.get(1).put("dataId", mainId);
-                        operaButtonNow.get(1).put("tableIdList", Constant.mainTableIdValue);
-                        operaButtonNow.get(1).put("pageIdList", Constant.mainPageIdValue);
                         Log.e(TAG, "onBindViewHolder: operaButton.get(1) "+operaButtonNow.get(1).toString());
                         final String operaButtonSetMapStr1=JSON.toJSONString(operaButtonNow.get(1));
 
@@ -269,8 +263,6 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                         holder.list_opera2.setVisibility(View.VISIBLE);
 
                         operaButtonNow.get(2).put("dataId", mainId);
-                        operaButtonNow.get(2).put("tableIdList", Constant.mainTableIdValue);
-                        operaButtonNow.get(2).put("pageIdList", Constant.mainPageIdValue);
                         final String operaButtonSetMapStr2=JSON.toJSONString(operaButtonNow.get(2));
                         holder.list_opera2.setOnClickListener(new View.OnClickListener() {
                             @Override
