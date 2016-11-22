@@ -824,9 +824,9 @@ public class Add_EditAdapter extends BaseAdapter {
                         }
                     }
                 }
-
-                if (idValues.equals("") && Constant.relationFieldId != null
-                        && Constant.relationFieldId.equals(needFilterStr[1])) {
+//                && Constant.relationFieldId != null
+//                        && Constant.relationFieldId.equals(needFilterStr[1])
+                if (idValues.equals("")) {
                     idValues = dataId;
                     Constant.relationField = position;
                 }

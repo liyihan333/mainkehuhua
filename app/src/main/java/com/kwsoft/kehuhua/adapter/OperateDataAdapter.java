@@ -115,6 +115,7 @@ public class OperateDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public void onBindViewHolder(RecyclerView.ViewHolder thisHolder, final int position) {
         if (thisHolder instanceof OperateHolder) {
             final OperateHolder holder = (OperateHolder) thisHolder;
+            holder.setIsRecyclable(false);//禁止viewHolder复用
             Log.e(TAG, "position "+position+"  onBindViewHolder: mDatas.get(position)  "+mDatas.get(position));
             //item操作
                 final int fieldRole = Integer.valueOf(valueOf(mDatas.get(position).get("fieldRole")));
@@ -246,63 +247,67 @@ public class OperateDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     if (isShow) {
                         holder.add_spinner.setVisibility(View.VISIBLE);
                     }
-                    //删除无用字典值数据
-                    List<Map<String, Object>> dicList = getNewDicList(position);
-                    //设置默认选中值以及byId的位置
-                    int byId = 0;//
-                    int dicDefaultSelectInt;
-                    String dicDefaultSelect;
-                    //有值的情况
+                    try {
+                        //删除无用字典值数据
+                        List<Map<String, Object>> dicList = getNewDicList(position);
+                        //设置默认选中值以及byId的位置
+                        int byId = 0;//
+                        int dicDefaultSelectInt;
+                        String dicDefaultSelect;
+                        //有值的情况
 
-                    if (!defaultName.equals("")&&!defaultName.equals("null")&&Utils.isNum(defaultName)) {
-                        byId = getById(dicList, byId, Integer.valueOf(defaultName));
-                        //无值、有默认值的情况
-                    } else if (!valueOf(mDatas.get(position).get("dicDefaultSelect")).equals("")) {
-                        dicDefaultSelect = valueOf(mDatas.get(position).get("dicDefaultSelect"));
-                        //获得默认选中值
-                        dicDefaultSelectInt = Integer.valueOf(dicDefaultSelect);
-                        //如果有默认选中值，将byId确定
-                        byId = getById(dicList, byId, dicDefaultSelectInt);
-                    }
-                    //字典按钮点击选择Arrays.asList("One", "Two", "Three", "Four", "Five")
-                    List<String> dataset = new LinkedList<>();
-
-                    for (int i = 0; i < dicList.size(); i++) {
-                        dataset.add(valueOf(dicList.get(i).get("DIC_NAME")));
-                    }
-                    Log.e(TAG, "onBindViewHolder: byId "+byId);
-
-                    Log.e(TAG, "onBindViewHolder: mDatas.get(position) "+mDatas.get(position).toString());
-                    mDatas.get(position).put(Constant.itemValue, valueOf(dicList.get(byId).get("DIC_ID")));
-                    mDatas.get(position).put(Constant.itemName, valueOf(dicList.get(byId).get("DIC_ID")));
-                    String dicName=String.valueOf(dicList.get(byId).get("DIC_NAME"));
-
-
-                    if (!dicName.equals("")&&!dicName.equals("null")) {
-                        holder.add_spinner.setText(dicName);
-                    }
-
-
-                    final List<Map<String, Object>> finalDicList = dicList;
-                    final int size = dataset.size();
-                    final String[] arrs = dataset.toArray(new String[size]);
-                    holder.add_spinner.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            ArrayAdapter adapter = new ArrayAdapter(mContext, R.layout.activity_adapter_radio_item, R.id.text1, arrs);
-                            AlertDialog dialog = new AlertDialog.Builder(mContext).setTitle("").
-                                    setAdapter(adapter, new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            String DIC_ID = valueOf(finalDicList.get(which).get("DIC_ID"));
-                                            mDatas.get(position).put(itemValue, DIC_ID);
-                                            mDatas.get(position).put(Constant.itemName, DIC_ID);
-                                            holder.add_spinner.setText(arrs[which]);
-                                            dialog.dismiss();
-                                        }
-                                    }).create();
-                            dialog.show();
+                        if (!defaultName.equals("")&&!defaultName.equals("null")&&Utils.isNum(defaultName)) {
+                            byId = getById(dicList, byId, Integer.valueOf(defaultName));
+                            //无值、有默认值的情况
+                        } else if (!valueOf(mDatas.get(position).get("dicDefaultSelect")).equals("")) {
+                            dicDefaultSelect = valueOf(mDatas.get(position).get("dicDefaultSelect"));
+                            //获得默认选中值
+                            dicDefaultSelectInt = Integer.valueOf(dicDefaultSelect);
+                            //如果有默认选中值，将byId确定
+                            byId = getById(dicList, byId, dicDefaultSelectInt);
                         }
-                    });
+                        //字典按钮点击选择Arrays.asList("One", "Two", "Three", "Four", "Five")
+                        List<String> dataset = new LinkedList<>();
+
+                        for (int i = 0; i < dicList.size(); i++) {
+                            dataset.add(valueOf(dicList.get(i).get("DIC_NAME")));
+                        }
+                        Log.e(TAG, "onBindViewHolder: byId "+byId);
+                        Log.e(TAG, "onBindViewHolder: dicList "+dicList.toString() );
+                        Log.e(TAG, "onBindViewHolder: mDatas.get(position) "+mDatas.get(position).toString());
+                        mDatas.get(position).put(Constant.itemValue, valueOf(dicList.get(byId).get("DIC_ID")));
+                        mDatas.get(position).put(Constant.itemName, valueOf(dicList.get(byId).get("DIC_ID")));
+                        String dicName=String.valueOf(dicList.get(byId).get("DIC_NAME"));
+
+
+                        if (!dicName.equals("")&&!dicName.equals("null")) {
+                            holder.add_spinner.setText(dicName);
+                        }
+
+
+                        final List<Map<String, Object>> finalDicList = dicList;
+                        final int size = dataset.size();
+                        final String[] arrs = dataset.toArray(new String[size]);
+                        holder.add_spinner.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                ArrayAdapter adapter = new ArrayAdapter(mContext, R.layout.activity_adapter_radio_item, R.id.text1, arrs);
+                                AlertDialog dialog = new AlertDialog.Builder(mContext).setTitle("").
+                                        setAdapter(adapter, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                String DIC_ID = valueOf(finalDicList.get(which).get("DIC_ID"));
+                                                mDatas.get(position).put(itemValue, DIC_ID);
+                                                mDatas.get(position).put(Constant.itemName, DIC_ID);
+                                                holder.add_spinner.setText(arrs[which]);
+                                                dialog.dismiss();
+                                            }
+                                        }).create();
+                                dialog.show();
+                            }
+                        });
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
+                    }
 //3、日期
 
                 } else if (fieldRole == 14 || fieldRole == 26 || fieldRole == 28) {
