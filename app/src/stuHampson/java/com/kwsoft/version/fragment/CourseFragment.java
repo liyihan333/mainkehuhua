@@ -472,20 +472,27 @@ public class CourseFragment extends Fragment implements OnDataListener, WeekDate
                 if (list.get(i).get("SHOW_CONTENT") != null) {
                     String courseNameStr = String.valueOf(list.get(i).get("SHOW_CONTENT"));
                     String[] coursNameArr = courseNameStr.split(",");
-                    courseName = coursNameArr[coursNameArr.length - 1].substring(3);
+                    if (coursNameArr.length >= 3) {
+                        courseName = coursNameArr[coursNameArr.length - 1].substring(3);
+                    }
                     //courseName = "English chnie dsd ds dsf";
                 }
-                if (!isContainChinese(courseName)) {
-                    courseName.replaceAll(" ", "\n");
-                    textView.setTextSize(9);
-                    textView.setPadding(9, 0, 9, 0);
-                } else {
-                    textView.setTextSize(11);
-                    textView.setPadding(9, 0, 9, 0);
-                }
+
                 Log.e("TAG", "课程表检测3。2");
                 courseView.setBackgroundResource(R.drawable.couse_bg);
-                courseView.setCourseNameText(courseName);
+                if (courseName != null && courseName.length() > 0) {
+                    if (!isContainChinese(courseName)) {
+                        courseName.replaceAll(" ", "\n");
+                        textView.setTextSize(9);
+                        textView.setPadding(9, 0, 9, 0);
+                    } else {
+                        textView.setTextSize(11);
+                        textView.setPadding(9, 0, 9, 0);
+                    }
+                    courseView.setCourseNameText(courseName);
+                } else {
+                    courseView.setCourseNameText("暂无数据");
+                }
                 courseInfoLayout.addView(courseView);
 
                 final String content = list.get(i).get("SHOW_CONTENT") + "";
@@ -505,16 +512,12 @@ public class CourseFragment extends Fragment implements OnDataListener, WeekDate
                 Log.e("TAG", "课程表检测4");
             } catch (NumberFormatException e) {
                 e.printStackTrace();
-
             }
-
         }
         // stopAnim();
     }
 
     public boolean isContainChinese(String str) {
-
-
         Pattern p = Pattern.compile("[\u4e00-\u9fa5]");
         Matcher m = p.matcher(str);
         if (m.find()) {

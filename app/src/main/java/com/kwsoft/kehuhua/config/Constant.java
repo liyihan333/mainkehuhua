@@ -19,13 +19,12 @@ import java.util.regex.PatternSyntaxException;
 
 /**
  * Created by Administrator on 2015/11/28 0028.
- *
  */
 public class Constant {
-        public static String sysUrl = "http://124.254.63.60:8874/edus_auto/";//汉普森项目
-//    public static String sysUrl = "http://182.92.108.162/edus_auto/";//外网项目
+    public static String sysUrl = "http://124.254.63.60:8874/edus_auto/";//汉普森项目
+    //    public static String sysUrl = "http://182.92.108.162/edus_auto/";//外网项目
     // public static String sysUrl = "http://192.168.6.171:8080/edus_auto/";//小庞项目
-   // public static String sysUrl = "http://192.168.6.129:8080/edus_auto/";//红伟项目
+    // public static String sysUrl = "http://192.168.6.129:8080/edus_auto/";//红伟项目
 //    public static String sysUrl = "http://192.168.6.117:8080/edus_auto/";
 //    public static String sysUrl = "http://192.168.6.150:8081/edus_auto/";//陈蒙项目
     public final static String sysLoginUrl = "login_interfaceProLogin.do";//项目选择方法
@@ -154,19 +153,18 @@ public class Constant {
     public static String pictureStr = "";//上传图片路径
     public static ArrayList<String> img_Paths = new ArrayList<>();//上传图片路径
     public final static String pictureUrl = "servlet/OmFileUploadServlet";
-    public  static String infoTitle = "";
+    public static String infoTitle = "";
     public static int topBarColor;
 
 
-    public static List<Map<String, Object>> buttonSet=new ArrayList<>();//按钮列表数据
+    public static List<Map<String, Object>> buttonSet = new ArrayList<>();//按钮列表数据
 
-    public final static String downLoadFileStr="DownLoadFile?str=";
+    public final static String downLoadFileStr = "DownLoadFile?str=";
 
 //学员端参数：
 
     public static String stu_index = "";// 副key
     public static String stu_homeSetId = "";// 副key
-
 
 
     public static void threadToast(Activity activity, String str) {
