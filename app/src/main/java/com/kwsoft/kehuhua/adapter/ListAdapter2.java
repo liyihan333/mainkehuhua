@@ -179,7 +179,6 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             //首先过滤不能显示的按钮，将不显示的按钮删除
 
 
-            Log.e(TAG, "onBindViewHolder: operaButton "+operaButton.toString());
 
             if (operaButton!=null&&operaButton.size()>0) {
                 List<Map<String, Object>> operaButtonNow=new ArrayList<>();//不能在原来的上面改，需要新建，否则后面的会得到错误的集合
