@@ -1,7 +1,6 @@
 package com.kwsoft.version;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -95,7 +94,7 @@ public class StuLoginActivity extends BaseActivity implements View.OnClickListen
 
     @PermissionSuccess(requestCode = 188)
     public void doSomething() {
-        Toast.makeText(this, "权限成功", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "权限成功", Toast.LENGTH_SHORT).show();
     }
 
     @PermissionFail(requestCode = 188)

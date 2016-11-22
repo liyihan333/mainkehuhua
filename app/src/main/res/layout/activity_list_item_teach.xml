@@ -79,7 +79,7 @@
 
                 <TextView
                     android:id="@+id/left1"
-                    android:layout_width="80dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:textColor="@color/list_item_left"
@@ -104,7 +104,7 @@
 
                 <TextView
                     android:id="@+id/left2"
-                    android:layout_width="80dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:textColor="@color/list_item_left"
@@ -129,7 +129,7 @@
 
                 <TextView
                     android:id="@+id/left3"
-                    android:layout_width="80dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:textColor="@color/list_item_left"
@@ -154,7 +154,7 @@
 
                 <TextView
                     android:id="@+id/left4"
-                    android:layout_width="80dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:textColor="@color/list_item_left"
@@ -229,7 +229,7 @@
                 android:id="@+id/dash_ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="13dp"
+                android:layout_marginTop="5dp"
                 android:visibility="gone"
                 android:orientation="horizontal">
                 <View
@@ -249,7 +249,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/list_item_content"
-            android:layout_marginTop="13dp"
             android:layout_marginLeft="15dp"
             android:visibility="gone"
             >
@@ -273,7 +272,7 @@
 
     </RelativeLayout>
     <RelativeLayout
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:id="@+id/list_opera_layout"
         android:layout_below="@+id/list_content"
         android:layout_width="match_parent"
@@ -287,6 +286,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="确认上课"
+            android:background="@drawable/photo_btn_first"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_centerVertical="true"
             android:visibility="gone"/>
         <Button
@@ -294,6 +295,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="确认下课"
+            android:background="@drawable/photo_btn_first"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_centerInParent="true"
             android:layout_marginStart="3dp"
             android:visibility="gone"/>
@@ -302,6 +305,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="交作业"
+            android:background="@drawable/photo_btn_first"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
             android:visibility="gone"/>
