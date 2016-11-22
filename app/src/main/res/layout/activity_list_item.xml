@@ -79,7 +79,7 @@
 
                 <TextView
                     android:id="@+id/left1"
-                    android:layout_width="80dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:textColor="@color/list_item_left"
@@ -104,7 +104,7 @@
 
                 <TextView
                     android:id="@+id/left2"
-                    android:layout_width="80dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:textColor="@color/list_item_left"
@@ -129,7 +129,7 @@
 
                 <TextView
                     android:id="@+id/left3"
-                    android:layout_width="80dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:textColor="@color/list_item_left"
@@ -154,7 +154,7 @@
 
                 <TextView
                     android:id="@+id/left4"
-                    android:layout_width="80dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:textColor="@color/list_item_left"
@@ -229,7 +229,7 @@
                 android:id="@+id/dash_ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="13dp"
+                android:layout_marginTop="5dp"
                 android:visibility="gone"
                 android:orientation="horizontal">
                 <View
