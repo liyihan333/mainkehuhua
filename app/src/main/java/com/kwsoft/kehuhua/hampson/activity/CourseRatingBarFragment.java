@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -96,13 +95,13 @@ public class CourseRatingBarFragment extends Fragment {
                 }
             }
         });
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String itemData = JSON.toJSONString(mAdapter.getItem(i));
-                toItem(itemData);
-            }
-        });
+//        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                String itemData = JSON.toJSONString(mAdapter.getItem(i));
+//                toItem(itemData);
+//            }
+//        });
     }
 
     @Override

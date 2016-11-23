@@ -150,7 +150,6 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="11dp"
                         android:gravity="top"
-                        android:text="李明费李明费李明"
                         android:textColor="@color/list_item_left"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -196,18 +195,5 @@
             </com.kwsoft.kehuhua.hampson.view.FlexBoxLayout>
 
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/tv_teach_content1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="11dp"
-            android:gravity="top"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:textColor="@color/list_item_left"
-            android:textSize="14sp"
-            android:visibility="gone" />
-
     </LinearLayout>
 </LinearLayout>

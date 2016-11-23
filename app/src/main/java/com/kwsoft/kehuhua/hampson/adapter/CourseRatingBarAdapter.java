@@ -188,6 +188,7 @@ public class CourseRatingBarAdapter extends BaseAdapter {
             //获取最底层评价描述
             String pingjiaMiaoShu=String.valueOf(map.get(4).get("fieldCnName2"));
             if (!pingjiaMiaoShu.equals("")||!pingjiaMiaoShu.equals("null")) {
+
                 tv_teach_content.setText(map.get(4).get("fieldCnName2"));
             }else{
                 tv_teach_content.setText("无评价内容");

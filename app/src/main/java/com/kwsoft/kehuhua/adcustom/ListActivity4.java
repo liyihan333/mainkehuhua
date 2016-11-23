@@ -204,7 +204,7 @@ public class ListActivity4 extends BaseActivity implements ViewPager.OnPageChang
 //                    transaction.add(R.id.fragment_container, courseHpsFragment);
                     Log.e(TAG, "refreshPage: 学员端走定制化课堂内容（一对一教学日志）页面");
 //评价列表有数据之后在空串后加数字，共2个地方需要修改 //Log.e("评价列表：",)
-                }else if(menuNamePanDuan.contains("评价")&& StuPra.studentProId.equals("57159822f07e75084cb8a1fe")){
+                }else if(menuNamePanDuan.contains("学员评价")&& StuPra.studentProId.equals("57159822f07e75084cb8a1fe")){
                     Fragment courseRatingBarFragment = new CourseRatingBarFragment();
                     courseRatingBarFragment.setArguments(listBundle);
                     fragmentList.add(courseRatingBarFragment);
@@ -267,7 +267,7 @@ public class ListActivity4 extends BaseActivity implements ViewPager.OnPageChang
                 Log.e(TAG, "refreshPage单个: 学员端走定制化课堂内容（一对一教学日志）页面");
 
 //评价列表有数据之后在空串后加数字，共2个地方需要修改
-            }else if(titleName.contains("评价")&& StuPra.studentProId.equals("57159822f07e75084cb8a1fe")){
+            }else if(titleName.contains("学员评价")&& StuPra.studentProId.equals("57159822f07e75084cb8a1fe")){
                 xFragment = new CourseRatingBarFragment();
                 Log.e(TAG, "refreshPage单个: 学员端走定制化评价列表展示页面");
             }else if(titleName.contains("学员课程教师")&& StuPra.studentProId.equals("57159822f07e75084cb8a1fe")){
