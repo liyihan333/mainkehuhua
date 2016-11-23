@@ -71,6 +71,7 @@ public class ListActivity4 extends BaseActivity implements ViewPager.OnPageChang
         ButterKnife.bind(this);
         CloseActivityClass.activityList.add(this);
         Log.e(TAG, "进入Tab");
+        Log.e(TAG, "进入Tab");
         initView();
     }
 
