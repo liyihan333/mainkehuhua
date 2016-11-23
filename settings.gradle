@@ -1,2 +1,2 @@
-include ':app', ':datetimepicker-library', ':weekcalendar'
+include ':app', ':datetimepicker-library', ':weekcalendar', ':mp3Recorder'
 include ':library'
