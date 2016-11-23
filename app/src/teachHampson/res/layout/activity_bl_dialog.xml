@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:textColor="@color/black"
-            android:text="入园须知"
+            android:text="入学须知"
             android:textSize="16sp" />
 
         <LinearLayout

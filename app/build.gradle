@@ -74,8 +74,6 @@ android {
         stuHampson.res.srcDirs = ['src/stuHampson/res']
 
 
-
-
     }
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES.txt'
@@ -161,4 +159,6 @@ dependencies {
     compile 'com.android.support:multidex:1.0.1'
     //Google官方出的分包方案
     compile files('libs/flame.jar')
+//清理缓存
+    compile('org.kymjs.kjframe:kjframe:2.6')
 }

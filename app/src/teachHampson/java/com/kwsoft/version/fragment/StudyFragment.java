@@ -174,11 +174,11 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
                     map.put("menuName", map.get("menuName").toString().replace("手机端", ""));
                     map.put("image", image[i]);
                     menuListAll.add(map);
-                    if (menuName.contains("今日课表")) {
+                    if (menuName.contains("Today")) {
                         todayPageId = map.get("pageId").toString();
                         todayTableid = map.get("tableId").toString();
                         continue;
-                    } else if (menuName.contains("明日课表")) {
+                    } else if (menuName.contains("Tomorrow")) {
                         tomorrowPageId = map.get("pageId").toString();
                         tomorrowTableId = map.get("tableId").toString();
                         continue;
@@ -291,7 +291,7 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
                                                 if (homePagelistMap != null && homePagelistMap.size() > 0) {
                                                     Map<String, Object> map = menuListMaps.get(i);
                                                     String menuName = map.get("menuName") + "";
-                                                    if ("今日课表".equals(menuName)) {
+                                                    if ("Today".equals(menuName)) {
                                                         //今日课表
                                                         Intent intent = new Intent(getActivity(), TodayCourseTableActivity.class);
                                                         intent.putExtra("todayPageId", todayPageId);
@@ -299,7 +299,7 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
                                                         intent.putExtra("isToday", "1");
                                                         intent.putExtra("titleName", String.valueOf(menuListMaps.get(i).get("menuName")));
                                                         startActivity(intent);
-                                                    } else if ("明日课表".equals(menuName)) {
+                                                    } else if ("Tomorrow".equals(menuName)) {
                                                         //明日课表
                                                         Intent intent = new Intent(getActivity(), TodayCourseTableActivity.class);
                                                         intent.putExtra("tomorrowPageId", tomorrowPageId);
