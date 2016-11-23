@@ -205,7 +205,6 @@
             android:gravity="top"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:text="李明费李明费李明费李明费李明费李明费李明费李明费"
             android:textColor="@color/list_item_left"
             android:textSize="14sp"
             android:visibility="gone" />

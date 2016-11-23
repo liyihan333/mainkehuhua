@@ -123,7 +123,7 @@ public class CourseRatingBarAdapter extends BaseAdapter {
             //老师标题和老师名字
             teach_name_title.setText(map.get(0).get("fieldCnName"));
             tv_teach_name.setText(map.get(0).get("fieldCnName2"));
-            String pingJiaMiaoShu = map.get(6).get("fieldCnName2");
+            String pingJiaMiaoShu = map.get(7).get("fieldCnName2");
             Log.e(TAG, "getView: 总数 "+(map.size()-1)+" 现在执行到 pingJiaMiaoShu");
             if (pingJiaMiaoShu != null && pingJiaMiaoShu.length() > 0) {
                 String[] tags = pingJiaMiaoShu.split(",");
@@ -137,17 +137,17 @@ public class CourseRatingBarAdapter extends BaseAdapter {
                 }
             }
             ll_cb_layout.setVisibility(View.VISIBLE);
-            //获取星级汉字
-            String xingJi = map.get(2).get("fieldCnName2");
+            //获取星级数字
+            String xingJi = map.get(6).get("fieldCnName2");
             switch (xingJi) {
-                case "五星":
+                case "5":
                     star0.setBackgroundResource(R.mipmap.star_ratingbar_full);
                     star1.setBackgroundResource(R.mipmap.star_ratingbar_full);
                     star2.setBackgroundResource(R.mipmap.star_ratingbar_full);
                     star3.setBackgroundResource(R.mipmap.star_ratingbar_full);
                     star4.setBackgroundResource(R.mipmap.star_ratingbar_full);
                     break;
-                case "四星":
+                case "4":
                     star0.setBackgroundResource(R.mipmap.star_ratingbar_full);
                     star1.setBackgroundResource(R.mipmap.star_ratingbar_full);
                     star2.setBackgroundResource(R.mipmap.star_ratingbar_full);
@@ -155,21 +155,21 @@ public class CourseRatingBarAdapter extends BaseAdapter {
                     star4.setBackgroundResource(R.mipmap.star_ratingbar_empty);
 
                     break;
-                case "三星":
+                case "3":
                     star0.setBackgroundResource(R.mipmap.star_ratingbar_full);
                     star1.setBackgroundResource(R.mipmap.star_ratingbar_full);
                     star2.setBackgroundResource(R.mipmap.star_ratingbar_full);
                     star3.setBackgroundResource(R.mipmap.star_ratingbar_empty);
                     star4.setBackgroundResource(R.mipmap.star_ratingbar_empty);
                     break;
-                case "两星":
+                case "2":
                     star0.setBackgroundResource(R.mipmap.star_ratingbar_full);
                     star1.setBackgroundResource(R.mipmap.star_ratingbar_full);
                     star2.setBackgroundResource(R.mipmap.star_ratingbar_empty);
                     star3.setBackgroundResource(R.mipmap.star_ratingbar_empty);
                     star4.setBackgroundResource(R.mipmap.star_ratingbar_empty);
                     break;
-                case "一星":
+                case "1":
                     star0.setBackgroundResource(R.mipmap.star_ratingbar_full);
                     star1.setBackgroundResource(R.mipmap.star_ratingbar_empty);
                     star2.setBackgroundResource(R.mipmap.star_ratingbar_empty);
