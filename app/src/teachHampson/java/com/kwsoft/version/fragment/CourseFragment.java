@@ -474,7 +474,7 @@ public class CourseFragment extends Fragment implements OnDataListener, WeekDate
                     String courseNameStr = String.valueOf(list.get(i).get("SHOW_CONTENT"));
                     String[] coursNameArr = courseNameStr.split(",");
                     if (coursNameArr.length >= 3) {
-                        courseName = coursNameArr[coursNameArr.length - 1].substring(3);
+                        courseName = coursNameArr[coursNameArr.length - 2].substring(3);
                         //courseName = "English chnie dsd ds dsf";
                     }
                 }
