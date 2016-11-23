@@ -138,16 +138,16 @@ public class CourseRatingBarAdapter extends BaseAdapter {
             }
             ll_cb_layout.setVisibility(View.VISIBLE);
             //获取星级数字
-            String xingJi = map.get(6).get("fieldCnName2");
+            String xingJi = map.get(2).get("fieldCnName2");
             switch (xingJi) {
-                case "5":
+                case "五星":
                     star0.setBackgroundResource(R.mipmap.star_ratingbar_full);
                     star1.setBackgroundResource(R.mipmap.star_ratingbar_full);
                     star2.setBackgroundResource(R.mipmap.star_ratingbar_full);
                     star3.setBackgroundResource(R.mipmap.star_ratingbar_full);
                     star4.setBackgroundResource(R.mipmap.star_ratingbar_full);
                     break;
-                case "4":
+                case "四星":
                     star0.setBackgroundResource(R.mipmap.star_ratingbar_full);
                     star1.setBackgroundResource(R.mipmap.star_ratingbar_full);
                     star2.setBackgroundResource(R.mipmap.star_ratingbar_full);
@@ -155,21 +155,21 @@ public class CourseRatingBarAdapter extends BaseAdapter {
                     star4.setBackgroundResource(R.mipmap.star_ratingbar_empty);
 
                     break;
-                case "3":
+                case "三星":
                     star0.setBackgroundResource(R.mipmap.star_ratingbar_full);
                     star1.setBackgroundResource(R.mipmap.star_ratingbar_full);
                     star2.setBackgroundResource(R.mipmap.star_ratingbar_full);
                     star3.setBackgroundResource(R.mipmap.star_ratingbar_empty);
                     star4.setBackgroundResource(R.mipmap.star_ratingbar_empty);
                     break;
-                case "2":
+                case "两星":
                     star0.setBackgroundResource(R.mipmap.star_ratingbar_full);
                     star1.setBackgroundResource(R.mipmap.star_ratingbar_full);
                     star2.setBackgroundResource(R.mipmap.star_ratingbar_empty);
                     star3.setBackgroundResource(R.mipmap.star_ratingbar_empty);
                     star4.setBackgroundResource(R.mipmap.star_ratingbar_empty);
                     break;
-                case "1":
+                case "一星":
                     star0.setBackgroundResource(R.mipmap.star_ratingbar_full);
                     star1.setBackgroundResource(R.mipmap.star_ratingbar_empty);
                     star2.setBackgroundResource(R.mipmap.star_ratingbar_empty);
