@@ -20,7 +20,6 @@ import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
 import com.kwsoft.kehuhua.adapter.ListAdapter2;
 import com.kwsoft.kehuhua.adcustom.InfoActivity;
-import com.kwsoft.kehuhua.adcustom.ListActivity4;
 import com.kwsoft.kehuhua.adcustom.OperateDataActivity;
 import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.adcustom.base.BaseActivity;
@@ -226,7 +225,7 @@ public class ListFragment extends Fragment {
 //            }
 //获取条目总数
             totalNum = Integer.valueOf(String.valueOf(setMap.get("dataCount")));
-
+            Log.e(TAG, "setStore: totalNum "+totalNum);
 
 //获取搜索数据，如果有搜索数据但是仅仅是方括号没内容则隐藏搜索框
             if (pageSet.get("serachSet") != null) {
@@ -277,28 +276,29 @@ public class ListFragment extends Fragment {
                 Log.e("TAG", "获取buttonSet" + Constant.buttonSet);
 
                 //判断右上角按钮是否可见
-                if (Constant.buttonSet.size() > 0) {
-
-                        for (int i=0;i<Constant.buttonSet.size();i++) {
-                            Constant.buttonSet.get(i).put("tableIdList", tableId);
-                            Constant.buttonSet.get(i).put("pageIdList", pageId);
-                        }
-
-                    ((ListActivity4)getActivity()).mToolbar.showRightImageButton();
-                    ((ListActivity4)getActivity()).mToolbar.setRightButtonOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            ((ListActivity4)getActivity()).buttonList();
-                        }
-                    });
-
-                } else {
-                    ((ListActivity4)getActivity()).mToolbar.hideRightImageButton();
-                }
+//                if (Constant.buttonSet.size() > 0) {
+//
+//                        for (int i=0;i<Constant.buttonSet.size();i++) {
+//                            Constant.buttonSet.get(i).put("tableIdList", tableId);
+//                            Constant.buttonSet.get(i).put("pageIdList", pageId);
+//                        }
+//
+//                    ((ListActivity4)getActivity()).mToolbar.showRightImageButton();
+//                    ((ListActivity4)getActivity()).mToolbar.setRightButtonOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            ((ListActivity4)getActivity()).buttonList();
+//                        }
+//                    });
+//
+//                } else {
+//                    ((ListActivity4)getActivity()).mToolbar.hideRightImageButton();
+//                }
 
 
             }
 //获取dataList
+            Log.e(TAG, "setStore: setMap.get(\"dataList\") "+setMap.get("dataList").toString());
             dataList = (List<Map<String, Object>>) setMap.get("dataList");
             Log.e("TAG", "获取dataList" + dataList);
 
