@@ -20,6 +20,7 @@ import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
 import com.kwsoft.kehuhua.adapter.ListAdapter2;
 import com.kwsoft.kehuhua.adcustom.InfoActivity;
+import com.kwsoft.kehuhua.adcustom.ListActivity4;
 import com.kwsoft.kehuhua.adcustom.OperateDataActivity;
 import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.adcustom.base.BaseActivity;
@@ -271,31 +272,33 @@ public class ListFragment extends Fragment {
             fieldSet = (List<Map<String, Object>>) pageSet.get("fieldSet");
             Log.e("TAG", "获取fieldSet" + fieldSet.toString());
 //获取buttonSet
+            String but=String.valueOf(pageSet.get("buttonSet"));
+            Log.e(TAG, "setStore: but0 "+but);
             if (pageSet.get("buttonSet") != null) {
+                Log.e(TAG, "setStore: but1 "+but);
                 Constant.buttonSet = (List<Map<String, Object>>) pageSet.get("buttonSet");//初始化下拉按钮数据
                 Log.e("TAG", "获取buttonSet" + Constant.buttonSet);
-
                 //判断右上角按钮是否可见
-//                if (Constant.buttonSet.size() > 0) {
-//
-//                        for (int i=0;i<Constant.buttonSet.size();i++) {
-//                            Constant.buttonSet.get(i).put("tableIdList", tableId);
-//                            Constant.buttonSet.get(i).put("pageIdList", pageId);
-//                        }
-//
-//                    ((ListActivity4)getActivity()).mToolbar.showRightImageButton();
-//                    ((ListActivity4)getActivity()).mToolbar.setRightButtonOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            ((ListActivity4)getActivity()).buttonList();
-//                        }
-//                    });
-//
-//                } else {
-//                    ((ListActivity4)getActivity()).mToolbar.hideRightImageButton();
-//                }
-
-
+                if (Constant.buttonSet.size() > 0) {
+                    ((ListActivity4)getActivity()).mToolbar.showRightImageButton();
+                        for (int i=0;i<Constant.buttonSet.size();i++) {
+                            Constant.buttonSet.get(i).put("tableIdList", tableId);
+                            Constant.buttonSet.get(i).put("pageIdList", pageId);
+                        }
+                    ((ListActivity4)getActivity()).mToolbar.setRightButtonOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            ((ListActivity4)getActivity()).buttonList();
+                        }
+                    });
+                } else {
+                    Log.e(TAG, "setStore: but2 "+but);
+                    ((ListActivity4)getActivity()).mToolbar.hideRightImageButton();
+                }
+            }else{
+                Log.e(TAG, "setStore: but3 "+but);
+                Constant.buttonSet = new ArrayList<>();
+                ((ListActivity4)getActivity()).mToolbar.hideRightImageButton();
             }
 //获取dataList
             Log.e(TAG, "setStore: setMap.get(\"dataList\") "+setMap.get("dataList").toString());
