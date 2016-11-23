@@ -64,11 +64,10 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
 
         initView();
         initFragment();
-        Log.e("olduserid",Constant.USERID+"/"+useridOld);
-        if (!Constant.USERID.equals(useridOld)){
-           initDialog();
-           sPreferences.edit().putString("useridOld", Constant.USERID).apply();
-        }
+//        if (!Constant.USERID.equals(useridOld)){
+//           initDialog();
+//           sPreferences.edit().putString("useridOld", Constant.USERID).apply();
+//        }
         PgyUpdateManager.register(this);
     }
 

@@ -108,6 +108,7 @@ dependencies {
     //谷歌类型转换工具
     compile project(path: ':library')
     compile project(path: ':weekcalendar')
+    compile project(path: ':mp3Recorder')
     //日历控件，课程表工具
     compile files('libs/jpush-android-2.1.7.jar')
     //极光推送

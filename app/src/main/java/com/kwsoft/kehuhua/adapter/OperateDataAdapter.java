@@ -453,6 +453,7 @@ holder.addGeneral.setOnClickListener(new View.OnClickListener() {
                             public void onClick(View view) {
                                 Intent intent = new Intent(mActivity, SelectPictureActivity.class);
                                 intent.putExtra("position", position + "");
+                                Log.e(TAG, "onClick: 出发的position "+position );
                                 intent.putExtra("fieldRole", fieldRole + "");
                                 mActivity.startActivityForResult(intent, 2);
                             }
@@ -461,14 +462,16 @@ holder.addGeneral.setOnClickListener(new View.OnClickListener() {
                         //判断选择了x张图片
 
                         String numPic = valueOf(mDatas.get(position).get(itemValue));
-
+                        Log.e(TAG, "onBindViewHolder: 已选文件的id字符串numPic "+numPic);
                         if (!numPic.equals("null") && !numPic.equals("")) {
 
                             String[] numPicArray = numPic.split(",");
                             int picLength = numPicArray.length;
                             String picContent = "已选" + picLength + "个文件";
+                            Log.e(TAG, "onBindViewHolder: picContent "+picContent);
                             holder.picNumber.setText(picContent);
                         } else {
+                            Log.e(TAG, "onBindViewHolder: 已选文件的id字符串numPic "+numPic);
                             holder.picNumber.setText("尚无附件");
                         }
 

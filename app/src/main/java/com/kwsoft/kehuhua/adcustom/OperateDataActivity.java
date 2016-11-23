@@ -465,10 +465,12 @@ public class OperateDataActivity extends BaseActivity {
                 String positionStr = bundle.getString("position");
                 String codeListStr = bundle.getString("codeListStr");
                 int position=Integer.valueOf(positionStr);
+                Log.e(TAG, "onActivityResult: 收获的positionStr "+position);
                 fieldSet.get(position).put(Constant.itemValue, codeListStr);
                 fieldSet.get(position).put(Constant.itemName, codeListStr);
                 Log.e("TAG", "fieldSet.get(picturePosition) " + fieldSet.get(position).toString());
                 mAdapter.notifyItemChanged(position);
+                mAdapter.notifyDataSetChanged();
             }
         }
 
