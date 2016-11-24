@@ -63,7 +63,7 @@ public static  int is8=0;
         String value = itemMap.get("fieldCnName2");
         tv_name.setText(name);
 
-        if (name.contains("附件")&& StuPra.studentProId.equals("57159822f07e75084cb8a1fe")) {
+        if (name.contains("附件")&&!name.contains("mongo")&& StuPra.studentProId.equals("57159822f07e75084cb8a1fe")) {
             tv_entity_name.setVisibility(View.VISIBLE);
             String downLoadId="";
             if (name.equals("作业附件")) {

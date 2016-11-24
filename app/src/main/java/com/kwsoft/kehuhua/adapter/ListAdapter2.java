@@ -87,6 +87,23 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         if (thisHolder instanceof ListViewHolder) {
             final ListViewHolder holder = (ListViewHolder) thisHolder;
             List<Map<String, String>> item = getData(position);
+
+            for (int i=0;i<item.size();i++) {
+               String value1= item.get(i).get("fieldCnName");
+                String value2= item.get(i).get("fieldCnName2");
+                if (value1.contains("附件")&&!value1.contains("mongo")) {
+                    String[] valueArr = value2.split(",");
+                    String fileNum;
+                    if (valueArr.length>0) {
+                        fileNum = valueArr.length + "个附件";
+                    }else{
+                        fileNum = "无附件";
+                    }
+
+                    item.get(i).put("fieldCnName2",fileNum);
+                }
+            }
+
             try {
                 final String title = item.get(0).get("fieldCnName2");
                 holder.studentName.setText(!title.equals("null") ? title : "");

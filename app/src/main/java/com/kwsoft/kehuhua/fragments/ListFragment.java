@@ -20,6 +20,7 @@ import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
 import com.kwsoft.kehuhua.adapter.ListAdapter2;
 import com.kwsoft.kehuhua.adcustom.InfoActivity;
+import com.kwsoft.kehuhua.adcustom.ListActivity4;
 import com.kwsoft.kehuhua.adcustom.OperateDataActivity;
 import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.adcustom.base.BaseActivity;
@@ -82,11 +83,8 @@ public class ListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
         ButterKnife.bind(this, view);
-        Log.e(TAG, "onCreateView: dialog开始 ");
         ((BaseActivity)getActivity()).dialog.show();
-        Log.e(TAG, "onCreateView: dialog结束 ");
         initRefreshLayout();//初始化控件
-        Log.e(TAG, "onCreateView: 初始化控件 ");
         getDataIntent();//获取初始化数据
         getData();
 
@@ -278,28 +276,28 @@ public class ListFragment extends Fragment {
                 Constant.buttonSet = (List<Map<String, Object>>) pageSet.get("buttonSet");//初始化下拉按钮数据
                 Log.e("TAG", "获取buttonSet" + Constant.buttonSet);
                 //判断右上角按钮是否可见
-//                if (Constant.buttonSet.size() > 0) {
-//                    ((ListActivity4)getActivity()).mToolbar.showRightImageButton();
-//                        for (int i=0;i<Constant.buttonSet.size();i++) {
-//                            Constant.buttonSet.get(i).put("tableIdList", tableId);
-//                            Constant.buttonSet.get(i).put("pageIdList", pageId);
-//                        }
-//                    ((ListActivity4)getActivity()).mToolbar.setRightButtonOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            ((ListActivity4)getActivity()).buttonList();
-//                        }
-//                    });
-//                } else {
-//                    Log.e(TAG, "setStore: but2 "+but);
-//                    ((ListActivity4)getActivity()).mToolbar.hideRightImageButton();
-//                }
+                if (Constant.buttonSet.size() > 0) {
+                    ((ListActivity4)getActivity()).mToolbar.showRightImageButton();
+                        for (int i=0;i<Constant.buttonSet.size();i++) {
+                            Constant.buttonSet.get(i).put("tableIdList", tableId);
+                            Constant.buttonSet.get(i).put("pageIdList", pageId);
+                        }
+                    ((ListActivity4)getActivity()).mToolbar.setRightButtonOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            ((ListActivity4)getActivity()).buttonList();
+                        }
+                    });
+                } else {
+                    Log.e(TAG, "setStore: but2 "+but);
+                    ((ListActivity4)getActivity()).mToolbar.hideRightImageButton();
+                }
             }
-//            else{
-//                Log.e(TAG, "setStore: but3 "+but);
-//                Constant.buttonSet = new ArrayList<>();
-//                ((ListActivity4)getActivity()).mToolbar.hideRightImageButton();
-//            }
+            else{
+                Log.e(TAG, "setStore: but3 "+but);
+                Constant.buttonSet = null;
+                ((ListActivity4)getActivity()).mToolbar.hideRightImageButton();
+            }
 //获取dataList
             Log.e(TAG, "setStore: setMap.get(\"dataList\") "+setMap.get("dataList").toString());
             dataList = (List<Map<String, Object>>) setMap.get("dataList");
@@ -316,15 +314,12 @@ public class ListFragment extends Fragment {
 
     }
 
-    public int isResume=0;
 
-
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        isResume=1;
-//        refreshData();
-//    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        getData();
+    }
 
 //    @Override
 //    protected void onRestart() {
@@ -380,12 +375,12 @@ public class ListFragment extends Fragment {
                     mRefreshLayout.finishRefresh();
                     if (datas.size() == 0) {
                         Snackbar.make(mRecyclerView, "本页无数据", Snackbar.LENGTH_SHORT).show();
-                    } else if(isResume==0){
+                    } else{
                         Snackbar.make(mRecyclerView, "共"+totalNum+"条", Snackbar.LENGTH_SHORT).show();
                     }
 
                 }
-                isResume=0;
+
                 break;
             case STATE_MORE:
                 if (mAdapter != null) {
