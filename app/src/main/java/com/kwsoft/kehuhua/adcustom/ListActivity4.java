@@ -394,9 +394,11 @@ public class ListActivity4 extends BaseActivity implements ViewPager.OnPageChang
     public void toPage(int position) {
         int buttonType = (int) buttonSet.get(position).get("buttonType");
         Map<String, Object> buttonSetItem = buttonSet.get(position);
+
         switch (buttonType) {
             case 0://添加页面
                 Intent intent = new Intent(ListActivity4.this, OperateDataActivity.class);
+                Log.e("buttonSetItem=",JSON.toJSONString(buttonSetItem));
                 intent.putExtra("itemSet", JSON.toJSONString(buttonSetItem));
                 startActivityForResult(intent, 5);
                 break;

@@ -44,16 +44,15 @@ public class OperateDataActivity extends BaseActivity {
 
     private CommonToolbar mToolbar;
     private String buttonName;
-    private String mainTableId,mainPageId,tableId,pageId,dataId;
+    private String mainTableId, mainPageId, tableId, pageId, dataId;
     private Map<String, String> paramsMap;
     private int buttonType;
     private String keyRelation = "";
     private String hideFieldParagram = "";
 
 
-
-
     private static final String TAG = "OperateDataActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,8 +67,8 @@ public class OperateDataActivity extends BaseActivity {
 
     private void getData() {
         //不同页面类型请求Url不一样
-        String volleyUrl="";
-        switch (buttonType){
+        String volleyUrl = "";
+        switch (buttonType) {
 
             case 0://列表添加
                 volleyUrl = Constant.sysUrl + Constant.requestAdd;
@@ -92,13 +91,13 @@ public class OperateDataActivity extends BaseActivity {
                 .execute(new EdusStringCallback(OperateDataActivity.this) {
                     @Override
                     public void onError(Call call, Exception e, int id) {
-                        ErrorToast.errorToast(mContext,e);
+                        ErrorToast.errorToast(mContext, e);
                         dialog.dismiss();
                     }
 
                     @Override
                     public void onResponse(String response, int id) {
-                        Log.e(TAG, "onResponse: "+response+"  id  "+id);
+                        Log.e(TAG, "onResponse: " + response + "  id  " + id);
                         setStore(response);
                     }
                 });
@@ -118,43 +117,42 @@ public class OperateDataActivity extends BaseActivity {
             fieldSet = (List<Map<String, Object>>) pageSet.get("fieldSet");
 
 //判断添加还是修改，keyRelation赋值不一样
-                switch (buttonType){
-                    case 0://添加无此参数
-                        break;
-                    case 18:
-                        if (pageSet.get("relationFieldId") != null) {
-                            Constant.relationFieldId = String.valueOf(pageSet.get("relationFieldId"));
+            switch (buttonType) {
+                case 0://添加无此参数
+                    break;
+                case 18:
+                    if (pageSet.get("relationFieldId") != null) {
+                        Constant.relationFieldId = String.valueOf(pageSet.get("relationFieldId"));
 
                         keyRelation = "t0_au_" + tableId + "_" + pageId + "_" + Constant.relationFieldId + "=" + dataId;
-                        }
+                    }
 
-                        Log.e(TAG, "setStore: keyRelation "+keyRelation);
-                        break;
-                    case 12:
-                        keyRelation = "&t0_au_" + tableId + "_" + pageId + "=" + dataId;
-                        break;
-                }
+                    Log.e(TAG, "setStore: keyRelation " + keyRelation);
+                    break;
+                case 12:
+                    keyRelation = "&t0_au_" + tableId + "_" + pageId + "=" + dataId;
+                    break;
+            }
 
-                Log.e("TAG", "keyRelation " + keyRelation);
+            Log.e("TAG", "keyRelation " + keyRelation);
 
-                //hideFieldSet,隐藏字段
-                if (pageSet.get("hideFieldSet") != null) {
-                    List<Map<String, Object>> hideFieldSet = (List<Map<String, Object>>) pageSet.get("hideFieldSet");
-                    hideFieldParagram += DataProcess.toHidePageSet(hideFieldSet);
-                }
-
+            //hideFieldSet,隐藏字段
+            if (pageSet.get("hideFieldSet") != null) {
+                List<Map<String, Object>> hideFieldSet = (List<Map<String, Object>>) pageSet.get("hideFieldSet");
+                hideFieldParagram += DataProcess.toHidePageSet(hideFieldSet);
+            }
 
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-             showData();
+        showData();
     }
+
     private static final int STATE_NORMAL = 0;
     private static final int STATE_REFREH = 1;
     private int state = STATE_NORMAL;
     private OperateDataAdapter mAdapter;
-
 
 
     /**
@@ -175,7 +173,7 @@ public class OperateDataActivity extends BaseActivity {
 
     private void showData() {
 
-        Log.e(TAG, "showData: "+state);
+        Log.e(TAG, "showData: " + state);
         switch (state) {
             case STATE_NORMAL:
                 normalRequest();
@@ -210,10 +208,10 @@ public class OperateDataActivity extends BaseActivity {
         if (!value.equals("no")) {
             if (hasInternetConnected()) {
                 dialog.show();
-                String volleyUrl1="";
-                switch (buttonType){
+                String volleyUrl1 = "";
+                switch (buttonType) {
                     case 0://添加提交地址
-                       volleyUrl1 = Constant.sysUrl + Constant.commitAdd + "?" +
+                        volleyUrl1 = Constant.sysUrl + Constant.commitAdd + "?" +
                                 Constant.tableId + "=" + tableId + "&" + Constant.pageId + "=" + pageId + "&" +
                                 value + "&" + hideFieldParagram;
                         break;
@@ -229,7 +227,7 @@ public class OperateDataActivity extends BaseActivity {
                         break;
                 }
                 //请求地址（关联添加和修改）
-                String volleyUrl = volleyUrl1.replaceAll(" ", "%20").replaceAll("&&","&");
+                String volleyUrl = volleyUrl1.replaceAll(" ", "%20").replaceAll("&&", "&");
                 //get请求
                 OkHttpUtils
                         .get()
@@ -238,14 +236,14 @@ public class OperateDataActivity extends BaseActivity {
                         .execute(new EdusStringCallback(OperateDataActivity.this) {
                             @Override
                             public void onError(Call call, Exception e, int id) {
-                                ErrorToast.errorToast(mContext,e);
+                                ErrorToast.errorToast(mContext, e);
                                 dialog.dismiss();
                                 Toast.makeText(OperateDataActivity.this, "操作失败", Toast.LENGTH_SHORT).show();
                             }
 
                             @Override
                             public void onResponse(String response, int id) {
-                                Log.e(TAG, "onResponse: "+response);
+                                Log.e(TAG, "onResponse: " + response);
                                 if (response != null && !response.equals("0")) {
                                     backToInfo();
                                 } else {
@@ -253,29 +251,26 @@ public class OperateDataActivity extends BaseActivity {
                                 }
                             }
                         });
-            }else{
+            } else {
                 Toast.makeText(this, "无网络", Toast.LENGTH_SHORT).show();
             }
         }
-
-
-
 
 
     }
 
     /**
      * {
-     "butWhereJs":"rowData.AFM_3 == 9",
-     "tableIdList":"19",
-     "buttonName":"修改",
-     "buttonType":12,
-     "buttonId":191,
-     "butJyWhereJs":"",
-     "tableId":19,
-     "dataId":"90",
-     "startTurnPage":1256
-     }
+     * "butWhereJs":"rowData.AFM_3 == 9",
+     * "tableIdList":"19",
+     * "buttonName":"修改",
+     * "buttonType":12,
+     * "buttonId":191,
+     * "butJyWhereJs":"",
+     * "tableId":19,
+     * "dataId":"90",
+     * "startTurnPage":1256
+     * }
      */
     //获取参数
     private void getIntentData() {
@@ -285,11 +280,13 @@ public class OperateDataActivity extends BaseActivity {
         Intent intent = getIntent();
         String buttonSetItemStr = intent.getStringExtra("itemSet");
         Map<String, Object> buttonSetItem = JSON.parseObject(buttonSetItemStr);
-        Log.e(TAG, "getIntentData: buttonSetItem "+buttonSetItem.toString());
+        // String buttonName =buttonSetItem.get("buttonName").toString();
+        Log.e(TAG, "getIntentData: buttonSetItem " + buttonSetItem.toString());
         //赋值页面标题
         buttonName = String.valueOf(buttonSetItem.get("buttonName"));
-        String buttonTypeStr=String.valueOf(buttonSetItem.get("buttonType"));
-        buttonType=Integer.valueOf(buttonTypeStr);
+//        Log.e("buttonName=", buttonName);
+        String buttonTypeStr = String.valueOf(buttonSetItem.get("buttonType"));
+        buttonType = Integer.valueOf(buttonTypeStr);
         //获取参数并添加
         //mainTableId
         mainTableId = String.valueOf(buttonSetItem.get("tableIdList"));
@@ -305,11 +302,11 @@ public class OperateDataActivity extends BaseActivity {
         paramsMap.put(Constant.pageId, pageId);
         //dataId：在对列表操作的时候是没有的，只有行级操作的时候才有
         dataId = String.valueOf(buttonSetItem.get("dataId"));
-        if (dataId!=null&&!dataId.equals("null")) {
+        if (dataId != null && !dataId.equals("null")) {
 
             paramsMap.put(mainId, dataId);
         }
-        Log.e(TAG, "getIntentData: paramsMap "+paramsMap.toString());
+        Log.e(TAG, "getIntentData: paramsMap " + paramsMap.toString());
     }
 
     @Override
@@ -317,20 +314,46 @@ public class OperateDataActivity extends BaseActivity {
         mToolbar = (CommonToolbar) findViewById(R.id.common_toolbar);
         mToolbar.setTitle(buttonName);
         mToolbar.setBackgroundColor(getResources().getColor(topBarColor));
-        //左侧返回按钮
-        mToolbar.setRightButtonIcon(getResources().getDrawable(R.mipmap.edit_commit1));
+        if (buttonName.contains("预约")) {
+            mToolbar.showRightTextView();
+            mToolbar.hideRightImageButton();
+            mToolbar.setRightTextView("预约");
+            mToolbar.setRightTextViewOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    toCommit();
+                }
+            });
+        } else if (buttonName.contains("请假")) {
+            mToolbar.showRightTextView();
+            mToolbar.hideRightImageButton();
+            mToolbar.setRightTextView("请假");
+            mToolbar.setRightTextViewOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    toCommit();
+                }
+            });
+        } else {
+            mToolbar.hidetvRightTextView();
+            mToolbar.showRightImageButton();
+            //左侧返回按钮
+            mToolbar.setRightButtonIcon(getResources().getDrawable(R.mipmap.edit_commit1));
+            mToolbar.setRightButtonOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    toCommit();
+                }
+            });
+        }
+
         mToolbar.setLeftButtonOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
-        mToolbar.setRightButtonOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                toCommit();
-            }
-        });
+
     }
 
 
@@ -346,10 +369,9 @@ public class OperateDataActivity extends BaseActivity {
     }
 
 
-
     private void toCommit() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(buttonName+"？");
+        builder.setMessage(buttonName + "？");
         builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
 
             @Override
@@ -372,6 +394,7 @@ public class OperateDataActivity extends BaseActivity {
         dialog.dismiss();
         this.finish();
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -457,15 +480,15 @@ public class OperateDataActivity extends BaseActivity {
                 Log.e("TAG", "secondValue " + secondValue);
                 fieldSet.get(positionLast).put(Constant.itemValue, myValueList.size() + "&" + secondValue);
                 mAdapter.notifyItemChanged(positionLast);
-            }else if (resultCode == 101) {
+            } else if (resultCode == 101) {
                 //返回添加页面后复位jump值
                 Constant.jumpNum = 0;
                 Log.e("TAG", "RESULT_OK " + 101);
                 Bundle bundle = data.getBundleExtra("bundle");
                 String positionStr = bundle.getString("position");
                 String codeListStr = bundle.getString("codeListStr");
-                int position=Integer.valueOf(positionStr);
-                Log.e(TAG, "onActivityResult: 收获的positionStr "+position);
+                int position = Integer.valueOf(positionStr);
+                Log.e(TAG, "onActivityResult: 收获的positionStr " + position);
                 fieldSet.get(position).put(Constant.itemValue, codeListStr);
                 fieldSet.get(position).put(Constant.itemName, codeListStr);
                 Log.e("TAG", "fieldSet.get(picturePosition) " + fieldSet.get(position).toString());
@@ -492,14 +515,14 @@ public class OperateDataActivity extends BaseActivity {
                 .execute(new EdusStringCallback(mContext) {
                     @Override
                     public void onError(Call call, Exception e, int id) {
-                        ErrorToast.errorToast(mContext,e);
+                        ErrorToast.errorToast(mContext, e);
                         dialog.dismiss();
-                        Log.e(TAG, "onError: Call  "+call+"  id  "+id);
+                        Log.e(TAG, "onError: Call  " + call + "  id  " + id);
                     }
 
                     @Override
                     public void onResponse(String response, int id) {
-                        Log.e(TAG, "onResponse: "+"  id  "+id);
+                        Log.e(TAG, "onResponse: " + "  id  " + id);
                         putValue(response);
                     }
                 });

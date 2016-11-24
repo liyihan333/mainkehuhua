@@ -17,6 +17,7 @@
         <attr name="isShowRightButton" format="boolean" />
         <attr name="isHideLeftButton" format="boolean" />
         <attr name="isShowTitle" format="boolean" />
+        <attr name="isShowRightTextView" format="boolean" />
     </declare-styleable>
 
     <!--<declare-styleable name="NumberCircleProgressBar">-->
