@@ -157,7 +157,7 @@ public class Constant {
     public static int topBarColor;
 
 
-    public static List<Map<String, Object>> buttonSet = new ArrayList<>();//按钮列表数据
+    public static List<Map<String, Object>> buttonSet =null;//按钮列表数据
 
     public final static String downLoadFileStr = "DownLoadFile?str=";
 
