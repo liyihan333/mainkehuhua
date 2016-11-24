@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -56,7 +57,9 @@ public static  int is8=0;
         view = inflater.inflate(R.layout.activity_info_item, null);
         TextView tv_name = (TextView) view.findViewById(R.id.tv_name);
         TextView tv_entity_name = (TextView) view.findViewById(R.id.tv_entity_name);
-       View info_item_line =view.findViewById(R.id.info_item_line);
+
+        ImageView fileRight = (ImageView) view.findViewById(R.id.fileRight);
+        View info_item_line =view.findViewById(R.id.info_item_line);
         Map<String, String> itemMap = fieldSet.get(i);
         Log.e(TAG, "getView: itemMap " + itemMap.toString());
         String name = itemMap.get("fieldCnName");
@@ -65,6 +68,7 @@ public static  int is8=0;
 
         if (name.contains("附件")&&!name.contains("mongo")&& StuPra.studentProId.equals("57159822f07e75084cb8a1fe")) {
             tv_entity_name.setVisibility(View.VISIBLE);
+
             String downLoadId="";
             if (name.equals("作业附件")) {
                 is8=1;
@@ -77,6 +81,7 @@ public static  int is8=0;
                 Log.e(TAG, "getView: downLoadId2 "+downLoadId);
                 }
             if (!value.equals("")) {
+                fileRight.setVisibility(View.VISIBLE);
                 String[] valueArr = value.split(",");
                 String fileNum = valueArr.length + "个附件";
                 Log.e(TAG, "getView: fileNum "+fileNum);

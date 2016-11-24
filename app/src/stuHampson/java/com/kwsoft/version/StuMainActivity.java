@@ -32,6 +32,7 @@ import com.pgyersdk.update.PgyUpdateManager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import kr.co.namee.permissiongen.PermissionFail;
 import kr.co.namee.permissiongen.PermissionGen;
@@ -52,7 +53,7 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
     AssortFragment menuFragment;
     private String hideMenuList;//获取我的界面中的tableid pageid 个人资料
     private String feedbackInfoList;//反馈信息
-
+    public List<List<Map<String, Object>>> buttonSet=new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

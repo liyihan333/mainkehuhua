@@ -83,10 +83,6 @@ public class ListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
         ButterKnife.bind(this, view);
-        ((BaseActivity)getActivity()).dialog.show();
-        initRefreshLayout();//初始化控件
-        getDataIntent();//获取初始化数据
-        getData();
 
         return view;
     }
@@ -98,15 +94,12 @@ public class ListFragment extends Fragment {
         mRefreshLayout.setMaterialRefreshListener(new MaterialRefreshListener() {
             @Override
             public void onRefresh(MaterialRefreshLayout materialRefreshLayout) {
-
                 refreshData();
             }
 
             @Override
             public void onRefreshLoadMore(MaterialRefreshLayout materialRefreshLayout) {
-
                 if (mAdapter!=null&&mAdapter.getItemCount() < totalNum) {
-
                     loadMoreData();
                 } else {
 //                    Snackbar.make(mRecyclerView, "没有更多了", Snackbar.LENGTH_SHORT).show();
@@ -119,7 +112,6 @@ public class ListFragment extends Fragment {
     /**
      * 接收菜单传递过来的模块数据包
      */
-
     public Bundle listDataBundle;
     private Map<String, String> paramsMap;
     public void getDataIntent() {
@@ -128,12 +120,10 @@ public class ListFragment extends Fragment {
         paramsMap = JSON.parseObject(paramsStr,
                 new TypeReference<Map<String, String>>() {
                 });
-
         tableId=paramsMap.get(Constant.tableId);
         pageId=paramsMap.get(Constant.pageId);
         Constant.mainTableIdValue =tableId;
         Constant.mainPageIdValue =pageId;
-        Log.e(TAG, "getDataIntent: 接收list4传递过来的listFragmentData");
     }
 
     private static final String TAG = "ListFragment";
@@ -143,11 +133,9 @@ public class ListFragment extends Fragment {
     @SuppressWarnings("unchecked")
     public void getData() {
         if (((BaseActivity)getActivity()).hasInternetConnected()) {
-
             //地址
             String volleyUrl = Constant.sysUrl + Constant.requestListSet;
             Log.e("TAG", "列表请求地址：" + volleyUrl);
-
             //参数
             paramsMap.put("start", start + "");
             if (!Constant.stu_index.equals("")) {
@@ -178,12 +166,10 @@ public class ListFragment extends Fragment {
                         @Override
                         public void onResponse(String response, int id) {
                             Log.e(TAG, "onResponse: "+"  id  "+id);
-
                             setStore(response);
                         }
                     });
         }else{
-
             ((BaseActivity)getActivity()).dialog.dismiss();
             mRefreshLayout.finishRefresh();
             Toast.makeText(getActivity(), "请连接网络", Toast.LENGTH_SHORT).show();
@@ -318,6 +304,9 @@ public class ListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        ((BaseActivity)getActivity()).dialog.show();
+        initRefreshLayout();//初始化控件
+        getDataIntent();//获取初始化数据
         getData();
     }
 

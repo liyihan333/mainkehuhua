@@ -236,12 +236,28 @@ public class ListActivity4 extends BaseActivity implements ViewPager.OnPageChang
                             viewPager.setCurrentItem(checkedId);
                         }
                     });
-            viewPager.setOnPageChangeListener(this);
+
             Log.e(TAG, "initViewPager: fragmentList "+fragmentList.toString());
             Log.e(TAG, "开始适配viewPager");
             adapter = new PageFragmentAdapter(super.getSupportFragmentManager(), fragmentList);
             viewPager.setAdapter(adapter);
             viewPager.setOffscreenPageLimit(20);//fragment数量大于21个才会销毁第一个fragment
+            viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                    fragmentList.get(position).onResume();
+                }
+
+                @Override
+                public void onPageSelected(int position) {
+                    fragmentList.get(position).onResume();
+                }
+
+                @Override
+                public void onPageScrollStateChanged(int state) {
+
+                }
+            });
             Log.e(TAG, "初始化viewPager完毕");
         }else{
             Log.e(TAG, "initViewPager: 进入单个fragment");
