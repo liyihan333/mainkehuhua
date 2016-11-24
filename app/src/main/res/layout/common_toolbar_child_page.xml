@@ -2,8 +2,7 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="45dp"
-    >
+    android:layout_height="45dp">
     <!--android:background="@color/black"-->
     <LinearLayout
         android:id="@+id/child_toolbar_leftButton"
@@ -28,10 +27,9 @@
         android:layout_centerInParent="true"
         android:layout_gravity="center"
         android:gravity="center"
-        android:text="shuxing"
+        android:text="预约"
         android:textColor="@color/white"
-        android:textSize="20sp"
-         />
+        android:textSize="20sp" />
     <!--android:visibility="gone"-->
     <!--android:visibility="gone"-->
 
@@ -42,8 +40,18 @@
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:background="#00000000"
-        android:visibility="gone"
-        />
+        android:visibility="gone" />
+
+    <!--<TextView-->
+    <!--android:id="@+id/tv_toolbar_rightTextView"-->
+    <!--android:layout_width="40dp"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_alignParentEnd="true"-->
+    <!--android:layout_centerVertical="true"-->
+    <!--android:background="#00000000"-->
+    <!--android:gravity="bottom"-->
+    <!--android:textSize="16sp"-->
+    <!--android:visibility="gone" />-->
 
     <ImageView
         android:id="@+id/is_child_iv"
@@ -51,9 +59,23 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/child_toolbar_title"
         android:layout_marginStart="4dp"
-        android:visibility="gone"
         android:layout_toEndOf="@+id/child_toolbar_title"
         android:src="@mipmap/often_drop"
-        />
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tv_toolbar_rightTextView"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/child_toolbar_title"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/child_toolbar_title"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:visibility="gone"
+        android:text="预约"
+        android:textSize="18sp" />
+
 
 </RelativeLayout>
