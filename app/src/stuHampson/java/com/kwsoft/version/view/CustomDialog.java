@@ -3,6 +3,8 @@ package com.kwsoft.version.view;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.text.Html;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -153,6 +155,8 @@ public class CustomDialog extends Dialog {
 
             // set the dialog title
             ((TextView) layout.findViewById(R.id.tv_title)).setText(title);
+           // Log.e("tvmsg",message);
+//            ((TextView) layout.findViewById(R.id.tv_msg)).setText(Html.fromHtml(message));
             // set the confirm button
             if (positiveButtonText != null) {
                 ((Button) layout.findViewById(R.id.btn_yes))
@@ -191,7 +195,7 @@ public class CustomDialog extends Dialog {
             }
             // set the content message
             if (message != null) {
-                ((TextView) layout.findViewById(R.id.tv_msg)).setText(message);
+                ((TextView) layout.findViewById(R.id.tv_msg)).setText(Html.fromHtml(message));
             } else if (contentView != null) {
                 // if no message set
                 // add the contentView to the dialog body

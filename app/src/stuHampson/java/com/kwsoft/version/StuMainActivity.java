@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -15,10 +16,14 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
+import com.kwsoft.kehuhua.adcustom.MainActivity;
 import com.kwsoft.kehuhua.adcustom.MessagAlertActivity;
 import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.adcustom.base.BaseActivity;
 import com.kwsoft.kehuhua.config.Constant;
+import com.kwsoft.kehuhua.urlCnn.EdusStringCallback;
+import com.kwsoft.kehuhua.urlCnn.ErrorToast;
 import com.kwsoft.kehuhua.utils.CloseActivityClass;
 import com.kwsoft.kehuhua.widget.CnToolbar;
 import com.kwsoft.kehuhua.zxing.CaptureActivity;
@@ -29,19 +34,26 @@ import com.kwsoft.version.fragment.StuFragmentTabAdapter;
 import com.kwsoft.version.fragment.StudyFragment;
 import com.kwsoft.version.view.CustomDialog;
 import com.pgyersdk.update.PgyUpdateManager;
+import com.zhy.http.okhttp.OkHttpUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import kr.co.namee.permissiongen.PermissionFail;
 import kr.co.namee.permissiongen.PermissionGen;
 import kr.co.namee.permissiongen.PermissionSuccess;
+import okhttp3.Call;
+
+import static com.kwsoft.kehuhua.config.Constant.tableId;
 
 /**
  * 学员端看板界面
  * wyl
  */
 public class StuMainActivity extends BaseActivity implements View.OnClickListener {
+    private static final String TAG = "StuMainActivity";
     StuFragmentTabAdapter stutabAdapter;
     private RadioGroup radioGroup;
     private RadioButton radio3;
@@ -52,6 +64,7 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
     AssortFragment menuFragment;
     private String hideMenuList;//获取我的界面中的tableid pageid 个人资料
     private String feedbackInfoList;//反馈信息
+    String admissInfoContent;//入学通知内容
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +78,7 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
         initView();
         initFragment();
 //        if (!Constant.USERID.equals(useridOld)){
-//           initDialog();
+       // initDialog();
 //           sPreferences.edit().putString("useridOld", Constant.USERID).apply();
 //        }
         PgyUpdateManager.register(this);
@@ -73,24 +86,92 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
 
     public void initDialog() {
 
-        CustomDialog.Builder builder = new CustomDialog.Builder(StuMainActivity.this);
-//                builder.setMessage("这个就是自定义的提示框");
-        builder.setTitle("入学须知");
-        builder.setPositiveButton("我知道了!", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                //设置你的操作事项
-            }
-        });
+        String admissionInfoUrl = Constant.sysUrl + Constant.requestListData;
 
-        builder.setNegativeButton("",
-                new android.content.DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
+        //参数
+//        Map<String, String> paramsMap = new HashMap<>();
+//        paramsMap.put("tableId", "313");
+//        paramsMap.put("pageId", "2782");
+//        //请求
+//        OkHttpUtils
+//                .post()
+//                .params(paramsMap)
+//                .url(admissionInfoUrl)
+//                .build()
+//                .execute(new EdusStringCallback(StuMainActivity.this) {
+//                    @Override
+//                    public void onError(Call call, Exception e, int id) {
+//                        ErrorToast.errorToast(mContext, e);
+//                        Log.e(TAG, "onError: Call  " + call + "  id  " + id);
+//                    }
+//
+//                    @Override
+//                    public void onResponse(String response, int id) {
+//                        Log.e(TAG, "网络获取添加数据" + response);
+//                        //DLCH.put(volleyUrl + paramsStr, jsonData);
+////                        setStore(jsonData);
+//                        Map<String, Object> admissionMap = JSON.parseObject(response,
+//                                new TypeReference<Map<String, Object>>() {
+//                                });
+//                        List<Map<String, Object>> rowsMap = (List<Map<String, Object>>) admissionMap.get("rows");
+//                        Map<String, Object> map = rowsMap.get(0);
+//                        String AFM_1Id = map.get("AFM_1").toString();
+
+        String admissionInfoUrl2 = "http://192.168.6.150:8081/hps_edus_auto/phone_startSchoolInfo.do";
+        Map<String, String> paramsMap2 = new HashMap<>();
+//                        paramsMap2.put("id", AFM_1Id);
+        paramsMap2.put("id", "794");
+
+        OkHttpUtils
+                .post()
+                .params(paramsMap2)
+                .url(admissionInfoUrl2)
+                .build()
+                .execute(new EdusStringCallback(StuMainActivity.this) {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        ErrorToast.errorToast(mContext, e);
+                        Log.e(TAG, "onError: Call  " + call + "  id  " + id);
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        Log.e(TAG, "网络获取添加数据" + response);
+                        admissInfoContent = response;
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                CustomDialog.Builder builder = new CustomDialog.Builder(StuMainActivity.this);
+//                builder.setMessage("这个就是自定义的提示框");
+                                builder.setTitle("入学须知");
+                                if (admissInfoContent == null || admissInfoContent.length() <= 0) {
+                                    admissInfoContent = "暂无数据！";
+                                }
+                                builder.setMessage(admissInfoContent);
+                                builder.setPositiveButton("我知道了!", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                        //设置你的操作事项
+                                    }
+                                });
+
+                                builder.setNegativeButton("",
+                                        new android.content.DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
+                                            }
+                                        });
+
+                                builder.create().show();
+                            }
+                        });
                     }
                 });
+//                    }
+//                });
 
-        builder.create().show();
+
     }
 
     @Override
@@ -109,9 +190,9 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
         menuList = "";
         hideMenuList = intent.getStringExtra("hideMenuList");
         menuDataMap = intent.getStringExtra("menuDataMap");
-        feedbackInfoList=intent.getStringExtra("feedbackInfoList");
+        feedbackInfoList = intent.getStringExtra("feedbackInfoList");
         Log.e("hidemel", JSON.toJSONString(hideMenuList));
-        Log.e("feedb",JSON.toJSONString(feedbackInfoList));
+        Log.e("feedb", JSON.toJSONString(feedbackInfoList));
 
         mToolbar = (CnToolbar) findViewById(R.id.stu_toolbar);
 //        Resources resources = mContext.getResources().getDrawable(R.drawable.nav_news);
@@ -151,7 +232,7 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
         Bundle studyBundle = new Bundle();
         studyBundle.putString("arrStr", arrStr);
         studyBundle.putString("menuDataMap", menuDataMap);
-        studyBundle.putBoolean("isLogin",true);
+        studyBundle.putBoolean("isLogin", true);
         studyFragment.setArguments(studyBundle);
 
         Bundle courseBundle = new Bundle();
@@ -164,7 +245,7 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
 
         Bundle meBundle = new Bundle();
         meBundle.putString("hideMenuList", hideMenuList);
-        meBundle.putString("feedbackInfoList",feedbackInfoList);
+        meBundle.putString("feedbackInfoList", feedbackInfoList);
         meFragment.setArguments(meBundle);
 
         List<Fragment> mFragments = new ArrayList<>();
