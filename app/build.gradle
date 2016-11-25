@@ -160,6 +160,9 @@ dependencies {
     compile 'com.android.support:multidex:1.0.1'
     //Google官方出的分包方案
     compile files('libs/flame.jar')
-//清理缓存
+    //mp3转码
     compile('org.kymjs.kjframe:kjframe:2.6')
+    //清理缓存
+    compile 'com.github.franmontiel:PersistentCookieJar:v1.0.0'
+    //cookie支持
 }

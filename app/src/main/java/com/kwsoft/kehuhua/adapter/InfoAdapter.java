@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.hampson.activity.ReadFileActivity;
-import com.kwsoft.version.StuPra;
 
 import java.util.List;
 import java.util.Map;
@@ -65,52 +64,49 @@ public static  int is8=0;
         String name = itemMap.get("fieldCnName");
         String value = itemMap.get("fieldCnName2");
         tv_name.setText(name);
-
-        if (name.contains("附件")&&!name.contains("mongo")&& StuPra.studentProId.equals("57159822f07e75084cb8a1fe")) {
+        //如果名称中包含附件两个字并且不包含mongodbid，就讲附件查看text显示
+        if (name.contains("附件")&&!name.contains("mongo")) {
             tv_entity_name.setVisibility(View.VISIBLE);
-
+            //找到downLoadId
             String downLoadId="";
-            if (name.equals("作业附件")) {
-                is8=1;
-                        downLoadId = fieldSet.get(9).get("fieldCnName2");
-                        Log.e(TAG, "getView: downLoadId1 "+downLoadId);
-
-                }else if(name.equals("完成附件")){
-                is9=1;
-                      downLoadId = fieldSet.get(8).get("fieldCnName2");
-                Log.e(TAG, "getView: downLoadId2 "+downLoadId);
+            for (int f=0;f<fieldSet.size();f++) {//查找名称一致的name
+                String mongoName=String.valueOf(fieldSet.get(f).get("fieldCnName"));
+                Log.e(TAG, "getView: mongoName "+mongoName);
+                Log.e(TAG, "getView: name "+name);
+                if (mongoName.equals(name+"mongodbId")) {
+                    downLoadId=String.valueOf(fieldSet.get(f).get("fieldCnName2"));//获取id
+                    Log.e(TAG, "getView: downLoadId "+downLoadId);
+                    break;
                 }
-            if (!value.equals("")) {
+            }
+            if (!value.equals("")&&!value.equals("null")) {
                 fileRight.setVisibility(View.VISIBLE);
+
                 String[] valueArr = value.split(",");
                 String fileNum = valueArr.length + "个附件";
                 Log.e(TAG, "getView: fileNum "+fileNum);
                 tv_entity_name.setText(fileNum);
                 final String fieldSetString = JSON.toJSONString(fieldSet);
                 final String finalDownLoadId = downLoadId;
-                tv_entity_name.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(context, ReadFileActivity.class);
-                        intent.putExtra("position", i+"");
-                        intent.putExtra("fieldSet", fieldSetString);
-                        intent.putExtra("downLoadId", finalDownLoadId);
-                        context.startActivity(intent);
-                    }
-                });
+                if (!downLoadId.equals("")&&!downLoadId.equals("null")) {
+                    Log.e(TAG, "getView: 能够响应附件点击事件");
+                    tv_entity_name.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(context, ReadFileActivity.class);
+                            intent.putExtra("position", i+"");
+                            intent.putExtra("fieldSet", fieldSetString);
+                            intent.putExtra("downLoadId", finalDownLoadId);
+                            context.startActivity(intent);
+                        }
+                    });
+                }
+
             }else {
                 tv_entity_name.setText("无附件");
             }
         }else {
             tv_entity_name.setText(value);
-        }
-        if (is8==1||is9==1) {
-            if (i>7) {
-                tv_name.setVisibility(View.GONE);
-                tv_entity_name.setVisibility(View.GONE);
-                info_item_line.setVisibility(View.GONE);
-                Log.e(TAG, "getView: i "+i);
-            }
         }
         return view;
     }

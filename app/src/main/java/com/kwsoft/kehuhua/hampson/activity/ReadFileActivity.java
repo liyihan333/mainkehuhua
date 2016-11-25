@@ -60,19 +60,13 @@ public class ReadFileActivity extends BaseActivity {
 
     private List<Map<String, String>> fieldSet;
     private int position;
-    String prefix;
 
     private void getIntentData() {
         Intent intent = getIntent();
         String positionStr = intent.getStringExtra("position");
         position = Integer.valueOf(positionStr);
         String fieldSetStr = intent.getStringExtra("fieldSet");
-
-        prefix= intent.getStringExtra("fileEnd");
-
         downLoadId = intent.getStringExtra("downLoadId");
-
-
         fieldSet = JSON.parseObject(fieldSetStr,
                 new TypeReference<List<Map<String, String>>>() {
                 });
@@ -99,12 +93,12 @@ public class ReadFileActivity extends BaseActivity {
 //            }
 //
 //        }
-        if (!downLoadId.equals("")) {
+
             String[] downLoadIdArr = downLoadId.split(",");
             for (int m = 0; m < downLoadIdArr.length; m++) {
                 mongoIds.add(downLoadIdArr[m]);
             }
-        }
+
         List<String> fileNames = new ArrayList<>();
 
         if (!value.equals("")) {
