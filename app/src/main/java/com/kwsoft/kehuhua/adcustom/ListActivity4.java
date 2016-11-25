@@ -61,7 +61,7 @@ public class ListActivity4 extends BaseActivity implements ViewPager.OnPageChang
     private HorizontalScrollView hvChannel;
     private PageFragmentAdapter adapter = null;
     private List<Fragment> fragmentList = new ArrayList<>();
-    private List<Fragment> singleFragment = new ArrayList<>();
+//    private List<Fragment> singleFragment = new ArrayList<>();
     private List<Channel> selectedChannel = new ArrayList<>();
     public CommonToolbar mToolbar;
     @Override
@@ -236,16 +236,11 @@ public class ListActivity4 extends BaseActivity implements ViewPager.OnPageChang
                             viewPager.setCurrentItem(checkedId);
                         }
                     });
-            viewPager.setOnPageChangeListener(this);
-            Log.e(TAG, "initViewPager: fragmentList "+fragmentList.toString());
-            Log.e(TAG, "开始适配viewPager");
             adapter = new PageFragmentAdapter(super.getSupportFragmentManager(), fragmentList);
             viewPager.setAdapter(adapter);
             viewPager.setOffscreenPageLimit(20);//fragment数量大于21个才会销毁第一个fragment
-            Log.e(TAG, "初始化viewPager完毕");
-        }else{
-            Log.e(TAG, "initViewPager: 进入单个fragment");
 
+        }else{
             String fragmentTableId= itemMap.get("tableId") + "";
             String fragmentPageId = itemMap.get("pageId") + "";
             String titleName = itemMap.get("menuName") + "";
@@ -262,39 +257,46 @@ public class ListActivity4 extends BaseActivity implements ViewPager.OnPageChang
 
             if (titleName.contains("成长轨迹")&& StuPra.studentProId.equals("57159822f07e75084cb8a1fe")) {
                 xFragment = new StageTestFragment();
-                Log.e(TAG, "refreshPage单个: 学员端走定制化阶段测评页面");
             }else if (titleName.contains("教学日志")&& StuPra.studentProId.equals("57159822f07e75084cb8a1fe")) {
                 xFragment = new CourseHpsFragment();
-                Log.e(TAG, "refreshPage单个: 学员端走定制化课堂内容（一对一教学日志）页面");
-
-//评价列表有数据之后在空串后加数字，共2个地方需要修改
             }else if(titleName.contains("学员评价")&& StuPra.studentProId.equals("57159822f07e75084cb8a1fe")){
                 xFragment = new CourseRatingBarFragment();
-                Log.e(TAG, "refreshPage单个: 学员端走定制化评价列表展示页面");
             }else if(titleName.contains("学员课程教师")&& StuPra.studentProId.equals("57159822f07e75084cb8a1fe")){
                 xFragment = new StuClassTchFragment();
-                Log.e(TAG, "refreshPage单个: 学员端走定制化学员课程教师列表展示页面");
             }else {
                 xFragment = new ListFragment();
             }
             xFragment.setArguments(listBundle);
-            singleFragment.removeAll(singleFragment);
-            singleFragment.add(xFragment);
+            fragmentList.removeAll(fragmentList);
+            fragmentList.add(xFragment);
             rgChannel = (RadioGroup) super.findViewById(R.id.rgChannel);
             viewPager = (ViewPager) super.findViewById(R.id.vpNewsList);
             hvChannel = (HorizontalScrollView) super.findViewById(R.id.hvChannel);
             hvChannel.setVisibility(View.GONE);
 
-            viewPager.setOnPageChangeListener(this);
-            Log.e(TAG, "initViewPager: 单个fragmentList "+singleFragment.toString());
-            Log.e(TAG, "开始适配单个viewPager");
-            adapter = new PageFragmentAdapter(super.getSupportFragmentManager(), singleFragment);
+//            viewPager.setOnPageChangeListener(this);
+            adapter = new PageFragmentAdapter(super.getSupportFragmentManager(), fragmentList);
             viewPager.setAdapter(adapter);
             viewPager.setOffscreenPageLimit(20);//fragment数量大于21个才会销毁第一个fragment
-            Log.e(TAG, "初始化单个viewPager完毕");
-
         }
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                setTab(position);
+                fragmentList.get(position).onResume();
+                Log.e(TAG, "onPageScrolled: zhixing");
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     /**

@@ -6,12 +6,13 @@
     android:gravity="center_vertical"
     android:orientation="vertical"
     >
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
+        android:paddingEnd="10dp"
         android:layout_height="wrap_content">
 
 
@@ -20,46 +21,33 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"
-        android:paddingLeft="20dp"
+        android:paddingStart="20dp"
         android:text="学员姓名"
+        android:layout_centerVertical="true"
         android:textColor="@color/list_item_left"
         />
 
     <TextView
         android:id="@+id/tv_entity_name"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingStart="25dp"
         android:paddingEnd="20dp"
         android:textSize="20sp"
         android:text="fgfg"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/tv_name"
         android:textColor="@color/list_item_right"
         />
-
-
-      <com.kwsoft.kehuhua.hampson.activity.ZuoYeImageGridView
-          android:id="@+id/zuoYeImageGridView"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:paddingStart="25dp"
-          android:paddingEnd="20dp"
-          android:numColumns="4"
-          android:visibility="gone"
-          >
-
-      </com.kwsoft.kehuhua.hampson.activity.ZuoYeImageGridView>
-
-
-
-
-
-
-
-
-
-
-
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/fileRight"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:visibility="gone"
+            android:src="@mipmap/fileright"/>
+    </RelativeLayout>
     <View
         android:id="@+id/info_item_line"
         android:layout_width="match_parent"

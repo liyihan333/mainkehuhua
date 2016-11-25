@@ -86,23 +86,37 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public void onBindViewHolder(RecyclerView.ViewHolder thisHolder, int position) {
         if (thisHolder instanceof ListViewHolder) {
             final ListViewHolder holder = (ListViewHolder) thisHolder;
-            List<Map<String, String>> item = getData(position);
 
-            for (int i=0;i<item.size();i++) {
-               String value1= item.get(i).get("fieldCnName");
-                String value2= item.get(i).get("fieldCnName2");
-                if (value1.contains("附件")&&!value1.contains("mongo")) {
-                    String[] valueArr = value2.split(",");
-                    String fileNum;
-                    if (valueArr.length>0) {
-                        fileNum = valueArr.length + "个附件";
-                    }else{
-                        fileNum = "无附件";
-                    }
-
-                    item.get(i).put("fieldCnName2",fileNum);
-                }
-            }
+            List<Map<String, String>> item=getData(position);
+         //创建新的对象对fieldCnName2进行操作，否则会在下个页面造成显示错误
+//            for (int i=0;i<getData(position).size();i++) {
+//
+//                Map<String, String> map1=getData(position).get(i);
+//
+//                Map<String, String> map = new HashMap<>();
+//                for (String s : map1.keySet()) {
+//                    map.put(s, map1.get(s));
+//                }
+//                item.add(map);
+//                Log.e(TAG, "onBindViewHolder: map1 "+map1.getClass());
+//                Log.e(TAG, "onBindViewHolder: map "+map.getClass());
+//            }
+//
+//            for (int i=0;i<item.size();i++) {
+//               String value1= item.get(i).get("fieldCnName");
+//                String value2= item.get(i).get("fieldCnName2");
+//                if (value1.contains("附件")&&!value1.contains("mongo")) {
+//                    String[] valueArr = value2.split(",");
+//                    String fileNum;
+//                    if (valueArr.length>0) {
+//                        fileNum = valueArr.length + "个附件";
+//                    }else{
+//                        fileNum = "无附件";
+//                    }
+//
+//                    item.get(i).put("fieldCnName2",fileNum);
+//                }
+//            }
 
             try {
                 final String title = item.get(0).get("fieldCnName2");

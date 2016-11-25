@@ -29,4 +29,7 @@ public class PageFragmentAdapter extends FragmentPagerAdapter {
     @Override
     public int getItemPosition(Object object) {
         return POSITION_NONE;  //没有找到child要求重新加载
-    }  }
+    }
+
+
+}

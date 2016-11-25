@@ -41,8 +41,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.Call;
 
-import static com.kwsoft.kehuhua.config.Constant.buttonSet;
-
 /**
 
  */
@@ -87,7 +85,6 @@ public class ListFragment extends Fragment {
         initRefreshLayout();//初始化控件
         getDataIntent();//获取初始化数据
         getData();
-
         return view;
     }
 
@@ -98,15 +95,12 @@ public class ListFragment extends Fragment {
         mRefreshLayout.setMaterialRefreshListener(new MaterialRefreshListener() {
             @Override
             public void onRefresh(MaterialRefreshLayout materialRefreshLayout) {
-
                 refreshData();
             }
 
             @Override
             public void onRefreshLoadMore(MaterialRefreshLayout materialRefreshLayout) {
-
                 if (mAdapter!=null&&mAdapter.getItemCount() < totalNum) {
-
                     loadMoreData();
                 } else {
 //                    Snackbar.make(mRecyclerView, "没有更多了", Snackbar.LENGTH_SHORT).show();
@@ -119,7 +113,6 @@ public class ListFragment extends Fragment {
     /**
      * 接收菜单传递过来的模块数据包
      */
-
     public Bundle listDataBundle;
     private Map<String, String> paramsMap;
     public void getDataIntent() {
@@ -128,12 +121,10 @@ public class ListFragment extends Fragment {
         paramsMap = JSON.parseObject(paramsStr,
                 new TypeReference<Map<String, String>>() {
                 });
-
         tableId=paramsMap.get(Constant.tableId);
         pageId=paramsMap.get(Constant.pageId);
         Constant.mainTableIdValue =tableId;
         Constant.mainPageIdValue =pageId;
-        Log.e(TAG, "getDataIntent: 接收list4传递过来的listFragmentData");
     }
 
     private static final String TAG = "ListFragment";
@@ -143,11 +134,9 @@ public class ListFragment extends Fragment {
     @SuppressWarnings("unchecked")
     public void getData() {
         if (((BaseActivity)getActivity()).hasInternetConnected()) {
-
             //地址
             String volleyUrl = Constant.sysUrl + Constant.requestListSet;
             Log.e("TAG", "列表请求地址：" + volleyUrl);
-
             //参数
             paramsMap.put("start", start + "");
             if (!Constant.stu_index.equals("")) {
@@ -178,19 +167,17 @@ public class ListFragment extends Fragment {
                         @Override
                         public void onResponse(String response, int id) {
                             Log.e(TAG, "onResponse: "+"  id  "+id);
-
                             setStore(response);
                         }
                     });
         }else{
-
             ((BaseActivity)getActivity()).dialog.dismiss();
             mRefreshLayout.finishRefresh();
             Toast.makeText(getActivity(), "请连接网络", Toast.LENGTH_SHORT).show();
             backStart();
         }
     }
-
+   private List<Map<String, Object>> buttonSet=new ArrayList<>();
     public void backStart(){
 
         //下拉失败后需要将加上limit的strat返还给原来的start，否则会获取不到数据
@@ -273,30 +260,11 @@ public class ListFragment extends Fragment {
             Log.e(TAG, "setStore: but0 "+but);
             if (pageSet.get("buttonSet") != null) {
                 Log.e(TAG, "setStore: but1 "+but);
-                Constant.buttonSet = (List<Map<String, Object>>) pageSet.get("buttonSet");//初始化下拉按钮数据
-                Log.e("TAG", "获取buttonSet" + Constant.buttonSet);
+                buttonSet = (List<Map<String, Object>>) pageSet.get("buttonSet");//初始化下拉按钮数据
+                setButtonSet();
+                Log.e("TAG", "获取buttonSet" + buttonSet);
                 //判断右上角按钮是否可见
-                if (Constant.buttonSet.size() > 0) {
-                    ((ListActivity4)getActivity()).mToolbar.showRightImageButton();
-                        for (int i=0;i<Constant.buttonSet.size();i++) {
-                            Constant.buttonSet.get(i).put("tableIdList", tableId);
-                            Constant.buttonSet.get(i).put("pageIdList", pageId);
-                        }
-                    ((ListActivity4)getActivity()).mToolbar.setRightButtonOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            ((ListActivity4)getActivity()).buttonList();
-                        }
-                    });
-                } else {
-                    Log.e(TAG, "setStore: but2 "+but);
-                    ((ListActivity4)getActivity()).mToolbar.hideRightImageButton();
-                }
-            }
-            else{
-                Log.e(TAG, "setStore: but3 "+but);
-                Constant.buttonSet = null;
-                ((ListActivity4)getActivity()).mToolbar.hideRightImageButton();
+
             }
 //获取dataList
             Log.e(TAG, "setStore: setMap.get(\"dataList\") "+setMap.get("dataList").toString());
@@ -314,11 +282,32 @@ public class ListFragment extends Fragment {
 
     }
 
+    public void setButtonSet() {
+        Constant.buttonSet= buttonSet;
+        Log.e(TAG, "setButtonSet: Constant.buttonSet "+Constant.buttonSet.toString());
+        if (Constant.buttonSet.size() > 0) {
+            ((ListActivity4)getActivity()).mToolbar.showRightImageButton();
+            for (int i = 0; i< buttonSet.size(); i++) {
+                Constant.buttonSet.get(i).put("tableIdList", tableId);
+                Constant.buttonSet.get(i).put("pageIdList", pageId);
+            }
+            ((ListActivity4)getActivity()).mToolbar.setRightButtonOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ((ListActivity4)getActivity()).buttonList();
+                }
+            });
+        } else {
+            ((ListActivity4)getActivity()).mToolbar.hideRightImageButton();
+        }
 
+    }
     @Override
     public void onResume() {
         super.onResume();
-        getData();
+        Log.e(TAG, "onResume: setButtonSet()");
+        setButtonSet();
+
     }
 
 //    @Override
@@ -376,6 +365,7 @@ public class ListFragment extends Fragment {
                     if (datas.size() == 0) {
                         Snackbar.make(mRecyclerView, "本页无数据", Snackbar.LENGTH_SHORT).show();
                     } else{
+                        Log.e(TAG, "showData: 执行了共x条");
                         Snackbar.make(mRecyclerView, "共"+totalNum+"条", Snackbar.LENGTH_SHORT).show();
                     }
 

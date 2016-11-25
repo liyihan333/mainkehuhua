@@ -117,6 +117,7 @@ public class ZuoYeGridViewAdapter extends BaseAdapter {
      */
     private void openFile(final String filePath)
     {
+        Log.e(TAG, "openFile: filePath "+filePath);
         String ext = filePath.substring(filePath.lastIndexOf('.')).toLowerCase(Locale.US);
         try
         {
