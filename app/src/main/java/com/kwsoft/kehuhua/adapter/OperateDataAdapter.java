@@ -93,7 +93,7 @@ public class OperateDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         mContext = parent.getContext();
         this.mActivity = (Activity) mContext;
         Log.e(TAG, "onCreateViewHolder: 适配器创建");
-        if(mActivity instanceof OperateDataActivity) {
+        if (mActivity instanceof OperateDataActivity) {
             Constant.jumpNum = 1;
         } else if (mActivity instanceof AddTemplateDataActivity) {
             Constant.jumpNum1 = 4;
@@ -111,42 +111,43 @@ public class OperateDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     private static final String TAG = "OperateDataAdapter";
+
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder thisHolder, final int position) {
         if (thisHolder instanceof OperateHolder) {
             final OperateHolder holder = (OperateHolder) thisHolder;
             holder.setIsRecyclable(false);//禁止viewHolder复用
-            Log.e(TAG, "position "+position+"  onBindViewHolder: mDatas.get(position)  "+mDatas.get(position));
+            Log.e(TAG, "position " + position + "  onBindViewHolder: mDatas.get(position)  " + mDatas.get(position));
             //item操作
-                final int fieldRole = Integer.valueOf(valueOf(mDatas.get(position).get("fieldRole")));
+            final int fieldRole = Integer.valueOf(valueOf(mDatas.get(position).get("fieldRole")));
 //初始化必填字段标志
-                int ifMust = 0;
-                if (mDatas.get(position).get("ifMust") != null) {
-                    ifMust = Integer.valueOf(valueOf(mDatas.get(position).get("ifMust")));
-                }
+            int ifMust = 0;
+            if (mDatas.get(position).get("ifMust") != null) {
+                ifMust = Integer.valueOf(valueOf(mDatas.get(position).get("ifMust")));
+            }
 //初始化是否可修改标志
-                int ifUpdate = 0;
-                if (mDatas.get(position).get("ifUpdate") != null) {
-                    ifUpdate = Integer.valueOf(valueOf(mDatas.get(position).get("ifUpdate")));
-                }
+            int ifUpdate = 0;
+            if (mDatas.get(position).get("ifUpdate") != null) {
+                ifUpdate = Integer.valueOf(valueOf(mDatas.get(position).get("ifUpdate")));
+            }
 //初始化左侧名称
-                String fieldCnName = valueOf(mDatas.get(position).get("fieldCnName"));
-                if (fieldCnName.equals("") || fieldCnName.equals("null")) {
-                    fieldCnName = "";
-                }
-                holder.textView.setText(fieldCnName);
+            String fieldCnName = valueOf(mDatas.get(position).get("fieldCnName"));
+            if (fieldCnName.equals("") || fieldCnName.equals("null")) {
+                fieldCnName = "";
+            }
+            holder.textView.setText(fieldCnName);
 
 //初始化必填标志
-                if (ifMust == 1) {
-                    holder.textViewIfMust.setVisibility(View.VISIBLE);
-                }
+            if (ifMust == 1) {
+                holder.textViewIfMust.setVisibility(View.VISIBLE);
+            }
 //设置控件不可点击
-                if (ifUpdate == 0) {
-                    holder.list_item_cover.setVisibility(View.VISIBLE);
-                    holder.list_item_cover2.setVisibility(View.VISIBLE);
-                }
+            if (ifUpdate == 0) {
+                holder.list_item_cover.setVisibility(View.VISIBLE);
+                holder.list_item_cover2.setVisibility(View.VISIBLE);
+            }
 //初始化item项参数，供传递到多选和树形选择用
-                final Map<String, Object> childPra = mDatas.get(position);
+            final Map<String, Object> childPra = mDatas.get(position);
 
 /**
  * 默认值选取，取key为：true_defaultShowValName
@@ -154,341 +155,387 @@ public class OperateDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
  */
 
 //默认值选择,不包含20、21的情况，如果存在赋值，不存在为空串
-                String defaultName;
-                Object itemObj = mDatas.get(position).get(Constant.itemName);
-                if (itemObj != null) {
-                    defaultName = valueOf(itemObj);
-                } else {
-                    defaultName = "";
-                }
+            String defaultName;
+            Object itemObj = mDatas.get(position).get(Constant.itemName);
+            if (itemObj != null) {
+                defaultName = valueOf(itemObj);
+            } else {
+                defaultName = "";
+            }
 
 
 //chooseType判断
-                int chooseType = -1;
-                if (mDatas.get(position).get("chooseType") != null) {
-                    chooseType = Integer.valueOf(valueOf(mDatas.get(position).get("chooseType")));
-                }
-                final int finalChooseType = chooseType;
+            int chooseType = -1;
+            if (mDatas.get(position).get("chooseType") != null) {
+                chooseType = Integer.valueOf(valueOf(mDatas.get(position).get("chooseType")));
+            }
+            final int finalChooseType = chooseType;
 
 //jsWhereStr判断   "jsWhereStr": "#{19:180} == 6"，通过判断来决定校区选择或者考点选择模块等等是否显示
-                boolean isShow = isShow(position, holder.textView, holder.textViewIfMust);
+            boolean isShow = isShow(position, holder.textView, holder.textViewIfMust);
 //1、普通编辑框
 
-                if (fieldRole == -1 || fieldRole == 1 || fieldRole == 2 || fieldRole == 10 ||
-                        fieldRole == 3 || fieldRole == 4 || fieldRole == 5 ||
-                        fieldRole == 6 || fieldRole == 7 || fieldRole == 11 ||
-                        fieldRole == 12 || fieldRole == 13 || fieldRole == 8 ||
-                        fieldRole == 9 || fieldRole == 24 || fieldRole == 29) {
+            if (fieldRole == -1 || fieldRole == 1 || fieldRole == 2 || fieldRole == 10 ||
+                    fieldRole == 3 || fieldRole == 4 || fieldRole == 5 ||
+                    fieldRole == 6 || fieldRole == 7 || fieldRole == 11 ||
+                    fieldRole == 12 || fieldRole == 13 || fieldRole == 8 ||
+                    fieldRole == 9 || fieldRole == 24 || fieldRole == 29) {
 
-                    if (fieldRole == 24) {//密码格式
-                        holder.add_edit_text.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                    }
-                    if (fieldRole == 6) {//手机号
-                        holder.add_edit_text.setInputType(InputType.TYPE_CLASS_PHONE);
-                        InputFilter[] filters = {new InputFilter.LengthFilter(11)};
-                        holder.add_edit_text.setFilters(filters);
-                        // add_edit_text.setError("请输入正确的手机号");
-                    }
-                    if (fieldRole == 13) {//金额，带小数点
-                        holder.add_edit_text.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
-                    }
-                    if (fieldRole == 5) {//网址
-                        holder.add_edit_text.setInputType(InputType.TYPE_TEXT_VARIATION_URI);
-                        holder.add_edit_text.setError("请输入正确的网址");
-                    }
-                    if (fieldRole == 11) {//网址
-                        holder.add_edit_text.setInputType(InputType.TYPE_TEXT_VARIATION_PHONETIC);
-                        holder.add_edit_text.setError("请输入正确的拼音");
-                    }
-                    if (fieldRole == 2) {//富文本
-                        holder.add_edit_text.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
-                    }
-                    if (fieldRole == 3) {//身份证号
-                        holder.add_edit_text.setInputType(InputType.TYPE_CLASS_PHONE);
-                        InputFilter[] filters = {new InputFilter.LengthFilter(18)};
-                        holder.add_edit_text.setFilters(filters);
-                        //add_edit_text.
-                    }
-                    if (fieldRole == 12) {//身份证号
-                        holder.add_edit_text.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
-                    }
-                    if (fieldRole == 8) {//订单编号
-                        Constant.tmpFieldId = String.valueOf(mDatas.get(position).get("tmpFieldId"));
-                    }
-                    if (isShow) {
-                        holder.add_edit_text.setVisibility(View.VISIBLE);
-                    }
-                    if (!defaultName.equals("")) {
-                        holder.add_edit_text.setText(defaultName);
+                if (fieldRole == 24) {//密码格式
+                    holder.add_edit_text.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                }
+                if (fieldRole == 6) {//手机号
+                    holder.add_edit_text.setInputType(InputType.TYPE_CLASS_PHONE);
+                    InputFilter[] filters = {new InputFilter.LengthFilter(11)};
+                    holder.add_edit_text.setFilters(filters);
+                    // add_edit_text.setError("请输入正确的手机号");
+                }
+                if (fieldRole == 13) {//金额，带小数点
+                    holder.add_edit_text.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                }
+                if (fieldRole == 5) {//网址
+                    holder.add_edit_text.setInputType(InputType.TYPE_TEXT_VARIATION_URI);
+                    holder.add_edit_text.setError("请输入正确的网址");
+                }
+                if (fieldRole == 11) {//网址
+                    holder.add_edit_text.setInputType(InputType.TYPE_TEXT_VARIATION_PHONETIC);
+                    holder.add_edit_text.setError("请输入正确的拼音");
+                }
+                if (fieldRole == 2) {//富文本
+                    holder.add_edit_text.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+                }
+                if (fieldRole == 3) {//身份证号
+                    holder.add_edit_text.setInputType(InputType.TYPE_CLASS_PHONE);
+                    InputFilter[] filters = {new InputFilter.LengthFilter(18)};
+                    holder.add_edit_text.setFilters(filters);
+                    //add_edit_text.
+                }
+                if (fieldRole == 12) {//身份证号
+                    holder.add_edit_text.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                }
+                if (fieldRole == 8) {//订单编号
+                    Constant.tmpFieldId = String.valueOf(mDatas.get(position).get("tmpFieldId"));
+                }
+                if (isShow) {
+                    holder.add_edit_text.setVisibility(View.VISIBLE);
+                }
+                if (!defaultName.equals("")) {
+                    holder.add_edit_text.setText(defaultName);
+
+                }
+                mDatas.get(position).put(itemValue, defaultName);
+
+                holder.add_edit_text.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
                     }
-                    mDatas.get(position).put(itemValue, defaultName);
 
-                    holder.add_edit_text.addTextChangedListener(new TextWatcher() {
-                        @Override
-                        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-                        }
+                    }
 
-                        @Override
-                        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                        }
-
-                        @Override
-                        public void afterTextChanged(Editable editable) {
-                            mDatas.get(position).put(Constant.itemName, editable.toString());
-                            mDatas.get(position).put(Constant.itemValue, editable.toString());
-                        }
-                    });
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+                        mDatas.get(position).put(Constant.itemName, editable.toString());
+                        mDatas.get(position).put(Constant.itemValue, editable.toString());
+                    }
+                });
 
 //2、单值选择项&星期
-                } else if (fieldRole == 16 || fieldRole == 23) {
-                    if (isShow) {
-                        holder.add_spinner.setVisibility(View.VISIBLE);
+            } else if (fieldRole == 16 || fieldRole == 23) {
+                if (isShow) {
+                    holder.add_spinner.setVisibility(View.VISIBLE);
+                }
+                try {
+                    //删除无用字典值数据
+                    List<Map<String, Object>> dicList = getNewDicList(position);
+                    //设置默认选中值以及byId的位置
+                    int byId = 0;//
+                    int dicDefaultSelectInt;
+                    String dicDefaultSelect;
+                    //有值的情况
+
+                    if (!defaultName.equals("") && !defaultName.equals("null") && Utils.isNum(defaultName)) {
+                        byId = getById(dicList, byId, Integer.valueOf(defaultName));
+                        //无值、有默认值的情况
+                    } else if (!valueOf(mDatas.get(position).get("dicDefaultSelect")).equals("")) {
+                        dicDefaultSelect = valueOf(mDatas.get(position).get("dicDefaultSelect"));
+                        //获得默认选中值
+                        dicDefaultSelectInt = Integer.valueOf(dicDefaultSelect);
+                        //如果有默认选中值，将byId确定
+                        byId = getById(dicList, byId, dicDefaultSelectInt);
                     }
-                    try {
-                        //删除无用字典值数据
-                        List<Map<String, Object>> dicList = getNewDicList(position);
-                        //设置默认选中值以及byId的位置
-                        int byId = 0;//
-                        int dicDefaultSelectInt;
-                        String dicDefaultSelect;
-                        //有值的情况
+                    //字典按钮点击选择Arrays.asList("One", "Two", "Three", "Four", "Five")
+                    List<String> dataset = new LinkedList<>();
 
-                        if (!defaultName.equals("")&&!defaultName.equals("null")&&Utils.isNum(defaultName)) {
-                            byId = getById(dicList, byId, Integer.valueOf(defaultName));
-                            //无值、有默认值的情况
-                        } else if (!valueOf(mDatas.get(position).get("dicDefaultSelect")).equals("")) {
-                            dicDefaultSelect = valueOf(mDatas.get(position).get("dicDefaultSelect"));
-                            //获得默认选中值
-                            dicDefaultSelectInt = Integer.valueOf(dicDefaultSelect);
-                            //如果有默认选中值，将byId确定
-                            byId = getById(dicList, byId, dicDefaultSelectInt);
-                        }
-                        //字典按钮点击选择Arrays.asList("One", "Two", "Three", "Four", "Five")
-                        List<String> dataset = new LinkedList<>();
-
-                        for (int i = 0; i < dicList.size(); i++) {
-                            dataset.add(valueOf(dicList.get(i).get("DIC_NAME")));
-                        }
-                        Log.e(TAG, "onBindViewHolder: byId "+byId);
-                        Log.e(TAG, "onBindViewHolder: dicList "+dicList.toString() );
-                        Log.e(TAG, "onBindViewHolder: mDatas.get(position) "+mDatas.get(position).toString());
-                        mDatas.get(position).put(Constant.itemValue, valueOf(dicList.get(byId).get("DIC_ID")));
-                        mDatas.get(position).put(Constant.itemName, valueOf(dicList.get(byId).get("DIC_ID")));
-                        String dicName=String.valueOf(dicList.get(byId).get("DIC_NAME"));
-
-
-                        if (!dicName.equals("")&&!dicName.equals("null")) {
-                            holder.add_spinner.setText(dicName);
-                        }
-
-
-                        final List<Map<String, Object>> finalDicList = dicList;
-                        final int size = dataset.size();
-                        final String[] arrs = dataset.toArray(new String[size]);
-                        holder.add_spinner.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                ArrayAdapter adapter = new ArrayAdapter(mContext, R.layout.activity_adapter_radio_item, R.id.text1, arrs);
-                                AlertDialog dialog = new AlertDialog.Builder(mContext).setTitle("").
-                                        setAdapter(adapter, new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                String DIC_ID = valueOf(finalDicList.get(which).get("DIC_ID"));
-                                                mDatas.get(position).put(itemValue, DIC_ID);
-                                                mDatas.get(position).put(Constant.itemName, DIC_ID);
-                                                holder.add_spinner.setText(arrs[which]);
-                                                dialog.dismiss();
-                                            }
-                                        }).create();
-                                dialog.show();
-                            }
-                        });
-                    } catch (NumberFormatException e) {
-                        e.printStackTrace();
+                    for (int i = 0; i < dicList.size(); i++) {
+                        dataset.add(valueOf(dicList.get(i).get("DIC_NAME")));
                     }
+                    Log.e(TAG, "onBindViewHolder: byId " + byId);
+                    Log.e(TAG, "onBindViewHolder: dicList " + dicList.toString());
+                    Log.e(TAG, "onBindViewHolder: mDatas.get(position) " + mDatas.get(position).toString());
+                    mDatas.get(position).put(Constant.itemValue, valueOf(dicList.get(byId).get("DIC_ID")));
+                    mDatas.get(position).put(Constant.itemName, valueOf(dicList.get(byId).get("DIC_ID")));
+                    String dicName = String.valueOf(dicList.get(byId).get("DIC_NAME"));
+
+
+                    if (!dicName.equals("") && !dicName.equals("null")) {
+                        holder.add_spinner.setText(dicName);
+                    }
+
+
+                    final List<Map<String, Object>> finalDicList = dicList;
+                    final int size = dataset.size();
+                    final String[] arrs = dataset.toArray(new String[size]);
+                    holder.add_spinner.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            ArrayAdapter adapter = new ArrayAdapter(mContext, R.layout.activity_adapter_radio_item, R.id.text1, arrs);
+                            AlertDialog dialog = new AlertDialog.Builder(mContext).setTitle("").
+                                    setAdapter(adapter, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            String DIC_ID = valueOf(finalDicList.get(which).get("DIC_ID"));
+                                            mDatas.get(position).put(itemValue, DIC_ID);
+                                            mDatas.get(position).put(Constant.itemName, DIC_ID);
+                                            holder.add_spinner.setText(arrs[which]);
+                                            dialog.dismiss();
+                                        }
+                                    }).create();
+                            dialog.show();
+                        }
+                    });
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
 //3、日期
 
-                } else if (fieldRole == 14 || fieldRole == 26 || fieldRole == 28) {
-                    if (isShow) {
-                        holder.addGeneral.setVisibility(View.VISIBLE);
-                    }
-                    //将long型时间改为约定的时间格式
-                    String dateType = "yyyy-MM-dd HH:mm:ss";
-                    //判断 如果defaultName是格林尼治时间字符串
+            } else if (fieldRole == 15) {
+                if (isShow) {
+                    holder.addGeneral.setVisibility(View.VISIBLE);
+                }
+                //将long型时间改为约定的时间格式
+                String dateType = "yyyy-MM-dd HH:mm:ss";
+                //判断 如果defaultName是格林尼治时间字符串
 
+                //转换long为日期
+                //如果是则转换为时间类型字符串
+                if (defaultName.matches("[0-9]+")) {
+                    long defaultNameLong = Long.valueOf(defaultName);
                     //转换long为日期
-                    //如果是则转换为时间类型字符串
-                    if (defaultName.matches("[0-9]+")) {
-                        long defaultNameLong = Long.valueOf(defaultName);
-                        //转换long为日期
-                        Log.e("TAG", "defaultNameLong " + defaultNameLong);
-                        Date date = new Date(defaultNameLong);
-                        defaultName = new SimpleDateFormat(dateType).format(date);
+                    Log.e("TAG", "defaultNameLong " + defaultNameLong);
+                    Date date = new Date(defaultNameLong);
+                    defaultName = new SimpleDateFormat(dateType).format(date);
+                }
+                holder.addGeneral.setText(defaultName);
+                if (mDatas.get(position).get(itemValue) == null) {
+                    mDatas.get(position).put(itemValue, defaultName);
+                    mDatas.get(position).put(Constant.itemName, defaultName);
+                }
+
+
+                holder.addGeneral.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        SelectDateDialog mSelectDateDialog = new SelectDateDialog(mContext);
+                        mSelectDateDialog.setOnClickListener(new SelectDateDialog.OnClickListener() {
+                            @Override
+                            public boolean onSure(int mYear, int mMonth, int mDay, long time) {
+                                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                                final String date = dateFormat.format(time);
+                                //选择时间
+                                SelectTimeDialog mSelectTimeDialog = new SelectTimeDialog(mContext, new SelectTimeDialog.OnClickListener() {
+                                    @Override
+                                    public boolean onSure(int hour, int minute, int setTimeType) {
+                                        String result = String.format("%02d:%02d:%02d", hour, minute, 0);
+                                        String dateAndTime = date + " " + result;
+                                        holder.addGeneral.setText(dateAndTime);
+                                        Log.e(TAG, "onSure: dateAndTime  " + dateAndTime);
+                                        mDatas.get(position).put(itemValue, dateAndTime);
+                                        mDatas.get(position).put(Constant.itemName, dateAndTime);
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public boolean onCancel() {
+                                        return false;
+                                    }
+                                });
+                                Calendar c = Calendar.getInstance();
+                                c.setTimeInMillis(System.currentTimeMillis());
+                                mSelectTimeDialog.show(c.get(Calendar.HOUR_OF_DAY),
+                                        c.get(Calendar.MINUTE),
+                                        c.get(Calendar.SECOND));
+                                return false;
+                            }
+
+                            @Override
+                            public boolean onCancel() {
+                                return false;
+                            }
+                        });
+                        Calendar c = Calendar.getInstance();
+                        c.setTimeInMillis(System.currentTimeMillis());
+                        mSelectDateDialog.show(c.get(Calendar.YEAR),
+                                c.get(Calendar.MONTH),
+                                c.get(Calendar.DAY_OF_MONTH));
                     }
-                    holder.addGeneral.setText(defaultName);
-                    if (mDatas.get(position).get(itemValue) == null) {
-                        mDatas.get(position).put(itemValue, defaultName);
-                        mDatas.get(position).put(Constant.itemName, defaultName);
-                    }
+                });
 
+//4、日期
 
-                   holder.addGeneral.setOnClickListener(new View.OnClickListener() {
-                       @Override
-                       public void onClick(View view) {
-                           SelectDateDialog mSelectDateDialog = new SelectDateDialog(mContext);
-                           mSelectDateDialog.setOnClickListener(new SelectDateDialog.OnClickListener() {
-                               @Override
-                               public boolean onSure(int mYear, int mMonth, int mDay, long time) {
-                                   SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                                   final String date=dateFormat.format(time);
-                                   //选择时间
-                                   SelectTimeDialog mSelectTimeDialog=new SelectTimeDialog(mContext, new SelectTimeDialog.OnClickListener() {
-                                       @Override
-                                       public boolean onSure(int hour, int minute, int setTimeType) {
-                                           String result = String.format("%02d:%02d:%02d", hour, minute,0);
-                                           String dateAndTime=date+" "+result;
-                                           holder.addGeneral.setText(dateAndTime);
-                                           Log.e(TAG, "onSure: dateAndTime  "+dateAndTime);
-                                           mDatas.get(position).put(itemValue, dateAndTime);
-                                           mDatas.get(position).put(Constant.itemName, dateAndTime);
-                                           return false;
-                                       }
+            } else if (fieldRole == 14 || fieldRole == 26 || fieldRole == 28) {
+                if (isShow) {
+                    holder.addGeneral.setVisibility(View.VISIBLE);
 
-                                       @Override
-                                       public boolean onCancel() {
-                                           return false;
-                                       }
-                                   });
-                                   Calendar c = Calendar.getInstance();
-                                   c.setTimeInMillis(System.currentTimeMillis());
-                                   mSelectTimeDialog.show(c.get(Calendar.HOUR_OF_DAY),
-                                           c.get(Calendar.MINUTE),
-                                           c.get(Calendar.SECOND));
-                                   return false;
-                               }
-
-                               @Override
-                               public boolean onCancel() {
-                                   return false;
-                               }
-                           });
-                           Calendar c = Calendar.getInstance();
-                           c.setTimeInMillis(System.currentTimeMillis());
-                           mSelectDateDialog.show(c.get(Calendar.YEAR),
-                                   c.get(Calendar.MONTH),
-                                   c.get(Calendar.DAY_OF_MONTH));
-                       }
-                   });
-
-//4、时间
-
-                } else if (fieldRole == 15) {
-                    if (isShow) {
-                        holder.addGeneral.setVisibility(View.VISIBLE);
-
-                    }
+                }
 //将long型时间改为约定的时间格式
-                    String dateType = "HH:mm:ss";
-                    Log.e("TAG", "defaultName " + defaultName);
+                String dateType = "yyyy-MM-dd";
+                Log.e("TAG", "defaultName " + defaultName);
 //判断是否为纯数字
 
-                    //存储defaultName
+                //存储defaultName
 
 
-                    //如果是则转换为时间类型字符串
-                    if (defaultName.matches("[0-9]+")) {
-                        long defaultNameLong = Long.valueOf(defaultName);
-                        //转换long为日期
-                        Log.e("TAG", "defaultNameLong " + defaultNameLong);
-                        Date date = new Date(defaultNameLong);
-                        defaultName = new SimpleDateFormat(dateType).format(date);
-                    }
-                    holder.addGeneral.setText(defaultName);
-                    if (mDatas.get(position).get(itemValue) == null) {
-                        mDatas.get(position).put(itemValue, defaultName);
-                        mDatas.get(position).put(Constant.itemName, defaultName);
-                    }
+                //如果是则转换为时间类型字符串
+                if (defaultName.matches("[0-9]+")) {
+                    long defaultNameLong = Long.valueOf(defaultName);
+                    //转换long为日期
+                    Log.e("TAG", "defaultNameLong " + defaultNameLong);
+                    Date date = new Date(defaultNameLong);
+                    defaultName = new SimpleDateFormat(dateType).format(date);
+                }
+                holder.addGeneral.setText(defaultName);
+                if (mDatas.get(position).get(itemValue) == null) {
+                    mDatas.get(position).put(itemValue, defaultName);
+                    mDatas.get(position).put(Constant.itemName, defaultName);
+                }
 
 //                    final String finalDateType = dateType;
-holder.addGeneral.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-        SelectTimeDialog mSelectTimeDialog=new SelectTimeDialog(mContext, new SelectTimeDialog.OnClickListener() {
-            @Override
-            public boolean onSure(int hour, int minute, int setTimeType) {
-                String result = String.format("%02d:%02d:%02d", hour, minute,0);
-                holder.addGeneral.setText(result);
-                Log.e(TAG, "onSure: result"+result);
-                mDatas.get(position).put(itemValue, result);
-                mDatas.get(position).put(Constant.itemName, result);
-                return false;
-            }
+                holder.addGeneral.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        SelectDateDialog mSelectDateDialog = new SelectDateDialog(mContext);
+                        mSelectDateDialog.setOnClickListener(new SelectDateDialog.OnClickListener() {
+                            @Override
+                            public boolean onSure(int mYear, int mMonth, int mDay, long time) {
+                                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                                String date = dateFormat.format(time);
+                                //选择时间
+                                holder.addGeneral.setText(date);
+                                mDatas.get(position).put(Constant.itemValue, date);
+                                mDatas.get(position).put(Constant.itemName, date);
+                                return false;
+                            }
 
-            @Override
-            public boolean onCancel() {
-                return false;
-            }
-        });
-        Calendar c = Calendar.getInstance();
-        c.setTimeInMillis(System.currentTimeMillis());
-        mSelectTimeDialog.show(c.get(Calendar.HOUR_OF_DAY),
-                c.get(Calendar.MINUTE),
-                c.get(Calendar.SECOND));
-    }
-});
+                            @Override
+                            public boolean onCancel() {
+                                return false;
+                            }
+                        });
+                        Calendar c = Calendar.getInstance();
+                        c.setTimeInMillis(System.currentTimeMillis());
+                        mSelectDateDialog.show(c.get(Calendar.YEAR),
+                                c.get(Calendar.MONTH),
+                                c.get(Calendar.DAY_OF_MONTH));
+                    }
+                });
 
-                } else if (fieldRole == 19||fieldRole == 18) {
+            } else if (fieldRole == 19 || fieldRole == 18) {
 /**
  *
  * 添加作业附件
  *
  *
  */
-                    if (isShow && ifUpdate == 1) {
-                        holder.image_upload_layout.setVisibility(View.VISIBLE);
-                        holder.image_upload.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                Intent intent = new Intent(mActivity, SelectPictureActivity.class);
-                                intent.putExtra("position", position + "");
-                                Log.e(TAG, "onClick: 出发的position "+position );
-                                intent.putExtra("fieldRole", fieldRole + "");
-                                mActivity.startActivityForResult(intent, 2);
-                            }
-                        });
+                if (isShow && ifUpdate == 1) {
+                    holder.image_upload_layout.setVisibility(View.VISIBLE);
+                    holder.image_upload.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(mActivity, SelectPictureActivity.class);
+                            intent.putExtra("position", position + "");
+                            Log.e(TAG, "onClick: 出发的position " + position);
+                            intent.putExtra("fieldRole", fieldRole + "");
+                            mActivity.startActivityForResult(intent, 2);
+                        }
+                    });
 
-                        //判断选择了x张图片
+                    //判断选择了x张图片
 
-                        String numPic = valueOf(mDatas.get(position).get(itemValue));
-                        Log.e(TAG, "onBindViewHolder: 已选文件的id字符串numPic "+numPic);
-                        if (!numPic.equals("null") && !numPic.equals("")) {
+                    String numPic = valueOf(mDatas.get(position).get(itemValue));
+                    Log.e(TAG, "onBindViewHolder: 已选文件的id字符串numPic " + numPic);
+                    if (!numPic.equals("null") && !numPic.equals("")) {
 
-                            String[] numPicArray = numPic.split(",");
-                            int picLength = numPicArray.length;
-                            String picContent = "已选" + picLength + "个文件";
-                            Log.e(TAG, "onBindViewHolder: picContent "+picContent);
-                            holder.picNumber.setText(picContent);
-                        } else {
-                            Log.e(TAG, "onBindViewHolder: 已选文件的id字符串numPic "+numPic);
-                            holder.picNumber.setText("尚无附件");
+                        String[] numPicArray = numPic.split(",");
+                        int picLength = numPicArray.length;
+                        String picContent = "已选" + picLength + "个文件";
+                        Log.e(TAG, "onBindViewHolder: picContent " + picContent);
+                        holder.picNumber.setText(picContent);
+                    } else {
+                        Log.e(TAG, "onBindViewHolder: 已选文件的id字符串numPic " + numPic);
+                        holder.picNumber.setText("尚无附件");
+                    }
+
+
+                } else {
+                    holder.addGeneral.setVisibility(View.VISIBLE);
+                    holder.addGeneral.setText(defaultName);
+                }
+//5、内部对象单值
+            } else if (fieldRole == 20 || fieldRole == 22) {
+                if (isShow) {
+                    holder.addGeneral.setVisibility(View.VISIBLE);
+//                addGeneral.setHint("请选择");
+                } else {
+                    holder.addGeneral.setVisibility(View.GONE);
+                }
+
+                String itemName;
+                if (mDatas.get(position).get(Constant.itemName) != null) {
+                    itemName = valueOf(mDatas.get(position).get(Constant.itemName));
+                } else {
+                    itemName = "";
+                }
+
+                if (!itemName.equals("")) {
+                    holder.addGeneral.setText(itemName);
+                }
+                final String finalFieldCnName1 = fieldCnName;
+                holder.addGeneral.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        List<Map<String, String>> needFilterList = getNeedFilter(position);
+                        String idArrs = "";
+                        try {
+                            idArrs = valueOf(mDatas.get(position).get(itemValue));
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
 
+                        if (finalChooseType != 1) {
+                            toMultiValueActivity(finalFieldCnName1, "false", idArrs, childPra, needFilterList, position);
 
-                    } else {
-                        holder.addGeneral.setVisibility(View.VISIBLE);
-                        holder.addGeneral.setText(defaultName);
+
+                        } else {
+                            Log.e("TAG", "跳转到下拉树");
+                            toTreeView(finalFieldCnName1, "false", idArrs, childPra, needFilterList, position);
+                        }
+
                     }
-//5、内部对象单值
-                } else if (fieldRole == 20 || fieldRole == 22) {
+                });
+            }
+//6、内部对象多值
+            else if (fieldRole == 21) {
+
+                String addStyle = valueOf(mDatas.get(position).get("addStyle"));
+                if (addStyle.equals("1") || addStyle.equals("2")) {
+
                     if (isShow) {
                         holder.addGeneral.setVisibility(View.VISIBLE);
-//                addGeneral.setHint("请选择");
-                    } else {
-                        holder.addGeneral.setVisibility(View.GONE);
+//                    addGeneral.setHint("请选择");
                     }
-
                     String itemName;
                     if (mDatas.get(position).get(Constant.itemName) != null) {
                         itemName = valueOf(mDatas.get(position).get(Constant.itemName));
@@ -499,119 +546,75 @@ holder.addGeneral.setOnClickListener(new View.OnClickListener() {
                     if (!itemName.equals("")) {
                         holder.addGeneral.setText(itemName);
                     }
-                    final String finalFieldCnName1 = fieldCnName;
+
+                    final String finalFieldCnName = fieldCnName;
                     holder.addGeneral.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             List<Map<String, String>> needFilterList = getNeedFilter(position);
                             String idArrs = "";
-                            try {
+                            if (mDatas.get(position).get(itemValue) != null) {
                                 idArrs = valueOf(mDatas.get(position).get(itemValue));
-                            } catch (Exception e) {
-                                e.printStackTrace();
                             }
-
                             if (finalChooseType != 1) {
-                                toMultiValueActivity(finalFieldCnName1, "false", idArrs, childPra, needFilterList, position);
-
-
-                            } else {
-                                Log.e("TAG", "跳转到下拉树");
-                                toTreeView(finalFieldCnName1, "false", idArrs, childPra, needFilterList, position);
+                                toMultiValueActivity(finalFieldCnName, "true", idArrs, childPra, needFilterList, position);
+                            } else {//跳转到下拉树选择
+                                toTreeView(finalFieldCnName, "true", idArrs, childPra, needFilterList, position);
                             }
-
                         }
                     });
-                }
-//6、内部对象多值
-                else if (fieldRole == 21) {
+                } else if (addStyle.equals("3")) {
+                    if (isShow) {
+                        holder.add_unlimited.setVisibility(View.VISIBLE);
+                    }
 
-                    String addStyle = valueOf(mDatas.get(position).get("addStyle"));
-                    if (addStyle.equals("1") || addStyle.equals("2")) {
+                    String unlimitedAddValue = "";
+                    if (mDatas.get(position).get("tempListValue") != null) {
+                        unlimitedAddValue = valueOf(mDatas.get(position).get("tempListValue"));
 
-                        if (isShow) {
-                            holder.addGeneral.setVisibility(View.VISIBLE);
-//                    addGeneral.setHint("请选择");
-                        }
-                        String itemName;
-                        if (mDatas.get(position).get(Constant.itemName) != null) {
-                            itemName = valueOf(mDatas.get(position).get(Constant.itemName));
-                        } else {
-                            itemName = "";
-                        }
-
-                        if (!itemName.equals("")) {
-                            holder.addGeneral.setText(itemName);
-                        }
-
-                        final String finalFieldCnName = fieldCnName;
-                        holder.addGeneral.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                List<Map<String, String>> needFilterList = getNeedFilter(position);
-                                String idArrs = "";
-                                if (mDatas.get(position).get(itemValue) != null) {
-                                    idArrs = valueOf(mDatas.get(position).get(itemValue));
-                                }
-                                if (finalChooseType != 1) {
-                                    toMultiValueActivity(finalFieldCnName, "true", idArrs, childPra, needFilterList, position);
-                                } else {//跳转到下拉树选择
-                                    toTreeView(finalFieldCnName, "true", idArrs, childPra, needFilterList, position);
-                                }
-                            }
-                        });
-                    } else if (addStyle.equals("3")) {
-                        if (isShow) {
-                            holder.add_unlimited.setVisibility(View.VISIBLE);
-                        }
-
-                        String unlimitedAddValue = "";
-                        if (mDatas.get(position).get("tempListValue") != null) {
-                            unlimitedAddValue = valueOf(mDatas.get(position).get("tempListValue"));
-
-                        }
+                    }
 /**
  * 无限添加按钮
  */
 ////获取参数
-                        final String showFieldArr = valueOf(mDatas.get(position).get("showFieldArr"));
-                        final String fieldSetStr = JSON.toJSONString(mDatas);
+                    final String showFieldArr = valueOf(mDatas.get(position).get("showFieldArr"));
+                    final String fieldSetStr = JSON.toJSONString(mDatas);
 ////异步请求模板数据
-                        final String finalUnlimitedAddValue = unlimitedAddValue;
-                        final String finalFieldCnName2 = fieldCnName;
-                        holder.add_unlimited.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
+                    final String finalUnlimitedAddValue = unlimitedAddValue;
+                    final String finalFieldCnName2 = fieldCnName;
+                    holder.add_unlimited.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
 //                        requestData(showFieldArr);
-                                try {
-                                    Intent intent = new Intent();
-                                    intent.setClass(mContext, UnlimitedAddActivity.class);
-                                    intent.putExtra("fieldSetStr", fieldSetStr);
-                                    intent.putExtra("showFieldArr", showFieldArr);
-                                    intent.putExtra("viewName", finalFieldCnName2);
-                                    intent.putExtra("unlimitedAddValue", finalUnlimitedAddValue);
-                                    intent.putExtra("position", position + "");
-                                    intent.putExtra("tableId", tableId);
-                                    intent.putExtra("relationTableId", valueOf(mDatas.get(position).get("relationTableId")));
-                                    intent.putExtra("pageId", pageId);
-                                    mActivity.startActivityForResult(intent, 2);
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
+                            try {
+                                Intent intent = new Intent();
+                                intent.setClass(mContext, UnlimitedAddActivity.class);
+                                intent.putExtra("fieldSetStr", fieldSetStr);
+                                intent.putExtra("showFieldArr", showFieldArr);
+                                intent.putExtra("viewName", finalFieldCnName2);
+                                intent.putExtra("unlimitedAddValue", finalUnlimitedAddValue);
+                                intent.putExtra("position", position + "");
+                                intent.putExtra("tableId", tableId);
+                                intent.putExtra("relationTableId", valueOf(mDatas.get(position).get("relationTableId")));
+                                intent.putExtra("pageId", pageId);
+                                mActivity.startActivityForResult(intent, 2);
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
-                        });
-                    }
-
-                } else {
-                    if (isShow) {
-                        holder.addGeneral.setVisibility(View.VISIBLE);
-                    }
-
-                    if (!defaultName.equals("")) {
-                        holder.addGeneral.setHint(defaultName);
-                        mDatas.get(position).put(itemValue, defaultName);
-                    }
+                        }
+                    });
                 }
+
+            } else {
+                if (isShow) {
+                    holder.addGeneral.setVisibility(View.VISIBLE);
+                }
+
+                if (!defaultName.equals("")) {
+                    holder.addGeneral.setHint(defaultName);
+                    mDatas.get(position).put(itemValue, defaultName);
+                }
+            }
             holder.itemView.setTag(mDatas.get(position));
         }
 
@@ -647,7 +650,7 @@ holder.addGeneral.setOnClickListener(new View.OnClickListener() {
      * 下拉刷新更新数据
      */
     public void addData(List<Map<String, Object>> datas) {
-        Log.e(TAG, "addData: datas"+datas.toString());
+        Log.e(TAG, "addData: datas" + datas.toString());
         addData(0, datas);
         notifyDataSetChanged();
     }
@@ -664,7 +667,7 @@ holder.addGeneral.setOnClickListener(new View.OnClickListener() {
 
             notifyItemRangeChanged(position, mDatas.size());
 
-            for (int i=position;i<mDatas.size();i++) {
+            for (int i = position; i < mDatas.size(); i++) {
 
                 notifyItemChanged(i);
             }
@@ -830,7 +833,7 @@ holder.addGeneral.setOnClickListener(new View.OnClickListener() {
                 }
 //                && Constant.relationFieldId != null
 //                        && Constant.relationFieldId.equals(needFilterStr[1])
-                if (idValues.equals("") ) {
+                if (idValues.equals("")) {
                     idValues = dataId;
                     Constant.relationField = position;
                 }
