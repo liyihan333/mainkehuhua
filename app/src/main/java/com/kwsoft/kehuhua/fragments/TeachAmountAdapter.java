@@ -9,8 +9,6 @@ import android.widget.TextView;
 
 import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.config.Constant;
-import com.kwsoft.version.TodayCourseTableActivity;
-import com.kwsoft.version.adapter.TodayCourseTabAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

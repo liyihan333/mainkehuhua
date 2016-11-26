@@ -34,7 +34,6 @@ import com.kwsoft.kehuhua.urlCnn.ErrorToast;
 import com.kwsoft.kehuhua.utils.DataProcess;
 import com.kwsoft.kehuhua.view.RecycleViewDivider;
 import com.kwsoft.kehuhua.view.WrapContentLinearLayoutManager;
-import com.kwsoft.version.adapter.TodayCourseTabAdapter;
 import com.zhy.http.okhttp.OkHttpUtils;
 
 import java.util.ArrayList;
