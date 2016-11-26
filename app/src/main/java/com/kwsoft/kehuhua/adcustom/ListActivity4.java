@@ -270,7 +270,7 @@ public class ListActivity4 extends BaseActivity implements ViewPager.OnPageChang
                 xFragment = new ListFragment();
             }
             xFragment.setArguments(listBundle);
-            fragmentList.removeAll(fragmentList);
+            fragmentList.clear();
             fragmentList.add(xFragment);
             rgChannel = (RadioGroup) super.findViewById(R.id.rgChannel);
             viewPager = (ViewPager) super.findViewById(R.id.vpNewsList);
