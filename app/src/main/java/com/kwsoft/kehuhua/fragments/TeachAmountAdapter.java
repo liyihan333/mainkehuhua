@@ -1,32 +1,30 @@
-package com.kwsoft.version.adapter;
+package com.kwsoft.kehuhua.fragments;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.kwsoft.kehuhua.adcustom.R;
-import com.kwsoft.kehuhua.hampson.adapter.CourseAdapter;
-import com.kwsoft.kehuhua.urlCnn.EdusStringCallback;
+import com.kwsoft.kehuhua.config.Constant;
 import com.kwsoft.version.TodayCourseTableActivity;
-import com.kwsoft.version.fragment.StuInfoAdapter;
+import com.kwsoft.version.adapter.TodayCourseTabAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Administrator on 2016/11/11 0011.
+ * Created by Administrator on 2016/11/25 0025.
  */
 
-public class TodayCourseTabAdapter extends BaseAdapter {
+public class TeachAmountAdapter extends BaseAdapter {
     public List<Map<String, String>> list = new ArrayList<>();
     public Context context;
 
-    public TodayCourseTabAdapter(List<Map<String, String>> list, Context context) {
+    public TeachAmountAdapter(List<Map<String, String>> list, Context context) {
         this.list = list;
         this.context = context;
     }

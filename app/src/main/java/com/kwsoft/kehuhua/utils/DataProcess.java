@@ -356,6 +356,7 @@ public class DataProcess {
     }
 
     private static final String TAG = "DataProcess";
+
     /**
      * 跳转到list页面，分至此不分有无菜单情况
      */
@@ -372,16 +373,16 @@ public class DataProcess {
         }
         //转换整项为字符串准备发送
         String itemDataString = JSONArray.toJSONString(itemData);
-        Log.e(TAG, "toList: itemDataString "+itemDataString);
+        Log.e(TAG, "toList: itemDataString " + itemDataString);
         //转换子列表对象为字符串准备发送
         String childString = JSONArray.toJSONString(childList);
-        Log.e(TAG, "toList: childString "+childString);
+        Log.e(TAG, "toList: childString " + childString);
         Intent intent = new Intent();
 //        if ((itemData.get("menuName").toString()).contains("评价")) {
 //            intent.setClass(mActivity, AssessActivity.class);
 //        } else {
 //            if (itemData.get("menuPageUrl") == null) {
-                intent.setClass(mActivity, ListActivity4.class);
+        intent.setClass(mActivity, ListActivity4.class);
 //            } else {
 //                intent.setClass(mActivity, CourseActivity.class);
 //            }
@@ -391,17 +392,17 @@ public class DataProcess {
         mActivity.startActivity(intent);
     }
 
-    public static String listToString(List<String> stringList){
-        if (stringList==null) {
+    public static String listToString(List<String> stringList) {
+        if (stringList == null) {
             return null;
         }
-        StringBuilder result=new StringBuilder();
-        boolean flag=false;
+        StringBuilder result = new StringBuilder();
+        boolean flag = false;
         for (String string : stringList) {
             if (flag) {
                 result.append(",");
-            }else {
-                flag=true;
+            } else {
+                flag = true;
             }
             result.append(string);
         }

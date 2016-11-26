@@ -41,6 +41,7 @@
 
         </activity>
         <activity android:name="com.kwsoft.version.TodayCourseTableActivity"/>
+        <activity android:name="com.kwsoft.kehuhua.hampson.activity.TeachAmountDetailActivity"/>
         <meta-data
             android:name="PGYER_APPID"
             android:value="f6c68a067dd85f7a31460c706c5af11e" >

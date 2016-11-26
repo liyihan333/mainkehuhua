@@ -30,6 +30,7 @@ import com.kwsoft.kehuhua.adcustom.base.BaseActivity;
 import com.kwsoft.kehuhua.bean.Channel;
 import com.kwsoft.kehuhua.config.Constant;
 import com.kwsoft.kehuhua.fragments.ListFragment;
+import com.kwsoft.kehuhua.fragments.TeaachAmountFragment;
 import com.kwsoft.kehuhua.hampson.activity.CourseHpsFragment;
 import com.kwsoft.kehuhua.hampson.activity.CourseRatingBarFragment;
 import com.kwsoft.kehuhua.hampson.activity.StageTestFragment;
@@ -70,7 +71,6 @@ public class ListActivity4 extends BaseActivity implements ViewPager.OnPageChang
         setContentView(R.layout.activity_list_avtivity4);
         ButterKnife.bind(this);
         CloseActivityClass.activityList.add(this);
-        Log.e(TAG, "进入Tab");
         Log.e(TAG, "进入Tab");
         initView();
     }
@@ -263,6 +263,9 @@ public class ListActivity4 extends BaseActivity implements ViewPager.OnPageChang
                 xFragment = new CourseRatingBarFragment();
             }else if(titleName.contains("学员课程教师")&& StuPra.studentProId.equals("57159822f07e75084cb8a1fe")){
                 xFragment = new StuClassTchFragment();
+            }else if(titleName.contains("Class Amount")){
+                xFragment = new TeaachAmountFragment();
+                Log.e("kl","kl");
             }else {
                 xFragment = new ListFragment();
             }
@@ -273,6 +276,7 @@ public class ListActivity4 extends BaseActivity implements ViewPager.OnPageChang
             viewPager = (ViewPager) super.findViewById(R.id.vpNewsList);
             hvChannel = (HorizontalScrollView) super.findViewById(R.id.hvChannel);
             hvChannel.setVisibility(View.GONE);
+
 
 //            viewPager.setOnPageChangeListener(this);
             adapter = new PageFragmentAdapter(super.getSupportFragmentManager(), fragmentList);
