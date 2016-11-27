@@ -241,7 +241,6 @@
         <activity android:name=".CourseDetailActivity" />
         <activity android:name=".OperateDataActivity" />
         <activity android:name=".ListActivity2" />
-        <activity android:name=".ListActivity3" />
         <activity android:name=".ListActivity4" />
         <activity android:name="com.kwsoft.kehuhua.SetIpPortActivity"></activity>
 

@@ -1,6 +1,7 @@
 package com.kwsoft.kehuhua.adcustom.base;
 
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -37,11 +38,12 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseAct
     protected NotificationManager notificationManager;
     public LoadingDialog  dialog =null;
 
+    @SuppressLint("WorldReadableFiles")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
-        preferences = getSharedPreferences("userInfo", MODE_WORLD_READABLE);
+//        preferences = getSharedPreferences("userInfo", MODE_WORLD_READABLE);
 //        notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         dialog=new LoadingDialog(mContext,"玩命加载中...");
         myApplication = (MyApplication) getApplication();

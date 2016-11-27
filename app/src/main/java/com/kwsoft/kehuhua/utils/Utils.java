@@ -11,6 +11,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
 import android.view.View;
 
 import com.alibaba.fastjson.JSON;
@@ -20,9 +21,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
 
 public class Utils {
     public static int getAppVersion(Context context) {
@@ -208,6 +212,8 @@ public class Utils {
     }
 
     public static Map<String,Object> str2map(String jsonData){
+        Log.e(TAG, "str2map: 个人资料信息"+jsonData);
+        Map<String, Object> stuInfoMap=new HashMap<>();
 
         return JSON.parseObject(jsonData,
                     new TypeReference<Map<String, Object>>() {
