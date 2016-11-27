@@ -28,6 +28,7 @@ import com.kwsoft.kehuhua.config.Constant;
 import com.kwsoft.kehuhua.urlCnn.EdusStringCallback;
 import com.kwsoft.kehuhua.urlCnn.ErrorToast;
 import com.kwsoft.kehuhua.utils.DataProcess;
+import com.kwsoft.kehuhua.utils.Utils;
 import com.kwsoft.kehuhua.view.RecycleViewDivider;
 import com.kwsoft.kehuhua.view.WrapContentLinearLayoutManager;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -166,7 +167,7 @@ public class ListFragment extends Fragment {
 
                         @Override
                         public void onResponse(String response, int id) {
-                            Log.e(TAG, "onResponse: "+"  id  "+id);
+                            Utils.printLog(TAG,"onResponse: "+ response);
                             setStore(response);
                         }
                     });
@@ -195,7 +196,7 @@ public class ListFragment extends Fragment {
     public void setStore(String jsonData) {
         List<Map<String, Object>> dataList = new ArrayList<>();
         List<Map<String, Object>> fieldSet = new ArrayList<>();
-        Log.e("TAG", "解析set" + jsonData);
+
         try {
             Map<String, Object> setMap = JSON.parseObject(jsonData,
                     new TypeReference<Map<String, Object>>() {
