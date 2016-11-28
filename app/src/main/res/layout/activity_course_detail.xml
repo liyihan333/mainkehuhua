@@ -60,16 +60,18 @@
     </LinearLayout>
 
     <LinearLayout
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="15dp">
+        android:paddingStart="15dp"
+        android:paddingEnd="5dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="描         述："
+            android:text="课程安排："
             android:textColor="@color/list_item_left" />
 
         <TextView
@@ -81,11 +83,13 @@
     </LinearLayout>
 
     <LinearLayout
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="15dp">
+        android:paddingStart="15dp"
+        android:paddingEnd="5dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -101,11 +105,13 @@
             android:textColor="@color/list_item_right" />
     </LinearLayout>
     <LinearLayout
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="15dp">
+        android:paddingStart="15dp"
+        android:paddingEnd="5dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -121,11 +127,13 @@
             android:textColor="@color/list_item_right" />
     </LinearLayout>
     <LinearLayout
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="15dp">
+        android:paddingStart="15dp"
+        android:paddingEnd="5dp">
 
         <TextView
             android:layout_width="wrap_content"

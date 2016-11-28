@@ -52,9 +52,9 @@ public class CourseDetailActivity extends AppCompatActivity {
             startTime.setText(sTimeStr);
             endTime.setText(eTimeStr);
             tvdetail.setText(content3);
-            zhangJieMingCheng.setText(CHAPTER_NAME);
-            zhangJieRenWu.setText(CHAPTER_TASK);
-            zhangJieMiaoShu.setText(CHAPTER_DESCRIBE);
+            zhangJieMingCheng.setText(!CHAPTER_NAME.equals("null") ? CHAPTER_NAME : "无内容");
+            zhangJieRenWu.setText(!CHAPTER_TASK.equals("null") ? CHAPTER_TASK : "无内容");
+            zhangJieMiaoShu.setText(!CHAPTER_DESCRIBE.equals("null") ? CHAPTER_DESCRIBE : "无内容");
         }
 
         mToolbar.setTitle("课程详情");
