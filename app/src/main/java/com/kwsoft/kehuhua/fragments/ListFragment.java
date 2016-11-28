@@ -1,6 +1,9 @@
 package com.kwsoft.kehuhua.fragments;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -28,7 +31,6 @@ import com.kwsoft.kehuhua.config.Constant;
 import com.kwsoft.kehuhua.urlCnn.EdusStringCallback;
 import com.kwsoft.kehuhua.urlCnn.ErrorToast;
 import com.kwsoft.kehuhua.utils.DataProcess;
-import com.kwsoft.kehuhua.utils.Utils;
 import com.kwsoft.kehuhua.view.RecycleViewDivider;
 import com.kwsoft.kehuhua.view.WrapContentLinearLayoutManager;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -86,9 +88,17 @@ public class ListFragment extends Fragment {
         initRefreshLayout();//初始化控件
         getDataIntent();//获取初始化数据
         getData();
+        IntentFilter filter = new IntentFilter(OperateDataActivity.action);
+        getActivity().registerReceiver(broadcastReceiver, filter);
         return view;
     }
+    BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
 
+        @Override
+        public void onReceive(Context context, Intent intent) {
+           refreshData();
+        }
+    };
 
     //初始化SwipeRefreshLayout
     private void initRefreshLayout() {
@@ -167,7 +177,7 @@ public class ListFragment extends Fragment {
 
                         @Override
                         public void onResponse(String response, int id) {
-                            Utils.printLog(TAG,"onResponse: "+ response);
+//                            Utils.printLog(TAG,"onResponse: "+ response);
                             setStore(response);
                         }
                     });
@@ -311,18 +321,11 @@ public class ListFragment extends Fragment {
 
     }
 
-//    @Override
-//    protected void onRestart() {
-//        super.onRestart();
-//        isResume=1;
-//        refreshData();
-//    }
-
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+        getActivity().unregisterReceiver(broadcastReceiver);
     }
     /**
      * 下拉刷新方法
@@ -429,50 +432,6 @@ public class ListFragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-    public void toPage(int position) {
-        int buttonType = (int) buttonSet.get(position).get("buttonType");
-        Map<String, Object> buttonSetItem = buttonSet.get(position);
-        buttonSetItem.put("tableIdList", tableId);
-        buttonSetItem.put("pageIdList", pageId);
-        switch (buttonType) {
-            case 0://添加页面
-                Intent intent = new Intent(getActivity(), OperateDataActivity.class);
-                intent.putExtra("itemSet", JSON.toJSONString(buttonSetItem));
-                startActivityForResult(intent, 5);
-                break;
-            case 3://批量删除操作
-//              listAdapter.flag = true;
-//              listAdapter.notifyDataSetChanged();
-//              setGone();
-                break;
-        }
-    }
-
-
-    public void refreshPage(int position) {
-        Log.e("TAG", "list子菜单position " + position);
-        tableId = childList.get(position).get("tableId") + "";
-        pageId = childList.get(position).get("pageId") + "";
-//        titleName = childList.get(position).get("menuName") + "";
-
-        Log.e("TAG", "list子菜单position " + position);
-        //重新设置顶部名称
-//        mToolbar.setTitle(titleName);
-        //重设参数值
-        paramsMap.put(Constant.tableId, tableId);
-        paramsMap.put(Constant.pageId, pageId);
-
-
-        Constant.paramsMapSearch = paramsMap;
-        Constant.mainTableIdValue = tableId;
-        Constant.mainPageIdValue = pageId;
-        //重新请求数据
-
-
-        refreshData();
-
-
     }
 
 }

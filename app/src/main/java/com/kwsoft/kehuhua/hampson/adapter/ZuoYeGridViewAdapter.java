@@ -67,6 +67,7 @@ public class ZuoYeGridViewAdapter extends BaseAdapter {
 //          final String prefix=fileNames.get(i).substring(fileNames.get(i).lastIndexOf(".")+1);
             Uri uri = Uri.parse(datas.get(i));
             my_image_view.setImageURI(uri);
+
             my_image_view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

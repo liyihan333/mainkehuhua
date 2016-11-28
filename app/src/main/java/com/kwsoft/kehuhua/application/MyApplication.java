@@ -40,6 +40,7 @@ MyApplication extends Application {
         JPushInterface.init(this);            // 初始化 JPush
         initOkHttp();
         Fresco.initialize(this);
+
         initIpPort();
 
     }
