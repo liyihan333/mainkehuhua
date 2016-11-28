@@ -12,7 +12,7 @@ import static com.kwsoft.kehuhua.config.Constant.topBarColor;
 
 public class CourseDetailActivity extends AppCompatActivity {
 
-    private TextView startTime,endTime,tvdetail;
+    private TextView startTime,endTime,tvdetail,zhangJieMingCheng,zhangJieRenWu,zhangJieMiaoShu;
     private CommonToolbar mToolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,8 +22,9 @@ public class CourseDetailActivity extends AppCompatActivity {
         startTime = (TextView) findViewById(R.id.start_time);
         endTime = (TextView) findViewById(R.id.end_time);
         tvdetail = (TextView) findViewById(R.id.course_content);
-
-
+        zhangJieMingCheng= (TextView) findViewById(R.id.CHAPTER_NAME);
+        zhangJieRenWu= (TextView) findViewById(R.id.CHAPTER_TASK);
+        zhangJieMiaoShu= (TextView) findViewById(R.id.CHAPTER_DESCRIBE);
         mToolbar = (CommonToolbar) findViewById(R.id.common_toolbar);
 
         mToolbar.setBackgroundColor(getResources().getColor(topBarColor));
@@ -43,9 +44,17 @@ public class CourseDetailActivity extends AppCompatActivity {
             String content1=content.replaceAll(",","\n");
             String content2=content1.replaceAll("_","：");
             String content3=content2.replaceAll(":","：");
+            String CHAPTER_DESCRIBE=intent.getStringExtra("CHAPTER_DESCRIBE");
+            String CHAPTER_NAME=intent.getStringExtra("CHAPTER_NAME");
+            String CHAPTER_TASK=intent.getStringExtra("CHAPTER_TASK");
+
+
             startTime.setText(sTimeStr);
             endTime.setText(eTimeStr);
             tvdetail.setText(content3);
+            zhangJieMingCheng.setText(CHAPTER_NAME);
+            zhangJieRenWu.setText(CHAPTER_TASK);
+            zhangJieMiaoShu.setText(CHAPTER_DESCRIBE);
         }
 
         mToolbar.setTitle("课程详情");
