@@ -1,5 +1,6 @@
 package com.kwsoft.version;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.kwsoft.kehuhua.adcustom.OperateDataActivity;
 import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.adcustom.base.BaseActivity;
 import com.kwsoft.kehuhua.config.Constant;
@@ -80,12 +82,21 @@ public class StuInfoActivity extends BaseActivity {
         CommonToolbar mToolbar = (CommonToolbar) findViewById(R.id.common_toolbar);
 
         mToolbar.setTitle("个人资料");
+//        mToolbar.showRightTextView();
+//        mToolbar.setRightTextView("修改");
         mToolbar.setLeftButtonOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
+//        mToolbar.setRightTextViewOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(StuInfoActivity.this, OperateDataActivity.class);
+//                startActivity(intent);
+//            }
+//        });
         //下拉刷新设置
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
@@ -135,6 +146,7 @@ public class StuInfoActivity extends BaseActivity {
             Map<String, String> paramsMap = new HashMap<>();
             paramsMap.put(tableId, Constant.stuPerTABLEID);
             paramsMap.put(Constant.pageId, Constant.stuPerPAGEID);
+
             //请求
             OkHttpUtils
                     .post()

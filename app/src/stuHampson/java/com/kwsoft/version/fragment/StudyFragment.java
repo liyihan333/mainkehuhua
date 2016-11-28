@@ -2,6 +2,10 @@ package com.kwsoft.version.fragment;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -37,6 +41,7 @@ import com.kwsoft.version.ResetPwdActivity;
 import com.kwsoft.version.StuInfoActivity;
 import com.kwsoft.version.StuLoginActivity;
 import com.kwsoft.version.StuMainActivity;
+import com.kwsoft.version.StuPra;
 import com.kwsoft.version.androidRomType.AndtoidRomUtil;
 import com.kwsoft.version.view.StudyGridView;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -73,6 +78,7 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
     private Boolean isLogin = false;
     public String arrStr, menuStr, stuUrl;
     public Bundle arrBundle;
+    private ImageView iv_head;
 
 
     @Nullable
@@ -87,6 +93,13 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
 
     public void initView(View view) {
         stuName = (TextView) view.findViewById(R.id.stu_name);
+        iv_head = (ImageView) view.findViewById(R.id.iv_head);
+        //设置首页头像
+       // Bitmap bitmap= BitmapFactory.decodeFile(StuPra.hpsStuHeadPath);
+//       Drawable drawable= getResources().getDrawable(R.mipmap.icon);
+//        BitmapDrawable bd = (BitmapDrawable) drawable;
+//        Bitmap bitmap = bd.getBitmap();
+//        iv_head.setImageBitmap(bitmap);
 
         try {
             String username = Constant.loginName;

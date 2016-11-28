@@ -36,11 +36,11 @@
             android:orientation="horizontal"
             android:paddingLeft="15dp">
 
-            <ImageView
+            <com.kwsoft.kehuhua.view.HeadPictureImageView
                 android:id="@+id/stu_head_image"
-                android:layout_width="84sp"
-                android:layout_height="84sp"
-                android:src="@drawable/stuhead" />
+                android:layout_width="84dp"
+                android:layout_height="84dp"
+                android:background="@drawable/ic_bg" />
 
             <RelativeLayout
                 android:layout_width="match_parent"

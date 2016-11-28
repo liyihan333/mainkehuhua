@@ -48,6 +48,8 @@ public class Constant {
     public final static String requestTreeDialog = "treeDialog_interfaceToList.do";
     public final static String requestMaxRule = "add_interfaceAjaxGetMaxRule.do";
 
+    public final static String teachHeadUpdate="update_updateInfo.do";
+
     public final static String requestMessage = "mongoModel_interfaceSysMessList.do";
 
     public static String tmpFieldId = "";
