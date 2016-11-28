@@ -219,7 +219,7 @@ public class StuProLoginActivity extends BaseActivity {
         String countStr = String.valueOf(menuMap.get("notMsgCount"));
         if (!TextUtils.isEmpty(countStr) && !countStr.equals("null")) {
             int count = Integer.parseInt(countStr);
-            getLoginUserSharedPre().edit().putInt("count", count).apply();
+            sPreferences.edit().putInt("count", count).apply();
             BadgeUtil.sendBadgeNumber(StuProLoginActivity.this, count);
         } else {
             BadgeUtil.sendBadgeNumber(StuProLoginActivity.this, 0);

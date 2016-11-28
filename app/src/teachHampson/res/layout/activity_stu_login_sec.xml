@@ -206,7 +206,7 @@
                 android:layout_alignParentEnd="true"
                 android:background="@android:color/transparent"
                 android:layout_alignParentBottom="true"
-                android:src="@drawable/ic_notifications_black_24dp"
+                android:src="@mipmap/set_ip_config"
                 android:onClick="toSetIpPortProject"/>
 
         </RelativeLayout>

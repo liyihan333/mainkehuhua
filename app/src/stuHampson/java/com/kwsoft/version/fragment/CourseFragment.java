@@ -356,7 +356,7 @@ public class CourseFragment extends Fragment implements OnDataListener, WeekDate
     //请求课程表数据
     private void requestCourseData(String volleyUrl) {
         //startAnim();
-        Log.e("TAG", "请求课表数据");
+        Log.e("TAG", "请求课表数据参数： "+paramsMap.toString());
 
         //请求
         OkHttpUtils
@@ -496,6 +496,12 @@ public class CourseFragment extends Fragment implements OnDataListener, WeekDate
                 courseInfoLayout.addView(courseView);
 
                 final String content = list.get(i).get("SHOW_CONTENT") + "";
+
+                final String CHAPTER_DESCRIBE = String.valueOf(list.get(i).get("CHAPTER_DESCRIBE"));
+                final String CHAPTER_NAME = String.valueOf(list.get(i).get("CHAPTER_NAME"));
+
+                final String CHAPTER_TASK = String.valueOf(list.get(i).get("CHAPTER_TASK"));
+
                 courseView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -505,6 +511,9 @@ public class CourseFragment extends Fragment implements OnDataListener, WeekDate
                             intent.putExtra("content", content);
                             intent.putExtra("sTimeStr", sTimeStr);
                             intent.putExtra("eTimeStr", eTimeStr);
+                            intent.putExtra("CHAPTER_DESCRIBE", CHAPTER_DESCRIBE);
+                            intent.putExtra("CHAPTER_NAME", CHAPTER_NAME);
+                            intent.putExtra("CHAPTER_TASK", CHAPTER_TASK);
                         }
                         getContext().startActivity(intent);
                     }

@@ -111,7 +111,7 @@ public class OperateDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     private static final String TAG = "OperateDataAdapter";
-
+    private int fieldRole;
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder thisHolder, final int position) {
         if (thisHolder instanceof OperateHolder) {
@@ -119,7 +119,7 @@ public class OperateDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             holder.setIsRecyclable(false);//禁止viewHolder复用
             Log.e(TAG, "position " + position + "  onBindViewHolder: mDatas.get(position)  " + mDatas.get(position));
             //item操作
-            final int fieldRole = Integer.valueOf(valueOf(mDatas.get(position).get("fieldRole")));
+            fieldRole = Integer.valueOf(valueOf(mDatas.get(position).get("fieldRole")));
 //初始化必填字段标志
             int ifMust = 0;
             if (mDatas.get(position).get("ifMust") != null) {

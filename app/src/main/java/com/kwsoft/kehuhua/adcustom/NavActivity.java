@@ -310,7 +310,7 @@ public class NavActivity extends BaseActivity
             //Toast.makeText(getActivity(), "定制开发模块", Toast.LENGTH_SHORT).show();
             String parentItemStr = JSON.toJSONString(parentItem);
             Intent intent = new Intent();
-            intent.setClass(this, ListActivity3.class);
+            intent.setClass(this, ListActivity4.class);
             intent.putExtra("itemData", parentItemStr);
             startActivity(intent);
         }

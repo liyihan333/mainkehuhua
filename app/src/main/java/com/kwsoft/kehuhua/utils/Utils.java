@@ -11,6 +11,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
 import android.view.View;
 
 import com.alibaba.fastjson.JSON;
@@ -20,9 +21,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
 
 public class Utils {
     public static int getAppVersion(Context context) {
@@ -208,6 +212,8 @@ public class Utils {
     }
 
     public static Map<String,Object> str2map(String jsonData){
+        Log.e(TAG, "str2map: 个人资料信息"+jsonData);
+        Map<String, Object> stuInfoMap=new HashMap<>();
 
         return JSON.parseObject(jsonData,
                     new TypeReference<Map<String, Object>>() {
@@ -249,5 +255,25 @@ public class Utils {
             return false;
         }
         return true;
+    }
+
+    // 使用Log来显示调试信息,因为log在实现上每个message有4k字符长度限制
+    // 所以这里使用自己分节的方式来输出足够长度的message
+    public static void printLog(String tags,String str) {
+        str = str.trim();
+        int index = 0;
+        int maxLength = 4000;
+        String sub;
+        while (index < str.length()) {
+            // java的字符不允许指定超过总的长度end
+            if (str.length() <= index + maxLength) {
+                sub = str.substring(index);
+            } else {
+                sub = str.substring(index, maxLength);
+            }
+            Log.e(TAG, "printLog: index "+index);
+            Log.e(tags, sub.trim());
+            index += maxLength;
+        }
     }
 }

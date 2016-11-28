@@ -1,6 +1,7 @@
 package com.kwsoft.kehuhua.hampson.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,8 @@ import com.kwsoft.kehuhua.adcustom.R;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
 
 /**
  * Created by Administrator on 2016/11/7 0007.
@@ -44,12 +47,12 @@ public class StageTestAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        ViewHolder holder = null;
+        ViewHolderStage holder = null;
         if (view == null) {
             //解析布局
             view = LayoutInflater.from(mContext).inflate(R.layout.activity_stage_test_list_item, null);
-            //创建ViewHolder持有类
-            holder = new ViewHolder();
+            //创建ViewHolderStage持有类
+            holder = new ViewHolderStage();
             //将每个控件的对象保存到持有类中
             holder.tv_year= (TextView) view.findViewById(R.id.tv_year);
             holder.tv_month = (TextView) view.findViewById(R.id.tv_month);
@@ -62,10 +65,10 @@ public class StageTestAdapter extends BaseAdapter {
             view.setTag(holder);
         }
         //每次需要使用的时候都会拿到这个持有类
-        holder = (ViewHolder) view.getTag();
+        holder = (ViewHolderStage) view.getTag();
         List<Map<String, String>> map = list.get(i);
         //然后可以直接使用这个类中的控件，对控件进行操作，而不用重复去findViewById了
-
+        Log.e(TAG, "getView: 成长轨迹单项map "+map.toString());
         //成绩标题
         holder.tv_title.setText(map.get(0).get("fieldCnName2"));
         //分数
@@ -78,6 +81,7 @@ public class StageTestAdapter extends BaseAdapter {
        //考试日期
 
         String date=map.get(3).get("fieldCnName2");
+        Log.e(TAG, "getView: date "+date);
 //分别获取年月日
         String cpYear=date.substring(0,4);
         String cpMonth=date.substring(5,7)+"月";
@@ -97,13 +101,13 @@ public class StageTestAdapter extends BaseAdapter {
         return view;
     }
 
-    class ViewHolder {
+   static class  ViewHolderStage {
         TextView tv_year,tv_month, tv_day, tv_title, tv_score, tv_content_title, tv_content;
     }
 
 
     public void clear(){
-        list.removeAll(list);
+        list.clear();
         notifyDataSetChanged();
     }
     public void addData(List<List<Map<String, String>>> addData){

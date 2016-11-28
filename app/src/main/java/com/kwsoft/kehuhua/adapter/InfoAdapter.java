@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -16,6 +17,8 @@ import com.kwsoft.kehuhua.hampson.activity.ReadFileActivity;
 
 import java.util.List;
 import java.util.Map;
+
+import static android.view.View.GONE;
 
 /**
  * Created by Administrator on 2016/11/14 0014.
@@ -56,13 +59,18 @@ public static  int is8=0;
         view = inflater.inflate(R.layout.activity_info_item, null);
         TextView tv_name = (TextView) view.findViewById(R.id.tv_name);
         TextView tv_entity_name = (TextView) view.findViewById(R.id.tv_entity_name);
-
+        RelativeLayout info_item_layout=(RelativeLayout) view.findViewById(R.id.info_item_layout);
         ImageView fileRight = (ImageView) view.findViewById(R.id.fileRight);
         View info_item_line =view.findViewById(R.id.info_item_line);
         Map<String, String> itemMap = fieldSet.get(i);
         Log.e(TAG, "getView: itemMap " + itemMap.toString());
         String name = itemMap.get("fieldCnName");
         String value = itemMap.get("fieldCnName2");
+
+        if (name.contains("mongo")) {
+            info_item_layout.setVisibility(GONE);
+            info_item_line.setVisibility(GONE);
+        }
         tv_name.setText(name);
         //如果名称中包含附件两个字并且不包含mongodbid，就讲附件查看text显示
         if (name.contains("附件")&&!name.contains("mongo")) {
