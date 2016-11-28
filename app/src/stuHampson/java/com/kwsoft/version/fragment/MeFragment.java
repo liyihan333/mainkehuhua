@@ -1,11 +1,17 @@
 package com.kwsoft.version.fragment;
 
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -13,6 +19,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,12 +39,16 @@ import com.kwsoft.version.FeedbackActivity;
 import com.kwsoft.version.ResetPwdActivity;
 import com.kwsoft.version.StuInfoActivity;
 import com.kwsoft.version.StuLoginActivity;
+import com.kwsoft.version.StuPra;
 import com.pgyersdk.update.PgyUpdateManager;
 import com.zhy.http.okhttp.OkHttpUtils;
 
 import org.kymjs.kjframe.Core;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -49,7 +60,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.Call;
 
+import static android.R.attr.path;
 import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
+import static com.kwsoft.kehuhua.adcustom.R.id.imageView;
 import static com.kwsoft.kehuhua.config.Constant.tableId;
 
 /**
@@ -66,6 +79,10 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     TextView stuSchoolArea;
     @Bind(R.id.stu_version)
     TextView stuVersion;
+    @Bind(R.id.stu_head_image)
+    ImageView stuHeadImage;
+    private static String fileName;//头像名称
+
 
     @Nullable
     @Override
@@ -73,6 +90,10 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_me, container, false);
         ButterKnife.bind(this, view);
         initData();
+
+        Bitmap image = ((BitmapDrawable)stuHeadImage.getDrawable()).getBitmap();
+        saveImageToGallery(getActivity(), image);
+
         return view;
     }
 
@@ -454,4 +475,45 @@ public class MeFragment extends Fragment implements View.OnClickListener {
             e.printStackTrace();
         }
     }
+
+    /**
+     * 保存的图片路径传入进去，最后通知图库更新。
+     * @param context
+     * @param bmp
+     */
+
+    public static void saveImageToGallery(Context context, Bitmap bmp) {
+        // 首先保存图片
+        File appDir = new File(Environment.getExternalStorageDirectory(), "Boohee");
+        if (!appDir.exists()) {
+            appDir.mkdir();
+        }
+       // String fileName = System.currentTimeMillis() + ".jpg";
+         fileName = "hpshead" + ".jpg";
+        File file = new File(appDir, fileName);
+        StuPra.hpsStuHeadPath = file.getPath();
+        Log.e("hpstushead", StuPra.hpsStuHeadPath);
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            bmp.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            fos.flush();
+            fos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // 其次把文件插入到系统图库
+        try {
+            MediaStore.Images.Media.insertImage(context.getContentResolver(),
+                    file.getAbsolutePath(), fileName, null);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        // 最后通知图库更新
+        context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + path)));
+    }
+
+
 }

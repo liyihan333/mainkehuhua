@@ -1,5 +1,6 @@
 package com.kwsoft.version;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.kwsoft.kehuhua.adcustom.OperateDataActivity;
 import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.config.Constant;
 import com.kwsoft.kehuhua.urlCnn.EdusStringCallback;
@@ -37,15 +39,17 @@ public class StuInfoActivity extends AppCompatActivity {
     private StuInfoAdapter adapter;
     private SwipeRefreshLayout swipeRefreshLayout;
     private List<Map<String, String>> stuInfo;
+    private Map<String, Object> operaButtonSet = new HashMap<>();//修改按钮
+
     //下拉刷新handler
-    private Handler handler = new Handler(){
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            switch (msg.what){
+            switch (msg.what) {
                 case 0x101:
                     Log.e("TAG", "学员端开始handler通知跳转后 ");
-                    if (swipeRefreshLayout.isRefreshing()){
+                    if (swipeRefreshLayout.isRefreshing()) {
                         adapter.notifyDataSetChanged();
                         swipeRefreshLayout.setRefreshing(false);//设置不刷新
                         Toast.makeText(getApplicationContext(), "数据已更新", Toast.LENGTH_SHORT).show();
@@ -70,14 +74,29 @@ public class StuInfoActivity extends AppCompatActivity {
 
         CommonToolbar mToolbar = (CommonToolbar) findViewById(R.id.common_toolbar);
         mToolbar.setTitle("个人资料");
+        mToolbar.showRightTextView();
+        mToolbar.setRightTextView("修改");
         mToolbar.setLeftButtonOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
+        mToolbar.setRightTextViewOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (operaButtonSet != null && operaButtonSet.size() > 0) {
+                    Intent intent = new Intent(StuInfoActivity.this, OperateDataActivity.class);
+                    intent.putExtra("itemSet", operaButtonSet.toString());
+                    Log.e(TAG, operaButtonSet.toString());
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(StuInfoActivity.this, "暂时不能修改！", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
         //下拉刷新设置
-        swipeRefreshLayout=(SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light, android.R.color.holo_orange_light, android.R.color.holo_red_light);
         //设置下拉刷新监听
@@ -90,10 +109,11 @@ public class StuInfoActivity extends AppCompatActivity {
         });
 
     }
+
     /**
      * 加载菜单数据的线程
      */
-    class LoadDataThread extends  Thread{
+    class LoadDataThread extends Thread {
         @Override
         public void run() {
             //下载数据，重新设定dataList
@@ -108,10 +128,12 @@ public class StuInfoActivity extends AppCompatActivity {
             handler.sendEmptyMessage(0x101);//通过handler发送一个更新数据的标记，适配器进行dataSetChange，然后停止刷新动画
         }
     }
+
     /**
      * 3、获取字段接口数据,如果没有网络或者其他情况则读取本地
      */
     private static final String TAG = "StuInfoActivity";
+
     @SuppressWarnings("unchecked")
     public void requestSet() {
 
@@ -131,23 +153,27 @@ public class StuInfoActivity extends AppCompatActivity {
                 .execute(new EdusStringCallback(StuInfoActivity.this) {
                     @Override
                     public void onError(Call call, Exception e, int id) {
-                        ErrorToast.errorToast(mContext,e);
-                        Log.e(TAG, "onError: Call  "+call+"  id  "+id);
+                        ErrorToast.errorToast(mContext, e);
+                        Log.e(TAG, "onError: Call  " + call + "  id  " + id);
                     }
 
                     @Override
                     public void onResponse(String response, int id) {
-                        Log.e(TAG, "onResponse: "+"  id  "+id);
-                        setStore(response);
+                        Log.e(TAG, "onResponse: " + "  id  " + id);
+                        if (response != null && response.length() > 0) {
+                            setStore(response);
+                        } else {
+                            Toast.makeText(StuInfoActivity.this, "暂时没有个人信息", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
     }
 
-    List<Map<String, Object>> fieldSet=new ArrayList<>();
+    List<Map<String, Object>> fieldSet = new ArrayList<>();
 
     @SuppressWarnings("unchecked")
     private void setStore(String jsonData) {
-        String jsonData1=jsonData.replaceAll("00:00:00","");
+        String jsonData1 = jsonData.replaceAll("00:00:00", "");
         Map<String, Object> stuInfoMap = null;
         try {
             stuInfoMap = Utils.str2map(jsonData1);
@@ -157,10 +183,23 @@ public class StuInfoActivity extends AppCompatActivity {
         List<Map<String, Object>> dataList = new ArrayList<>();
         Map<String, Object> pageSet;
         try {
-           dataList = (List<Map<String, Object>>) stuInfoMap.get("dataList");
-            pageSet= (Map<String, Object>) stuInfoMap.get("pageSet");
-            fieldSet = (List<Map<String, Object>>) pageSet.get("fieldSet");
-            Log.e("fieldSet",fieldSet.toString());
+            if (stuInfoMap != null && stuInfoMap.size() > 0) {
+                dataList = (List<Map<String, Object>>) stuInfoMap.get("dataList");
+                pageSet = (Map<String, Object>) stuInfoMap.get("pageSet");
+                fieldSet = (List<Map<String, Object>>) pageSet.get("fieldSet");
+                if (pageSet.containsKey("operaButtonSet")) {
+                    List<Map<String, Object>> operaButtonSetList = (List<Map<String, Object>>) pageSet.get("operaButtonSet");
+                    if (operaButtonSetList != null && operaButtonSetList.size() > 0) {
+                        operaButtonSet.clear();
+                        operaButtonSet = operaButtonSetList.get(0);
+                        operaButtonSet.put("tableIdList", Constant.teachPerTABLEID);
+                        operaButtonSet.put("pageIdList", Constant.teachPerPAGEID);
+                    }
+                }
+                Log.e("fieldSet", fieldSet.toString());
+            }else {
+                Toast.makeText(StuInfoActivity.this, "暂时没有个人信息", Toast.LENGTH_SHORT).show();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -168,15 +207,15 @@ public class StuInfoActivity extends AppCompatActivity {
         if (dataList.size() > 0) {
 //            dataList.remove(dataList.size()-1);
 //            dataList.remove(dataList.size()-1);
-            if (stuInfo==null) {
+            if (stuInfo == null) {
                 stuInfo = unionAnalysis(dataList);
 //                stuInfo.remove(stuInfo.size()-1);
 //                stuInfo.remove(stuInfo.size()-1);
                 Log.e("TAG", "=================" + stuInfo.toString());
                 //设置适配器
-                adapter = new StuInfoAdapter(stuInfo,StuInfoActivity.this);
+                adapter = new StuInfoAdapter(stuInfo, StuInfoActivity.this);
                 stuInfoLv.setAdapter(adapter);
-            }else{
+            } else {
                 stuInfo.removeAll(stuInfo);
                 stuInfo.addAll(unionAnalysis(dataList));
 //                stuInfo.remove(stuInfo.size()-1);

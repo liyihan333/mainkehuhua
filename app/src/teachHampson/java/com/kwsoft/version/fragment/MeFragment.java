@@ -1,11 +1,17 @@
 package com.kwsoft.version.fragment;
 
 
+import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,6 +21,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,10 +29,12 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.adcustom.base.BaseActivity;
+import com.kwsoft.kehuhua.bean.LoginError;
 import com.kwsoft.kehuhua.config.Constant;
 import com.kwsoft.kehuhua.urlCnn.EdusStringCallback;
 import com.kwsoft.kehuhua.urlCnn.ErrorToast;
 import com.kwsoft.kehuhua.utils.Utils;
+import com.kwsoft.kehuhua.wechatPicture.SelectPictureActivity;
 import com.kwsoft.version.Common.AppConfig;
 import com.kwsoft.version.Common.CacheCommon;
 import com.kwsoft.version.Common.DataCleanManager;
@@ -50,8 +59,18 @@ import java.util.Properties;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import kr.co.namee.permissiongen.PermissionFail;
+import kr.co.namee.permissiongen.PermissionGen;
+import kr.co.namee.permissiongen.PermissionSuccess;
+import me.iwf.photopicker.PhotoPicker;
 import okhttp3.Call;
 
+import static android.app.Activity.RESULT_OK;
+import static com.kwsoft.kehuhua.config.Constant.LOGIN_URL;
+import static com.kwsoft.kehuhua.config.Constant.img_Paths;
+import static com.kwsoft.kehuhua.config.Constant.itemValue;
+import static com.kwsoft.kehuhua.config.Constant.pictureUrl;
+import static com.kwsoft.kehuhua.config.Constant.sysUrl;
 import static com.kwsoft.kehuhua.config.Constant.tableId;
 
 /**
@@ -68,13 +87,18 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     TextView stuSchoolArea;
     @Bind(R.id.stu_version)
     TextView stuVersion;
+    @Bind(R.id.stu_head_image)
+    ImageView stuHeadImage;
 
+    private ArrayList<String> imgPaths = new ArrayList<>();
+    public  String valueCode;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_me, container, false);
         ButterKnife.bind(this, view);
+        stuHeadImage.setOnClickListener(this);
         initData();
         return view;
     }
@@ -89,7 +113,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
     public void initData() {
 
-    //    tvCleanCache.setText(getCache());
+        //    tvCleanCache.setText(getCache());
 
         stuName.setText(Constant.loginName);
         stuPhone.setText(Constant.USERNAME_ALL);
@@ -260,6 +284,12 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.stu_head_image:
+                PermissionGen.needPermission(MeFragment.this, 105,
+                        new String[]{
+                                Manifest.permission.CAMERA,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        }
+                );
                 break;
             case R.id.stu_log_out:
                 Intent intentLogout = new Intent(getActivity(), StuLoginActivity.class);
@@ -306,9 +336,135 @@ public class MeFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 clearAppCache();
-              //  tvCleanCache.setText("0KB");
+                //  tvCleanCache.setText("0KB");
             }
         }).show();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                           int[] grantResults) {
+        PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
+    }
+
+    @PermissionSuccess(requestCode = 105)
+    public void doSomething() {
+     /*打开权限成功时执行的功能  */
+        PhotoPicker.builder()
+                .setPhotoCount(1)
+                .setShowCamera(true)
+                .setSelected(imgPaths)
+                .setShowGif(true)
+                .setPreviewEnabled(true)
+                .start(getActivity(), MeFragment.this, PhotoPicker.REQUEST_CODE);
+    }
+
+    @PermissionFail(requestCode = 105)
+    public void doFailSomething() {
+        /*打开权限失败后，给出的提示*/
+        Toast.makeText(getActivity(), "相机权限打开失败！", Toast.LENGTH_SHORT).show();
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == PhotoPicker.REQUEST_CODE) {
+            if (data != null) {
+                imgPaths.clear();
+                ((BaseActivity)getActivity()).dialog.show();
+                ArrayList<String> photos = data.getStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS);
+                imgPaths.addAll(photos);
+                Log.e(TAG, "onActivityResult: " + imgPaths.get(0));
+                uploadMethod(imgPaths.get(0));
+            }
+        }
+    }
+
+    public void uploadMethod(String path) {
+
+        String url = sysUrl + pictureUrl;
+        File file = new File(path);
+//        if (files.size() > 0) {
+        OkHttpUtils.post()//
+                .addFile("myFile", file.getName(), file)
+                .url(url)
+                .build()
+                .execute(new EdusStringCallback(getActivity()) {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        ErrorToast.errorToast(mContext, e);
+//                        waveProgress.setVisibility(View.GONE);
+                        ((BaseActivity)getActivity()).dialog.dismiss();
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        try {
+                            String[] valueTemp1 = response.split(":");
+                             valueCode = valueTemp1[1];
+                            Log.e("MyfrgupLoad",response);
+
+                            String url = Constant.sysUrl + Constant.teachHeadUpdate;
+                            Map<String, String> paramsMap = new HashMap<>();
+                            paramsMap.put("t0_au_2_4171",valueCode);
+                            paramsMap.put("t0_au_2_4171_3569",Constant.USERID);
+                            paramsMap.put("ifCleanInnerData","undefined");
+                            paramsMap.put("ifRecordingLog","0");
+                            paramsMap.put(tableId, Constant.teachPerTABLEID);
+                            paramsMap.put(Constant.pageId, Constant.teachPerPAGEID);
+                            Log.e("up2",paramsMap.toString());
+
+                            OkHttpUtils
+                                    .post()
+                                    .params(paramsMap)
+                                    .url(url)
+                                    .build()
+                                    .execute(new EdusStringCallback(getActivity()) {
+                                        @Override
+                                        public void onError(Call call, Exception e, int id) {
+                                            ErrorToast.errorToast(mContext, e);
+                                            Log.e(TAG, "onError: Call  " + call + "  id  " + id);
+                                            ((BaseActivity)getActivity()).dialog.dismiss();
+                                        }
+
+                                        @Override
+                                        public void onResponse(String response, int id) {
+                                            Log.e(TAG, "onResponse: "+ response);
+                                            if ("1".equals(response.trim())){
+                                                Log.e(TAG, "onResponse: "+"sccg");  //  setStore(response);
+                                                ((BaseActivity)getActivity()).dialog.dismiss();
+                                                Toast.makeText(getActivity(), "上传成功", Toast.LENGTH_SHORT).show();
+
+                                                getActivity().runOnUiThread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        File file = new File(imgPaths.get(0));
+                                                        Bitmap bitmap= BitmapFactory.decodeFile(file.getPath());
+                                                        Drawable drawable =new BitmapDrawable(bitmap);
+                                                       // stuHeadImage.setImageBitmap(bitmap);
+                                                        stuHeadImage.setBackground(drawable);
+                                                    }
+                                                });
+
+                                            } else {
+                                                Toast.makeText(getActivity(), "暂时没有个人信息", Toast.LENGTH_SHORT).show();
+                                                ((BaseActivity)getActivity()).dialog.dismiss();
+                                            }
+                                        }
+                                    });
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            ((BaseActivity)getActivity()).dialog.dismiss();
+                        }
+                    }
+
+                    @Override
+                    public void inProgress(float progress, long total, int id) {
+
+                    }
+                });
     }
 
     /**
@@ -333,7 +489,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         }
         if (fileSize > 0)
             cacheSize = FileUtil.formatFileSize(fileSize);
-        Log.e("cachesize=",cacheSize);
+        Log.e("cachesize=", cacheSize);
         tvCleanCache.setText(cacheSize);
     }
 
