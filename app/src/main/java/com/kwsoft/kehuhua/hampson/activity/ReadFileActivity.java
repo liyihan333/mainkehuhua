@@ -123,16 +123,18 @@ public class ReadFileActivity extends BaseActivity {
             for (int k=0;k<fileNames.size();k++) {
                 String url= Constant.sysUrl+Constant.downLoadFileStr+mongoIds.get(k);
                 String filename=fileNames.get(k);
-//                if (!filename.endsWith(".MP3")&&!filename.endsWith(".mp3")) {
+                Log.e(TAG, "showImage: url "+url);
+                Log.e(TAG, "showImage: filename "+filename);
+                if (!filename.endsWith(".MP3")&&!filename.endsWith(".mp3")) {
                     imageDatas.add(url);
                     ImageFileNames.add(filename);
-//
-//                }else{
-//                    Log.e(TAG, "showImage: mp3   "+filename);
-//                    musicDatas.add(url);
-//                    musicFileNames.add(filename);
-//
-//                }
+
+                }else{
+                    Log.e(TAG, "showImage: mp3   "+filename);
+                    musicDatas.add(url);
+                    musicFileNames.add(filename);
+
+                }
             }
 
 
@@ -144,7 +146,7 @@ public class ReadFileActivity extends BaseActivity {
 
             if (musicDatas.size()>0) {
                 Log.e(TAG, "showImage: 开始下载mp3");
-                downLoadMp3();
+//                downLoadMp3();
             }
 
 

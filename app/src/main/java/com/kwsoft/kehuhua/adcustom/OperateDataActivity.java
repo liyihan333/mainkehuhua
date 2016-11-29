@@ -245,6 +245,7 @@ public class OperateDataActivity extends BaseActivity {
                             public void onResponse(String response, int id) {
                                 Log.e(TAG, "onResponse: " + response);
                                 if (response != null && !response.equals("0")) {
+                                    Toast.makeText(OperateDataActivity.this, "操作成功", Toast.LENGTH_SHORT).show();
                                     backToInfo();
                                 } else {
                                     Toast.makeText(OperateDataActivity.this, "操作失败", Toast.LENGTH_SHORT).show();
@@ -389,8 +390,15 @@ public class OperateDataActivity extends BaseActivity {
         builder.create().show();
     }
 
+
+    public static final String action = "com.kwsoft.kehuhua.fragments.ListFragment.REFRESH_LIST";
     public void backToInfo() {
         Toast.makeText(OperateDataActivity.this, "操作成功", Toast.LENGTH_SHORT).show();
+        //发送广播给listFragment
+        Intent intent=new Intent(action);
+        sendBroadcast(intent);
+
+        //关闭dialog动画
         dialog.dismiss();
         this.finish();
     }
