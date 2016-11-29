@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="165dp"
+    android:layout_height="wrap_content"
     android:background="@color/no_edit_tv"
-    android:orientation="vertical">
+    android:orientation="horizontal">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,7 +13,6 @@
         <LinearLayout
             android:layout_width="54dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-2dp"
             android:gravity="right"
             android:orientation="vertical"
             android:paddingRight="2dp">
@@ -21,7 +20,7 @@
                 android:id="@+id/tv_year"
                 android:layout_marginLeft="5dp"
                 android:layout_width="49dp"
-                android:layout_marginTop="18dp"
+                android:layout_marginTop="16dp"
                 android:gravity="center"
                 android:layout_height="wrap_content"
                 android:background="@color/title_bg"
@@ -50,10 +49,15 @@
 
         <LinearLayout
             android:layout_width="8dp"
-            android:layout_height="165dp"
+            android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="vertical">
+            <View
+                android:layout_width="2dp"
+                android:layout_height="20dp"
+                android:background="@color/title_bg">
 
+            </View>
             <View
                 android:layout_width="8dp"
                 android:layout_height="8dp"
@@ -71,10 +75,12 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="122.5dp"
+            android:layout_height="match_parent"
             android:layout_marginLeft="12dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="12dp"
+            android:paddingBottom="12dp"
+            android:layout_marginBottom="5dp"
             android:background="@drawable/bg_stage_text_item"
             android:orientation="vertical">
 
@@ -148,7 +154,9 @@
                 android:layout_marginTop="12dp"
                 android:ellipsize="end"
                 android:textColor="@color/list_item_left"
-                android:text="第一阶段第一阶段第一阶段第一阶段第一阶段第一阶段第一阶段第一阶段第一阶段第一阶段第一阶段第一阶段"/>
+                android:text="第一阶段第一阶段第一阶段第一阶段第一阶段第一阶段第一阶段第
+一阶段第一阶段第一阶段第一阶段第一阶段"/>
         </LinearLayout>
+
     </LinearLayout>
 </LinearLayout>

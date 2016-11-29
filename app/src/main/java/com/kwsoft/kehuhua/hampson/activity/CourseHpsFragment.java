@@ -73,7 +73,7 @@ public class CourseHpsFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         ((BaseActivity) getActivity()).dialog.show();
-       empty_text= (TextView) view.findViewById(R.id.empty_text);
+        empty_text= (TextView) view.findViewById(R.id.empty_text);
         getDataIntent();//获取初始化数据
         initRefreshLayout();
         getData();
