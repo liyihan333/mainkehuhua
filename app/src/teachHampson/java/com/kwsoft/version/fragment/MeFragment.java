@@ -165,6 +165,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void getMeTableId(String meStr, List<Map<String, Object>> meListMap) {
+        Log.e(TAG, "getMeTableId: meListMap "+meListMap.toString());
         if (meStr != null) {
             try {
                 meListMap = JSON.parseObject(meStr,
@@ -188,14 +189,73 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 //                        Constant.teachBackTABLEID = map.get("tableId").toString();
 //                    }
                 }
-                // requestSet();
+
+
             } else {
                 Toast.makeText(getActivity(), "无菜单数据", Toast.LENGTH_SHORT).show();
             }
             Log.e("TAG", "获得学员端菜单数据：" + meStr);
 
         }
+//        if (!Constant.teachPerTABLEID.equals("")&&!Constant.teachPerPAGEID.equals("")) {
+            getData();
+//        }else{
+//            Toast.makeText(getActivity(), "缺少参数", Toast.LENGTH_SHORT).show();
+//        }
     }
+
+//    private Map<String, String> paramsMap=;
+    @SuppressWarnings("unchecked")
+    public void getData() {
+        if (((BaseActivity)getActivity()).hasInternetConnected()) {
+            //地址
+            String volleyUrl = Constant.sysUrl + Constant.requestListSet;
+            Log.e("TAG", "列表请求地址：" + volleyUrl);
+            //参数
+            Map<String, String> paramsMap=new HashMap<>();
+            paramsMap.put(Constant.tableId, "2");
+            paramsMap.put(Constant.pageId, "3573");
+            //请求
+            OkHttpUtils
+                    .post()
+                    .params(paramsMap)
+                    .url(volleyUrl)
+                    .build()
+                    .execute(new EdusStringCallback(getActivity()) {
+                        @Override
+                        public void onError(Call call, Exception e, int id) {
+
+                            Log.e(TAG, "onError: Call  "+call+"  id  "+id);
+                        }
+
+                        @Override
+                        public void onResponse(String response, int id) {
+                            Log.e(TAG, "onResponse: response "+response);
+                            getDataId(response);
+                        }
+                    });
+        }else{
+            ((BaseActivity)getActivity()).dialog.dismiss();
+            Toast.makeText(getActivity(), "请连接网络", Toast.LENGTH_SHORT).show();
+
+        }
+    }
+    String dataId;
+    private void getDataId(String response) {
+        Log.e(TAG, "getDataId: response"+response);
+        try {
+            Map<String, Object> setMap = JSON.parseObject(response,
+                    new TypeReference<Map<String, Object>>() {
+                    });
+            List<Map<String, Object>>  mapList= (List<Map<String, Object>>) setMap.get("dataList");
+           dataId=String.valueOf( mapList.get(0).get("T_"+"2"+"_0"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
 
     /**
      * 获取个人信息、主要校区
@@ -404,15 +464,15 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                             String[] valueTemp1 = response.split(":");
                              valueCode = valueTemp1[1];
                             Log.e("MyfrgupLoad",response);
-
+                            Toast.makeText(getActivity(), "上传成功", Toast.LENGTH_SHORT).show();
                             String url = Constant.sysUrl + Constant.teachHeadUpdate;
                             Map<String, String> paramsMap = new HashMap<>();
-                            paramsMap.put("t0_au_2_4171",valueCode);
-                            paramsMap.put("t0_au_2_4171_3569",Constant.USERID);
+                            paramsMap.put("t0_au_2_4171",dataId);
+                            paramsMap.put("t0_au_2_4171_3569",valueCode);
                             paramsMap.put("ifCleanInnerData","undefined");
                             paramsMap.put("ifRecordingLog","0");
-                            paramsMap.put(tableId, Constant.teachPerTABLEID);
-                            paramsMap.put(Constant.pageId, Constant.teachPerPAGEID);
+                            paramsMap.put(Constant.tableId, "2");
+                            paramsMap.put(Constant.pageId, "4171");
                             Log.e("up2",paramsMap.toString());
 
                             OkHttpUtils
@@ -434,7 +494,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                                             if ("1".equals(response.trim())){
                                                 Log.e(TAG, "onResponse: "+"sccg");  //  setStore(response);
                                                 ((BaseActivity)getActivity()).dialog.dismiss();
-                                                Toast.makeText(getActivity(), "上传成功", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(getActivity(), "提交成功", Toast.LENGTH_SHORT).show();
 
                                                 getActivity().runOnUiThread(new Runnable() {
                                                     @Override
