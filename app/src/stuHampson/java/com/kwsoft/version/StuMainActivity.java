@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.text.Html;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -16,15 +15,15 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.TypeReference;
-import com.kwsoft.kehuhua.adcustom.MainActivity;
 import com.kwsoft.kehuhua.adcustom.MessagAlertActivity;
 import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.adcustom.base.BaseActivity;
 import com.kwsoft.kehuhua.config.Constant;
+import com.kwsoft.kehuhua.sessionService.SessionService;
 import com.kwsoft.kehuhua.urlCnn.EdusStringCallback;
 import com.kwsoft.kehuhua.urlCnn.ErrorToast;
 import com.kwsoft.kehuhua.utils.CloseActivityClass;
+import com.kwsoft.kehuhua.utils.Utils;
 import com.kwsoft.kehuhua.widget.CnToolbar;
 import com.kwsoft.kehuhua.zxing.CaptureActivity;
 import com.kwsoft.version.fragment.AssortFragment;
@@ -45,8 +44,6 @@ import kr.co.namee.permissiongen.PermissionFail;
 import kr.co.namee.permissiongen.PermissionGen;
 import kr.co.namee.permissiongen.PermissionSuccess;
 import okhttp3.Call;
-
-import static com.kwsoft.kehuhua.config.Constant.tableId;
 
 /**
  * 学员端看板界面
@@ -82,6 +79,7 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
 //           sPreferences.edit().putString("useridOld", Constant.USERID).apply();
 //        }
         PgyUpdateManager.register(this);
+        Utils.startPollingService(mContext,17*60,SessionService.class, SessionService.ACTION);//启动20分钟一次的轮询获取session服务
     }
 
     public void initDialog() {
@@ -350,7 +348,7 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
                 exitTime = System.currentTimeMillis();
             } else {
                 Toast.makeText(this, "直接退出", Toast.LENGTH_SHORT).show();
-                CloseActivityClass.exitClient(this);
+//                CloseActivityClass.exitClient(this);
                 finish();
             }
             return true;
@@ -375,4 +373,11 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
     public void onClick(View view) {
 
     }
-}
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Utils.stopPollingService(this, SessionService.class, SessionService.ACTION);
+    }
+    }
+

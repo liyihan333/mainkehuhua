@@ -15,7 +15,9 @@ import android.widget.Toast;
 import com.kwsoft.kehuhua.adcustom.MessagAlertActivity;
 import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.adcustom.base.BaseActivity;
+import com.kwsoft.kehuhua.sessionService.SessionService;
 import com.kwsoft.kehuhua.utils.CloseActivityClass;
+import com.kwsoft.kehuhua.utils.Utils;
 import com.kwsoft.kehuhua.widget.CommonToolbar;
 import com.kwsoft.kehuhua.zxing.CaptureActivity;
 import com.kwsoft.version.androidRomType.AndtoidRomUtil;
@@ -55,6 +57,8 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
         initFragment();
         // initDialog();
         PgyUpdateManager.register(this);
+        Utils.startPollingService(mContext,17*60,SessionService.class, SessionService.ACTION);//启动20分钟一次的轮询获取session服务
+
     }
 
     public void initDialog() {
@@ -253,6 +257,13 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void onClick(View view) {
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Utils.stopPollingService(this, SessionService.class, SessionService.ACTION);
 
     }
 }
