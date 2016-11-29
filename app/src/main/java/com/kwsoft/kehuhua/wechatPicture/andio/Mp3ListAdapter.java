@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -72,7 +73,7 @@ public class Mp3ListAdapter extends BaseAdapter {
 
 
         TextView  seconds = (TextView) convertView.findViewById(R.id.recorder_time);
-            final View length = convertView.findViewById(R.id.recorder_length);
+            final FrameLayout length = (FrameLayout)convertView.findViewById(R.id.recorder_length);
         ImageView item_icon_right = (ImageView) convertView.findViewById(R.id.item_icon_right);
 
 
