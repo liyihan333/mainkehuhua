@@ -34,10 +34,10 @@
                 <ListView
                     android:id="@+id/listView"
                     android:layout_width="match_parent"
-                    android:layout_marginTop="0.5dp"
-                    android:layout_marginEnd="0.5dp"
-                    android:background="@color/white"
                     android:layout_height="match_parent"
+                    android:layout_marginEnd="0.5dp"
+                    android:layout_marginTop="0.5dp"
+                    android:background="@color/white"
                     android:cacheColorHint="@color/no_color"
                     android:divider="@color/text_e6e6e6"
                     android:dividerHeight="0.5dp"
@@ -55,25 +55,26 @@
         <!--android:layout_height="wrap_content"-->
 
         <!--android:layout_marginTop="@+id/"/>-->
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginTop="12dp"
-    android:layout_marginLeft="9dp"
-    android:layout_marginRight="9dp"
-    android:orientation="vertical">
-        <GridView
-            android:id="@+id/next_menu"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:numColumns="2"
-            android:verticalSpacing="9dp"
-            android:horizontalSpacing="9dp"
-            tools:listitem="@layout/stu_next_menu_item">
+            android:layout_marginLeft="9dp"
+            android:layout_marginRight="9dp"
+            android:layout_marginTop="12dp"
+            android:orientation="vertical">
+
+            <GridView
+                android:id="@+id/next_menu"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:horizontalSpacing="9dp"
+                android:numColumns="2"
+                android:verticalSpacing="9dp"
+                tools:listitem="@layout/stu_next_menu_item">
 
 
-        </GridView>
-</LinearLayout>
+            </GridView>
+        </LinearLayout>
 
     </LinearLayout>
 

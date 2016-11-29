@@ -73,11 +73,8 @@ public class StageTestFragment extends Fragment {
 
         ((BaseActivity) getActivity()).dialog.show();
         empty_text = (TextView) view.findViewById(R.id.empty_text);
-        Log.e("oncreate", "oncreat1");
         getDataIntent();//获取初始化数据
-        Log.e("oncreate", "oncreat2");
         initRefreshLayout();
-        Log.e("oncreate", "oncreat3");
         return view;
     }
 

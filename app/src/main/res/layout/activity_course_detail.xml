@@ -83,6 +83,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_CHAPTER_NAME"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -105,6 +106,7 @@
             android:textColor="@color/list_item_right" />
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/ll_CHAPTER_TASK"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -127,6 +129,7 @@
             android:textColor="@color/list_item_right" />
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/ll_CHAPTER_DESCRIBE"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

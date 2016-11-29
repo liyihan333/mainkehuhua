@@ -68,8 +68,13 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
     private List<Map<String, Object>> parentList = new ArrayList<>();
     private SimpleAdapter simpleAdapter = null;
 
-    private int[] imgs2 = {R.drawable.stu_see_record_task, R.drawable.stu_see_record_curriculum,
-            R.drawable.stu_see_record_leave, R.drawable.stu_see_record_curriculumb};
+    private int[] imgs2 = {R.mipmap.k1, R.mipmap.k2,
+            R.mipmap.k3, R.mipmap.k4, R.mipmap.k5,
+            R.mipmap.k6, R.mipmap.k7, R.mipmap.k8,
+            R.mipmap.k9, R.mipmap.k10, R.mipmap.k11,
+            R.mipmap.k12, R.mipmap.k13, R.mipmap.k14,
+            R.mipmap.k15, R.mipmap.k16, R.mipmap.k17,
+            R.mipmap.k18, R.mipmap.k19, R.mipmap.k20};
     private GridView gridView;
     private List<Map<String, Object>> menuListAll = new ArrayList<>();
     private List<Map<String, Object>> menuListMap = new ArrayList<>();
@@ -271,8 +276,8 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
                     cnName = String.valueOf(listMap.get(i).get("cnName"));
                     map.put("ctType", "3");
                     map.put("cnName", cnName);
-                    int j = i % 4;
-                    map.put("image", imgs2[j]);
+                   // int j = i % 4;
+                    map.put("image", imgs2[i]);
                     map.put("SourceDataId", listMap.get(i).get("homeSetId") + "_" + listMap.get(i).get("index"));
                     map.put("penetratePageId", listMap.get(i).get("phonePageId"));
                     map.put("tableId", listMap.get(i).get("tableId"));

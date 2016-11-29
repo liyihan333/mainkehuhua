@@ -43,6 +43,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import noman.weekcalendar.WeekCalendar;
+import noman.weekcalendar.WeekCalendarTeach;
 import noman.weekcalendar.WeekDateChaListener;
 import noman.weekcalendar.listener.OnDateClickListener;
 import okhttp3.Call;
@@ -55,7 +56,7 @@ import static android.content.ContentValues.TAG;
 public class CourseFragment extends Fragment implements OnDataListener, WeekDateChaListener {
     private TextView tvTitle;
 
-    private WeekCalendar weekCalendar;
+    private WeekCalendarTeach weekCalendar;
     private List<Map<String, Object>> list = new ArrayList<>();
     private List<Map<String, Object>> listQingjia;
     //    private CourseGridView courseGridView;
@@ -201,7 +202,7 @@ public class CourseFragment extends Fragment implements OnDataListener, WeekDate
                 datePickerDialog.show(getFragmentManager(), "datepicker");
             }
         });
-        weekCalendar = (WeekCalendar) view.findViewById(R.id.weekCalendar);
+        weekCalendar = (WeekCalendarTeach) view.findViewById(R.id.weekCalendar);
         weekCalendar.setOnDateClickListener(new OnDateClickListener() {
             @Override
             public void onDateClick(DateTime dateTime) {
@@ -501,7 +502,8 @@ public class CourseFragment extends Fragment implements OnDataListener, WeekDate
                     public void onClick(View v) {
 
                         Intent intent = new Intent(getActivity(), CourseDetailActivity.class);
-                        if (!content.equals("null")) {
+                        if (!content.equals("null") && content.length() > 0) {
+                            Log.e("courseFrag","contnent"+content);
                             intent.putExtra("content", content);
                             intent.putExtra("sTimeStr", sTimeStr);
                             intent.putExtra("eTimeStr", eTimeStr);

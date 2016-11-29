@@ -30,12 +30,11 @@ import java.util.Map;
 
 /**
  * Created by Administrator on 2016/9/10 0010.
- *
  */
 public class MenuFragment extends Fragment {
     private ListView regionListView;
     private GridView nextMenu;
-//    private TextView rightView;
+    //    private TextView rightView;
 //    private ArrayList<String> groups = new ArrayList<String>();
     private TextAdapter earaListViewAdapter;
     private List<Map<String, Object>> parentList;
@@ -55,11 +54,11 @@ public class MenuFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 earaListViewAdapter.setSelectPos(position);
                 earaListViewAdapter.notifyDataSetChanged();
-               int childNum= getChildMap(position);
-                if (childNum==0) {
+                int childNum = getChildMap(position);
+                if (childNum == 0) {
                     toItem(parentList.get(position));
                 }
-                    nextAdapter.notifyDataSetChanged();
+                nextAdapter.notifyDataSetChanged();
 
             }
         });
@@ -103,8 +102,6 @@ public class MenuFragment extends Fragment {
 //        }
 
 
-
-
         earaListViewAdapter = new TextAdapter(getActivity(), parentList);
         regionListView.setAdapter(earaListViewAdapter);
 
@@ -113,8 +110,8 @@ public class MenuFragment extends Fragment {
 
         Log.e("TAG", "教师端菜单childList：" + childList.toString());
         nextAdapter = new SimpleAdapter(getActivity(), childList,
-                R.layout.stu_next_menu_item, new String[]{"images","menuName"},
-                new int[]{R.id.next_menu_image,R.id.next_menu_name});
+                R.layout.stu_next_menu_item, new String[]{"images", "menuName"},
+                new int[]{R.id.next_menu_image, R.id.next_menu_name});
         nextMenu.setAdapter(nextAdapter);
 //        rightView.setText(groups.get(0));
     }
@@ -122,12 +119,20 @@ public class MenuFragment extends Fragment {
 
     public int getChildMap(int position) {
         childList.clear();
-        if (parentList.get(position).get("meunColl")!=null) {
-            childList.addAll((List<Map<String, Object>>)parentList.get(position).get("meunColl"));
-            for (int i = 0; i < childList.size(); i++) {
-                String newMenuName = String.valueOf(childList.get(i).get("menuName"));
-                childList.get(i).put("menuName", newMenuName.replace("手机端", ""));
-                childList.get(i).put("images", StuPra.images[i]);
+        if (parentList.get(position).get("meunColl") != null) {
+            childList.addAll((List<Map<String, Object>>) parentList.get(position).get("meunColl"));
+            if (position == 0) {
+                for (int i = 0; i < childList.size(); i++) {
+                    String newMenuName = String.valueOf(childList.get(i).get("menuName"));
+                    childList.get(i).put("menuName", newMenuName.replace("手机端", ""));
+                    childList.get(i).put("images", StuPra.images[i]);
+                }
+            } else {
+                for (int i = 0; i < childList.size(); i++) {
+                    String newMenuName = String.valueOf(childList.get(i).get("menuName"));
+                    childList.get(i).put("menuName", newMenuName.replace("手机端", ""));
+                    childList.get(i).put("images", StuPra.images[i+4]);
+                }
             }
         }
         return childList.size();

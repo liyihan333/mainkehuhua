@@ -93,38 +93,43 @@ public class StuPra {
 
     //存储老师端父类菜单的图标
     public static int[] images = {
-            R.drawable.edus_management_plan,
-            R.drawable.edus_management_position,
-            R.drawable.edus_management_school,
-            R.drawable.edus_management_student,
+            R.mipmap.f1,
+            R.mipmap.f2,
+            R.mipmap.f3,
+            R.mipmap.f4,
 
-            R.drawable.edus_management_plan,
-            R.drawable.edus_management_position,
-            R.drawable.edus_management_school,
-            R.drawable.edus_management_student,
+            R.mipmap.f5,
+            R.mipmap.f6,
+            R.mipmap.f7,
+            R.mipmap.f8,
 
-            R.drawable.edus_management_plan,
-            R.drawable.edus_management_position,
-            R.drawable.edus_management_school,
-            R.drawable.edus_management_student,
 
-            R.drawable.edus_management_plan,
-            R.drawable.edus_management_position,
-            R.drawable.edus_management_school,
-            R.drawable.edus_management_student,
+            R.mipmap.f9,
+            R.mipmap.f10,
+            R.mipmap.f11,
+            R.mipmap.f12,
 
-            R.drawable.edus_management_plan,
-            R.drawable.edus_management_position,
-            R.drawable.edus_management_school,
-            R.drawable.edus_management_student,
 
-            R.drawable.edus_management_plan,
-            R.drawable.edus_management_position,
-            R.drawable.edus_management_school,
-            R.drawable.edus_management_student,
+            R.mipmap.f13,
+            R.mipmap.f14,
+            R.mipmap.f15,
+            R.mipmap.f16,
 
-            R.drawable.edus_management_plan,
-            R.drawable.edus_management_position,
-            R.drawable.edus_management_school,
-            R.drawable.edus_management_student};
+
+            R.mipmap.f17,
+            R.mipmap.f18,
+            R.mipmap.f19,
+            R.mipmap.f20,
+
+
+            R.mipmap.f1,
+            R.mipmap.f2,
+            R.mipmap.f3,
+            R.mipmap.f4,
+
+
+            R.mipmap.f5,
+            R.mipmap.f6,
+            R.mipmap.f7,
+            R.mipmap.f8};
 }

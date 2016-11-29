@@ -42,7 +42,6 @@ import okhttp3.Call;
 
 /**
  * Created by Administrator on 2016/9/19 0019.
- *
  */
 public class AssortFragment extends Fragment {
 
@@ -53,16 +52,15 @@ public class AssortFragment extends Fragment {
     private List<Map<String, Object>> menuListAll;
 
 
-
-//下拉刷新handler
-    private Handler handler = new Handler(){
+    //下拉刷新handler
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            switch (msg.what){
+            switch (msg.what) {
                 case 0x101:
                     Log.e("TAG", "学员端开始handler通知跳转后 ");
-                    if (swipeRefreshLayout.isRefreshing()){
+                    if (swipeRefreshLayout.isRefreshing()) {
                         adapter.notifyDataSetChanged();
                         swipeRefreshLayout.setRefreshing(false);//设置不刷新
                         Toast.makeText(getActivity().getApplicationContext(), "数据已刷新", Toast.LENGTH_SHORT).show();
@@ -71,6 +69,7 @@ public class AssortFragment extends Fragment {
             }
         }
     };
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -93,7 +92,7 @@ public class AssortFragment extends Fragment {
 //        tvTitle.setText("分类");
         homeGridView = (GridView) v.findViewById(R.id.stu_home_grid);
 
-        swipeRefreshLayout=(SwipeRefreshLayout) v.findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light, android.R.color.holo_orange_light, android.R.color.holo_red_light);
         //设置下拉刷新监听
@@ -110,7 +109,7 @@ public class AssortFragment extends Fragment {
     /**
      * 加载菜单数据的线程
      */
-    class LoadDataThread extends  Thread{
+    class LoadDataThread extends Thread {
         @Override
         public void run() {
             //下载数据，重新设定dataList
@@ -128,26 +127,23 @@ public class AssortFragment extends Fragment {
 
 
     /**
-     *
      * 获取mainActivity传递的菜单menuList数据
-     *
      */
     private void getIntentData() {
         Bundle menuBundle = getArguments();
         String menuStr = menuBundle.getString("menuDataMap");
-            menuListAll = JSON.parseObject(menuStr,
-                    new TypeReference<List<Map<String, Object>>>() {
-                    });
-                menuListMap = DataProcess.toParentList(menuListAll);
-
+        menuListAll = JSON.parseObject(menuStr,
+                new TypeReference<List<Map<String, Object>>>() {
+                });
+        menuListMap = DataProcess.toParentList(menuListAll);
 
 
         Log.e("TAG", "menuListMap初始值 " + menuListMap.toString());
-                adapter = new SimpleAdapter(getActivity(), menuListMap,
-                        R.layout.fragment_assort_item, new String[]{"image", "menuName"},
-                        new int[]{R.id.iv_item, R.id.tv_item});
-                homeGridView.setAdapter(adapter);
-                homeGridView.setOnScrollListener(new SwipeListViewOnScrollListener(swipeRefreshLayout));
+        adapter = new SimpleAdapter(getActivity(), menuListMap,
+                R.layout.fragment_assort_item, new String[]{"image", "menuName"},
+                new int[]{R.id.iv_item, R.id.tv_item});
+        homeGridView.setAdapter(adapter);
+        homeGridView.setOnScrollListener(new SwipeListViewOnScrollListener(swipeRefreshLayout));
     }
 
     /**
@@ -155,7 +151,6 @@ public class AssortFragment extends Fragment {
      *
      * @param menuId
      * @param itemData
-     *
      */
     public void toItem(int menuId, Map<String, Object> itemData) {
 
@@ -193,19 +188,18 @@ public class AssortFragment extends Fragment {
     }
 
     private static final String TAG = "AssortFragment";
+
     /**
-     *
      * 刷新菜单方法，单独获取菜单
-     *
      */
 
     public void postLogin() {
-        if (!((BaseActivity)getActivity()).hasInternetConnected()) {
+        if (!((BaseActivity) getActivity()).hasInternetConnected()) {
             Looper.prepare();
             Toast.makeText(getActivity().getApplicationContext(), "当前网络不可用，请检查网络！", Toast.LENGTH_SHORT).show();
             Looper.loop();
             swipeRefreshLayout.setRefreshing(false);//直接设置不刷新
-        }else {
+        } else {
             final String volleyUrl = Constant.sysUrl + Constant.projectLoginUrl;
             Log.e("TAG", "学员端登陆地址 " + Constant.sysUrl + Constant.projectLoginUrl);
 
@@ -226,14 +220,14 @@ public class AssortFragment extends Fragment {
                         @Override
                         public void onError(Call call, Exception e, int id) {
 
-                            ErrorToast.errorToast(mContext,e);
-                            ((BaseActivity)getActivity()).dialog.dismiss();
-                            Log.e(TAG, "onError: Call  "+call+"  id  "+id);
+                            ErrorToast.errorToast(mContext, e);
+                            ((BaseActivity) getActivity()).dialog.dismiss();
+                            Log.e(TAG, "onError: Call  " + call + "  id  " + id);
                         }
 
                         @Override
                         public void onResponse(String response, int id) {
-                            Log.e(TAG, "onResponse: "+"  id  "+id);
+                            Log.e(TAG, "onResponse: " + "  id  " + id);
                             check(response);
                         }
                     });
@@ -244,12 +238,13 @@ public class AssortFragment extends Fragment {
 
     /**
      * 解析菜单数据
+     *
      * @param menuData
      */
 
     @SuppressWarnings("unchecked")
     private void check(String menuData) {
-        Map<String,Object> stuMenuMap=Utils.str2map(menuData);
+        Map<String, Object> stuMenuMap = Utils.str2map(menuData);
         menuListAll = (List<Map<String, Object>>) stuMenuMap.get("menuList");
         Log.e("TAG", "sessionId=" + menuListAll.toString());
         menuListMap.removeAll(menuListMap);
@@ -258,13 +253,9 @@ public class AssortFragment extends Fragment {
     }
 
 
-
     /**
-     *
-     *
      * 用于解决ListView与下拉刷新的Scroll事件冲突
-     *
-     * */
+     */
     public static class SwipeListViewOnScrollListener implements AbsListView.OnScrollListener {
 
         private SwipeRefreshLayout mSwipeView;
@@ -275,7 +266,7 @@ public class AssortFragment extends Fragment {
         }
 
         public SwipeListViewOnScrollListener(SwipeRefreshLayout swipeView,
-                                              AbsListView.OnScrollListener onScrollListener) {
+                                             AbsListView.OnScrollListener onScrollListener) {
             mSwipeView = swipeView;
             mOnScrollListener = onScrollListener;
         }
