@@ -94,7 +94,7 @@
 
                     <FrameLayout
                         android:id="@+id/recorder_length"
-                        android:layout_width="160dp"
+                        android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="16dp"
@@ -115,7 +115,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical|right"
                             android:layout_marginRight="10dp"
-                            android:text="3'"
+                            android:text="0'"
                             android:textColor="@color/white"
                             android:textSize="14sp" />
 

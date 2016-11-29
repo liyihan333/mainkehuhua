@@ -3,6 +3,7 @@ package com.kwsoft.kehuhua.hampson.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.DisplayMetrics;
@@ -11,8 +12,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.webkit.MimeTypeMap;
+import android.widget.AdapterView;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +34,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import butterknife.ButterKnife;
@@ -41,33 +44,36 @@ import static com.kwsoft.kehuhua.config.Constant.topBarColor;
 
 /**
  * Created by Administrator on 2016/11/15 0015.
+ *
  */
 
 public class ReadFileActivity extends BaseActivity {
-    private CommonToolbar mToolbar;
-    ZuoYeImageGridView zuoYeImageGridView;
 
-
-    List<String> imageDatas, ImageFileNames;
-    List<String> musicDatas, musicFileNames;
-
+    private ZuoYeImageGridView zuoYeImageGridView;
+    private String pathAndName="";
+    private MediaPlayer playerNow;
+    private List<String> imageDatas, ImageFileNames;
+    private List<String> musicDatas, musicFileNames;
+    private TextView seconds;
+    private FrameLayout length;
+    private LinearLayout ll_layout_audio;
     private String downLoadId;
     private static final String TAG = "ReadFileActivity";
+    private List<Map<String, String>> fieldSet;
+    private int position;
+    private int mMinItemWith;// 设置对话框的最大宽度和最小宽度
+    private int mMaxItemWith;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.hampson_activity_read_file_layout);
         ButterKnife.bind(this);
-
-        dialog=new LoadingDialog(mContext,"mp3文件下加载中...");
-        dialog.show();
         initView();
         getIntentData();
     }
 
-    private List<Map<String, String>> fieldSet;
-    private int position;
+
 
     private void getIntentData() {
         Intent intent = getIntent();
@@ -78,30 +84,15 @@ public class ReadFileActivity extends BaseActivity {
         fieldSet = JSON.parseObject(fieldSetStr,
                 new TypeReference<List<Map<String, String>>>() {
                 });
-
         showImage();
-
-
     }
 
     private void showImage() {
         List<String> mongoIds = new ArrayList<>();
-//获取mongoDB字符串
-
+        //获取mongoDB字符串
         Map<String, String> itemMap = fieldSet.get(position);
         String name = itemMap.get("fieldCnName");
         String value = itemMap.get("fieldCnName2");
-//        String downLoadId = "";
-//        for (int k = 0; k < fieldSet.size(); k++) {
-//
-//            String fieldCnName = fieldSet.get(k).get("fieldCnName");
-//
-//            if (fieldCnName.equals("mongodbId")) {
-//                downLoadId = fieldSet.get(k).get("fieldCnName2");
-//            }
-//
-//        }
-
         String[] downLoadIdArr = downLoadId.split(",");
         for (int m = 0; m < downLoadIdArr.length; m++) {
             mongoIds.add(downLoadIdArr[m]);
@@ -151,7 +142,6 @@ public class ReadFileActivity extends BaseActivity {
 
             if (musicDatas.size() > 0) {
                 ll_layout_audio.setVisibility(View.VISIBLE);
-
                 downLoadMp3();
             }else {
                 ll_layout_audio.setVisibility(View.GONE);
@@ -161,17 +151,16 @@ public class ReadFileActivity extends BaseActivity {
 
     }
 
-    int num = 0;
-    private int mMinItemWith;// 设置对话框的最大宽度和最小宽度
-    private int mMaxItemWith;
+
     @Override
     public void initView() {
+        playerNow = new MediaPlayer();
         WindowManager wManager = (WindowManager)getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics outMetrics = new DisplayMetrics();
         wManager.getDefaultDisplay().getMetrics(outMetrics);
         mMaxItemWith = (int) (outMetrics.widthPixels * 0.7f);
         mMinItemWith = (int) (outMetrics.widthPixels * 0.15f);
-        mToolbar = (CommonToolbar) findViewById(R.id.common_toolbar);
+        CommonToolbar mToolbar = (CommonToolbar) findViewById(R.id.common_toolbar);
         mToolbar.setTitle("查看附件");
         mToolbar.setBackgroundColor(getResources().getColor(topBarColor));
         //左侧返回按钮
@@ -185,17 +174,62 @@ public class ReadFileActivity extends BaseActivity {
         zuoYeImageGridView = (ZuoYeImageGridView) findViewById(R.id.zuoYeImageGridView);
         seconds = (TextView) findViewById(R.id.recorder_time);
         length = (FrameLayout)findViewById(R.id.recorder_length);
-        item_icon_right = (ImageView)findViewById(R.id.item_icon_right);
         ll_layout_audio= (LinearLayout)findViewById(R.id.ll_layout_audio);
+        length.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                Log.e(TAG, "onTouch: 是否走length.setOnTouchListener");
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+
+                    if (!pathAndName.equals("")) {
+                        if (!playerNow.isPlaying()) {
+                            try {
+                                playerNow.setDataSource(pathAndName);
+                                playerNow.prepare();
+                                playerNow.start();
+                            } catch (IllegalArgumentException | SecurityException | IllegalStateException | IOException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            }
+                        }else{
+                            playerNow.release();
+                            playerNow = new MediaPlayer();
+                            try {
+                                playerNow.setDataSource(pathAndName);
+                                playerNow.prepare();
+                                playerNow.start();
+                            } catch (IllegalArgumentException | SecurityException | IllegalStateException | IOException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            }
+                        }
+                    } else {
+                        downLoadMp3();
+                    }
+                }
+                return true;
+            }
+        });
+
+        zuoYeImageGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                dialog=new LoadingDialog(mContext,"文件下加载中...");
+                dialog.show();
+                try {
+                    showProgressiveJPEGs(imageDatas.get(i),ImageFileNames.get(i));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
-    TextView seconds;
-    FrameLayout length;
-    ImageView item_icon_right;
-    LinearLayout ll_layout_audio;
+
 
 
     public void downLoadMp3() {
-
+        dialog=new LoadingDialog(mContext,"mp3文件下加载中...");
+        dialog.show();
         OkHttpUtils.get()//
                 .url(musicDatas.get(0))
                 .tag(this)//
@@ -204,15 +238,11 @@ public class ReadFileActivity extends BaseActivity {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         dialog.dismiss();
-                        Toast.makeText(ReadFileActivity.this, "语音下载失败", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ReadFileActivity.this, "语音下载失败,请点击重新加载", Toast.LENGTH_SHORT).show();
 
                     }
                     @Override
                     public void onResponse(File response, int id) {
-
-                        Log.e(TAG, "onResponse: " + response);
-                        Log.e(TAG, "onResponse: path "+Environment.getExternalStorageDirectory().getPath() + "/hampsonDownloadVoice/");
-                        Log.e(TAG, "onResponse: musicFileNames.get(num) "+musicFileNames.get(num));
                         playMp3(response);
                     }
                 });
@@ -220,49 +250,86 @@ public class ReadFileActivity extends BaseActivity {
     }
 
 
-    public void playMp3(File file)  {
-       final String pathAndname=file.getPath();
 
-        Log.e(TAG, "playMp3: pathAndname "+pathAndname);
+
+    public void playMp3(File file)  {
+      pathAndName=file.getPath();
         MediaPlayer player = new MediaPlayer();
         try {
-            player.setDataSource(pathAndname);
-            int secondDur = player.getDuration();
-            Log.e(TAG, "getView: 获取秒数" + secondDur);
-            seconds.setText(secondDur);
+            player.setDataSource(pathAndName);
+            player.prepare();
+            int secondDur = player.getDuration()/1000;
+            String showSeconds=secondDur+"'";
+            seconds.setText(showSeconds);
             ViewGroup.LayoutParams lParams = length.getLayoutParams();
             lParams.width = (int) (mMinItemWith + mMaxItemWith / 60f * secondDur) * 3;
             length.setLayoutParams(lParams);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
-
-        length.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                MediaPlayer player = new MediaPlayer();
-                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-
-                    try {
-
-                        player.setDataSource(pathAndname);
-                        player.prepare();
-                        player.start();
-                    } catch (IllegalArgumentException | SecurityException | IllegalStateException | IOException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-
-                    player.stop();
-                }
-                return true;
-            }
-        });
         dialog.dismiss();
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        playerNow.release();
+    }
 
+    /**
+     * 演示：逐渐加载的图片，即，从模糊逐渐清晰。需要图片本身也支持这种方式
+     */
+    private void showProgressiveJPEGs(String url,String fileName) {
+        final String path= Environment.getExternalStorageDirectory().getPath();
+        OkHttpUtils.get()//
+                .url(url)
+                .tag(this)//
+                .build()
+                .execute(new FileCallBack(path, fileName) {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        dialog.dismiss();
+                    }
+
+                    @Override
+                    public void onResponse(File response, int id) {
+                        //Activity mActivity,final String filePath
+                        Log.e(TAG, "onResponse: 下载成功"+response.getName());
+                        openFile(path+"/"+response.getName());
+                    }
+
+                    @Override
+                    public void inProgress(float progress, long total, int id) {
+                        super.inProgress(progress, total, id);
+                    }
+                });
+    }
+
+    /**
+
+     */
+    private void openFile(final String filePath)
+    {
+        Log.e(TAG, "openFile: filePath "+filePath);
+        String ext = filePath.substring(filePath.lastIndexOf('.')).toLowerCase(Locale.US);
+        try
+        {
+            MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+            String temp = ext.substring(1);
+            String mime = mimeTypeMap.getMimeTypeFromExtension(temp);
+
+            Intent intent = new Intent();
+            intent.setAction(android.content.Intent.ACTION_VIEW);
+            File file = new File(filePath);
+            intent.setDataAndType(Uri.fromFile(file), mime);
+            startActivity(intent);
+            dialog.dismiss();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            Toast.makeText(mContext, "无法打开后缀名为." + ext + "的文件！",
+                    Toast.LENGTH_LONG).show();
+        }
+    }
 }

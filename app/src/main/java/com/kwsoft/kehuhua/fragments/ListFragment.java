@@ -404,12 +404,7 @@ public class ListFragment extends Fragment {
             }
         });
         ((BaseActivity)getActivity()).dialog.dismiss();
-        if (totalNum>0) {
-            Snackbar.make(mRecyclerView, "加载完成，共"+totalNum+"条", Snackbar.LENGTH_SHORT).show();
-        }else{
-            Snackbar.make(mRecyclerView, "本页无数据", Snackbar.LENGTH_SHORT).show();
 
-        }
 
     }
 

@@ -26,8 +26,6 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
-
 public class Utils {
     public static int getAppVersion(Context context) {
         try {
@@ -257,10 +255,11 @@ public class Utils {
         return true;
     }
 
+    private static final String TAG = "Utils";
     // 使用Log来显示调试信息,因为log在实现上每个message有4k字符长度限制
     // 所以这里使用自己分节的方式来输出足够长度的message
     public static void printLog(String tags,String str) {
-        str = str.trim();
+//        str = str.trim();
         int index = 0;
         int maxLength = 4000;
         String sub;
@@ -269,10 +268,13 @@ public class Utils {
             if (str.length() <= index + maxLength) {
                 sub = str.substring(index);
             } else {
-                sub = str.substring(index, maxLength);
+                sub = str.substring(index, index +maxLength);
             }
+
             Log.e(TAG, "printLog: index "+index);
-            Log.e(tags, sub.trim());
+            Log.e(TAG, "printLog: index +maxLength "+(index +maxLength));
+            Log.e(TAG, "printLog: str.length() "+str.length());
+            Log.e(tags, sub);
             index += maxLength;
         }
     }
