@@ -10,6 +10,11 @@
         fresco:failureImage="@mipmap/jiazaishibai"
         fresco:progressBarImage="@mipmap/jiazaizhong"
         fresco:progressBarAutoRotateInterval="5000"
+        fresco:roundTopLeft="true"
+        fresco:roundTopRight="true"
+        fresco:roundBottomLeft="true"
+        fresco:roundBottomRight="true"
+        fresco:pressedStateOverlayImage="@color/gray"
         android:visibility="gone"
         />
     <TextView

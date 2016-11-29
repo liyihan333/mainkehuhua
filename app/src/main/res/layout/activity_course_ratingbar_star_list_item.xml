@@ -40,10 +40,10 @@
                     android:textColor="#4c4c4c"
                     android:textSize="18sp" />
 
-                <ImageView
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:src="@mipmap/basics_into" />
+                <!--<ImageView-->
+                    <!--android:layout_width="18dp"-->
+                    <!--android:layout_height="18dp"-->
+                    <!--android:src="@mipmap/basics_into" />-->
             </LinearLayout>
         </RelativeLayout>
 

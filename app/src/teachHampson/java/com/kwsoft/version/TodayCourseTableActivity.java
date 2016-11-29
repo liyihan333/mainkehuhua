@@ -1,23 +1,20 @@
 package com.kwsoft.version;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.TypeReference;
-import com.cjj.MaterialRefreshLayout;
-import com.cjj.MaterialRefreshListener;
-import com.kwsoft.kehuhua.adcustom.ListActivity2;
-import com.kwsoft.kehuhua.adcustom.base.BaseActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
+import com.cjj.MaterialRefreshLayout;
+import com.cjj.MaterialRefreshListener;
 import com.kwsoft.kehuhua.adcustom.R;
+import com.kwsoft.kehuhua.adcustom.base.BaseActivity;
 import com.kwsoft.kehuhua.config.Constant;
 import com.kwsoft.kehuhua.urlCnn.EdusStringCallback;
 import com.kwsoft.kehuhua.urlCnn.ErrorToast;
@@ -153,6 +150,7 @@ public class TodayCourseTableActivity extends BaseActivity {
                         @Override
                         public void onError(Call call, Exception e, int id) {
                             ErrorToast.errorToast(mContext, e);
+
                             dialog.dismiss();
                             backStart();
                         }
@@ -212,7 +210,9 @@ public class TodayCourseTableActivity extends BaseActivity {
         }
     }
 
+    private static final String TAG = "TodayCourseTableActivit";
     private void parseData(String response) {
+        Log.e(TAG, "parseData: response "+response);
         Map<String, Object> menuMap = JSON.parseObject(response,
                 new TypeReference<Map<String, Object>>() {
                 });
@@ -256,7 +256,6 @@ public class TodayCourseTableActivity extends BaseActivity {
         showData();
     }
 
-    public String TAG = "Today";
 
     /**
      * 分动作展示数据

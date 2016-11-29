@@ -25,35 +25,40 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import okhttp3.Call;
 
 import static com.kwsoft.kehuhua.config.Constant.topBarColor;
 
 /**
  * Created by Administrator on 2016/11/15 0015.
- *
  */
 
 public class ReadFileActivity extends BaseActivity {
+    @Bind(R.id.mp3_list_view)
+    ListView mp3ListView;
     private CommonToolbar mToolbar;
     ZuoYeImageGridView zuoYeImageGridView;
 
 
-    List<String> imageDatas,ImageFileNames;
-    List<String> musicDatas,musicFileNames;
+    List<String> imageDatas, ImageFileNames;
+    List<String> musicDatas, musicFileNames;
 
-    private Mp3ListAdapter  mAdapter;
+    private Mp3ListAdapter mAdapter;
     private List<String> mDatas = new ArrayList<>();
     private List<File> mFiles = new ArrayList<>();
 
-    public  ListView mlistview;
+    public ListView mlistview;
 
     private String downLoadId;
     private static final String TAG = "ReadFileActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.hampson_activity_read_file_layout);
+        ButterKnife.bind(this);
         initView();
         getIntentData();
     }
@@ -94,10 +99,10 @@ public class ReadFileActivity extends BaseActivity {
 //
 //        }
 
-            String[] downLoadIdArr = downLoadId.split(",");
-            for (int m = 0; m < downLoadIdArr.length; m++) {
-                mongoIds.add(downLoadIdArr[m]);
-            }
+        String[] downLoadIdArr = downLoadId.split(",");
+        for (int m = 0; m < downLoadIdArr.length; m++) {
+            mongoIds.add(downLoadIdArr[m]);
+        }
 
         List<String> fileNames = new ArrayList<>();
 
@@ -109,28 +114,27 @@ public class ReadFileActivity extends BaseActivity {
         }
 
         if (mongoIds.size() > 0) {
-            Log.e(TAG, "showImage: mongoIds "+mongoIds.toString() );
+            Log.e(TAG, "showImage: mongoIds " + mongoIds.toString());
 
-            imageDatas=new ArrayList<>();
-            ImageFileNames=new ArrayList<>();
+            imageDatas = new ArrayList<>();
+            ImageFileNames = new ArrayList<>();
 
 
-
-            musicDatas=new ArrayList<>();
-            musicFileNames=new ArrayList<>();
+            musicDatas = new ArrayList<>();
+            musicFileNames = new ArrayList<>();
 
             //将mongodb分类
-            for (int k=0;k<fileNames.size();k++) {
-                String url= Constant.sysUrl+Constant.downLoadFileStr+mongoIds.get(k);
-                String filename=fileNames.get(k);
-                Log.e(TAG, "showImage: url "+url);
-                Log.e(TAG, "showImage: filename "+filename);
-                if (!filename.endsWith(".MP3")&&!filename.endsWith(".mp3")) {
+            for (int k = 0; k < fileNames.size(); k++) {
+                String url = Constant.sysUrl + Constant.downLoadFileStr + mongoIds.get(k);
+                String filename = fileNames.get(k);
+                Log.e(TAG, "showImage: url " + url);
+                Log.e(TAG, "showImage: filename " + filename);
+                if (!filename.endsWith(".MP3") && !filename.endsWith(".mp3")) {
                     imageDatas.add(url);
                     ImageFileNames.add(filename);
 
-                }else{
-                    Log.e(TAG, "showImage: mp3   "+filename);
+                } else {
+                    Log.e(TAG, "showImage: mp3   " + filename);
                     musicDatas.add(url);
                     musicFileNames.add(filename);
 
@@ -138,27 +142,29 @@ public class ReadFileActivity extends BaseActivity {
             }
 
 
-
-
             ZuoYeGridViewAdapter gridViewAdapter = new ZuoYeGridViewAdapter(this, imageDatas, ImageFileNames);
             zuoYeImageGridView.setAdapter(gridViewAdapter);
 
 
-            if (musicDatas.size()>0) {
-                Log.e(TAG, "showImage: 开始下载mp3");
-//                downLoadMp3();
+            if (musicDatas.size() > 0) {
+                for (int i = 0; i <musicDatas.size() ; i++) {
+                    Log.e(TAG, "showImage: musicDatas "+musicDatas.get(i));
+                    Log.e(TAG, "showImage: musicFileNames "+musicFileNames.get(i));
+                }
+                dialog.show();
+                downLoadMp3();
             }
-
 
 //            mAdapter = new RecorderAdapter(ReadFileActivity.this, mDatas);
 //            mlistview.setAdapter(mAdapter);
 
 
-
         }
 
     }
-int num=0;
+
+    int num = 0;
+
     @Override
     public void initView() {
         mToolbar = (CommonToolbar) findViewById(R.id.common_toolbar);
@@ -173,14 +179,13 @@ int num=0;
         });
 
         zuoYeImageGridView = (ZuoYeImageGridView) findViewById(R.id.zuoYeImageGridView);
-        mlistview = (ListView) findViewById(R.id.listview);
+
 
     }
-    String path= Environment.getExternalStorageDirectory().getPath()+"/hampsonDownloadVoice/";
-    public void downLoadMp3(){
-        Log.e(TAG, "downLoadMp3: musicDatas.get(num) "+musicDatas.get(num));
-        Log.e(TAG, "downLoadMp3: path "+path);
-        Log.e(TAG, "downLoadMp3: musicFileNames.get(num) "+musicFileNames.get(num));
+
+    String path = Environment.getExternalStorageDirectory().getPath() + "/hampsonDownloadVoice/";
+
+    public void downLoadMp3() {
 
         OkHttpUtils.get()//
                 .url(musicDatas.get(num))
@@ -194,17 +199,15 @@ int num=0;
 
                     @Override
                     public void onResponse(File response, int id) {
-                        Log.e(TAG, "onResponse: "+response);
+                        Log.e(TAG, "onResponse: " + response);
                         mFiles.add(response);
                         num++;
-                        if (num<musicDatas.size()) {
+                        if (num < musicDatas.size()) {
                             downLoadMp3();
-                        }else{
-                            try {
-                                mp32Media();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+                        } else {
+                            dialog.dismiss();
+                            //mp32Media();
+                            Log.e(TAG, "onResponse: mp3下载完了"+mFiles.size());
                         }
 
 

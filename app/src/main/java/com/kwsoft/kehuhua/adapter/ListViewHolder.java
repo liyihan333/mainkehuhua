@@ -2,7 +2,6 @@ package com.kwsoft.kehuhua.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -22,9 +21,9 @@ public class ListViewHolder extends RecyclerView.ViewHolder {
             click_open_btn;
     RelativeLayout click_open;
     LinearLayout dash_ll;
-    RelativeLayout list_opera_layout;
-
-    Button list_opera0,list_opera1,list_opera2;
+//    RelativeLayout list_opera_layout;
+//
+//    Button list_opera0,list_opera1,list_opera2;
 
 
     ListViewHolder(View view) {
@@ -50,9 +49,9 @@ public class ListViewHolder extends RecyclerView.ViewHolder {
 
         dash_ll = (LinearLayout) view.findViewById(R.id.dash_ll);
         //初始化三个按钮
-        list_opera_layout= (RelativeLayout) view.findViewById(R.id.list_opera_layout);
-        list_opera0=(Button)view.findViewById(R.id.list_opera0);
-        list_opera1=(Button)view.findViewById(R.id.list_opera1);
-        list_opera2=(Button)view.findViewById(R.id.list_opera2);
+//        list_opera_layout= (RelativeLayout) view.findViewById(R.id.list_opera_layout);
+//        list_opera0=(Button)view.findViewById(R.id.list_opera0);
+//        list_opera1=(Button)view.findViewById(R.id.list_opera1);
+//        list_opera2=(Button)view.findViewById(R.id.list_opera2);
     }
 }

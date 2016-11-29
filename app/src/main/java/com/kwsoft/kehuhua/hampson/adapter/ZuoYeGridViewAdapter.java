@@ -94,8 +94,8 @@ public class ZuoYeGridViewAdapter extends BaseAdapter {
                 .tag(this)//
                 .build()
                 .execute(new FileCallBack(path, fileName) {
-                    @Override
-                    public void onError(Call call, Exception e, int id) {
+                        @Override
+                        public void onError(Call call, Exception e, int id) {
 
                     }
 

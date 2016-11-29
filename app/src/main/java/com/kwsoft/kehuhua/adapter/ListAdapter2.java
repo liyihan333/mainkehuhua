@@ -88,35 +88,6 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             final ListViewHolder holder = (ListViewHolder) thisHolder;
 
             List<Map<String, String>> item=getData(position);
-         //创建新的对象对fieldCnName2进行操作，否则会在下个页面造成显示错误
-//            for (int i=0;i<getData(position).size();i++) {
-//
-//                Map<String, String> map1=getData(position).get(i);
-//
-//                Map<String, String> map = new HashMap<>();
-//                for (String s : map1.keySet()) {
-//                    map.put(s, map1.get(s));
-//                }
-//                item.add(map);
-//                Log.e(TAG, "onBindViewHolder: map1 "+map1.getClass());
-//                Log.e(TAG, "onBindViewHolder: map "+map.getClass());
-//            }
-//
-//            for (int i=0;i<item.size();i++) {
-//               String value1= item.get(i).get("fieldCnName");
-//                String value2= item.get(i).get("fieldCnName2");
-//                if (value1.contains("附件")&&!value1.contains("mongo")) {
-//                    String[] valueArr = value2.split(",");
-//                    String fileNum;
-//                    if (valueArr.length>0) {
-//                        fileNum = valueArr.length + "个附件";
-//                    }else{
-//                        fileNum = "无附件";
-//                    }
-//
-//                    item.get(i).put("fieldCnName2",fileNum);
-//                }
-//            }
 
             try {
                 final String title = item.get(0).get("fieldCnName2");
@@ -154,22 +125,7 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 String right4Title = item.get(4).get("fieldCnName2");
                 holder.right4.setText(!right4Title.equals("null") ? right4Title : "");
                 holder.right4.setVisibility(View.VISIBLE);
-////左5
-//                String left5Title = item.get(5).get("fieldCnName");
-//                holder.left5.setText(!left5Title.equals("null") ? left5Title : "");
-//                holder.left5.setVisibility(View.VISIBLE);
-//
-//                String right5Title = item.get(5).get("fieldCnName2");
-//                holder.right5.setText(!right5Title.equals("null") ? right5Title : "");
-//                holder.right5.setVisibility(View.VISIBLE);
-////左6
-//                String left6Title = item.get(6).get("fieldCnName");
-//                holder.left6.setText(!left6Title.equals("null") ? left6Title : "");
-//                holder.left6.setVisibility(View.VISIBLE);
-//
-//                String right6Title = item.get(6).get("fieldCnName2");
-//                holder.right6.setText(!right6Title.equals("null") ? right6Title : "");
-//                holder.right6.setVisibility(View.VISIBLE);
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -192,18 +148,145 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                                         intent.putExtra("childTab", JSON.toJSONString(childTab));
                                         intent.putExtra("titleName", titleName);
                                         mContext.startActivity(intent);
-                                        //                        holder.click_open_btn.setAlpha(new Float(0.75));
+                                        //holder.click_open_btn.setAlpha(new Float(0.75));
 
                                     }
                     });
-                }
+                }else{
+                                holder.dash_ll.setVisibility(View.GONE);
+                                holder.click_open.setVisibility(View.GONE);
+                            }
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
+
+            holder.itemView.setTag(item);
+        }
+
+    }
+
+    /**
+     * 获取单项数据
+     */
+
+    private List<Map<String, String>> getData(int position) {
+
+        return mDatas.get(position);
+    }
+
+    /**
+     * 获取全部数据
+     */
+    public List<List<Map<String, String>>> getDatas() {
+
+        return mDatas;
+    }
+
+    /**
+     * 清除数据
+     */
+    public void clearData() {
+
+        mDatas.clear();
+        notifyItemRangeRemoved(0, mDatas.size());
+    }
+
+
+    /**
+     * 下拉刷新更新数据
+     */
+    public void addData(List<List<Map<String, String>>> datas,List<Map<String, Object>> childTab) {
+
+        addData(0, datas,childTab);
+    }
+
+    /**
+     * 上拉加载添加数据的方法
+     */
+    public void addData(int position, List<List<Map<String, String>>> datas, List<Map<String, Object>> childTab) {
+this.childTab=childTab;
+        if (datas != null && datas.size() > 0) {
+
+            mDatas.addAll(datas);
+            notifyItemRangeChanged(position, mDatas.size());
+        }
+
+    }
+
+    @Override
+    public int getItemCount() {
+
+        return mDatas.size() > 0 ? mDatas.size() : 1;
+
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (mOnItemClickListener != null) {
+            //注意这里使用getTag方法获取数据
+            mOnItemClickListener.onItemClick(view, JSON.toJSONString(view.getTag()));
+        }
+    }
+}
+
+
+
+//创建新的对象对fieldCnName2进行操作，否则会在下个页面造成显示错误
+//            for (int i=0;i<getData(position).size();i++) {
+//
+//                Map<String, String> map1=getData(position).get(i);
+//
+//                Map<String, String> map = new HashMap<>();
+//                for (String s : map1.keySet()) {
+//                    map.put(s, map1.get(s));
+//                }
+//                item.add(map);
+//                Log.e(TAG, "onBindViewHolder: map1 "+map1.getClass());
+//                Log.e(TAG, "onBindViewHolder: map "+map.getClass());
+//            }
+//
+//            for (int i=0;i<item.size();i++) {
+//               String value1= item.get(i).get("fieldCnName");
+//                String value2= item.get(i).get("fieldCnName2");
+//                if (value1.contains("附件")&&!value1.contains("mongo")) {
+//                    String[] valueArr = value2.split(",");
+//                    String fileNum;
+//                    if (valueArr.length>0) {
+//                        fileNum = valueArr.length + "个附件";
+//                    }else{
+//                        fileNum = "无附件";
+//                    }
+//
+//                    item.get(i).put("fieldCnName2",fileNum);
+//                }
+//            }
+
+//多出来的两行
+
+////左5
+//                String left5Title = item.get(5).get("fieldCnName");
+//                holder.left5.setText(!left5Title.equals("null") ? left5Title : "");
+//                holder.left5.setVisibility(View.VISIBLE);
+//
+//                String right5Title = item.get(5).get("fieldCnName2");
+//                holder.right5.setText(!right5Title.equals("null") ? right5Title : "");
+//                holder.right5.setVisibility(View.VISIBLE);
+////左6
+//                String left6Title = item.get(6).get("fieldCnName");
+//                holder.left6.setText(!left6Title.equals("null") ? left6Title : "");
+//                holder.left6.setVisibility(View.VISIBLE);
+//
+//                String right6Title = item.get(6).get("fieldCnName2");
+//                holder.right6.setText(!right6Title.equals("null") ? right6Title : "");
+//                holder.right6.setVisibility(View.VISIBLE);
+
+
+
+
 //判断显示按钮
 
-            //首先过滤不能显示的按钮，将不显示的按钮删除
+//首先过滤不能显示的按钮，将不显示的按钮删除
 
 
 
@@ -310,71 +393,3 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 //                }
 //
 //            }
-            holder.itemView.setTag(item);
-        }
-
-    }
-
-    /**
-     * 获取单项数据
-     */
-
-    private List<Map<String, String>> getData(int position) {
-
-        return mDatas.get(position);
-    }
-
-    /**
-     * 获取全部数据
-     */
-    public List<List<Map<String, String>>> getDatas() {
-
-        return mDatas;
-    }
-
-    /**
-     * 清除数据
-     */
-    public void clearData() {
-
-        mDatas.clear();
-        notifyItemRangeRemoved(0, mDatas.size());
-    }
-
-
-    /**
-     * 下拉刷新更新数据
-     */
-    public void addData(List<List<Map<String, String>>> datas,List<Map<String, Object>> childTab) {
-
-        addData(0, datas,childTab);
-    }
-
-    /**
-     * 上拉加载添加数据的方法
-     */
-    public void addData(int position, List<List<Map<String, String>>> datas, List<Map<String, Object>> childTab) {
-this.childTab=childTab;
-        if (datas != null && datas.size() > 0) {
-
-            mDatas.addAll(datas);
-            notifyItemRangeChanged(position, mDatas.size());
-        }
-
-    }
-
-    @Override
-    public int getItemCount() {
-
-        return mDatas.size() > 0 ? mDatas.size() : 1;
-
-    }
-
-    @Override
-    public void onClick(View view) {
-        if (mOnItemClickListener != null) {
-            //注意这里使用getTag方法获取数据
-            mOnItemClickListener.onItemClick(view, JSON.toJSONString(view.getTag()));
-        }
-    }
-}

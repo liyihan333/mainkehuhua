@@ -5,10 +5,10 @@
     android:layout_marginTop="10dp"
     android:background="@drawable/shape_list_item_background"
     android:descendantFocusability="blocksDescendants"
-    android:paddingBottom="19dp"
+
     android:paddingEnd="15dp">
 
-
+    <!--android:paddingBottom="19dp"-->
     <!--<CheckBox-->
     <!--android:id="@+id/checkbox_operate_data"-->
     <!--android:layout_width="wrap_content"-->
@@ -55,13 +55,13 @@
                 android:textSize="20sp"
                 android:visibility="gone" />
 
-            <ImageView
-                android:id="@+id/iv_nextpage"
-                android:layout_width="20dp"
-                android:layout_height="match_parent"
-                android:layout_alignParentEnd="true"
-                android:layout_gravity="center_vertical"
-                android:src="@mipmap/teach_basics_into" />
+            <!--<ImageView-->
+                <!--android:id="@+id/iv_nextpage"-->
+                <!--android:layout_width="20dp"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_alignParentEnd="true"-->
+                <!--android:layout_gravity="center_vertical"-->
+                <!--android:src="@mipmap/teach_basics_into" />-->
         </RelativeLayout>
 
         <LinearLayout
@@ -271,47 +271,47 @@
         </RelativeLayout>
 
     </RelativeLayout>
-    <RelativeLayout
-        android:layout_marginTop="5dp"
-        android:id="@+id/list_opera_layout"
-        android:layout_below="@+id/list_content"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:visibility="gone">
+    <!--<RelativeLayout-->
+        <!--android:layout_marginTop="5dp"-->
+        <!--android:id="@+id/list_opera_layout"-->
+        <!--android:layout_below="@+id/list_content"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:visibility="gone">-->
 
-        <Button
+        <!--<Button-->
 
-            android:id="@+id/list_opera0"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="确认上课"
-            android:background="@drawable/photo_btn_first"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_centerVertical="true"
-            android:visibility="gone"/>
-        <Button
-            android:id="@+id/list_opera1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="确认下课"
-            android:background="@drawable/photo_btn_first"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_centerInParent="true"
-            android:layout_marginStart="3dp"
-            android:visibility="gone"/>
-        <Button
-            android:id="@+id/list_opera2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="交作业"
-            android:background="@drawable/photo_btn_first"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"
-            android:visibility="gone"/>
+            <!--android:id="@+id/list_opera0"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="确认上课"-->
+            <!--android:background="@drawable/photo_btn_first"-->
+            <!--style="?android:attr/borderlessButtonStyle"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:visibility="gone"/>-->
+        <!--<Button-->
+            <!--android:id="@+id/list_opera1"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="确认下课"-->
+            <!--android:background="@drawable/photo_btn_first"-->
+            <!--style="?android:attr/borderlessButtonStyle"-->
+            <!--android:layout_centerInParent="true"-->
+            <!--android:layout_marginStart="3dp"-->
+            <!--android:visibility="gone"/>-->
+        <!--<Button-->
+            <!--android:id="@+id/list_opera2"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="交作业"-->
+            <!--android:background="@drawable/photo_btn_first"-->
+            <!--style="?android:attr/borderlessButtonStyle"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_alignParentEnd="true"-->
+            <!--android:visibility="gone"/>-->
 
-    </RelativeLayout>
+    <!--</RelativeLayout>-->
 
 </RelativeLayout>
 
