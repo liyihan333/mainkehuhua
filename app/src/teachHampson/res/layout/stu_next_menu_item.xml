@@ -23,11 +23,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:ellipsize="end"
+            android:gravity="center_horizontal"
             android:layout_marginTop="14dp"
             android:text="二级菜单名称"
             android:textSize="14sp"
             android:textColor="@color/list_item_left"
-
             />
 
     </LinearLayout>

@@ -502,7 +502,8 @@ public class CourseFragment extends Fragment implements OnDataListener, WeekDate
                     public void onClick(View v) {
 
                         Intent intent = new Intent(getActivity(), CourseDetailActivity.class);
-                        if (!content.equals("null")) {
+                        if (!content.equals("null") && content.length() > 0) {
+                            Log.e("courseFrag","contnent"+content);
                             intent.putExtra("content", content);
                             intent.putExtra("sTimeStr", sTimeStr);
                             intent.putExtra("eTimeStr", eTimeStr);
