@@ -15,6 +15,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.kwsoft.kehuhua.adcustom.MessagAlertActivity;
 import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.adcustom.base.BaseActivity;
@@ -75,11 +76,11 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
         initView();
         initFragment();
 //        if (!Constant.USERID.equals(useridOld)){
-       // initDialog();
+        initDialog();
 //           sPreferences.edit().putString("useridOld", Constant.USERID).apply();
 //        }
         PgyUpdateManager.register(this);
-        Utils.startPollingService(mContext,30,SessionService.class, SessionService.ACTION);//启动20分钟一次的轮询获取session服务
+        Utils.startPollingService(mContext, 30, SessionService.class, SessionService.ACTION);//启动20分钟一次的轮询获取session服务
     }
 
     public void initDialog() {
@@ -87,43 +88,14 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
         String admissionInfoUrl = Constant.sysUrl + Constant.requestListData;
 
         //参数
-//        Map<String, String> paramsMap = new HashMap<>();
-//        paramsMap.put("tableId", "313");
-//        paramsMap.put("pageId", "2782");
-//        //请求
-//        OkHttpUtils
-//                .post()
-//                .params(paramsMap)
-//                .url(admissionInfoUrl)
-//                .build()
-//                .execute(new EdusStringCallback(StuMainActivity.this) {
-//                    @Override
-//                    public void onError(Call call, Exception e, int id) {
-//                        ErrorToast.errorToast(mContext, e);
-//                        Log.e(TAG, "onError: Call  " + call + "  id  " + id);
-//                    }
-//
-//                    @Override
-//                    public void onResponse(String response, int id) {
-//                        Log.e(TAG, "网络获取添加数据" + response);
-//                        //DLCH.put(volleyUrl + paramsStr, jsonData);
-////                        setStore(jsonData);
-//                        Map<String, Object> admissionMap = JSON.parseObject(response,
-//                                new TypeReference<Map<String, Object>>() {
-//                                });
-//                        List<Map<String, Object>> rowsMap = (List<Map<String, Object>>) admissionMap.get("rows");
-//                        Map<String, Object> map = rowsMap.get(0);
-//                        String AFM_1Id = map.get("AFM_1").toString();
-
-        String admissionInfoUrl2 = "http://192.168.6.150:8081/hps_edus_auto/phone_startSchoolInfo.do";
-        Map<String, String> paramsMap2 = new HashMap<>();
-//                        paramsMap2.put("id", AFM_1Id);
-        paramsMap2.put("id", "794");
-
+        Map<String, String> paramsMap = new HashMap<>();
+        paramsMap.put("tableId", "313");
+        paramsMap.put("pageId", "2782");
+        //请求
         OkHttpUtils
                 .post()
-                .params(paramsMap2)
-                .url(admissionInfoUrl2)
+                .params(paramsMap)
+                .url(admissionInfoUrl)
                 .build()
                 .execute(new EdusStringCallback(StuMainActivity.this) {
                     @Override
@@ -135,39 +107,69 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
                     @Override
                     public void onResponse(String response, int id) {
                         Log.e(TAG, "网络获取添加数据" + response);
-                        admissInfoContent = response;
-
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                CustomDialog.Builder builder = new CustomDialog.Builder(StuMainActivity.this);
-//                builder.setMessage("这个就是自定义的提示框");
-                                builder.setTitle("入学须知");
-                                if (admissInfoContent == null || admissInfoContent.length() <= 0) {
-                                    admissInfoContent = "暂无数据！";
-                                }
-                                builder.setMessage(admissInfoContent);
-                                builder.setPositiveButton("我知道了!", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                        //设置你的操作事项
-                                    }
+                        //DLCH.put(volleyUrl + paramsStr, jsonData);
+//                        setStore(jsonData);
+                        Map<String, Object> admissionMap = JSON.parseObject(response,
+                                new TypeReference<Map<String, Object>>() {
                                 });
+                        List<Map<String, Object>> rowsMap = (List<Map<String, Object>>) admissionMap.get("rows");
+                        Map<String, Object> map = rowsMap.get(0);
+                        String AFM_1Id = map.get("AFM_1").toString();
 
-                                builder.setNegativeButton("",
-                                        new android.content.DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                dialog.dismiss();
+                        // String admissionInfoUrl2 = "http://192.168.6.150:8081/hps_edus_auto/phone_startSchoolInfo.do";
+                        String admissionInfoUrl2 = Constant.sysUrl + Constant.admissionUrl;
+                        Map<String, String> paramsMap2 = new HashMap<>();
+                        paramsMap2.put("id", AFM_1Id);
+                      //  paramsMap2.put("id", "794");
+
+                        OkHttpUtils
+                                .post()
+                                .params(paramsMap2)
+                                .url(admissionInfoUrl2)
+                                .build()
+                                .execute(new EdusStringCallback(StuMainActivity.this) {
+                                    @Override
+                                    public void onError(Call call, Exception e, int id) {
+                                        ErrorToast.errorToast(mContext, e);
+                                        Log.e(TAG, "onError: Call  " + call + "  id  " + id);
+                                    }
+
+                                    @Override
+                                    public void onResponse(String response, int id) {
+                                        Log.e(TAG, "网络获取添加数据" + response);
+                                        admissInfoContent = response;
+
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                CustomDialog.Builder builder = new CustomDialog.Builder(StuMainActivity.this);
+//                builder.setMessage("这个就是自定义的提示框");
+                                                builder.setTitle("入学须知");
+                                                if (admissInfoContent == null || admissInfoContent.length() <= 0) {
+                                                    admissInfoContent = "暂无数据！";
+                                                }
+                                                builder.setMessage(admissInfoContent);
+                                                builder.setPositiveButton("我知道了!", new DialogInterface.OnClickListener() {
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        dialog.dismiss();
+                                                        //设置你的操作事项
+                                                    }
+                                                });
+
+                                                builder.setNegativeButton("",
+                                                        new android.content.DialogInterface.OnClickListener() {
+                                                            public void onClick(DialogInterface dialog, int which) {
+                                                                dialog.dismiss();
+                                                            }
+                                                        });
+
+                                                builder.create().show();
                                             }
                                         });
-
-                                builder.create().show();
-                            }
-                        });
+                                    }
+                                });
                     }
                 });
-//                    }
-//                });
 
 
     }
@@ -379,5 +381,5 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
         super.onDestroy();
         Utils.stopPollingService(this, SessionService.class, SessionService.ACTION);
     }
-    }
+}
 

@@ -224,8 +224,6 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
     private static long exitTime = 0;// 退出时间
 
 
-
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {

@@ -41,6 +41,8 @@ public class Constant {
     public final static String commitAdd = "add_interfaceAdd.do";
     public final static String requestRowsAdd = "addRelation_interfaceToAddRelationPage.do";
 
+    public final static String admissionUrl = "phone_startSchoolInfo.do";
+
     public final static String requestEdit = "update_interfaceToUpdate.do";
     public final static String requestDelete = "delete_interfaceDelete.do";
     public final static String commitEdit = "update_interfaceUpdate.do";

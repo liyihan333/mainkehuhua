@@ -140,6 +140,8 @@ public class TodayCourseTableActivity extends BaseActivity {
             paramsMap.put("pageId", pageid);
             paramsMap.put("start", start + "");
             paramsMap.put("limit", limit + "");
+
+            Log.e(TAG, "getTData: " + paramsMap.toString());
 //请求
             OkHttpUtils
                     .post()
@@ -157,6 +159,7 @@ public class TodayCourseTableActivity extends BaseActivity {
 
                         @Override
                         public void onResponse(String response, int id) {
+                            Log.e(TAG, "today:" + response);
                             parseData(response);
                         }
                     });
@@ -211,8 +214,9 @@ public class TodayCourseTableActivity extends BaseActivity {
     }
 
     private static final String TAG = "TodayCourseTableActivit";
+
     private void parseData(String response) {
-        Log.e(TAG, "parseData: response "+response);
+        Log.e(TAG, "parseData: response " + response);
         Map<String, Object> menuMap = JSON.parseObject(response,
                 new TypeReference<Map<String, Object>>() {
                 });
@@ -228,7 +232,7 @@ public class TodayCourseTableActivity extends BaseActivity {
                 Map<String, Object> map = fieldSet.get(i);
                 fieldCnName = map.get("fieldCnName") + "";
 
-                if (fieldCnName.contains("教师")) {
+                if (fieldCnName.contains("内容展示")) {
                     teacherfieldAliasName = map.get("fieldAliasName") + "";
                     continue;
                 } else if (fieldCnName.contains("时段")) {
@@ -242,7 +246,13 @@ public class TodayCourseTableActivity extends BaseActivity {
                 Map<String, Object> dataListmap = dataList.get(j);
                 Map<String, String> map = new HashMap<String, String>();
                 if (dataListmap.containsKey(teacherfieldAliasName)) {
-                    map.put("courseName", dataListmap.get(teacherfieldAliasName) + "");
+                    String courseNameStr = (dataListmap.get(teacherfieldAliasName)).toString();
+                    if (courseNameStr != null && courseNameStr.length() > 0) {
+                        String[] courseNameArr = courseNameStr.split(",");
+                        if (courseNameArr.length > 2) {
+                            map.put("courseName", courseNameArr[courseNameArr.length - 2].substring(3));
+                        }
+                    }
                 }
                 if (dataListmap.containsKey(classfieldAliasName)) {
                     map.put("courseTime", dataListmap.get(classfieldAliasName) + "");
