@@ -423,6 +423,7 @@ public class ListFragment extends Fragment {
             intent.putExtra("childData", itemData);
             intent.putExtra("tableId", tableId);
             intent.putExtra("operaButtonSet", operaButtonSet);
+            Log.e(TAG, "toItem: 传递到info的operaButtonSet "+operaButtonSet);
 
             startActivity(intent);
         } catch (Exception e) {

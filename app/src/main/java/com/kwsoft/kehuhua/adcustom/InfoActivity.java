@@ -82,7 +82,7 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
             infoDataList = JSON.parseObject(infoData,
                     new TypeReference<List<Map<String, String>>>() {
                     });
-            Log.e("TAG","infoData "+infoData);
+            Log.e("TAG","info收到的operaData "+operaData);
             Log.e("TAG","infoData "+infoData);
             mainId=infoDataList.get(0).get("mainId");
             tableId=infoDataList.get(0).get("tableId");
@@ -104,6 +104,7 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
 
                     List<Map<String, Object>> operaButtonNow=new ArrayList<>();//不能在原来的上面改，需要新建，否则后面的会得到错误的集合
                     String itemDataStr=infoDataList.get(0).get("allItemData");
+                    Log.e(TAG, "getInfoData: itemDataStr "+itemDataStr);
                     Map<String,Object>  itemDataMap = JSON.parseObject(itemDataStr,
                             new TypeReference<Map<String, Object>>() {
                             });
@@ -114,7 +115,7 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
                         String buttonKey="BTN_SHOW_"+buttonId;
                         String isShow=String.valueOf(itemDataMap.get(buttonKey));
 
-                        if (isShow.equals("1")) {
+                        if (!isShow.equals("0")) {
                             operaButtonNow.add(operaButtonSet0.get(i));
                         }
                     }
