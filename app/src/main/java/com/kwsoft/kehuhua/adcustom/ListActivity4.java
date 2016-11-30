@@ -263,7 +263,7 @@ public class ListActivity4 extends BaseActivity implements ViewPager.OnPageChang
                 xFragment = new CourseRatingBarFragment();
             }else if(titleName.contains("学员课程教师")&& StuPra.studentProId.equals("57159822f07e75084cb8a1fe")){
                 xFragment = new StuClassTchFragment();
-            }else if(titleName.contains("Class Amount")){
+            }else if(titleName.equals("Class Amount")){
                 xFragment = new TeaachAmountFragment();
                 Log.e("kl","kl");
             }else {
