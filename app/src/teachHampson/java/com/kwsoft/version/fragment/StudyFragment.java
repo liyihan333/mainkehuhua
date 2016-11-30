@@ -3,6 +3,7 @@ package com.kwsoft.version.fragment;
 import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.TypeReference;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.kwsoft.kehuhua.adcustom.BlankActivity;
@@ -85,6 +87,7 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
     public String teachUrl, homePageListstr;
     private String todayPageId, tomorrowPageId, todayTableid, tomorrowTableId;//金明日课表page/table
     private List<Map<String, Object>> homePagelistMap = new ArrayList<>();
+    SimpleDraweeView stuHeadImage;
 
     @Nullable
     @Override
@@ -104,6 +107,8 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
         tvUserrole = (TextView) view.findViewById(R.id.tv_userrole);
         tvMonth = (TextView) view.findViewById(R.id.tv_month);
         tvDay = (TextView) view.findViewById(R.id.tv_day);
+
+        stuHeadImage = (SimpleDraweeView) view.findViewById(R.id.stu_head_image);
 
         try {
             String username = Constant.loginName;
@@ -218,9 +223,18 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
         if (!isLogin) {
             isLogin = arrBundle.getBoolean("isLogin");
             initData();
+          //  updateImage();
         } else {
             getLoginData(teachUrl);
+          //  updateImage();
+
         }
+
+    }
+
+    public void updateImage(){
+        Uri uri = Uri.parse(Constant.sysUrl + Constant.downLoadFileStr + Constant.teaMongoId);
+        stuHeadImage.setImageURI(uri);
     }
 
     public void initData() {
@@ -388,7 +402,7 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
                 cnName = String.valueOf(listMap.get(i).get("cnName"));
                 map.put("ctType", "3");
                 map.put("cnName", cnName);
-               // int j = i % 4;
+                // int j = i % 4;
                 map.put("image", imgs2[i]);
                 map.put("SourceDataId", listMap.get(i).get("homeSetId") + "_" + listMap.get(i).get("index"));
                 map.put("penetratePageId", listMap.get(i).get("phonePageId"));

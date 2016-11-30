@@ -339,7 +339,10 @@ public class StuLoginActivity extends BaseActivity implements View.OnClickListen
             List<Map<String, Object>> menuListMap3 = (List<Map<String, Object>>) menuMap.get("personInfoList");//个人资料
             List<Map<String, Object>> menuListMap5 = (List<Map<String, Object>>) menuMap.get("feedbackInfoList");//反馈信息
             List<Map<String, Object>> menuListMap6 = (List<Map<String, Object>>) menuMap.get("homePageList");//今日课表、明日课表
-
+            if (menuMap.containsKey("teaMongoId")) {
+                String teaMongoId = menuMap.get("teaMongoId").toString();
+                Constant.teaMongoId = teaMongoId;
+            }
 
             Intent intent = new Intent();
             intent.setClass(StuLoginActivity.this, StuMainActivity.class);

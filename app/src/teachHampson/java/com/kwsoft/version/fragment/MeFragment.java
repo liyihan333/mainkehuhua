@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -27,6 +28,7 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.adcustom.base.BaseActivity;
 import com.kwsoft.kehuhua.bean.LoginError;
@@ -88,10 +90,10 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     @Bind(R.id.stu_version)
     TextView stuVersion;
     @Bind(R.id.stu_head_image)
-    ImageView stuHeadImage;
+    SimpleDraweeView stuHeadImage;
 
     private ArrayList<String> imgPaths = new ArrayList<>();
-    public  String valueCode;
+    public String valueCode;
 
     @Nullable
     @Override
@@ -112,11 +114,18 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     }
 
     public void initData() {
-
         //    tvCleanCache.setText(getCache());
-
         stuName.setText(Constant.loginName);
         stuPhone.setText(Constant.USERNAME_ALL);
+//        if (Constant.teaMongoId != null && Constant.teaMongoId.length() > 0) {
+            Uri uri = Uri.parse(Constant.sysUrl + Constant.downLoadFileStr + Constant.teaMongoId);
+            stuHeadImage.setImageURI(uri);
+//        }else {
+//            stuHeadImage.setBackground(R.drawable.ic_bg);
+//        }
+
+
+
         // stuSchoolArea.setText("北京校区");
         try {
             //开始获取版本号
@@ -165,7 +174,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void getMeTableId(String meStr, List<Map<String, Object>> meListMap) {
-        Log.e(TAG, "getMeTableId: meListMap "+meListMap.toString());
+        Log.e(TAG, "getMeTableId: meListMap " + meListMap.toString());
         if (meStr != null) {
             try {
                 meListMap = JSON.parseObject(meStr,
@@ -198,21 +207,21 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
         }
 //        if (!Constant.teachPerTABLEID.equals("")&&!Constant.teachPerPAGEID.equals("")) {
-            getData();
+        getData();
 //        }else{
 //            Toast.makeText(getActivity(), "缺少参数", Toast.LENGTH_SHORT).show();
 //        }
     }
 
-//    private Map<String, String> paramsMap=;
+    //    private Map<String, String> paramsMap=;
     @SuppressWarnings("unchecked")
     public void getData() {
-        if (((BaseActivity)getActivity()).hasInternetConnected()) {
+        if (((BaseActivity) getActivity()).hasInternetConnected()) {
             //地址
             String volleyUrl = Constant.sysUrl + Constant.requestListSet;
             Log.e("TAG", "列表请求地址：" + volleyUrl);
             //参数
-            Map<String, String> paramsMap=new HashMap<>();
+            Map<String, String> paramsMap = new HashMap<>();
             paramsMap.put(Constant.tableId, "2");
             paramsMap.put(Constant.pageId, "3573");
             //请求
@@ -225,30 +234,32 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                         @Override
                         public void onError(Call call, Exception e, int id) {
 
-                            Log.e(TAG, "onError: Call  "+call+"  id  "+id);
+                            Log.e(TAG, "onError: Call  " + call + "  id  " + id);
                         }
 
                         @Override
                         public void onResponse(String response, int id) {
-                            Log.e(TAG, "onResponse: response "+response);
+                            Log.e(TAG, "onResponse: response " + response);
                             getDataId(response);
                         }
                     });
-        }else{
-            ((BaseActivity)getActivity()).dialog.dismiss();
+        } else {
+            ((BaseActivity) getActivity()).dialog.dismiss();
             Toast.makeText(getActivity(), "请连接网络", Toast.LENGTH_SHORT).show();
 
         }
     }
+
     String dataId;
+
     private void getDataId(String response) {
-        Log.e(TAG, "getDataId: response"+response);
+        Log.e(TAG, "getDataId: response" + response);
         try {
             Map<String, Object> setMap = JSON.parseObject(response,
                     new TypeReference<Map<String, Object>>() {
                     });
-            List<Map<String, Object>>  mapList= (List<Map<String, Object>>) setMap.get("dataList");
-           dataId=String.valueOf( mapList.get(0).get("T_"+"2"+"_0"));
+            List<Map<String, Object>> mapList = (List<Map<String, Object>>) setMap.get("dataList");
+            dataId = String.valueOf(mapList.get(0).get("T_" + "2" + "_0"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -432,7 +443,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         if (resultCode == RESULT_OK && requestCode == PhotoPicker.REQUEST_CODE) {
             if (data != null) {
                 imgPaths.clear();
-                ((BaseActivity)getActivity()).dialog.show();
+                ((BaseActivity) getActivity()).dialog.show();
                 ArrayList<String> photos = data.getStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS);
                 imgPaths.addAll(photos);
                 Log.e(TAG, "onActivityResult: " + imgPaths.get(0));
@@ -455,25 +466,25 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                     public void onError(Call call, Exception e, int id) {
                         ErrorToast.errorToast(mContext, e);
 //                        waveProgress.setVisibility(View.GONE);
-                        ((BaseActivity)getActivity()).dialog.dismiss();
+                        ((BaseActivity) getActivity()).dialog.dismiss();
                     }
 
                     @Override
                     public void onResponse(String response, int id) {
                         try {
                             String[] valueTemp1 = response.split(":");
-                             valueCode = valueTemp1[1];
-                            Log.e("MyfrgupLoad",response);
+                            valueCode = valueTemp1[1];
+                            Log.e("MyfrgupLoad", response);
                             Toast.makeText(getActivity(), "上传成功", Toast.LENGTH_SHORT).show();
                             String url = Constant.sysUrl + Constant.teachHeadUpdate;
                             Map<String, String> paramsMap = new HashMap<>();
-                            paramsMap.put("t0_au_2_4171",dataId);
-                            paramsMap.put("t0_au_2_4171_3569",valueCode);
-                            paramsMap.put("ifCleanInnerData","undefined");
-                            paramsMap.put("ifRecordingLog","0");
+                            paramsMap.put("t0_au_2_4171", dataId);
+                            paramsMap.put("t0_au_2_4171_3569", valueCode);
+                            paramsMap.put("ifCleanInnerData", "undefined");
+                            paramsMap.put("ifRecordingLog", "0");
                             paramsMap.put(Constant.tableId, "2");
                             paramsMap.put(Constant.pageId, "4171");
-                            Log.e("up2",paramsMap.toString());
+                            Log.e("up2", paramsMap.toString());
 
                             OkHttpUtils
                                     .post()
@@ -485,38 +496,40 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                                         public void onError(Call call, Exception e, int id) {
                                             ErrorToast.errorToast(mContext, e);
                                             Log.e(TAG, "onError: Call  " + call + "  id  " + id);
-                                            ((BaseActivity)getActivity()).dialog.dismiss();
+                                            ((BaseActivity) getActivity()).dialog.dismiss();
                                         }
 
                                         @Override
                                         public void onResponse(String response, int id) {
-                                            Log.e(TAG, "onResponse: "+ response);
-                                            if ("1".equals(response.trim())){
-                                                Log.e(TAG, "onResponse: "+"sccg");  //  setStore(response);
-                                                ((BaseActivity)getActivity()).dialog.dismiss();
+                                            Log.e(TAG, "onResponse: " + response);
+                                            if ("1".equals(response.trim())) {
+                                                Log.e(TAG, "onResponse: " + "sccg");  //  setStore(response);
+                                                ((BaseActivity) getActivity()).dialog.dismiss();
                                                 Toast.makeText(getActivity(), "提交成功", Toast.LENGTH_SHORT).show();
 
                                                 getActivity().runOnUiThread(new Runnable() {
                                                     @Override
                                                     public void run() {
-                                                        File file = new File(imgPaths.get(0));
-                                                        Bitmap bitmap= BitmapFactory.decodeFile(file.getPath());
-                                                        Drawable drawable =new BitmapDrawable(bitmap);
-                                                       // stuHeadImage.setImageBitmap(bitmap);
-                                                        stuHeadImage.setBackground(drawable);
+//                                                        File file = new File(imgPaths.get(0));
+//                                                        Bitmap bitmap = BitmapFactory.decodeFile(file.getPath());
+//                                                        Drawable drawable = new BitmapDrawable(bitmap);
+//                                                        // stuHeadImage.setImageBitmap(bitmap);
+//                                                        stuHeadImage.setBackground(drawable);
+                                                        Uri uri = Uri.parse("file://"+imgPaths.get(0));
+                                                        stuHeadImage.setImageURI(uri);
                                                     }
                                                 });
 
                                             } else {
                                                 Toast.makeText(getActivity(), "暂时没有个人信息", Toast.LENGTH_SHORT).show();
-                                                ((BaseActivity)getActivity()).dialog.dismiss();
+                                                ((BaseActivity) getActivity()).dialog.dismiss();
                                             }
                                         }
                                     });
 
                         } catch (Exception e) {
                             e.printStackTrace();
-                            ((BaseActivity)getActivity()).dialog.dismiss();
+                            ((BaseActivity) getActivity()).dialog.dismiss();
                         }
                     }
 

@@ -36,7 +36,6 @@ public class StuProLoginActivity extends BaseActivity {
     }
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +71,7 @@ public class StuProLoginActivity extends BaseActivity {
             }
 
 
-        }else{
+        } else {
             toLoginPage();
         }
     }
@@ -110,15 +109,15 @@ public class StuProLoginActivity extends BaseActivity {
                         .execute(new EdusStringCallback(mContext) {
                             @Override
                             public void onError(Call call, Exception e, int id) {
-                                ErrorToast.errorToast(mContext,e);
+                                ErrorToast.errorToast(mContext, e);
                                 dialog.dismiss();
-                                ErrorToast.errorToast(mContext,e);
+                                ErrorToast.errorToast(mContext, e);
                                 toLoginPage();
                             }
 
                             @Override
                             public void onResponse(String response, int id) {
-                                Log.e(TAG, "onResponse: "+response+"  id  "+id);
+                                Log.e(TAG, "onResponse: " + response + "  id  " + id);
                                 check(response);
                             }
                         });
@@ -177,20 +176,22 @@ public class StuProLoginActivity extends BaseActivity {
             sPreferences.edit().putString("userid", userid).apply();
             List<Map<String, Object>> menuListMap1 = (List<Map<String, Object>>) menuMap.get("roleFollowList");
             List<Map<String, Object>> menuListMap2 = (List<Map<String, Object>>) menuMap.get("menuList");
-           // List<Map<String, Object>> menuListMap3 = (List<Map<String, Object>>) menuMap.get("hideMenuList");
+            // List<Map<String, Object>> menuListMap3 = (List<Map<String, Object>>) menuMap.get("hideMenuList");
             List<Map<String, Object>> menuListMap3 = (List<Map<String, Object>>) menuMap.get("personInfoList");//个人资料
             List<Map<String, Object>> menuListMap5 = (List<Map<String, Object>>) menuMap.get("feedbackInfoList");//反馈信息
             List<Map<String, Object>> menuListMap6 = (List<Map<String, Object>>) menuMap.get("homePageList");//今日课表、明日课表
 
-//
-//
+            if (menuMap.containsKey("teaMongoId")) {
+                String teaMongoId = menuMap.get("teaMongoId").toString();
+                Constant.teaMongoId = teaMongoId;
+            }
             Intent intent = new Intent();
             intent.setClass(StuProLoginActivity.this, StuMainActivity.class);
             intent.putExtra("jsonArray", JSON.toJSONString(menuListMap1));
             intent.putExtra("menuDataMap", JSON.toJSONString(menuListMap2));
             intent.putExtra("hideMenuList", JSON.toJSONString(menuListMap3));
-            intent.putExtra("feedbackInfoList",JSON.toJSONString(menuListMap5));
-            intent.putExtra("homePageList",JSON.toJSONString(menuListMap6));//今明日课表
+            intent.putExtra("feedbackInfoList", JSON.toJSONString(menuListMap5));
+            intent.putExtra("homePageList", JSON.toJSONString(menuListMap6));//今明日课表
             startActivity(intent);
             finish();
 
@@ -230,7 +231,7 @@ public class StuProLoginActivity extends BaseActivity {
                 if (loginInfo.get("USERNAME") != null) {
                     Log.e("TAG", "USERNAME" + loginInfo.get("USERNAME"));
                     Constant.loginName = String.valueOf(loginInfo.get("USERNAME"));
-                    Constant.roleNamesTeach=String.valueOf(loginInfo.get("roleNames"));
+                    Constant.roleNamesTeach = String.valueOf(loginInfo.get("roleNames"));
                     Toast.makeText(StuProLoginActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
                     Constant.USERID = String.valueOf(loginInfo.get("USERID"));
                 }

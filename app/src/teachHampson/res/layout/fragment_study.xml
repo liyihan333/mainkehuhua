@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:background="@color/normal_bg3"
     android:orientation="vertical">
 
@@ -40,10 +40,21 @@
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp">
 
-                    <ImageView
+                    <!--<ImageView-->
+                        <!--android:layout_width="40dp"-->
+                        <!--android:layout_height="40dp"-->
+                        <!--android:src="@mipmap/edus_portrait_normal" />
+                        -->
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:id="@+id/stu_head_image"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:src="@mipmap/edus_portrait_normal" />
+                        fresco:failureImage="@mipmap/edus_portrait_normal"
+                        fresco:progressBarImage="@mipmap/jiazaizhong"
+                        fresco:progressBarAutoRotateInterval="5000"
+                        fresco:roundAsCircle="true"
+                        fresco:pressedStateOverlayImage="@color/gray"
+                        />
 
                     <LinearLayout
                         android:id="@+id/stu_homepage_info"

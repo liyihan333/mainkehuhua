@@ -50,7 +50,7 @@ public class Constant {
     public final static String requestTreeDialog = "treeDialog_interfaceToList.do";
     public final static String requestMaxRule = "add_interfaceAjaxGetMaxRule.do";
 
-    public final static String teachHeadUpdate="update_updateInfo.do";
+    public final static String teachHeadUpdate = "update_updateInfo.do";
 
     public final static String requestMessage = "mongoModel_interfaceSysMessList.do";
 
@@ -118,6 +118,8 @@ public class Constant {
     /* 搜索地址所需信息 */
     public final static String searchCommitUrl = "http://192.168.6.46:8080/phone_edus_auto/model_ajaxList.do?";
 
+    public static String teaMongoId = "";//老师头像id
+
 
     /*增加学员信息*/
     public final static String tableId = "tableId";// 菜单中潜在学员的tableId
@@ -164,7 +166,7 @@ public class Constant {
     public static int topBarColor;
 
 
-    public static List<Map<String, Object>> buttonSet =null;//按钮列表数据
+    public static List<Map<String, Object>> buttonSet = null;//按钮列表数据
 
     public final static String downLoadFileStr = "DownLoadFile?str=";
 
