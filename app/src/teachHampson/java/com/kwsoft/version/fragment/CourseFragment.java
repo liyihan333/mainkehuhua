@@ -15,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
@@ -42,7 +41,6 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import noman.weekcalendar.WeekCalendar;
 import noman.weekcalendar.WeekCalendarTeach;
 import noman.weekcalendar.WeekDateChaListener;
 import noman.weekcalendar.listener.OnDateClickListener;
