@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RadioButton;
@@ -334,26 +335,26 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
 //        }
     }
 
-//    private static long exitTime = 0;// 退出时间
-//
-//    @Override
-//    public boolean onKeyDown(int keyCode, KeyEvent event) {
-//        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-//            if ((System.currentTimeMillis() - exitTime) > 1000) {
-//
-//                String msg = "再按一次退出";
-//                Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-//
-//                exitTime = System.currentTimeMillis();
-//            } else {
-//                Toast.makeText(this, "直接退出", Toast.LENGTH_SHORT).show();
-////                CloseActivityClass.exitClient(this);
-//                finish();
-//            }
-//            return true;
-//        }
-//        return super.onKeyDown(keyCode, event);
-//    }
+    private static long exitTime = 0;// 退出时间
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            if ((System.currentTimeMillis() - exitTime) > 1000) {
+
+                String msg = "再按一次退出";
+                Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+
+                exitTime = System.currentTimeMillis();
+            } else {
+                Toast.makeText(this, "直接退出", Toast.LENGTH_SHORT).show();
+//                CloseActivityClass.exitClient(this);
+                finish();
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
 
     @Override
