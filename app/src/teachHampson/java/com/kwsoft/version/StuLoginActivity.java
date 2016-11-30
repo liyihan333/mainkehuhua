@@ -266,7 +266,6 @@ public class StuLoginActivity extends BaseActivity implements View.OnClickListen
                         .execute(new EdusStringCallback(mContext) {
                             @Override
                             public void onError(Call call, Exception e, int id) {
-                                ErrorToast.errorToast(mContext,e);
                                 dialog.dismiss();
                                 ErrorToast.errorToast(mContext,e);
                                 Log.e(TAG, "onError: e.getClass()"+e.getClass());
