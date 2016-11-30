@@ -75,10 +75,10 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
 
         initView();
         initFragment();
-//        if (!Constant.USERID.equals(useridOld)){
-        initDialog();
-//           sPreferences.edit().putString("useridOld", Constant.USERID).apply();
-//        }
+        if (!Constant.USERID.equals(useridOld)) {
+            initDialog();
+            sPreferences.edit().putString("useridOld", Constant.USERID).apply();
+        }
         PgyUpdateManager.register(this);
         Utils.startPollingService(mContext, 30, SessionService.class, SessionService.ACTION);//启动20分钟一次的轮询获取session服务
     }
@@ -120,7 +120,7 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
                         String admissionInfoUrl2 = Constant.sysUrl + Constant.admissionUrl;
                         Map<String, String> paramsMap2 = new HashMap<>();
                         paramsMap2.put("id", AFM_1Id);
-                      //  paramsMap2.put("id", "794");
+                        //  paramsMap2.put("id", "794");
 
                         OkHttpUtils
                                 .post()
@@ -325,6 +325,7 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
 //            startActivityForResult(intent, 1);
 //        } else if (miui) {
 //            //小米
+
 //            Intent intent = new Intent(StuMainActivity.this, CaptureActivity.class);
 //            startActivityForResult(intent, 1);
 //        } else if (flyme) {
