@@ -188,15 +188,15 @@
                     android:textSize="20sp" />
             </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="63sp"
-                android:text="©版权所有:可为时代"
-                android:textColor="#858585"
-                android:textSize="@dimen/text_size_9" />
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentBottom="true"-->
+                <!--android:layout_centerHorizontal="true"-->
+                <!--android:layout_marginBottom="63sp"-->
+                <!--android:text="©版权所有:可为时代"-->
+                <!--android:textColor="#858585"-->
+                <!--android:textSize="@dimen/text_size_9" />-->
 
             <ImageView
                 android:layout_width="45dp"
@@ -209,9 +209,17 @@
                 android:src="@mipmap/set_ip_config"
                 android:onClick="toSetIpPortProject"/>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:gravity="center_horizontal"
+                android:text="©版权所有:可为时代"
+                android:textColor="#858585"
+                android:textSize="@dimen/text_size_9"
+                android:layout_alignParentBottom="true"
+                android:id="@+id/textView3" />
+
         </RelativeLayout>
-
-
     </LinearLayout>
-
 </RelativeLayout>
