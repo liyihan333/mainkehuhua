@@ -255,6 +255,7 @@ public class DataProcess {
 
     public static String commit(Activity mActivity,
                                 List<Map<String, Object>> dataCommit) {
+        Log.e(TAG, "commit: dataCommit "+dataCommit.toString());
 //必填项判断
         String commitUrl = "";
         int numNull = 0;//判断必填项是否填写
@@ -308,6 +309,15 @@ public class DataProcess {
                 commitMap1.put(key, value);
             }
             for (Map.Entry entry : commitMap1.entrySet()) {
+                String key=String.valueOf(entry.getKey());
+                if (key.endsWith("_0")) {
+                    commitMap1.remove(key);
+                }
+
+            }
+
+            for (Map.Entry entry : commitMap1.entrySet()) {
+
                 commitUrl += entry.getKey() + "=" + entry.getValue() + "&";
             }
             commitUrl = commitUrl.substring(0, commitUrl.length() - 1);
