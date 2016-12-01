@@ -57,7 +57,7 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
         initFragment();
         // initDialog();
         PgyUpdateManager.register(this);
-        Utils.startPollingService(mContext,17*60,SessionService.class, SessionService.ACTION);//启动20分钟一次的轮询获取session服务
+        Utils.startPollingService(mContext,5*60,SessionService.class, SessionService.ACTION);//启动20分钟一次的轮询获取session服务
 
     }
 

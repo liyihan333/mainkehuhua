@@ -48,7 +48,7 @@ public class OperateDataActivity extends BaseActivity {
     private Map<String, String> paramsMap;
     private int buttonType;
     private String keyRelation = "";
-    private String hideFieldParagram = "";
+    private String hideFieldParagram = "&";
 
 
     private static final String TAG = "OperateDataActivity";
@@ -213,17 +213,17 @@ public class OperateDataActivity extends BaseActivity {
                     case 0://添加提交地址
                         volleyUrl1 = Constant.sysUrl + Constant.commitAdd + "?" +
                                 Constant.tableId + "=" + tableId + "&" + Constant.pageId + "=" + pageId + "&" +
-                                value + "&" + hideFieldParagram;
+                                value + hideFieldParagram;
                         break;
                     case 18:
                         volleyUrl1 = Constant.sysUrl + Constant.commitAdd + "?" +
                                 Constant.tableId + "=" + tableId + "&" + Constant.pageId + "=" + pageId + "&" +
-                                value + "&" + hideFieldParagram + "&" + keyRelation;
+                                value + hideFieldParagram + "&" + keyRelation;
                         break;
                     case 12:
                         volleyUrl1 = Constant.sysUrl + Constant.commitEdit + "?" +
                                 Constant.tableId + "=" + tableId + "&" + Constant.pageId + "=" + pageId + "&" +
-                                value + "&" + hideFieldParagram + "&" + keyRelation;
+                                value + hideFieldParagram + "&" + keyRelation;
                         break;
                 }
                 //请求地址（关联添加和修改）

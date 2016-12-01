@@ -316,7 +316,7 @@ public class OperateDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     holder.addGeneral.setVisibility(View.VISIBLE);
                 }
                 //将long型时间改为约定的时间格式
-                String dateType = "yyyy-MM-dd HH:mm:ss";
+                String dateType = "HH:mm:ss";
                 //判断 如果defaultName是格林尼治时间字符串
 
                 //转换long为日期
@@ -338,22 +338,15 @@ public class OperateDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 holder.addGeneral.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        SelectDateDialog mSelectDateDialog = new SelectDateDialog(mContext);
-                        mSelectDateDialog.setOnClickListener(new SelectDateDialog.OnClickListener() {
-                            @Override
-                            public boolean onSure(int mYear, int mMonth, int mDay, long time) {
-                                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                                final String date = dateFormat.format(time);
                                 //选择时间
                                 SelectTimeDialog mSelectTimeDialog = new SelectTimeDialog(mContext, new SelectTimeDialog.OnClickListener() {
                                     @Override
                                     public boolean onSure(int hour, int minute, int setTimeType) {
                                         String result = String.format("%02d:%02d:%02d", hour, minute, 0);
-                                        String dateAndTime = date + " " + result;
-                                        holder.addGeneral.setText(dateAndTime);
-                                        Log.e(TAG, "onSure: dateAndTime  " + dateAndTime);
-                                        mDatas.get(position).put(itemValue, dateAndTime);
-                                        mDatas.get(position).put(Constant.itemName, dateAndTime);
+                                        holder.addGeneral.setText(result);
+                                        Log.e(TAG, "onSure: dateAndTime  " + result);
+                                        mDatas.get(position).put(itemValue, result);
+                                        mDatas.get(position).put(Constant.itemName, result);
                                         return false;
                                     }
 
@@ -367,19 +360,7 @@ public class OperateDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                                 mSelectTimeDialog.show(c.get(Calendar.HOUR_OF_DAY),
                                         c.get(Calendar.MINUTE),
                                         c.get(Calendar.SECOND));
-                                return false;
-                            }
 
-                            @Override
-                            public boolean onCancel() {
-                                return false;
-                            }
-                        });
-                        Calendar c = Calendar.getInstance();
-                        c.setTimeInMillis(System.currentTimeMillis());
-                        mSelectDateDialog.show(c.get(Calendar.YEAR),
-                                c.get(Calendar.MONTH),
-                                c.get(Calendar.DAY_OF_MONTH));
                     }
                 });
 
@@ -388,7 +369,6 @@ public class OperateDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             } else if (fieldRole == 14 || fieldRole == 26 || fieldRole == 28) {
                 if (isShow) {
                     holder.addGeneral.setVisibility(View.VISIBLE);
-
                 }
 //将long型时间改为约定的时间格式
                 String dateType = "yyyy-MM-dd";
@@ -396,8 +376,6 @@ public class OperateDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 //判断是否为纯数字
 
                 //存储defaultName
-
-
                 //如果是则转换为时间类型字符串
                 if (defaultName.matches("[0-9]+")) {
                     long defaultNameLong = Long.valueOf(defaultName);
@@ -411,7 +389,6 @@ public class OperateDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     mDatas.get(position).put(itemValue, defaultName);
                     mDatas.get(position).put(Constant.itemName, defaultName);
                 }
-
 //                    final String finalDateType = dateType;
                 holder.addGeneral.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -441,7 +418,6 @@ public class OperateDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                                 c.get(Calendar.DAY_OF_MONTH));
                     }
                 });
-
             } else if (fieldRole == 19 || fieldRole == 18) {
 /**
  *
