@@ -5,6 +5,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -94,6 +95,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
     private ArrayList<String> imgPaths = new ArrayList<>();
     public String valueCode;
+    public static final String action = "com.kwsoft.version.fragment.mefragaction";
 
     @Nullable
     @Override
@@ -118,12 +120,11 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         stuName.setText(Constant.loginName);
         stuPhone.setText(Constant.USERNAME_ALL);
 //        if (Constant.teaMongoId != null && Constant.teaMongoId.length() > 0) {
-            Uri uri = Uri.parse(Constant.sysUrl + Constant.downLoadFileStr + Constant.teaMongoId);
-            stuHeadImage.setImageURI(uri);
+        Uri uri = Uri.parse(Constant.sysUrl + Constant.downLoadFileStr + Constant.teaMongoId);
+        stuHeadImage.setImageURI(uri);
 //        }else {
 //            stuHeadImage.setBackground(R.drawable.ic_bg);
 //        }
-
 
 
         // stuSchoolArea.setText("北京校区");
@@ -506,7 +507,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                                                 Log.e(TAG, "onResponse: " + "sccg");  //  setStore(response);
                                                 ((BaseActivity) getActivity()).dialog.dismiss();
                                                 Toast.makeText(getActivity(), "提交成功", Toast.LENGTH_SHORT).show();
-
+                                                final String uriStr = "file://" + imgPaths.get(0);
                                                 getActivity().runOnUiThread(new Runnable() {
                                                     @Override
                                                     public void run() {
@@ -515,10 +516,15 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 //                                                        Drawable drawable = new BitmapDrawable(bitmap);
 //                                                        // stuHeadImage.setImageBitmap(bitmap);
 //                                                        stuHeadImage.setBackground(drawable);
-                                                        Uri uri = Uri.parse("file://"+imgPaths.get(0));
+                                                        Uri uri = Uri.parse(uriStr);
                                                         stuHeadImage.setImageURI(uri);
                                                     }
                                                 });
+
+                                                //更新第一个activity的ui
+                                                Intent intent = new Intent(action);
+                                                intent.putExtra("uriStr", uriStr);
+                                               getActivity().sendBroadcast(intent);
 
                                             } else {
                                                 Toast.makeText(getActivity(), "暂时没有个人信息", Toast.LENGTH_SHORT).show();

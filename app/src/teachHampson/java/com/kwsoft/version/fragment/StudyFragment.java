@@ -1,7 +1,10 @@
 package com.kwsoft.version.fragment;
 
 import android.Manifest;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -107,8 +110,10 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
         tvUserrole = (TextView) view.findViewById(R.id.tv_userrole);
         tvMonth = (TextView) view.findViewById(R.id.tv_month);
         tvDay = (TextView) view.findViewById(R.id.tv_day);
-
+//设置首页头像
         stuHeadImage = (SimpleDraweeView) view.findViewById(R.id.stu_head_image);
+        String urlStr = Constant.sysUrl + Constant.downLoadFileStr + Constant.teaMongoId;
+        updateImage(urlStr);
 
         try {
             String username = Constant.loginName;
@@ -167,6 +172,11 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
         setMenuModel();
         // initData();
         //  initModel();
+
+
+        //设置广播
+        IntentFilter filter = new IntentFilter(MeFragment.action);
+        getActivity().registerReceiver(broadcastReceiver, filter);
     }
 
     private void setMenuModel() {
@@ -223,17 +233,24 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
         if (!isLogin) {
             isLogin = arrBundle.getBoolean("isLogin");
             initData();
-          //  updateImage();
         } else {
             getLoginData(teachUrl);
-          //  updateImage();
 
         }
 
     }
 
-    public void updateImage(){
-        Uri uri = Uri.parse(Constant.sysUrl + Constant.downLoadFileStr + Constant.teaMongoId);
+    BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            updateImage(intent.getExtras().getString("uriStr"));
+        }
+    };
+
+    public void updateImage(String uriStr) {
+        Uri uri = Uri.parse(uriStr);
         stuHeadImage.setImageURI(uri);
     }
 
@@ -497,7 +514,9 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        getActivity().unregisterReceiver(broadcastReceiver);
         ButterKnife.unbind(this);
+
     }
 
     @OnClick(R.id.stu_homepage_info)
