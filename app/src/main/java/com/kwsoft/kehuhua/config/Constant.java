@@ -5,6 +5,7 @@ import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Environment;
 import android.os.Looper;
 import android.text.TextUtils;
 import android.widget.Toast;
@@ -175,7 +176,8 @@ public class Constant {
     public static String stu_index = "";// 副key
     public static String stu_homeSetId = "";// 副key
 
-
+    public final static String sdPath = Environment.getExternalStorageDirectory().getAbsolutePath()+"/";//+ "/HampsonFile"+"/"
+    public final static String sdPathProject = "HampsonFile"+"/";
     public static void threadToast(Activity activity, String str) {
         Looper.prepare();
         Toast.makeText(activity, str,

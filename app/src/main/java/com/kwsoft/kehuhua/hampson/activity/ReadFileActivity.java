@@ -3,7 +3,6 @@ package com.kwsoft.kehuhua.hampson.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.DisplayMetrics;
@@ -12,8 +11,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.webkit.MimeTypeMap;
-import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -34,7 +31,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import butterknife.ButterKnife;
@@ -210,19 +206,6 @@ public class ReadFileActivity extends BaseActivity {
                 return true;
             }
         });
-
-        zuoYeImageGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                dialog=new LoadingDialog(mContext,"文件下加载中...");
-                dialog.show();
-                try {
-                    showProgressiveJPEGs(imageDatas.get(i),ImageFileNames.get(i));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
     }
 
 
@@ -276,60 +259,6 @@ public class ReadFileActivity extends BaseActivity {
         playerNow.release();
     }
 
-    /**
-     * 演示：逐渐加载的图片，即，从模糊逐渐清晰。需要图片本身也支持这种方式
-     */
-    private void showProgressiveJPEGs(String url,String fileName) {
-        final String path= Environment.getExternalStorageDirectory().getPath();
-        OkHttpUtils.get()//
-                .url(url)
-                .tag(this)//
-                .build()
-                .execute(new FileCallBack(path, fileName) {
-                    @Override
-                    public void onError(Call call, Exception e, int id) {
-                        dialog.dismiss();
-                    }
 
-                    @Override
-                    public void onResponse(File response, int id) {
-                        //Activity mActivity,final String filePath
-                        Log.e(TAG, "onResponse: 下载成功"+response.getName());
-                        openFile(path+"/"+response.getName());
-                    }
 
-                    @Override
-                    public void inProgress(float progress, long total, int id) {
-                        super.inProgress(progress, total, id);
-                    }
-                });
-    }
-
-    /**
-
-     */
-    private void openFile(final String filePath)
-    {
-        Log.e(TAG, "openFile: filePath "+filePath);
-        String ext = filePath.substring(filePath.lastIndexOf('.')).toLowerCase(Locale.US);
-        try
-        {
-            MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
-            String temp = ext.substring(1);
-            String mime = mimeTypeMap.getMimeTypeFromExtension(temp);
-
-            Intent intent = new Intent();
-            intent.setAction(android.content.Intent.ACTION_VIEW);
-            File file = new File(filePath);
-            intent.setDataAndType(Uri.fromFile(file), mime);
-            startActivity(intent);
-            dialog.dismiss();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-            Toast.makeText(mContext, "无法打开后缀名为." + ext + "的文件！",
-                    Toast.LENGTH_LONG).show();
-        }
-    }
 }
