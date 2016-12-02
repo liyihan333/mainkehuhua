@@ -112,22 +112,12 @@ public class SelectPictureActivity extends BaseActivity implements View.OnClickL
             @Override
             public void onClick(View view) {
                 getFile();//收集文件
-                Log.e(TAG, "onClick: 开始上传音频文件");
-                if (fieldRole.equals("18")) {
-                    if (myFile.size() == 1) {
-                        uploadMethod();
-                    } else if (myFile.size() == 0) {
-                        Toast.makeText(SelectPictureActivity.this, "请选择一个文件", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(SelectPictureActivity.this, "最多只允许上传一个文件", Toast.LENGTH_SHORT).show();
-                    }
-                } else if (fieldRole.equals("19")) {
+                Log.e(TAG, "onClick: 开始上传音频文件fieldRole "+fieldRole);
                     if (myFile.size() > 0) {
                         uploadMethod();//递归上传
                     } else {
                         Toast.makeText(SelectPictureActivity.this, "请至少选择一个文件", Toast.LENGTH_SHORT).show();
                     }
-                }
 
 
             }
