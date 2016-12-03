@@ -22,6 +22,7 @@ import com.facebook.imagepipeline.cache.DefaultCacheKeyFactory;
 import com.facebook.imagepipeline.core.ImagePipelineFactory;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.kwsoft.kehuhua.adcustom.R;
+import com.kwsoft.kehuhua.utils.NoDoubleClickListener;
 import com.kwsoft.kehuhua.view.ImageLoadingDrawable;
 
 import java.io.File;
@@ -90,9 +91,9 @@ public class ZuoYeGridViewAdapter extends BaseAdapter {
         my_image_view.setImageURI(uri);
 
 
-        my_image_view.setOnClickListener(new View.OnClickListener() {
+        my_image_view.setOnClickListener(new NoDoubleClickListener() {//禁止急速连续点击
             @Override
-            public void onClick(View view) {
+            public void onNoDoubleClick(View view) {
                 File file = getFileFromDiskCache(url);
                 if (file!=null) {
                     File file1 = changeName(file, fileNames.get(i));
@@ -193,17 +194,26 @@ public class ZuoYeGridViewAdapter extends BaseAdapter {
      */
     private void openFile(final String filePath) {
         Log.e(TAG, "openFile: filePath " + filePath);
-        String ext = filePath.substring(filePath.lastIndexOf('.')).toLowerCase(Locale.US);
+        String ext = (filePath.substring(filePath.lastIndexOf('.')).toLowerCase(Locale.US));
+//        String ext =ext1.replace(".","");//适配安卓7.0，截取的时候7.0会包含文件后缀前的那个“点”
+        Log.e(TAG, "openFile: ext "+ext);
         try {
             MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+            Log.e(TAG, "changeName: 监测点7");
             String temp = ext.substring(1);
+            Log.e(TAG, "changeName: 监测点8");
             String mime = mimeTypeMap.getMimeTypeFromExtension(temp);
-
+            Log.e(TAG, "changeName: 监测点9");
             Intent intent = new Intent();
+            Log.e(TAG, "changeName: 监测点10");
             intent.setAction(android.content.Intent.ACTION_VIEW);
+            Log.e(TAG, "changeName: 监测点11");
             File file = new File(filePath);
+            Log.e(TAG, "changeName: 监测点12");
             intent.setDataAndType(Uri.fromFile(file), mime);
-            context.startActivity(intent);
+            Log.e(TAG, "changeName: 监测点13");
+            context.startActivity(intent);//需要更改为fileProvider
+            Log.e(TAG, "changeName: 监测点14");
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(context, "无法打开后缀名为." + ext + "的文件！",

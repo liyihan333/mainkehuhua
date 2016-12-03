@@ -40,7 +40,7 @@
                     android:layout_marginTop="22dp"
                     android:text="图片附件列表"
                     android:textColor="#858585"
-                    android:textSize="22sp" />
+                    android:textSize="19sp" />
 
                 <com.kwsoft.kehuhua.hampson.activity.ZuoYeImageGridView
                     android:id="@+id/zuoYeImageGridView"
@@ -73,13 +73,13 @@
                         android:layout_marginTop="20dp"
                         android:text="音频附件列表"
                         android:textColor="@color/list_item_left"
-                        android:textSize="22sp" />
+                        android:textSize="19sp" />
 
                 <RelativeLayout
                     android:id="@+id/mp3_lay_out"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="18dp"
                     android:orientation="vertical"
                     >
 
