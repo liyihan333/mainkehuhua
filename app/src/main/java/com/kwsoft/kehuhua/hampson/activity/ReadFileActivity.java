@@ -177,7 +177,7 @@ public class ReadFileActivity extends BaseActivity {
                 Log.e(TAG, "onTouch: 是否走length.setOnTouchListener");
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
 
-                    if (!pathAndName.equals("")) {
+                    if (!pathAndName.equals("")&&playerNow!=null) {
                         if (!playerNow.isPlaying()) {
                             try {
                                 playerNow.setDataSource(pathAndName);
