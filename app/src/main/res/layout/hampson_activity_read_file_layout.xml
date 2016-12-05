@@ -44,13 +44,13 @@
 
                 <com.kwsoft.kehuhua.hampson.activity.ZuoYeImageGridView
                     android:id="@+id/zuoYeImageGridView"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:layout_margin="18dp"
                     android:columnWidth="90dp"
                     android:gravity="center"
                     android:horizontalSpacing="5dp"
-                    android:numColumns="4"
+                    android:numColumns="3"
                     android:scrollbars="none"
                     android:stretchMode="columnWidth"
                     android:verticalSpacing="5dp" />
