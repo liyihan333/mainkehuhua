@@ -21,7 +21,7 @@ import com.alibaba.fastjson.TypeReference;
 import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.adcustom.base.BaseActivity;
 import com.kwsoft.kehuhua.config.Constant;
-import com.kwsoft.kehuhua.hampson.adapter.ZuoYeGridViewAdapter;
+import com.kwsoft.kehuhua.hampson.adapter.ZuoYeImageGridViewAdapter;
 import com.kwsoft.kehuhua.loadDialog.LoadingDialog;
 import com.kwsoft.kehuhua.widget.CommonToolbar;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -132,7 +132,7 @@ public class ReadFileActivity extends BaseActivity {
             }
 
 
-            ZuoYeGridViewAdapter gridViewAdapter = new ZuoYeGridViewAdapter(this, imageDatas, ImageFileNames);
+            ZuoYeImageGridViewAdapter gridViewAdapter = new ZuoYeImageGridViewAdapter(this, imageDatas, ImageFileNames);
             zuoYeImageGridView.setAdapter(gridViewAdapter);
 
 
