@@ -59,7 +59,6 @@ public class ReadFileActivity extends BaseActivity {
     private int position;
     private int mMinItemWith;// 设置对话框的最大宽度和最小宽度
     private int mMaxItemWith;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -171,44 +170,42 @@ public class ReadFileActivity extends BaseActivity {
         seconds = (TextView) findViewById(R.id.recorder_time);
         length = (FrameLayout)findViewById(R.id.recorder_length);
         ll_layout_audio= (LinearLayout)findViewById(R.id.ll_layout_audio);
-        length.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                Log.e(TAG, "onTouch: 是否走length.setOnTouchListener");
-                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+        try {
+            length.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    Log.e(TAG, "onTouch: 是否走length.setOnTouchListener");
+                    if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
 
-                    if (!pathAndName.equals("")&&playerNow!=null) {
-                        if (!playerNow.isPlaying()) {
-                            try {
-                                playerNow.setDataSource(pathAndName);
-                                playerNow.prepare();
-                                playerNow.start();
-                            } catch (IllegalArgumentException | SecurityException | IllegalStateException | IOException e) {
-                                // TODO Auto-generated catch block
-                                e.printStackTrace();
+                        if (!pathAndName.equals("")&&playerNow!=null) {
+    //                        play();
+                            if (playerNow.isPlaying()) {
+                                playerNow.stop();
                             }
-                        }else{
-                            playerNow.release();
-                            playerNow = new MediaPlayer();
-                            try {
-                                playerNow.setDataSource(pathAndName);
-                                playerNow.prepare();
-                                playerNow.start();
-                            } catch (IllegalArgumentException | SecurityException | IllegalStateException | IOException e) {
-                                // TODO Auto-generated catch block
-                                e.printStackTrace();
-                            }
+                                try {
+                                    playerNow.reset();//在开启播放的时候这段代码必须加，以便清除以前的进度
+                                    playerNow.setDataSource(pathAndName);
+                                    playerNow.prepare();
+                                    playerNow.start();
+                                } catch (IllegalArgumentException | SecurityException | IllegalStateException | IOException e) {
+                                    // TODO Auto-generated catch block
+                                    e.printStackTrace();
+                                    Log.e(TAG, "onTouch: Mp3异常出现1 "+e.toString());
+                                }
+
+                        } else {
+                            downLoadMp3();
                         }
-                    } else {
-                        downLoadMp3();
                     }
+                    return true;
                 }
-                return true;
-            }
-        });
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(TAG, "initView: 播放音乐按钮异常");
+        }
+
     }
-
-
 
     public void downLoadMp3() {
         dialog=new LoadingDialog(mContext,"mp3文件下加载中...");
@@ -256,9 +253,15 @@ public class ReadFileActivity extends BaseActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        playerNow.release();
+        if (playerNow.isPlaying()) {
+            playerNow.stop();
+        }
+
     }
 
-
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        playerNow.release();
+    }
 }
