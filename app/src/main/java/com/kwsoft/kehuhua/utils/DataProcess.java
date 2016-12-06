@@ -12,6 +12,7 @@ import com.kwsoft.kehuhua.config.Constant;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -308,12 +309,25 @@ public class DataProcess {
                 }
                 commitMap1.put(key, value);
             }
-            for (Map.Entry entry : commitMap1.entrySet()) {
-                String key=String.valueOf(entry.getKey());
-                if (key.endsWith("_0")) {
-                    commitMap1.remove(key);
-                }
+//            for (Map.Entry entry : commitMap1.entrySet()) {
+//                String key=String.valueOf(entry.getKey());
+//                if (key.endsWith("_0")) {
+//                    commitMap1.remove(key);
+//                }
+//
+//            }
 
+//不会抛出异常的map遍历移除key方式
+            Iterator<Map.Entry<String, Object>> it = commitMap1.entrySet().iterator();
+            while(it.hasNext()){
+                Map.Entry<String, Object> entry = it.next();
+                String key = entry.getKey();
+                if(key.endsWith("_0")){
+                    Log.e(TAG, "commit: "+"To delete key " + key);
+                    it.remove();
+                    Log.e(TAG, "commit: "+"The key " +key + " was deleted");
+
+                }
             }
 
             for (Map.Entry entry : commitMap1.entrySet()) {
