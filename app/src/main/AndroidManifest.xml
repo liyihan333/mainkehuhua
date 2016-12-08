@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.kwsoft.kehuhua.adcustom">
 
     <!-- package="com.kwsoft.kehuhua.adcustom" -->
@@ -25,9 +26,9 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
-    <permission
-        android:name="com.kwsoft.kehuhua.adcustom.permission.JPUSH_MESSAGE"
-        android:protectionLevel="signature" />
+    <!--<permission-->
+        <!--android:name="com.kwsoft.kehuhua.adcustom.permission.JPUSH_MESSAGE"-->
+        <!--android:protectionLevel="signature" />-->
 
     <!-- Required  一些系统要求的权限，如访问网络等 -->
     <uses-permission android:name="com.kwsoft.kehuhua.adcustom.permission.JPUSH_MESSAGE" />
@@ -56,218 +57,54 @@
         android:supportsRtl="true"
         android:windowSoftInputMode="stateHidden|adjustPan"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".IsLoginActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name="com.kwsoft.kehuhua.login.LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity android:name=".IsLoginActivity" android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name="com.kwsoft.kehuhua.login.LoginActivity" android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".HomeChildActivity" />
         <activity android:name=".InfoActivity" />
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name">
-
-        </activity>
+        <activity android:name=".MainActivity" android:label="@string/app_name"/>
         <service android:name="com.kwsoft.kehuhua.sessionService.SessionService" />
-        <activity
-            android:name="com.kwsoft.kehuhua.login.ProjectSelectActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name="com.kwsoft.kehuhua.login.ProjectSelectActivity" android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".SearchActivity" />
-        <activity
-            android:name=".FeedbackActivity"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings" />
+        <activity android:name=".FeedbackActivity" android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".SettingsActivity" android:label="@string/title_activity_settings" />
         <activity android:name="com.kwsoft.kehuhua.zxing.CaptureActivity" />
-        <activity
-            android:name=".NavActivity"
-            android:label="@string/title_activity_nav"
-            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".NavActivity" android:label="@string/title_activity_nav" android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ExpandableActivity" />
         <activity android:name=".BlankActivity" />
         <activity android:name=".ChartActivity" />
-
         <activity android:name=".AddItemsActivity" />
         <activity android:name=".RowsEditActivity" />
-        <activity
-            android:name=".MultiValueActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".MultiValueActivity" android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MultiValueItemActivity" />
-        <activity
-            android:name=".SearchResultActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".RowsReadActivity" />
-        <activity android:name=".RowsAddActivity" />
-        <activity
-            android:name=".TreeViewActivity" />
-        <activity
-            android:name=".MenuActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".SearchResultActivity" android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".RowsReadActivity"/>
+        <activity android:name=".RowsAddActivity"/>
+        <activity android:name=".TreeViewActivity"/>
+        <activity android:name=".MenuActivity" android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".CourseActivity" />
         <activity android:name=".TabActivity" />
-        <activity
-            android:name=".UnlimitedAddActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        ji
-        <activity
-            android:name=".AddTemplateDataActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".MessagAlertActivity"
-            android:label="消息" />
+        <activity android:name=".UnlimitedAddActivity" android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".AddTemplateDataActivity" android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".MessagAlertActivity" android:label="消息" />
         <activity android:name="com.kwsoft.kehuhua.wechatPicture.SelectPictureActivity" />
-        <activity android:name="com.kwsoft.kehuhua.wechatPicture.EnlargePicActivity">
-
-        </activity>
-        <activity
-            android:name="me.iwf.photopicker.PhotoPickerActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity
-            android:name="me.iwf.photopicker.PhotoPagerActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
-
-        <!-- For test only 测试状态通知栏，需要打开的Activity -->
-        <activity
-            android:name=".TestActivity"
-            android:label="消息公告">
-            <intent-filter>
-                <action android:name="jpush.testAction" />
-
-                <category android:name="jpush.testCategory" />
-            </intent-filter>
-        </activity>
-
-        <!-- Rich push 核心功能 since 2.0.6 -->
-        <!-- <activity -->
-        <!-- android:name="cn.jpush.android.ui.PopWinActivity" -->
-        <!-- android:theme="@style/MyDialogStyle" -->
-        <!-- android:exported="false"> -->
-        <!-- </activity> -->
-
-
-        <!-- Required SDK核心功能 -->
-        <activity
-            android:name="cn.jpush.android.ui.PushActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:exported="false"
-            android:theme="@android:style/Theme.NoTitleBar">
-            <intent-filter>
-                <action android:name="cn.jpush.android.ui.PushActivity" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="com.kwsoft.kehuhua.adcustom" />
-            </intent-filter>
-        </activity>
-        <!-- Required  SDK核心功能 -->
-        <service
-            android:name="cn.jpush.android.service.DownloadService"
-            android:enabled="true"
-            android:exported="false" />
-
-        <!-- Required SDK 核心功能 -->
-        <!-- 可配置android:process参数将PushService放在其他进程中 -->
-        <service
-            android:name="cn.jpush.android.service.PushService"
-            android:enabled="true"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="cn.jpush.android.intent.REGISTER" />
-                <action android:name="cn.jpush.android.intent.REPORT" />
-                <action android:name="cn.jpush.android.intent.PushService" />
-                <action android:name="cn.jpush.android.intent.PUSH_TIME" />
-            </intent-filter>
-        </service>
-
-        <!-- Required SDK核心功能 -->
-        <receiver
-            android:name="cn.jpush.android.service.PushReceiver"
-            android:enabled="true"
-            android:exported="false">
-            <intent-filter android:priority="1000">
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />
-                <!-- Required  显示通知栏 -->
-                <category android:name="com.kwsoft.kehuhua.adcustom" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.USER_PRESENT" />
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-            </intent-filter>
-            <!-- Optional -->
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_ADDED" />
-                <action android:name="android.intent.action.PACKAGE_REMOVED" />
-
-                <data android:scheme="package" />
-            </intent-filter>
-        </receiver>
-
-        <!-- Required SDK核心功能 -->
-        <receiver
-            android:name="cn.jpush.android.service.AlarmReceiver"
-            android:exported="false" />
-
-        <!-- User defined.  For test only  用户自定义的广播接收器 -->
-        <receiver
-            android:name=".MyReceiver"
-            android:enabled="true"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="cn.jpush.android.intent.REGISTRATION" />
-                <!-- Required  用户注册SDK的intent -->
-                <action android:name="cn.jpush.android.intent.UNREGISTRATION" />
-                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />
-                <!-- Required  用户接收SDK消息的intent -->
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />
-                <!-- Required  用户接收SDK通知栏信息的intent -->
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
-                <!-- Required  用户打开自定义通知栏的intent -->
-                <action android:name="cn.jpush.android.intent.ACTION_RICHPUSH_CALLBACK" />
-                <!-- Optional 用户接受Rich Push Javascript 回调函数的intent -->
-                <action android:name="cn.jpush.android.intent.CONNECTION" />
-                <!-- 接收网络变化 连接/断开 since 1.6.3 -->
-                <category android:name="com.kwsoft.kehuhua.adcustom" />
-            </intent-filter>
-        </receiver>
-
-        <!-- Required  . Enable it you can get statistics data with channel -->
-        <meta-data
-            android:name="JPUSH_CHANNEL"
-            android:value="developer-default" />
-        <meta-data
-            android:name="JPUSH_APPKEY"
-            android:value="af01b0f8546cb4d2def0e1e1" />
-
+        <activity android:name="com.kwsoft.kehuhua.wechatPicture.EnlargePicActivity"/>
+        <activity android:name="me.iwf.photopicker.PhotoPickerActivity" android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity android:name="me.iwf.photopicker.PhotoPagerActivity" android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity android:name=".CourseDetailActivity" />
         <activity android:name=".OperateDataActivity" />
         <activity android:name=".ListActivity2" />
         <activity android:name=".ListActivity4" />
-        <activity android:name="com.kwsoft.kehuhua.SetIpPortActivity"></activity>
-
-        <activity android:name="com.kwsoft.kehuhua.hampson.activity.StarRatingBarActivity"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"
-            >
-        </activity>
-        <activity android:name="com.kwsoft.kehuhua.hampson.activity.CourseRatingBarActivity">
-
-        </activity>
-        <activity android:name="com.kwsoft.kehuhua.hampson.activity.CourseHpsActivity">
-
-        </activity>
-        <activity android:name="com.kwsoft.kehuhua.hampson.activity.StageTestActivity">
-
-    </activity>
-        <activity android:name="com.kwsoft.kehuhua.hampson.activity.ZoomImageActivity">
-
-        </activity>
-        <activity android:name="com.kwsoft.kehuhua.hampson.activity.PlayAudioActivity">
-
-        </activity>
+        <activity android:name="com.kwsoft.kehuhua.SetIpPortActivity"/>
+        <activity android:name="com.kwsoft.kehuhua.hampson.activity.StarRatingBarActivity" android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+        <activity android:name="com.kwsoft.kehuhua.hampson.activity.CourseRatingBarActivity"/>
+        <activity android:name="com.kwsoft.kehuhua.hampson.activity.CourseHpsActivity"/>
+        <activity android:name="com.kwsoft.kehuhua.hampson.activity.StageTestActivity"/>
+        <activity android:name="com.kwsoft.kehuhua.hampson.activity.ZoomImageActivity"/>
+        <activity android:name="com.kwsoft.kehuhua.hampson.activity.PlayAudioActivity"/>
         <activity android:name="com.kwsoft.kehuhua.hampson.activity.AssessActivity"/>
-
-
         <activity android:name="com.kwsoft.kehuhua.hampson.activity.ReadFileActivity"/>
+
 
 
     </application>

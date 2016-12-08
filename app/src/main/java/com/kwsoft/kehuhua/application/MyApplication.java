@@ -38,6 +38,8 @@ MyApplication extends Application {
 //        Fresco.initialize(getApplicationContext());//拍照上传初始化
         JPushInterface.setDebugMode(false);    // 设置开启日志,发布时请关闭日志
         JPushInterface.init(this);            // 初始化 JPush
+        Log.e(TAG, "onCreate: 已经初始化推送");
+        Log.e(TAG, "onCreate: "+getApplicationInfo());
         initOkHttp();
         Fresco.initialize(this);
 

@@ -11,6 +11,12 @@ android {
         versionCode 1
         versionName "1.0.0"
         multiDexEnabled true
+        ndk {
+            //选择要添加的对应cpu类型的.so库。
+            abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a', 'x86', 'x86_64', 'mips', 'mips64'
+        }
+
+
     }
     buildTypes {
         release {
@@ -41,12 +47,22 @@ android {
             applicationId "com.kwsoft.version.teachHampson"
             resValue "string", "app_name", "汉普森教师端"
             versionName "1.0.0"
+            manifestPlaceholders = [
+                    JPUSH_PKGNAME: applicationId,
+                    JPUSH_APPKEY : "b941bcd18c4aec39146fb25c", //JPush上注册的包名对应的appkey.
+                    JPUSH_CHANNEL: "developer-default1", //暂时填写默认值即可.
+            ]
         }
 
         stuHampson {
             applicationId "com.kwsoft.version.stuHampson"
             resValue "string", "app_name", "汉普森学员端"
             versionName "1.0.0"
+            manifestPlaceholders = [
+                    JPUSH_PKGNAME: applicationId,
+                    JPUSH_APPKEY : "b4c836415024e6ee357da5aa", //JPush上注册的包名对应的appkey.
+                    JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
+            ]
         }
     }
 //    lintOptions {
@@ -110,8 +126,6 @@ dependencies {
     compile project(path: ':weekcalendar')
     compile project(path: ':mp3Recorder')
     //日历控件，课程表工具
-    compile files('libs/jpush-android-2.1.7.jar')
-    //极光推送
     compile files('libs/badgeview.jar')
     compile 'com.android.support:appcompat-v7:25.0.1'
     compile 'com.android.support:design:25.0.1'
@@ -165,4 +179,6 @@ dependencies {
     //清理缓存
     compile 'com.github.franmontiel:PersistentCookieJar:v1.0.0'
     //cookie支持
+    compile 'cn.jiguang.sdk:jpush:3.0.0'  // 此处以JPush 3.0.0 版本为例。
+    compile 'cn.jiguang.sdk:jcore:1.0.0'  // 此处以JCore 1.0.0 版本为例。
 }
