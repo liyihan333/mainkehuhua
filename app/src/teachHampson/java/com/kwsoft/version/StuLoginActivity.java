@@ -55,7 +55,7 @@ public class StuLoginActivity extends BaseActivity implements View.OnClickListen
     private Button login;
     private ImageView iv_phone_clear;
     private ImageView iv_password_clear;
-
+    private String useridOld;
     static {
         //学员端设置成顶栏红色
         Constant.topBarColor = R.color.prim_topBarColor;
@@ -68,8 +68,11 @@ public class StuLoginActivity extends BaseActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stu_login_sec);
         CloseActivityClass.activityList.add(this);
+        sPreferences = getSharedPreferences(Constant.proId, MODE_PRIVATE);
 //        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         dialog=new LoadingDialog(mContext,"正在登录中...");
+        useridOld = sPreferences.getString("useridOld", "");
+
         initJudgeSave();
         initView();
         initPermission();
@@ -322,42 +325,64 @@ public class StuLoginActivity extends BaseActivity implements View.OnClickListen
         }
     }
 
+
+    public void toGuide(String menuData) {
+
+        Intent intent = new Intent();
+        intent.setClass(StuLoginActivity.this, GuideActivity.class);
+        Constant.menuData=menuData;
+        startActivity(intent);
+        dialog.dismiss();
+
+
+    }
+
     //此方法传递菜单JSON数据
     @SuppressWarnings("unchecked")
     private void mainPage(String menuData) {
-        try {
-            Map<String, Object> menuMap = JSON.parseObject(menuData,
-                    new TypeReference<Map<String, Object>>() {
-                    });
-            Map<String, Object> loginfo = (Map<String, Object>) menuMap.get("loginInfo");
-            String userid = String.valueOf(loginfo.get("USERID"));
-            Constant.USERID = String.valueOf(loginfo.get("USERID"));
-            sPreferences.edit().putString("userid", userid).apply();
-            List<Map<String, Object>> menuListMap1 = (List<Map<String, Object>>) menuMap.get("roleFollowList");
-            List<Map<String, Object>> menuListMap2 = (List<Map<String, Object>>) menuMap.get("menuList");
+        Log.e(TAG, "mainPage: useridOld "+String.valueOf(useridOld));
+        if (String.valueOf(useridOld).equals("")||String.valueOf(useridOld).equals("null")) {//跳转至引导页面
+            toGuide(menuData);
+            sPreferences.edit().putString("useridOld", Constant.USERID).apply();
+        }else{
+            //跳转至主界面
+            try {
+                Map<String, Object> menuMap = JSON.parseObject(menuData,
+                        new TypeReference<Map<String, Object>>() {
+                        });
+                Map<String, Object> loginfo = (Map<String, Object>) menuMap.get("loginInfo");
+                String userid = String.valueOf(loginfo.get("USERID"));
+                Constant.USERID = String.valueOf(loginfo.get("USERID"));
+                sPreferences.edit().putString("userid", userid).apply();
+                List<Map<String, Object>> menuListMap1 = (List<Map<String, Object>>) menuMap.get("roleFollowList");
+                List<Map<String, Object>> menuListMap2 = (List<Map<String, Object>>) menuMap.get("menuList");
 //            List<Map<String, Object>> menuListMap3 = (List<Map<String, Object>>) menuMap.get("hideMenuList");
-            List<Map<String, Object>> menuListMap3 = (List<Map<String, Object>>) menuMap.get("personInfoList");//个人资料
-            List<Map<String, Object>> menuListMap5 = (List<Map<String, Object>>) menuMap.get("feedbackInfoList");//反馈信息
-            List<Map<String, Object>> menuListMap6 = (List<Map<String, Object>>) menuMap.get("homePageList");//今日课表、明日课表
-            if (menuMap.containsKey("teaMongoId")) {
-                String teaMongoId = menuMap.get("teaMongoId").toString();
-                Constant.teaMongoId = teaMongoId;
-            }
+                List<Map<String, Object>> menuListMap3 = (List<Map<String, Object>>) menuMap.get("personInfoList");//个人资料
+                List<Map<String, Object>> menuListMap5 = (List<Map<String, Object>>) menuMap.get("feedbackInfoList");//反馈信息
+                List<Map<String, Object>> menuListMap6 = (List<Map<String, Object>>) menuMap.get("homePageList");//今日课表、明日课表
+                if (menuMap.containsKey("teaMongoId")) {
+                    String teaMongoId = menuMap.get("teaMongoId").toString();
+                    Constant.teaMongoId = teaMongoId;
+                }
 
-            Intent intent = new Intent();
-            intent.setClass(StuLoginActivity.this, StuMainActivity.class);
-            intent.putExtra("jsonArray", JSON.toJSONString(menuListMap1));
-            intent.putExtra("menuDataMap", JSON.toJSONString(menuListMap2));
-            intent.putExtra("hideMenuList", JSON.toJSONString(menuListMap3));
-            intent.putExtra("feedbackInfoList",JSON.toJSONString(menuListMap5));
-            intent.putExtra("homePageList",JSON.toJSONString(menuListMap6));//今明日课表
-            startActivity(intent);
-            finish();
-            dialog.dismiss();
-        } catch (Exception e) {
-            e.printStackTrace();
-            dialog.dismiss();
+                Intent intent = new Intent();
+                intent.setClass(StuLoginActivity.this, StuMainActivity.class);
+                intent.putExtra("jsonArray", JSON.toJSONString(menuListMap1));
+                intent.putExtra("menuDataMap", JSON.toJSONString(menuListMap2));
+                intent.putExtra("hideMenuList", JSON.toJSONString(menuListMap3));
+                intent.putExtra("feedbackInfoList",JSON.toJSONString(menuListMap5));
+                intent.putExtra("homePageList",JSON.toJSONString(menuListMap6));//今明日课表
+                startActivity(intent);
+                finish();
+                dialog.dismiss();
+            } catch (Exception e) {
+                e.printStackTrace();
+                dialog.dismiss();
+            }
         }
+
+
+
     }
 
     //获得用户名方法

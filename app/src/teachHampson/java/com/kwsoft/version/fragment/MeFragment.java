@@ -2,28 +2,17 @@ package com.kwsoft.version.fragment;
 
 
 import android.Manifest;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
-import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,14 +21,12 @@ import com.alibaba.fastjson.TypeReference;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.adcustom.base.BaseActivity;
-import com.kwsoft.kehuhua.bean.LoginError;
 import com.kwsoft.kehuhua.config.Constant;
+import com.kwsoft.kehuhua.loadDialog.LoadingDialog;
 import com.kwsoft.kehuhua.urlCnn.EdusStringCallback;
 import com.kwsoft.kehuhua.urlCnn.ErrorToast;
 import com.kwsoft.kehuhua.utils.Utils;
-import com.kwsoft.kehuhua.wechatPicture.SelectPictureActivity;
 import com.kwsoft.version.Common.AppConfig;
-import com.kwsoft.version.Common.CacheCommon;
 import com.kwsoft.version.Common.DataCleanManager;
 import com.kwsoft.version.Common.FileUtil;
 import com.kwsoft.version.Common.MethodsCompat;
@@ -69,9 +56,6 @@ import me.iwf.photopicker.PhotoPicker;
 import okhttp3.Call;
 
 import static android.app.Activity.RESULT_OK;
-import static com.kwsoft.kehuhua.config.Constant.LOGIN_URL;
-import static com.kwsoft.kehuhua.config.Constant.img_Paths;
-import static com.kwsoft.kehuhua.config.Constant.itemValue;
 import static com.kwsoft.kehuhua.config.Constant.pictureUrl;
 import static com.kwsoft.kehuhua.config.Constant.sysUrl;
 import static com.kwsoft.kehuhua.config.Constant.tableId;
@@ -382,8 +366,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
                 break;
             case R.id.ll_stu_clear_cache:
-                // dialog1();
-                onClickCleanCache();
+                clearAppCache();
                 break;
             case R.id.ll_stu_feedback:
                 Intent intent1 = new Intent(getActivity(), FeedbackActivity.class);
@@ -398,20 +381,9 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                 break;
         }
     }
-
     private final int CLEAN_SUC = 1001;
     private final int CLEAN_FAIL = 1002;
 
-    private void onClickCleanCache() {
-        CacheCommon.getConfirmDialog(getActivity(), "是否清空缓存?", new DialogInterface.OnClickListener
-                () {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                clearAppCache();
-                //  tvCleanCache.setText("0KB");
-            }
-        }).show();
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions,
@@ -577,8 +549,11 @@ public class MeFragment extends Fragment implements View.OnClickListener {
      *
      * @param
      */
-    public void clearAppCache() {
+    private LoadingDialog dialogClear;
 
+    public void clearAppCache() {
+        dialogClear=new LoadingDialog(getActivity(),"清理中...");
+        dialogClear.show();
         new Thread() {
             @Override
             public void run() {
@@ -636,9 +611,11 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         public void handleMessage(android.os.Message msg) {
             switch (msg.what) {
                 case CLEAN_FAIL:
+                    dialogClear.dismiss();
                     Toast.makeText(getActivity(), "清除失败", Toast.LENGTH_SHORT).show();
                     break;
                 case CLEAN_SUC:
+                    dialogClear.dismiss();
                     tvCleanCache.setText("0KB");
                     Toast.makeText(getActivity(), "清除成功", Toast.LENGTH_SHORT).show();
                     break;
@@ -646,31 +623,6 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         }
 
     };
-
-    private void dialog1() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());  //先得到构造器
-        builder.setTitle("提示"); //设置标题
-        builder.setMessage("是否确认清除缓存?"); //设置内容
-        //builder.setIcon(R.mipmap.ic_launcher);//设置图标，图片id即可
-        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() { //设置确定按钮
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss(); //关闭dialog
-                clearCache();
-                tvCleanCache.setText(getCache());
-                Toast.makeText(getActivity(), "清除成功", Toast.LENGTH_SHORT).show();
-            }
-        });
-        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() { //设置取消按钮
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-//                Toast.makeText(getActivity(), "取消", Toast.LENGTH_SHORT).show();
-            }
-        });
-        //参数都设置完成了，创建并显示出来
-        builder.create().show();
-    }
 
 
     public String getCache() {

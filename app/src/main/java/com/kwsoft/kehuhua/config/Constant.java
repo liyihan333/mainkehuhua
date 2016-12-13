@@ -66,7 +66,6 @@ public class Constant {
     public static String loginName = "";
     public static String roleNamesTeach = "";
 
-    public static String menuData = "";
     public static String proId = "";
     public static String proName = "";
     //    public static String stuProId = "57159822f07e75084cb8a1fe";//陈蒙学员端
@@ -178,6 +177,19 @@ public class Constant {
 
     public final static String sdPath = Environment.getExternalStorageDirectory().getAbsolutePath()+"/";//+ "/HampsonFile"+"/"
     public final static String sdPathProject = "HampsonFile"+"/";
+
+
+    public static String menuData="";
+
+
+
+
+
+
+
+
+
+
     public static void threadToast(Activity activity, String str) {
         Looper.prepare();
         Toast.makeText(activity, str,

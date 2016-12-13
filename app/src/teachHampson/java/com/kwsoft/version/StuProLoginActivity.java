@@ -40,6 +40,8 @@ public class StuProLoginActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stu_pro_login);
+
+
         initJudgeSave();
     }
 
@@ -47,7 +49,6 @@ public class StuProLoginActivity extends BaseActivity {
     public void initView() {
 
     }
-
 
     /**
      * 初始化判断sharePreference
@@ -156,7 +157,10 @@ public class StuProLoginActivity extends BaseActivity {
         }
     }
 
+
+
     private void toLoginPage() {
+        //判断用户id是否登陆过
         Intent intent = new Intent();
         intent.setClass(StuProLoginActivity.this, StuLoginActivity.class);
         startActivity(intent);

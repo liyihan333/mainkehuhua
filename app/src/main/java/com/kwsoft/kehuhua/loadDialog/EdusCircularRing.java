@@ -50,7 +50,7 @@ public class EdusCircularRing extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        mPaint.setColor(Color.argb(100, 255, 255, 255));
+        mPaint.setColor(Color.argb(100, 50, 50, 50));
         canvas.drawCircle(mWidth / 2, mWidth / 2, mWidth / 2 - mPadding, mPaint);
         mPaint.setColor(Color.WHITE);
         RectF rectF = new RectF(mPadding, mPadding, mWidth - mPadding, mWidth - mPadding);

@@ -24,6 +24,8 @@ import android.view.inputmethod.InputMethodManager;
 import com.kwsoft.kehuhua.application.MyApplication;
 import com.kwsoft.kehuhua.loadDialog.LoadingDialog;
 
+
+
 /**
  * Activity的基类，实现了IActivitySupport接口
  *
@@ -37,7 +39,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseAct
     protected ProgressDialog pg = null;
     protected NotificationManager notificationManager;
     public LoadingDialog  dialog =null;
-
     @SuppressLint("WorldReadableFiles")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +46,12 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseAct
         mContext = this;
 //        preferences = getSharedPreferences("userInfo", MODE_WORLD_READABLE);
 //        notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        dialog=new LoadingDialog(mContext,"玩命加载中...");
+        dialog=new LoadingDialog(mContext,"加载中...");
         myApplication = (MyApplication) getApplication();
         myApplication.addActivity(this);
 
     }
+
 
     /**
      * 初始化页面布局
@@ -89,6 +91,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseAct
     public void requestData() {
 
     }
+
 
     /**
      * 获取ActionBar
