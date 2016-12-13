@@ -81,10 +81,10 @@ public class CourseAdapter extends BaseAdapter {
         //教学内容
         holder.teach_content_title.setText(item.get(3).get("fieldCnName"));
         holder.tv_teach_content.setText(item.get(3).get("fieldCnName2"));
-        //考勤
-        holder.tv_attence.setText(item.get(4).get("fieldCnName"));
-        //课后作业
-        holder.tv_homework.setText(item.get(5).get("fieldCnName"));
+//        //考勤
+//        holder.tv_attence.setText(item.get(4).get("fieldCnName"));
+//        //课后作业
+//        holder.tv_homework.setText(item.get(5).get("fieldCnName"));
 
         return view;
     }

@@ -107,19 +107,19 @@
                                 android:textSize="15sp" />
                         </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="22dp"
-                            android:layout_height="match_parent"
-                            android:gravity="center_vertical|right"
-                            android:orientation="vertical"
-                            android:visibility="gone">
+                        <!--<LinearLayout-->
+                            <!--android:layout_width="22dp"-->
+                            <!--android:layout_height="match_parent"-->
+                            <!--android:gravity="center_vertical|right"-->
+                            <!--android:orientation="vertical"-->
+                            <!--android:visibility="gone">-->
 
-                            <ImageView
-                                android:layout_width="6dp"
+                            <!--<ImageView-->
+                                <!--android:layout_width="6dp"-->
 
-                                android:layout_height="10dp"
-                                android:src="@mipmap/often_into_small" />
-                        </LinearLayout>
+                                <!--android:layout_height="10dp"-->
+                                <!--android:src="@mipmap/often_into_small" />-->
+                        <!--</LinearLayout>-->
                     </LinearLayout>
                 </LinearLayout>
 
@@ -211,18 +211,18 @@
                         </LinearLayout>
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="40dp"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="right"
-                        android:gravity="center_vertical|right"
-                        android:orientation="vertical">
+                    <!--<LinearLayout-->
+                        <!--android:layout_width="40dp"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:layout_gravity="right"-->
+                        <!--android:gravity="center_vertical|right"-->
+                        <!--android:orientation="vertical">-->
 
-                        <ImageView
-                            android:layout_width="7dp"
-                            android:layout_height="12dp"
-                            android:src="@mipmap/often_into" />
-                    </LinearLayout>
+                        <!--<ImageView-->
+                            <!--android:layout_width="7dp"-->
+                            <!--android:layout_height="12dp"-->
+                            <!--android:src="@mipmap/often_into" />-->
+                    <!--</LinearLayout>-->
                 </LinearLayout>
 
             </LinearLayout>
