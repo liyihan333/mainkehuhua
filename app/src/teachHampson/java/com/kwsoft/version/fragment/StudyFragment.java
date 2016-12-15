@@ -36,6 +36,7 @@ import com.kwsoft.kehuhua.adcustom.MessagAlertActivity;
 import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.adcustom.base.BaseActivity;
 import com.kwsoft.kehuhua.config.Constant;
+import com.kwsoft.kehuhua.hampson.activity.KanBanLRActivity;
 import com.kwsoft.kehuhua.urlCnn.EdusStringCallback;
 import com.kwsoft.kehuhua.urlCnn.ErrorToast;
 import com.kwsoft.kehuhua.utils.DataProcess;
@@ -68,8 +69,8 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
     private TextView stuName;
     private StudyGridView homeGridView;
     private List<Map<String, Object>> parentList = new ArrayList<>();
-    private int[] image = {R.mipmap.edus_see_set_tody, R.mipmap.edus_see_form_tomorrow,
-            R.mipmap.edus_see_scan, R.mipmap.edus_see_news};
+    private int[] image = {R.mipmap.edus_see_today, R.mipmap.edus_see_tomorrow,
+            R.mipmap.edus_see_homework, R.mipmap.edus_see_feedback};
     private int[] imgs2 = {R.mipmap.k1, R.mipmap.k2,
             R.mipmap.k3, R.mipmap.k4, R.mipmap.k5,
             R.mipmap.k6, R.mipmap.k7, R.mipmap.k8,
@@ -135,16 +136,35 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Map<String, String> itemData = new HashMap<>();
+                String tableId = String.valueOf(parentList.get(position).get("tableId"));
+                String pageId = String.valueOf(parentList.get(position).get("penetratePageId"));
                 itemData.put("tableId", String.valueOf(parentList.get(position).get("tableId")));
                 itemData.put("pageId", String.valueOf(parentList.get(position).get("penetratePageId")));
                 itemData.put("menuName", String.valueOf(parentList.get(position).get("cnName")));
                 Constant.stu_index = String.valueOf(parentList.get(position).get("ctType"));
                 Constant.stu_homeSetId = String.valueOf(parentList.get(position).get("SourceDataId"));
                 try {
-                    Intent intent = new Intent();
-                    intent.setClass(getActivity(), ListActivity4.class);
-                    intent.putExtra("itemData", JSON.toJSONString(itemData));
-                    startActivity(intent);
+                    Log.e(TAG, "onItemClick: wyl" + tableId + "//" + pageId + "//" + String.valueOf(parentList.get(position).get("cnName")));
+                    switch (tableId) {
+                        case "19":
+                        case "70":
+                        case "71":
+                            Intent intent = new Intent(getActivity(), KanBanLRActivity.class);
+                            intent.putExtra("itemData", JSON.toJSONString(itemData));
+                            Log.e("itemtdastudy",JSON.toJSONString(itemData));
+                            startActivity(intent);
+                            break;
+                        default:
+                            intent = new Intent();
+                            intent.setClass(getActivity(), ListActivity4.class);
+                            intent.putExtra("itemData", JSON.toJSONString(itemData));
+                            startActivity(intent);
+                            break;
+                    }
+//                    Intent intent = new Intent();
+//                    intent.setClass(getActivity(), ListActivity4.class);
+//                    intent.putExtra("itemData", JSON.toJSONString(itemData));
+//                    startActivity(intent);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

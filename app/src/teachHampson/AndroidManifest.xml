@@ -41,6 +41,7 @@
         </activity>
         <activity android:name="com.kwsoft.version.TodayCourseTableActivity"/>
         <activity android:name="com.kwsoft.version.GuideActivity"/>
+        <activity android:name="com.kwsoft.kehuhua.hampson.activity.KanBanLRActivity"/>
         <activity android:name="com.kwsoft.kehuhua.hampson.activity.TeachAmountDetailActivity"/>
         <receiver
             android:name="com.kwsoft.version.edusReceiver.MyReceiver"

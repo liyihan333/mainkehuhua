@@ -68,7 +68,6 @@ public class ListFragment extends Fragment {
     private int state = STATE_NORMAL;
 
 
-
     private String operaButtonSet;
     private List<List<Map<String, String>>> datas;
     private ListAdapter2 mAdapter;
@@ -76,15 +75,12 @@ public class ListFragment extends Fragment {
     private List<Map<String, Object>> childList = new ArrayList<>();
 
 
-
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
         ButterKnife.bind(this, view);
-        ((BaseActivity)getActivity()).dialog.show();
+        ((BaseActivity) getActivity()).dialog.show();
         initRefreshLayout();//初始化控件
         getDataIntent();//获取初始化数据
         getData();
@@ -92,11 +88,12 @@ public class ListFragment extends Fragment {
         getActivity().registerReceiver(broadcastReceiver, filter);
         return view;
     }
+
     BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-           refreshData();
+            refreshData();
         }
     };
 
@@ -111,7 +108,7 @@ public class ListFragment extends Fragment {
 
             @Override
             public void onRefreshLoadMore(MaterialRefreshLayout materialRefreshLayout) {
-                if (mAdapter!=null&&mAdapter.getItemCount() < totalNum) {
+                if (mAdapter != null && mAdapter.getItemCount() < totalNum) {
                     loadMoreData();
                 } else {
 //                    Snackbar.make(mRecyclerView, "没有更多了", Snackbar.LENGTH_SHORT).show();
@@ -126,25 +123,27 @@ public class ListFragment extends Fragment {
      */
     public Bundle listDataBundle;
     private Map<String, String> paramsMap;
+
     public void getDataIntent() {
         listDataBundle = getArguments();
-       String paramsStr = listDataBundle.getString("listFragmentData");
+        String paramsStr = listDataBundle.getString("listFragmentData");
         paramsMap = JSON.parseObject(paramsStr,
                 new TypeReference<Map<String, String>>() {
                 });
-        tableId=paramsMap.get(Constant.tableId);
-        pageId=paramsMap.get(Constant.pageId);
-        Constant.mainTableIdValue =tableId;
-        Constant.mainPageIdValue =pageId;
+        tableId = paramsMap.get(Constant.tableId);
+        pageId = paramsMap.get(Constant.pageId);
+        Constant.mainTableIdValue = tableId;
+        Constant.mainPageIdValue = pageId;
     }
 
     private static final String TAG = "ListFragment";
+
     /**
      * 获取字段接口数据
      */
     @SuppressWarnings("unchecked")
     public void getData() {
-        if (((BaseActivity)getActivity()).hasInternetConnected()) {
+        if (((BaseActivity) getActivity()).hasInternetConnected()) {
             //地址
             String volleyUrl = Constant.sysUrl + Constant.requestListSet;
             Log.e("TAG", "列表请求地址：" + volleyUrl);
@@ -158,7 +157,7 @@ public class ListFragment extends Fragment {
             }
             paramsMap.put("limit", limit + "");
 
-            Log.e(TAG, "getData: paramsMap "+paramsMap.toString());
+            Log.e(TAG, "getData: paramsMap " + paramsMap.toString());
             //请求
             OkHttpUtils
                     .post()
@@ -168,11 +167,11 @@ public class ListFragment extends Fragment {
                     .execute(new EdusStringCallback(getActivity()) {
                         @Override
                         public void onError(Call call, Exception e, int id) {
-                            ErrorToast.errorToast(mContext,e);
+                            ErrorToast.errorToast(mContext, e);
                             mRefreshLayout.finishRefresh();
-                            ((BaseActivity)getActivity()).dialog.dismiss();
+                            ((BaseActivity) getActivity()).dialog.dismiss();
                             backStart();
-                            Log.e(TAG, "onError: Call  "+call+"  id  "+id);
+                            Log.e(TAG, "onError: Call  " + call + "  id  " + id);
                         }
 
                         @Override
@@ -181,27 +180,30 @@ public class ListFragment extends Fragment {
                             setStore(response);
                         }
                     });
-        }else{
-            ((BaseActivity)getActivity()).dialog.dismiss();
+        } else {
+            ((BaseActivity) getActivity()).dialog.dismiss();
             mRefreshLayout.finishRefresh();
             Toast.makeText(getActivity(), "请连接网络", Toast.LENGTH_SHORT).show();
             backStart();
         }
     }
-   private List<Map<String, Object>> buttonSet=new ArrayList<>();
-    public void backStart(){
+
+    private List<Map<String, Object>> buttonSet = new ArrayList<>();
+
+    public void backStart() {
 
         //下拉失败后需要将加上limit的strat返还给原来的start，否则会获取不到数据
-        if ( state == STATE_MORE) {
+        if (state == STATE_MORE) {
             //start只能是limit的整数倍
-            if (start>limit) {
-                start-=limit;
+            if (start > limit) {
+                start -= limit;
             }
             mRefreshLayout.finishRefreshLoadMore();
         }
     }
 
     List<Map<String, Object>> operaButtonSetList;
+
     @SuppressWarnings("unchecked")
     public void setStore(String jsonData) {
         List<Map<String, Object>> dataList = new ArrayList<>();
@@ -221,7 +223,7 @@ public class ListFragment extends Fragment {
 //            }
 //获取条目总数
             totalNum = Integer.valueOf(String.valueOf(setMap.get("dataCount")));
-            Log.e(TAG, "setStore: totalNum "+totalNum);
+            Log.e(TAG, "setStore: totalNum " + totalNum);
 
 //获取搜索数据，如果有搜索数据但是仅仅是方括号没内容则隐藏搜索框
             if (pageSet.get("serachSet") != null) {
@@ -240,8 +242,8 @@ public class ListFragment extends Fragment {
                 try {
                     operaButtonSetList = (List<Map<String, Object>>) pageSet.get("operaButtonSet");
 
-                    if (operaButtonSetList.size()>0) {
-                        for (int i=0;i<operaButtonSetList.size();i++) {
+                    if (operaButtonSetList.size() > 0) {
+                        for (int i = 0; i < operaButtonSetList.size(); i++) {
                             operaButtonSetList.get(i).put("tableIdList", tableId);
                             operaButtonSetList.get(i).put("pageIdList", pageId);
                         }
@@ -267,10 +269,10 @@ public class ListFragment extends Fragment {
             fieldSet = (List<Map<String, Object>>) pageSet.get("fieldSet");
             Log.e("TAG", "获取fieldSet" + fieldSet.toString());
 //获取buttonSet
-            String but=String.valueOf(pageSet.get("buttonSet"));
-            Log.e(TAG, "setStore: but0 "+but);
+            String but = String.valueOf(pageSet.get("buttonSet"));
+            Log.e(TAG, "setStore: but0 " + but);
             if (pageSet.get("buttonSet") != null) {
-                Log.e(TAG, "setStore: but1 "+but);
+                Log.e(TAG, "setStore: but1 " + but);
                 buttonSet = (List<Map<String, Object>>) pageSet.get("buttonSet");//初始化下拉按钮数据
                 setButtonSet();
                 Log.e("TAG", "获取buttonSet" + buttonSet);
@@ -278,41 +280,42 @@ public class ListFragment extends Fragment {
 
             }
 //获取dataList
-            Log.e(TAG, "setStore: setMap.get(\"dataList\") "+setMap.get("dataList").toString());
+            Log.e(TAG, "setStore: setMap.get(\"dataList\") " + setMap.get("dataList").toString());
             dataList = (List<Map<String, Object>>) setMap.get("dataList");
             Log.e("TAG", "获取dataList" + dataList);
 
         } catch (Exception e) {
             e.printStackTrace();
-            ((BaseActivity)getActivity()).dialog.dismiss();
+            ((BaseActivity) getActivity()).dialog.dismiss();
         }
 //将dataList与fieldSet合并准备适配数据
-        datas = DataProcess.combineSetData(tableId,pageId, fieldSet, dataList);
+        datas = DataProcess.combineSetData(tableId, pageId, fieldSet, dataList);
         showData();
 
 
     }
 
     public void setButtonSet() {
-        Constant.buttonSet= buttonSet;
-        Log.e(TAG, "setButtonSet: Constant.buttonSet "+Constant.buttonSet.toString());
+        Constant.buttonSet = buttonSet;
+        Log.e(TAG, "setButtonSet: Constant.buttonSet " + Constant.buttonSet.toString());
         if (Constant.buttonSet.size() > 0) {
-            ((ListActivity4)getActivity()).mToolbar.showRightImageButton();
-            for (int i = 0; i< buttonSet.size(); i++) {
+            ((ListActivity4) getActivity()).mToolbar.showRightImageButton();
+            for (int i = 0; i < buttonSet.size(); i++) {
                 Constant.buttonSet.get(i).put("tableIdList", tableId);
                 Constant.buttonSet.get(i).put("pageIdList", pageId);
             }
-            ((ListActivity4)getActivity()).mToolbar.setRightButtonOnClickListener(new View.OnClickListener() {
+            ((ListActivity4) getActivity()).mToolbar.setRightButtonOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ((ListActivity4)getActivity()).buttonList();
+                    ((ListActivity4) getActivity()).buttonList();
                 }
             });
         } else {
-            ((ListActivity4)getActivity()).mToolbar.hideRightImageButton();
+            ((ListActivity4) getActivity()).mToolbar.hideRightImageButton();
         }
 
     }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -325,9 +328,10 @@ public class ListFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
-        Constant.stu_index="";
+        Constant.stu_index = "";
         getActivity().unregisterReceiver(broadcastReceiver);
     }
+
     /**
      * 下拉刷新方法
      */
@@ -354,7 +358,7 @@ public class ListFragment extends Fragment {
      * 分动作展示数据
      */
     private void showData() {
-        Log.e(TAG, "showData: "+state);
+        Log.e(TAG, "showData: " + state);
         switch (state) {
             case STATE_NORMAL:
                 normalRequest();
@@ -364,14 +368,14 @@ public class ListFragment extends Fragment {
                 if (mAdapter != null) {
 
                     mAdapter.clearData();
-                    mAdapter.addData(datas,childTab);
+                    mAdapter.addData(datas, childTab);
                     mRecyclerView.scrollToPosition(0);
                     mRefreshLayout.finishRefresh();
                     if (datas.size() == 0) {
                         Snackbar.make(mRecyclerView, "本页无数据", Snackbar.LENGTH_SHORT).show();
-                    } else{
+                    } else {
                         Log.e(TAG, "showData: 执行了共x条");
-                        Snackbar.make(mRecyclerView, "共"+totalNum+"条", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(mRecyclerView, "共" + totalNum + "条", Snackbar.LENGTH_SHORT).show();
                     }
 
                 }
@@ -379,7 +383,7 @@ public class ListFragment extends Fragment {
                 break;
             case STATE_MORE:
                 if (mAdapter != null) {
-                    mAdapter.addData(mAdapter.getDatas().size(), datas,childTab);
+                    mAdapter.addData(mAdapter.getDatas().size(), datas, childTab);
                     mRecyclerView.scrollToPosition(mAdapter.getDatas().size());
                     mRefreshLayout.finishRefreshLoadMore();
                     Snackbar.make(mRecyclerView, "更新了" + datas.size() + "条数据", Snackbar.LENGTH_SHORT).show();
@@ -391,7 +395,7 @@ public class ListFragment extends Fragment {
 
     public void normalRequest() {
         Log.e(TAG, "normalRequest: ");
-        mAdapter = new ListAdapter2(datas, childTab,operaButtonSetList);
+        mAdapter = new ListAdapter2(datas, childTab, operaButtonSetList);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new WrapContentLinearLayoutManager(getActivity()));
         mRecyclerView.addItemDecoration(new RecycleViewDivider(getActivity(), LinearLayoutManager.VERTICAL));
@@ -404,9 +408,7 @@ public class ListFragment extends Fragment {
                 toItem(data);
             }
         });
-        ((BaseActivity)getActivity()).dialog.dismiss();
-
-
+        ((BaseActivity) getActivity()).dialog.dismiss();
     }
 
     @OnClick(R.id.searchButton)
@@ -423,7 +425,7 @@ public class ListFragment extends Fragment {
             intent.putExtra("childData", itemData);
             intent.putExtra("tableId", tableId);
             intent.putExtra("operaButtonSet", operaButtonSet);
-            Log.e(TAG, "toItem: 传递到info的operaButtonSet "+operaButtonSet);
+            Log.e(TAG, "toItem: 传递到info的operaButtonSet " + operaButtonSet);
 
             startActivity(intent);
         } catch (Exception e) {

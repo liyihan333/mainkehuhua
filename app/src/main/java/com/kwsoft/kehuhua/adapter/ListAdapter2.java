@@ -26,6 +26,7 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private OnRecyclerViewItemClickListener mOnItemClickListener = null;
     private static final int VIEW_TYPE = 1;
     private List<Map<String, Object>> operaButton;
+
     /**
      * 获取条目 View填充的类型
      * 默认返回0
@@ -52,10 +53,10 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         this.childTab = childTab;
     }
 
-    public ListAdapter2(List<List<Map<String, String>>> mDatas, List<Map<String, Object>> childTab,List<Map<String, Object>> operaButton) {
+    public ListAdapter2(List<List<Map<String, String>>> mDatas, List<Map<String, Object>> childTab, List<Map<String, Object>> operaButton) {
         this.mDatas = mDatas;
         this.childTab = childTab;
-        this.operaButton=operaButton;
+        this.operaButton = operaButton;
     }
 
     @Override
@@ -64,6 +65,7 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         mContext = parent.getContext();
         LayoutInflater mInflater = LayoutInflater.from(parent.getContext());
         Log.e("TAG", "viewType:" + viewType);
+        Log.e("mdatawyl=",mDatas.get(0).get(0).toString());
         if (VIEW_TYPE == viewType) {
             view = mInflater.inflate(R.layout.empty_view, parent, false);
 
@@ -72,7 +74,7 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         if (!StuPra.studentProId.equals("5704e45c7cf6c0b2d9873da6")) {
             view = mInflater.inflate(R.layout.activity_list_item, null);
-        }else{
+        } else {
             view = mInflater.inflate(R.layout.activity_list_item_teach, null);
         }
 
@@ -82,12 +84,13 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
     private static final String TAG = "ListAdapter2";
+
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder thisHolder, int position) {
         if (thisHolder instanceof ListViewHolder) {
             final ListViewHolder holder = (ListViewHolder) thisHolder;
 
-            List<Map<String, String>> item=getData(position);
+            List<Map<String, String>> item = getData(position);
 
             try {
                 final String title = item.get(0).get("fieldCnName2");
@@ -133,29 +136,29 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
 //判断跳转子表格
             try {
-                            final String titleName = item.get(0).get("fieldCnName2");
-                            final String mainId = item.get(0).get("mainId");
-                            Log.e(TAG, "onBindViewHolder: childTab "+childTab.toString());
-                            if (childTab.size() > 0) {
-                                holder.dash_ll.setVisibility(View.VISIBLE);
-                                holder.click_open.setVisibility(View.VISIBLE);
-                                holder.click_open_btn.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        Intent intent = new Intent();
-                                        intent.setClass(mContext, TabActivity.class);
-                                        intent.putExtra("mainId", mainId);
-                                        intent.putExtra("childTab", JSON.toJSONString(childTab));
-                                        intent.putExtra("titleName", titleName);
-                                        mContext.startActivity(intent);
-                                        //holder.click_open_btn.setAlpha(new Float(0.75));
+                final String titleName = item.get(0).get("fieldCnName2");
+                final String mainId = item.get(0).get("mainId");
+                Log.e(TAG, "onBindViewHolder: childTab " + childTab.toString());
+                if (childTab.size() > 0) {
+                    holder.dash_ll.setVisibility(View.VISIBLE);
+                    holder.click_open.setVisibility(View.VISIBLE);
+                    holder.click_open_btn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent();
+                            intent.setClass(mContext, TabActivity.class);
+                            intent.putExtra("mainId", mainId);
+                            intent.putExtra("childTab", JSON.toJSONString(childTab));
+                            intent.putExtra("titleName", titleName);
+                            mContext.startActivity(intent);
+                            //holder.click_open_btn.setAlpha(new Float(0.75));
 
-                                    }
+                        }
                     });
-                }else{
-                                holder.dash_ll.setVisibility(View.GONE);
-                                holder.click_open.setVisibility(View.GONE);
-                            }
+                } else {
+                    holder.dash_ll.setVisibility(View.GONE);
+                    holder.click_open.setVisibility(View.GONE);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -196,16 +199,16 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     /**
      * 下拉刷新更新数据
      */
-    public void addData(List<List<Map<String, String>>> datas,List<Map<String, Object>> childTab) {
+    public void addData(List<List<Map<String, String>>> datas, List<Map<String, Object>> childTab) {
 
-        addData(0, datas,childTab);
+        addData(0, datas, childTab);
     }
 
     /**
      * 上拉加载添加数据的方法
      */
     public void addData(int position, List<List<Map<String, String>>> datas, List<Map<String, Object>> childTab) {
-this.childTab=childTab;
+        this.childTab = childTab;
         if (datas != null && datas.size() > 0) {
 
             mDatas.addAll(datas);
@@ -229,7 +232,6 @@ this.childTab=childTab;
         }
     }
 }
-
 
 
 //创建新的对象对fieldCnName2进行操作，否则会在下个页面造成显示错误
@@ -282,12 +284,9 @@ this.childTab=childTab;
 //                holder.right6.setVisibility(View.VISIBLE);
 
 
-
-
 //判断显示按钮
 
 //首先过滤不能显示的按钮，将不显示的按钮删除
-
 
 
 //            if (operaButton!=null&&operaButton.size()>0) {

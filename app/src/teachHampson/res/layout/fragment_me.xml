@@ -29,9 +29,9 @@
             android:background="@color/light_gray" />
 
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="118sp"
+            android:layout_height="135sp"
             android:background="@color/white"
             android:gravity="center_vertical"
             android:orientation="horizontal"
@@ -58,8 +58,11 @@
                 />
 
             <RelativeLayout
+                android:layout_toRightOf="@+id/stu_head_image"
                 android:layout_width="match_parent"
-                android:layout_height="84sp"
+                android:layout_marginTop="-5dp"
+                android:layout_alignTop="@+id/stu_head_image"
+                android:layout_height="wrap_content"
                 android:gravity="center_vertical">
 
                 <TextView
@@ -67,7 +70,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="14sp"
-                    android:layout_marginTop="7dp"
                     android:text="李小明"
                     android:textColor="@color/text2"
                     android:textSize="17sp" />
@@ -78,7 +80,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/stu_name"
                     android:layout_marginLeft="12dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="7dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -100,12 +102,13 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/stu_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/stu_phone_line"
                     android:layout_marginLeft="12dp"
                     android:gravity="bottom"
-                    android:layout_marginTop="6dp"
+                    android:layout_marginTop="5dp"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -128,10 +131,53 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_below="@+id/stu_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="16dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="7dp"
+                    android:orientation="horizontal">
+                    <View
+                        android:id="@+id/star0"
+                        android:layout_width="16dp"
+                        android:layout_height="match_parent"
+                        android:background="@mipmap/star_ratingbar_full" />
+
+                    <View
+                        android:id="@+id/star1"
+                        android:layout_width="16dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="6dp"
+                        android:background="@mipmap/star_ratingbar_full" />
+
+                    <View
+                        android:id="@+id/star2"
+                        android:layout_width="16dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="6dp"
+                        android:background="@mipmap/star_ratingbar_full" />
+
+                    <View
+                        android:id="@+id/star3"
+                        android:layout_width="16dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="6dp"
+                        android:background="@mipmap/star_ratingbar_full" />
+
+                    <View
+                        android:id="@+id/star4"
+                        android:layout_width="16dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="6dp"
+                        android:background="@mipmap/star_ratingbar_full" />
+
+                </LinearLayout>
+
             </RelativeLayout>
 
 
-        </LinearLayout>
+        </RelativeLayout>
 
         <View
             android:layout_width="match_parent"

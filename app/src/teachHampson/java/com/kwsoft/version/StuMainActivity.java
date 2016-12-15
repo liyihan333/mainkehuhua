@@ -43,7 +43,7 @@ import java.util.List;
 public class StuMainActivity extends BaseActivity implements View.OnClickListener {
     StuFragmentTabAdapter stutabAdapter;
     private RadioGroup radioGroup;
-    private RadioButton radio3;
+  //  private RadioButton radio3;
     private String arrStr;
     private String menuDataMap,menuList;//看板数据、课程表数据、主菜单数据
     private CommonToolbar mToolbar;
@@ -139,7 +139,7 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
 
         RadioButton radio0 = (RadioButton) findViewById(R.id.radio0);
         RadioButton radio2 = (RadioButton) findViewById(R.id.radio2);
-        radio3 = (RadioButton) findViewById(R.id.radio3);
+       // radio3 = (RadioButton) findViewById(R.id.radio3);
 
         Intent intent = getIntent();
         arrStr = intent.getStringExtra("jsonArray");
@@ -178,7 +178,7 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
 
     public void initFragment() {
         Fragment studyFragment = new StudyFragment();
-        MenuFragment menuFragment = new MenuFragment();
+      //  MenuFragment menuFragment = new MenuFragment();
         Fragment courseFragment = new CourseFragment();
         Fragment meFragment = new MeFragment();
 
@@ -189,10 +189,10 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
         Log.e("homlie",homePageList);
         studyBundle.putBoolean("isLogin",true);
         studyFragment.setArguments(studyBundle);
-
-        Bundle menuBundle = new Bundle();
-        menuBundle.putString("menuDataMap", menuDataMap);
-        menuFragment.setArguments(menuBundle);
+//
+//        Bundle menuBundle = new Bundle();
+//        menuBundle.putString("menuDataMap", menuDataMap);
+//        menuFragment.setArguments(menuBundle);
 
         Bundle courseBundle = new Bundle();
       //  courseBundle.putString("menuList", menuList);
@@ -205,7 +205,7 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
 
         List<Fragment> mFragments = new ArrayList<>();
         mFragments.add(studyFragment);
-        mFragments.add(menuFragment);
+     //   mFragments.add(menuFragment);
         mFragments.add(courseFragment);
         mFragments.add(meFragment);
         stutabAdapter = new StuFragmentTabAdapter(this, mFragments, R.id.content, radioGroup);
@@ -222,18 +222,18 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
                     case R.id.radio2:
 
                         break;
-                    case R.id.radio3:
-
-                        break;
+//                    case R.id.radio3:
+//
+//                        break;
 
                 }
             }
         });
     }
 
-    public void fragmentClick() {
-        radio3.setChecked(true);
-    }
+//    public void fragmentClick() {
+//        radio3.setChecked(true);
+//    }
 
 
     public void toCamera() {
