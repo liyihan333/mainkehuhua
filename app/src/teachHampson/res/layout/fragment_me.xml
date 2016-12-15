@@ -307,6 +307,7 @@
                     android:id="@+id/ll_stu_feedback"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:layout_marginStart="10sp"
                     android:orientation="vertical">
 
