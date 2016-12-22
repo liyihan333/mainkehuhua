@@ -158,7 +158,7 @@ public class MultiValueActivity extends BaseActivity {
     
     public void requestData() {
         final String volleyUrl = Constant.sysUrl + Constant.requestListSet;
-
+        paramsMap.put("sessionId", Constant.sessionId);
         Log.e("TAG", "网络获取内多dataUrl " + volleyUrl);
         Log.e("TAG", "网络获取内多table " + paramsMap.toString());
 

@@ -214,6 +214,7 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
                     map.put("menuName", map.get("menuName").toString().replace("手机端", ""));
                     map.put("image", image[i]);
                     menuListAll.add(map);
+                    Log.e(TAG, "setMenuModel: menuName1"+menuName);
                     if (menuName.contains("Today")) {
                         todayPageId = map.get("pageId").toString();
                         todayTableid = map.get("tableId").toString();
@@ -347,7 +348,8 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
                                                 if (homePagelistMap != null && homePagelistMap.size() > 0) {
                                                     Map<String, Object> map = menuListMaps.get(i);
                                                     String menuName = map.get("menuName") + "";
-                                                    if ("Today".equals(menuName)) {
+                                                    Log.e(TAG, "onItemClick: menuName2"+menuName );
+                                                    if (menuName.contains("Today")) {
                                                         //今日课表
                                                         Intent intent = new Intent(getActivity(), TodayCourseTableActivity.class);
                                                         intent.putExtra("todayPageId", todayPageId);
@@ -355,7 +357,7 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
                                                         intent.putExtra("isToday", "1");
                                                         intent.putExtra("titleName", String.valueOf(menuListMaps.get(i).get("menuName")));
                                                         startActivity(intent);
-                                                    } else if ("Tomorrow".equals(menuName)) {
+                                                    } else if (menuName.contains("Tomorrow")) {
                                                         //明日课表
                                                         Intent intent = new Intent(getActivity(), TodayCourseTableActivity.class);
                                                         intent.putExtra("tomorrowPageId", tomorrowPageId);
@@ -649,7 +651,7 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
                     });
             Map<String, Object> loginfo = (Map<String, Object>) menuMap.get("loginInfo");
             Constant.USERID = String.valueOf(loginfo.get("USERID"));
-
+            Constant.sessionId = String.valueOf(loginfo.get("sessionId"));
             List<Map<String, Object>> menuListMap1 = (List<Map<String, Object>>) menuMap.get("roleFollowList");
             // List<Map<String, Object>> menuListMap2 = (List<Map<String, Object>>) menuMap.get("menuList");
 //看板模块数据

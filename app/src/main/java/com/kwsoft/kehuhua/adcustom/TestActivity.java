@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.kwsoft.kehuhua.adcustom.base.BaseActivity;
+import com.kwsoft.kehuhua.config.Constant;
 import com.kwsoft.kehuhua.config.Url;
 import com.kwsoft.kehuhua.urlCnn.EdusStringCallback;
 import com.kwsoft.kehuhua.urlCnn.ErrorToast;
@@ -116,6 +117,7 @@ public class TestActivity extends BaseActivity {
         Map<String,String> paramsMap=new HashMap<>();
         paramsMap.put("msgMainId",mainId);
         paramsMap.put("msgTabName","SYSTEM_MESSAGE");
+        paramsMap.put("sessionId", Constant.sessionId);
         //请求
         OkHttpUtils
                 .post()

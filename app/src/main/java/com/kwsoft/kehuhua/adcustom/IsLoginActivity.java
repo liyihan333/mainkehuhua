@@ -125,6 +125,7 @@ public class IsLoginActivity extends Activity {
         Map<String, Object> menuMap = JSON.parseObject(menuData, Map.class);
         if (menuMap.get("loginInfo") != null) {
             Map<String, Object> loginInfo = (Map<String, Object>) menuMap.get("loginInfo");
+            Constant.sessionId = String.valueOf(loginInfo.get("sessionId"));
             if (loginInfo.get("USERNAME") != null) {
                 Log.e("TAG", "USERNAME" + loginInfo.get("USERNAME"));
                 Constant.loginName = (String) loginInfo.get("USERNAME");

@@ -90,6 +90,7 @@ public class RowsReadActivity extends AppCompatActivity {
 
     private void requestRead() {
         final String volleyUrl = Constant.sysUrl + Constant.requestEdit;
+        paramsMap.put("sessionId", Constant.sessionId);
         Log.e("TAG", "修改页面Url " + volleyUrl);
         Log.e("TAG", "修改页面paramsMap：" + paramsMap);
 

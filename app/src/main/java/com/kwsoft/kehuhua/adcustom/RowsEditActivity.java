@@ -126,6 +126,7 @@ public class RowsEditActivity extends BaseActivity {
 
         //参数
         paramsMap.put("tNumber", "0");
+        paramsMap.put("sessionId", Constant.sessionId);
         //请求
         OkHttpUtils
                 .post()
@@ -339,6 +340,7 @@ public class RowsEditActivity extends BaseActivity {
 
     private void requestRule(Map<String, String> parMap) {
         String volleyUrl = Constant.sysUrl + Constant.requestMaxRule;
+        parMap.put("sessionId", Constant.sessionId);
         Log.e("TAG", "网络获取规则dataUrl " + volleyUrl);
         Log.e("TAG", "网络获取规则table " + parMap.toString());
 

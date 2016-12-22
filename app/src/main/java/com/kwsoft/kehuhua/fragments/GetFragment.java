@@ -19,6 +19,7 @@ import com.kwsoft.kehuhua.adapter.MyItemRecyclerViewAdapter;
 import com.kwsoft.kehuhua.adcustom.MessagAlertActivity;
 import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.adcustom.TestActivity;
+import com.kwsoft.kehuhua.config.Constant;
 import com.kwsoft.kehuhua.config.Url;
 import com.kwsoft.kehuhua.login.LoginActivity;
 import com.kwsoft.kehuhua.urlCnn.EdusStringCallback;
@@ -101,6 +102,7 @@ public class GetFragment extends Fragment implements View.OnClickListener {
         Map<String,String> paramsMap=new HashMap<>();
         paramsMap.put("limit",limit+"");
         paramsMap.put("start",start+"");
+        paramsMap.put("sessionId", Constant.sessionId);
         //请求
         OkHttpUtils
                 .post()

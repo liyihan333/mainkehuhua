@@ -127,6 +127,7 @@ public class AddItemsActivity extends BaseActivity {
 
         //参数
         paramsMap.put("tNumber", "0");
+        paramsMap.put("sessionId", Constant.sessionId);
         //请求
         OkHttpUtils
                 .post()

@@ -150,6 +150,7 @@ public class CourseHpsFragment extends Fragment {
             Log.e("TAG", "列表请求地址：" + volleyUrl);
 
             //参数
+            paramsMap.put("sessionId", Constant.sessionId);
             paramsMap.put("start", start + "");
             paramsMap.put("limit", limit + "");
 

@@ -389,6 +389,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     Constant.loginName = String.valueOf(loginInfo.get("USERNAME"));
                     Toast.makeText(LoginActivity.this, "欢迎登陆：" + Constant.loginName, Toast.LENGTH_SHORT).show();
                     Constant.USERID = String.valueOf(loginInfo.get("USERID"));
+                    Constant.sessionId = String.valueOf(loginInfo.get("sessionId"));
                     //xiebubiao修改
                     setAlias(Constant.USERID);
                     Constant.menuAlterTime = "";

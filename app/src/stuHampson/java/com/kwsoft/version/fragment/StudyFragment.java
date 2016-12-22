@@ -441,6 +441,7 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
             paramsMap.put(Constant.proIdName, Constant.proId);
             paramsMap.put(Constant.timeName, Constant.menuAlterTime);
             paramsMap.put(Constant.sourceName, Constant.sourceInt);
+
             //请求
             OkHttpUtils
                     .post()
@@ -477,6 +478,7 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
                     });
             Map<String, Object> loginfo = (Map<String, Object>) menuMap.get("loginInfo");
             Constant.USERID = String.valueOf(loginfo.get("USERID"));
+            Constant.sessionId = String.valueOf(loginfo.get("sessionId"));
 //            List<Map<String, Object>> menuListMap1 = (List<Map<String, Object>>) menuMap.get("roleFollowList");
 //            List<Map<String, Object>> menuListMap2 = (List<Map<String, Object>>) menuMap.get("menuList");
             List<Map<String, Object>> menuListMap1 = null;

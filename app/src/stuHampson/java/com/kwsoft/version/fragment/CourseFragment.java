@@ -356,6 +356,7 @@ public class CourseFragment extends Fragment implements OnDataListener, WeekDate
     //请求课程表数据
     private void requestCourseData(String volleyUrl) {
         //startAnim();
+        paramsMap.put("sessionId", Constant.sessionId);
         Log.e("TAG", "请求课表数据参数： "+paramsMap.toString());
 
         //请求

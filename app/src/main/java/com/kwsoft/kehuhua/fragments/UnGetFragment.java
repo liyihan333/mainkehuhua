@@ -103,6 +103,7 @@ public class UnGetFragment extends Fragment implements View.OnClickListener{
         Map<String,String> paramsMap=new HashMap<>();
         paramsMap.put("limit",limit+"");
         paramsMap.put("start",start+"");
+        paramsMap.put("sessionId", Constant.sessionId);
         //请求
         OkHttpUtils
                 .post()

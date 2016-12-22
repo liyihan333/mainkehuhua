@@ -193,6 +193,7 @@ public class RowsAddActivity extends BaseActivity {
     //请求
     public void requestAdd() {
         String volleyUrl = Constant.sysUrl + Constant.requestRowsAdd;
+        paramsMap.put("sessionId", Constant.sessionId);
         Log.e("TAG", "关联添加Url " + volleyUrl);
         Log.e("TAG", "网络获取添加参数 " + paramsMap.toString());
 
@@ -371,6 +372,7 @@ public class RowsAddActivity extends BaseActivity {
 
     private void requestRule(final Map<String, String> parMap) {
         String volleyUrl = Constant.sysUrl + Constant.requestMaxRule;
+        parMap.put("sessionId", Constant.sessionId);
         Log.e("TAG", "网络获取规则dataUrl " + volleyUrl);
         Log.e("TAG", "网络获取规则table " + parMap.toString());
 

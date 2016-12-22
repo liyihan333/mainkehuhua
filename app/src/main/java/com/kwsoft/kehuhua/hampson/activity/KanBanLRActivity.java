@@ -216,6 +216,7 @@ public class KanBanLRActivity extends BaseActivity {
                 paramsMap.put("pageType", "1");
                 Log.e("TAG", "去看板的列表请求");
             }
+            paramsMap.put("sessionId", Constant.sessionId);
             paramsMap.put("limit", limit + "");
 
             Log.e(TAG, "getData: paramsMap " + paramsMap.toString());

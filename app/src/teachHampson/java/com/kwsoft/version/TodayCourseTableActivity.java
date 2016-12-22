@@ -140,6 +140,7 @@ public class TodayCourseTableActivity extends BaseActivity {
             paramsMap.put("pageId", pageid);
             paramsMap.put("start", start + "");
             paramsMap.put("limit", limit + "");
+            paramsMap.put("sessionId", Constant.sessionId);
 
             Log.e(TAG, "getTData: " + paramsMap.toString());
 //请求
@@ -160,6 +161,7 @@ public class TodayCourseTableActivity extends BaseActivity {
                         @Override
                         public void onResponse(String response, int id) {
                             Log.e(TAG, "today:" + response);
+
                             parseData(response);
                         }
                     });
@@ -220,6 +222,7 @@ public class TodayCourseTableActivity extends BaseActivity {
         Map<String, Object> menuMap = JSON.parseObject(response,
                 new TypeReference<Map<String, Object>>() {
                 });
+
         List<Map<String, Object>> dataList = (List<Map<String, Object>>) menuMap.get("dataList");
         Map<String, Object> pageSet = (Map<String, Object>) menuMap.get("pageSet");
         List<Map<String, Object>> fieldSet = (List<Map<String, Object>>) pageSet.get("fieldSet");

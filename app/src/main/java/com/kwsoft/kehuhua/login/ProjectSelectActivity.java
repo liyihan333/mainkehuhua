@@ -156,6 +156,7 @@ public class ProjectSelectActivity extends BaseActivity implements OnRefreshList
 
         //参数
         Map<String, String> paramsMap = new HashMap<>();
+        paramsMap.put("sessionId", Constant.sessionId);
         paramsMap.put("source", "1");
         //请求
         OkHttpUtils

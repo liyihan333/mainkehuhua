@@ -224,6 +224,7 @@ public class CourseFragment extends Fragment implements OnDataListener, WeekDate
         paramsMap.put("minDate", thisWeekFirstDate);//thisWeekFirstDate
         paramsMap.put("maxDate", thisWeekLastDate);//thisWeekLastDate
 
+
         Log.e(TAG, Constant.USERID + "//" + tableId);
     }
 
@@ -314,6 +315,7 @@ public class CourseFragment extends Fragment implements OnDataListener, WeekDate
         courseInfoLayout.removeAllViews();
         paramsMap.put("minDate", thisWeekFirstDate);//thisWeekFirstDate
         paramsMap.put("maxDate", thisWeekLastDate);//thisWeekLastDate
+        paramsMap.put("sessionId", Constant.sessionId);
         requestCourseData(url);
 
 //        courseAdapter.startAndEndDate(startDate.toString("yyyy-MM-dd"),endDate.toString("yyyy-MM-dd"));

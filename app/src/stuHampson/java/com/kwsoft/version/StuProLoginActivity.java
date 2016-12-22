@@ -262,6 +262,7 @@ public class StuProLoginActivity extends BaseActivity {
                     Constant.loginName = String.valueOf(loginInfo.get("USERNAME"));
                     Toast.makeText(StuProLoginActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
                     Constant.USERID = String.valueOf(loginInfo.get("USERID"));
+                    Constant.sessionId = String.valueOf(loginInfo.get("sessionId"));
                 }
             } catch (Exception e) {
                 e.printStackTrace();

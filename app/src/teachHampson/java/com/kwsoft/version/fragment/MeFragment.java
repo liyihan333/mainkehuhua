@@ -209,6 +209,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
             Map<String, String> paramsMap = new HashMap<>();
             paramsMap.put(Constant.tableId, "2");
             paramsMap.put(Constant.pageId, "3573");
+            paramsMap.put("sessionId", Constant.sessionId);
             //请求
             OkHttpUtils
                     .post()
@@ -266,6 +267,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 //                paramsMap.put(Constant.pageId, StuPra.stuInfoPageId);
         paramsMap.put(tableId, Constant.teachPerTABLEID);
         paramsMap.put(Constant.pageId, Constant.teachPerPAGEID);
+        paramsMap.put("sessionId", Constant.sessionId);
         //请求
         OkHttpUtils
                 .post()
@@ -457,6 +459,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                             paramsMap.put("ifRecordingLog", "0");
                             paramsMap.put(Constant.tableId, "2");
                             paramsMap.put(Constant.pageId, "4171");
+                            paramsMap.put("sessionId", Constant.sessionId);
                             Log.e("up2", paramsMap.toString());
 
                             OkHttpUtils

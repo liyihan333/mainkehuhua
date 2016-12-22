@@ -82,6 +82,7 @@ public class OperateDataActivity extends BaseActivity {
                 break;
 
         }
+        paramsMap.put("sessionId", Constant.sessionId);
         //请求
         OkHttpUtils
                 .post()
@@ -511,6 +512,7 @@ public class OperateDataActivity extends BaseActivity {
 
     private void requestRule(final Map<String, String> parMap) {
         String volleyUrl = Constant.sysUrl + Constant.requestMaxRule;
+        parMap.put("sessionId", Constant.sessionId);
         Log.e("TAG", "网络获取规则dataUrl " + volleyUrl);
         Log.e("TAG", "网络获取规则table " + parMap.toString());
 

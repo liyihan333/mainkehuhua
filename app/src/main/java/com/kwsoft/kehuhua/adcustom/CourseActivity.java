@@ -247,6 +247,7 @@ public class CourseActivity extends AppCompatActivity implements OnDataListener,
 
         //参数
         paramsMap.put("tNumber", "0");
+        paramsMap.put("sessionId", Constant.sessionId);
         //请求
         OkHttpUtils
                 .post()

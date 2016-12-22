@@ -106,6 +106,7 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
     private void getData() {
         //不同页面类型请求Url不一样
         String volleyUrl = Constant.sysUrl + Constant.requestRowsAdd;
+        paramsMap.put("sessionId", Constant.sessionId);
         //请求
         OkHttpUtils
                 .post()
@@ -353,7 +354,7 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
             dialog.show();
             String volleyUrl1 = Constant.sysUrl + Constant.commitAdd + "?" +
                     Constant.tableId + "=" + tableId + "&" + Constant.pageId + "=" + pageId + "&" +
-                    pingJiaValue + "&" + hideFieldParagram + "&" + keyRelation;
+                    pingJiaValue + "&" + hideFieldParagram + "&" + keyRelation+"&sessionId="+Constant.sessionId;
 
             //请求地址（关联添加和修改）
             String volleyUrl = volleyUrl1.replaceAll(" ", "%20").replaceAll("&&", "&");

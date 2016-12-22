@@ -150,6 +150,7 @@ commitValue();
                             String key = String.valueOf(dataList.get(position).get("tempKey"));
                             String value = String.valueOf(dataList.get(position).get("tempValue"));
                             parMap.put(key, value);
+                            parMap.put("sessionId", Constant.sessionId);
                             requestRule(parMap);
                         } catch (Exception e) {
                             e.printStackTrace();

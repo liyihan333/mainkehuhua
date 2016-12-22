@@ -211,7 +211,7 @@ public class ListActivity2 extends BaseActivity {
                 Log.e("TAG", "去看板的列表请求");
             }
             paramsMap.put("limit", limit + "");
-
+            paramsMap.put("sessionId", Constant.sessionId);
             Log.e(TAG, "getData: paramsMap "+paramsMap.toString());
             //请求
             OkHttpUtils

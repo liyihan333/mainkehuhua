@@ -143,6 +143,7 @@ public class StuInfoActivity extends AppCompatActivity {
         Map<String, String> paramsMap = new HashMap<>();
         paramsMap.put(tableId, Constant.teachPerTABLEID);
         paramsMap.put(Constant.pageId, Constant.teachPerPAGEID);
+        paramsMap.put("sessionId", Constant.sessionId);
         Log.e("TAG", "学员端请求个人信息参数：" + paramsMap.toString());
         //请求
         OkHttpUtils

@@ -221,6 +221,7 @@ public class MessagAlertActivity extends BaseActivity {
         //参数
         Map<String,String> paramsMap=new HashMap<>();
         paramsMap.put("delIds",ids);
+        paramsMap.put("sessionId", Constant.sessionId);
         //请求
         OkHttpUtils
                 .post()

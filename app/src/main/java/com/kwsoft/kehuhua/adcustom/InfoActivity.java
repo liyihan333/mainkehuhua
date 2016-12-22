@@ -355,6 +355,7 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
     private void deleteItems() {
         final String volleyUrl = Constant.sysUrl + Constant.requestDelete;
         Log.e("TAG", "获取dataUrl " + volleyUrl);
+        delMapParams.put("sessionId", Constant.sessionId);
         Log.e(TAG, "删除参数  "+delMapParams.toString());
         //请求
         OkHttpUtils

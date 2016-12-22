@@ -47,6 +47,7 @@ public class SessionService  extends Service {
     }
 
     public void reGetSession() {
+        map.put("sessionId", Constant.sessionId);
                 //请求
                 OkHttpUtils
                         .post()

@@ -219,6 +219,7 @@ public class ResetPwdActivity extends BaseActivity implements View.OnClickListen
         paramsMap.put("stuId", stuId);
         paramsMap.put("oldPassword", edOldpwd.getText().toString());
         paramsMap.put("newPassword", edConfirmpwd.getText().toString());
+        paramsMap.put("sessionId", Constant.sessionId);
         //请求
         OkHttpUtils
                 .post()

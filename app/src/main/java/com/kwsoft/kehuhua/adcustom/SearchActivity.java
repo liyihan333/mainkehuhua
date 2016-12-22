@@ -137,7 +137,7 @@ public class SearchActivity extends FragmentActivity {
     private static final String TAG = "SearchActivity";
     private void requestSearch() {
         String volleyUrl = Constant.sysUrl + Constant.requestListSet;
-
+        paramsMapNew.put("sessionId", Constant.sessionId);
         //请求
         OkHttpUtils
                 .post()

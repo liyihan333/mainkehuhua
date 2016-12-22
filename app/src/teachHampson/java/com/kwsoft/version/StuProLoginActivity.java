@@ -177,6 +177,8 @@ public class StuProLoginActivity extends BaseActivity {
             Map<String, Object> loginfo = (Map<String, Object>) menuMap.get("loginInfo");
             String userid = String.valueOf(loginfo.get("USERID"));
             Constant.USERID = String.valueOf(loginfo.get("USERID"));
+            Constant.sessionId = String.valueOf(loginfo.get("sessionId"));
+
             sPreferences.edit().putString("userid", userid).apply();
             List<Map<String, Object>> menuListMap1 = (List<Map<String, Object>>) menuMap.get("roleFollowList");
             List<Map<String, Object>> menuListMap2 = (List<Map<String, Object>>) menuMap.get("menuList");

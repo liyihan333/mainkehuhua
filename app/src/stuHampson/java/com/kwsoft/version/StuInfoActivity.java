@@ -146,7 +146,7 @@ public class StuInfoActivity extends BaseActivity {
             Map<String, String> paramsMap = new HashMap<>();
             paramsMap.put(tableId, Constant.stuPerTABLEID);
             paramsMap.put(Constant.pageId, Constant.stuPerPAGEID);
-
+            paramsMap.put("sessionId", Constant.sessionId);
             //请求
             OkHttpUtils
                     .post()
@@ -186,6 +186,7 @@ public class StuInfoActivity extends BaseActivity {
             Map<String, String> paramsMap = new HashMap<>();
             paramsMap.put(tableId, Constant.stuPerTABLEID);
             paramsMap.put(Constant.pageId, Constant.stuPerPAGEID);
+            paramsMap.put("sessionId", Constant.sessionId);
             //请求
             OkHttpUtils
                     .post()

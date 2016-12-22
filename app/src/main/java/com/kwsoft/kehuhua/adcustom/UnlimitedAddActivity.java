@@ -113,6 +113,7 @@ public class UnlimitedAddActivity extends AppCompatActivity {
         Map<String, String> paramsMap = new HashMap<>();
         paramsMap.put(Constant.tableId, tableId);
         paramsMap.put(Constant.pageId, showFieldArr);
+        paramsMap.put("sessionId", Constant.sessionId);
         //请求
         OkHttpUtils
                 .post()
