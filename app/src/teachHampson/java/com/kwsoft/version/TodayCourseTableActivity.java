@@ -63,7 +63,7 @@ public class TodayCourseTableActivity extends BaseActivity {
         initRefreshLayout();
         initData();
 
-
+        dialog.show();
     }
 
     private void initData() {
@@ -168,7 +168,7 @@ public class TodayCourseTableActivity extends BaseActivity {
         } else {
             dialog.dismiss();
             mRefreshLayout.finishRefresh();
-            Toast.makeText(TodayCourseTableActivity.this, "请连接网络", Toast.LENGTH_SHORT).show();
+            Toast.makeText(TodayCourseTableActivity.this, "no network", Toast.LENGTH_SHORT).show();
             backStart();
         }
     }
@@ -263,7 +263,7 @@ public class TodayCourseTableActivity extends BaseActivity {
                 list.add(map);
             }
         } else {
-            Toast.makeText(TodayCourseTableActivity.this, "暂时无课表数据", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(TodayCourseTableActivity.this, "暂时无课表数据", Toast.LENGTH_SHORT).show();
             dialog.dismiss();
         }
         showData();
@@ -296,7 +296,7 @@ public class TodayCourseTableActivity extends BaseActivity {
 //                    mListView.scrollToPosition(mAdapter.getDatas().size());
 
                     mRefreshLayout.finishRefreshLoadMore();
-                    Snackbar.make(lv_listview, "更新了" + list.size() + "条", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(lv_listview, list.size() + " datas refreshed", Snackbar.LENGTH_SHORT).show();
                 }
 
                 break;
@@ -308,12 +308,12 @@ public class TodayCourseTableActivity extends BaseActivity {
         lv_listview.setAdapter(adapter);
         dialog.dismiss();
         if (totalNum == 0) {
-            Snackbar.make(lv_listview, "本页无数据", Snackbar.LENGTH_SHORT).show();
+//            Snackbar.make(lv_listview, "本页无数据", Snackbar.LENGTH_SHORT).show();
             empty_text.setVisibility(View.VISIBLE);
 
         } else {
             empty_text.setVisibility(View.GONE);
-            Snackbar.make(lv_listview, "加载完成，共" + totalNum + "条", Snackbar.LENGTH_SHORT).show();
+//            Snackbar.make(lv_listview, "加载完成，共" + totalNum + "条", Snackbar.LENGTH_SHORT).show();
         }
     }
 

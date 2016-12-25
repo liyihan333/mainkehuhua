@@ -35,6 +35,7 @@ import okhttp3.Call;
 
 /**
  * Created by Administrator on 2016/12/15 0015.
+ *
  */
 
 public class KanBanLRActivity extends BaseActivity {
@@ -70,6 +71,7 @@ public class KanBanLRActivity extends BaseActivity {
         setContentView(R.layout.activity_kanbanlr);
 
         ButterKnife.bind(this);
+        dialog.show();
         itemData = getIntent().getStringExtra("itemData");
         itemMap = JSON.parseObject(itemData,
                 new TypeReference<Map<String, Object>>() {
@@ -129,7 +131,7 @@ public class KanBanLRActivity extends BaseActivity {
                     Log.e(TAG, "onRefreshLoadMore: " + adapter.getItemCount());
                     loadMoreData();
                 } else {
-                    Snackbar.make(mRecyclerView, "没有更多了", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(mRecyclerView, "no more data", Snackbar.LENGTH_SHORT).show();
                     mRefreshLayout.finishRefreshLoadMore();
                 }
             }
@@ -169,11 +171,12 @@ public class KanBanLRActivity extends BaseActivity {
                     adapter.notifyDataSetChanged();
                     mRecyclerView.scrollToPosition(0);
                     mRefreshLayout.finishRefresh();
+                    dialog.dismiss();
                     if (datas.size() == 0) {
-                        Snackbar.make(mRecyclerView, "本页无数据", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(mRecyclerView, "no data", Snackbar.LENGTH_SHORT).show();
                     } else {
                         Log.e(TAG, "showData: 执行了共x条");
-                        Snackbar.make(mRecyclerView, "共" + totalNum + "条", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(mRecyclerView, totalNum + " datas", Snackbar.LENGTH_SHORT).show();
                     }
 
                 }
@@ -186,7 +189,7 @@ public class KanBanLRActivity extends BaseActivity {
                     adapter.notifyDataSetChanged();
                     mRecyclerView.scrollToPosition(adapter.getDatas().size());
                     mRefreshLayout.finishRefreshLoadMore();
-                    Snackbar.make(mRecyclerView, "更新了" + childDatas.size() + "条数据", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(mRecyclerView, childDatas.size() + " datas refreshed", Snackbar.LENGTH_SHORT).show();
                 }
                 break;
         }
@@ -228,7 +231,7 @@ public class KanBanLRActivity extends BaseActivity {
                         public void onError(Call call, Exception e, int id) {
                             ErrorToast.errorToast(mContext, e);
                             mRefreshLayout.finishRefresh();
-//                        ((BaseActivity) getActivity()).dialog.dismiss();
+                            dialog.dismiss();
                             backStart();
                         }
 
@@ -241,7 +244,7 @@ public class KanBanLRActivity extends BaseActivity {
         } else {
 //            ((BaseActivity) getActivity()).dialog.dismiss();
             mRefreshLayout.finishRefresh();
-            Toast.makeText(KanBanLRActivity.this, "请连接网络", Toast.LENGTH_SHORT).show();
+            Toast.makeText(KanBanLRActivity.this, "no network", Toast.LENGTH_SHORT).show();
             backStart();
         }
     }
@@ -260,9 +263,15 @@ public class KanBanLRActivity extends BaseActivity {
 
     public void check(String menuData) {
         Log.e(TAG, "check: 0");
-        Map<String, Object> menuMap = JSON.parseObject(menuData,
-                new TypeReference<Map<String, Object>>() {
-                });
+        Map<String, Object> menuMap = null;
+        try {
+            menuMap = JSON.parseObject(menuData,
+                    new TypeReference<Map<String, Object>>() {
+                    });
+        } catch (Exception e) {
+            e.printStackTrace();
+            dialog.dismiss();
+        }
         List<Map<String, Object>> menuListMap2 = new ArrayList<>();
         Log.e(TAG, "check: 1");
         if (menuMap.containsKey("pageSet")) {
@@ -294,6 +303,7 @@ public class KanBanLRActivity extends BaseActivity {
                 showData();
             }
         }
+        dialog.dismiss();
     }
 
     private void normalRequest() {
@@ -313,6 +323,7 @@ public class KanBanLRActivity extends BaseActivity {
                 toItem(data);
             }
         });
+        dialog.dismiss();
         //((BaseActivity) getActivity()).dialog.dismiss();
     }
 

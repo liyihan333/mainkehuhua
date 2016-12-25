@@ -46,7 +46,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseAct
         mContext = this;
 //        preferences = getSharedPreferences("userInfo", MODE_WORLD_READABLE);
 //        notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        dialog=new LoadingDialog(mContext,"加载中...");
+        dialog=new LoadingDialog(mContext,"Please wait...");
         myApplication = (MyApplication) getApplication();
         myApplication.addActivity(this);
 

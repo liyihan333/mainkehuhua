@@ -70,7 +70,7 @@ public class StuLoginActivity extends BaseActivity implements View.OnClickListen
         CloseActivityClass.activityList.add(this);
         sPreferences = getSharedPreferences(Constant.proId, MODE_PRIVATE);
 //        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        dialog=new LoadingDialog(mContext,"正在登录中...");
+        dialog=new LoadingDialog(mContext,"logining ...");
         useridOld = sPreferences.getString("useridOld", "");
 
         initJudgeSave();
@@ -102,7 +102,7 @@ public class StuLoginActivity extends BaseActivity implements View.OnClickListen
 
     @PermissionFail(requestCode = 188)
     public void doFailSomething() {
-        Toast.makeText(this, "权限获取失败", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "permission failed", Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -223,7 +223,7 @@ public class StuLoginActivity extends BaseActivity implements View.OnClickListen
                 try {
                     postLogin();
                 } catch (Exception e) {
-                    Toast.makeText(this, "当前项目链接可能出错", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Current project link may be error", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent();
                     intent.setClass(StuLoginActivity.this, SetIpPortActivity.class);
                     startActivity(intent);
@@ -243,7 +243,7 @@ public class StuLoginActivity extends BaseActivity implements View.OnClickListen
     public void postLogin() {
         Log.e("TAG", "学员端登陆 ");
         if (!hasInternetConnected()) {
-            Toast.makeText(this, "当前网络不可用，请检查网络！", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "no network", Toast.LENGTH_SHORT).show();
         } else {
             dialog.show();
             nameValue = mUserName.getText().toString();//trim去掉首尾空格
@@ -283,7 +283,7 @@ public class StuLoginActivity extends BaseActivity implements View.OnClickListen
                 
             } else {
                 dialog.dismiss();
-                Toast.makeText(StuLoginActivity.this, "用户名或密码不能为空", Toast.LENGTH_SHORT).show();
+                Toast.makeText(StuLoginActivity.this, "Username or password cannot be empty", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -298,7 +298,7 @@ public class StuLoginActivity extends BaseActivity implements View.OnClickListen
             //获取error的值，判断
             LoginError loginError = JSON.parseObject(menuData, LoginError.class);
             if (loginError.getError() != 0) {
-                Toast.makeText(this, "用户名或密码错误", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Wrong username or password", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             } else {
                 //当成功登陆后存储正确的用户名和密码,
@@ -321,7 +321,7 @@ public class StuLoginActivity extends BaseActivity implements View.OnClickListen
             }
         } else {
             dialog.dismiss();
-            Toast.makeText(StuLoginActivity.this, "服务端无数据", Toast.LENGTH_SHORT).show();
+            Toast.makeText(StuLoginActivity.this, "server no data", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -410,7 +410,7 @@ public class StuLoginActivity extends BaseActivity implements View.OnClickListen
                     Constant.loginName = String.valueOf(loginInfo.get("USERNAME"));
                     Constant.sessionId = String.valueOf(loginInfo.get("sessionId"));
                     Constant.roleNamesTeach=String.valueOf(loginInfo.get("roleNames"));
-                    Toast.makeText(StuLoginActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(StuLoginActivity.this, "logged in", Toast.LENGTH_SHORT).show();
                     Constant.USERID = String.valueOf(loginInfo.get("USERID"));
 
                 }

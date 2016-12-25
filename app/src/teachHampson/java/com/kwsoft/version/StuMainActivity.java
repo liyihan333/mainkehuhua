@@ -27,7 +27,6 @@ import com.kwsoft.kehuhua.zxing.CaptureActivity;
 import com.kwsoft.version.androidRomType.AndtoidRomUtil;
 import com.kwsoft.version.fragment.CourseFragment;
 import com.kwsoft.version.fragment.MeFragment;
-import com.kwsoft.version.fragment.MenuFragment;
 import com.kwsoft.version.fragment.StuFragmentTabAdapter;
 import com.kwsoft.version.fragment.StudyFragment;
 import com.kwsoft.version.view.CustomDialog;
@@ -155,7 +154,7 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
 //        Drawable drawable = resources.getDrawable(R.drawable.nav_news);
 //        mToolbar.setRightButtonIcon(mContext.getResources().getDrawable(R.drawable.nav_news));
 //        mToolbar.setLeftButtonIcon(mContext.getResources().getDrawable(R.drawable.nav_scan_code));
-        mToolbar.setTitle("教务客户化平台");
+        mToolbar.setTitle("iHampson");
         mToolbar.setRightButtonIcon(getResources().getDrawable(R.drawable.nav_news));
 
         mToolbar.setRightButtonOnClickListener(new View.OnClickListener() {

@@ -184,7 +184,7 @@ public class ListFragment extends Fragment {
         } else {
             ((BaseActivity) getActivity()).dialog.dismiss();
             mRefreshLayout.finishRefresh();
-            Toast.makeText(getActivity(), "请连接网络", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "no network", Toast.LENGTH_SHORT).show();
             backStart();
         }
     }
@@ -372,11 +372,9 @@ public class ListFragment extends Fragment {
                     mAdapter.addData(datas, childTab);
                     mRecyclerView.scrollToPosition(0);
                     mRefreshLayout.finishRefresh();
-                    if (datas.size() == 0) {
-                        Snackbar.make(mRecyclerView, "本页无数据", Snackbar.LENGTH_SHORT).show();
-                    } else {
+                    if (datas.size() != 0) {
                         Log.e(TAG, "showData: 执行了共x条");
-                        Snackbar.make(mRecyclerView, "共" + totalNum + "条", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(mRecyclerView, totalNum + " datas", Snackbar.LENGTH_SHORT).show();
                     }
 
                 }
@@ -387,7 +385,7 @@ public class ListFragment extends Fragment {
                     mAdapter.addData(mAdapter.getDatas().size(), datas, childTab);
                     mRecyclerView.scrollToPosition(mAdapter.getDatas().size());
                     mRefreshLayout.finishRefreshLoadMore();
-                    Snackbar.make(mRecyclerView, "更新了" + datas.size() + "条数据", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(mRecyclerView, datas.size() + " datas refreshed", Snackbar.LENGTH_SHORT).show();
                 }
 
                 break;

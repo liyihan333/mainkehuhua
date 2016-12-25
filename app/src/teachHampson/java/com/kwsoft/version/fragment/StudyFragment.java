@@ -411,7 +411,7 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
 
     @PermissionFail(requestCode = 106)
     public void doFailedCapture() {
-        Toast.makeText(getActivity(), "获取权限失败", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "permission failed", Toast.LENGTH_SHORT).show();
     }
 
     public void setKanbanAdapter(List<Map<String, Object>> parentLists) {
@@ -637,7 +637,7 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
         } else {
 
             pull_refresh_scrollview.onRefreshComplete();
-            Toast.makeText(getActivity(), "无网络", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "no network", Toast.LENGTH_SHORT).show();
 
         }
     }
@@ -664,7 +664,7 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
             pull_refresh_scrollview.onRefreshComplete();
             pull_refresh_scrollview.onRefreshComplete();
             if (isResume == 0) {
-                Toast.makeText(getActivity(), "数据已刷新", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "data refreshed", Toast.LENGTH_SHORT).show();
             }
 
 

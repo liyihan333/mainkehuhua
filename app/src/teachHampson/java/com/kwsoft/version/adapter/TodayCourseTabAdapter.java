@@ -5,14 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.kwsoft.kehuhua.adcustom.R;
-import com.kwsoft.kehuhua.hampson.adapter.CourseAdapter;
-import com.kwsoft.kehuhua.urlCnn.EdusStringCallback;
-import com.kwsoft.version.TodayCourseTableActivity;
-import com.kwsoft.version.fragment.StuInfoAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +15,7 @@ import java.util.Map;
 
 /**
  * Created by Administrator on 2016/11/11 0011.
+ *
  */
 
 public class TodayCourseTabAdapter extends BaseAdapter {
