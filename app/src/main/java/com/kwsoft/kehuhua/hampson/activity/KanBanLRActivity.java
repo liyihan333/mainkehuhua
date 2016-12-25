@@ -1,6 +1,5 @@
 package com.kwsoft.kehuhua.hampson.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DividerItemDecoration;
@@ -8,7 +7,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
@@ -34,9 +32,6 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import okhttp3.Call;
-
-import static com.kwsoft.kehuhua.config.Constant.pageId;
-import static com.kwsoft.kehuhua.config.Constant.tableId;
 
 /**
  * Created by Administrator on 2016/12/15 0015.
@@ -85,6 +80,7 @@ public class KanBanLRActivity extends BaseActivity {
         //tableId = "17796";
         initView();
         initRefreshLayout();
+        requestData();
     }
 
     @Override
@@ -109,13 +105,13 @@ public class KanBanLRActivity extends BaseActivity {
                 DividerItemDecoration.VERTICAL));
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        datas.clear();
-        childDatas.clear();
-        requestData();
-    }
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        datas.clear();
+//        childDatas.clear();
+//        requestData();
+//    }
 
     private void initRefreshLayout() {
         mRefreshLayout.setLoadMore(true);
@@ -263,24 +259,27 @@ public class KanBanLRActivity extends BaseActivity {
     }
 
     public void check(String menuData) {
+        Log.e(TAG, "check: 0");
         Map<String, Object> menuMap = JSON.parseObject(menuData,
                 new TypeReference<Map<String, Object>>() {
                 });
-        List<Map<String, Object>> menuListMap2 = null;
-
+        List<Map<String, Object>> menuListMap2 = new ArrayList<>();
+        Log.e(TAG, "check: 1");
         if (menuMap.containsKey("pageSet")) {
+            Log.e(TAG, "check: 2");
             Map<String, Object> pageSet = (Map<String, Object>) menuMap.get("pageSet");
             if (pageSet.containsKey("fieldSet")) {
+                Log.e(TAG, "check: 3");
                 menuListMap2Key = (List<Map<String, Object>>) pageSet.get("fieldSet");
-                Log.e("menuListMap2Key", JSON.toJSONString(menuListMap2Key));
+                Log.e(TAG,"menuListMap2Key "+JSON.toJSONString(menuListMap2Key));
 
                 if (menuMap.containsKey("dataList")) {
                     menuListMap2 = (List<Map<String, Object>>) menuMap.get("dataList");
-                    Log.e("menuListMap2", JSON.toJSONString(menuListMap2));
+                    Log.e(TAG,"menuListMap2 "+JSON.toJSONString(menuListMap2));
                 }
                 childDatas.clear();
                 totalNum = Integer.parseInt(menuMap.get("dataCount") + "");
-                Log.e("menuListMap2num", menuMap.get("dataCount") + "");
+                Log.e(TAG,"menuListMap2num "+menuMap.get("dataCount") + "");
                 if (menuListMap2 != null && menuListMap2.size() > 0) {
                     for (int i = 0; i < menuListMap2.size(); i++) {
                         Map<String, Object> map = menuListMap2.get(i);
@@ -288,6 +287,7 @@ public class KanBanLRActivity extends BaseActivity {
                             childDatas.add(map);
                         } else {
                             datas.add(map);
+                            Log.e(TAG, "check: datas "+datas.size());
                         }
                     }
                 }
@@ -297,6 +297,7 @@ public class KanBanLRActivity extends BaseActivity {
     }
 
     private void normalRequest() {
+        Log.e(TAG, "normalRequest: datas "+datas.size());
         adapter = new KanBLRBaseAdapter(menuListMap2Key,datas, this);
         mRecyclerView.setAdapter(adapter);
 

@@ -2,12 +2,14 @@ package com.kwsoft.kehuhua.hampson.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.kwsoft.kehuhua.adapter.EmptyViewHolder;
 import com.kwsoft.kehuhua.adcustom.R;
 
 import java.util.List;
@@ -22,19 +24,39 @@ public class KanBLRBaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private Context mContext;
     public OnRecyclerViewItemClickListener mOnItemClickListener = null;
     List<Map<String, Object>> menuListMap2Key = null;
-
+    private static final int VIEW_TYPE = 1;
     public KanBLRBaseAdapter(List<Map<String, Object>> menuListMap2Key, List<Map<String, Object>> mDatas, Context mContext) {
         this.mDatas = mDatas;
-        this.mContext = mContext;
+//        this.mContext = mContext;
         this.menuListMap2Key = menuListMap2Key;
+    }
+    /**
+     * 获取条目 View填充的类型
+     * 默认返回0
+     * 将lists为空返回 1
+     */
+    public int getItemViewType(int position) {
+        if (mDatas.size() <= 0) {
+            return VIEW_TYPE;
+        }
+        return super.getItemViewType(position);
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // 加载数据item的布局，生成VH返回
-        View v = LayoutInflater.from(mContext).inflate(R.layout.activity_kanbanlr_item, parent, false);
-        v.setOnClickListener(this);
-        return new ComViewHolder(v);
+        View view;
+        mContext = parent.getContext();
+        LayoutInflater mInflater = LayoutInflater.from(parent.getContext());
+        Log.e(TAG, "onCreateViewHolder: mDatas "+mDatas.size());
+        if (VIEW_TYPE == viewType) {
+            Log.e(TAG, "onCreateViewHolder: VIEW_TYPE "+VIEW_TYPE+"     viewType"+viewType);
+            view = mInflater.inflate(R.layout.empty_view, parent, false);
+            return new EmptyViewHolder(view);
+        }
+        view = mInflater.inflate(R.layout.activity_kanbanlr_item, null);
+        view.setOnClickListener(this);
+        return new ComViewHolder(view);
     }
 
     private static final String TAG = "ListBaseAdapter";
@@ -56,18 +78,13 @@ public class KanBLRBaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     holder.tv_right.setText(!right.equals("null") ? right : "无");
                 }
             }
-
-
-
-
-
             holder.itemView.setTag(map);
         }
     }
 
     @Override
     public int getItemCount() {
-        return mDatas.size();
+        return mDatas.size() > 0 ? mDatas.size() : 1;
     }
 
     public interface OnRecyclerViewItemClickListener {
