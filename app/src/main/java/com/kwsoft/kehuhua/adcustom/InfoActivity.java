@@ -247,11 +247,18 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
                                                 Intent mIntentEdit = new Intent(mContext, StarRatingBarActivity.class);
                                                 mIntentEdit.putExtra("itemSet", operaButtonSetMapStr);
                                                 startActivity(mIntentEdit);
-                                            }else{
-                                                Intent mIntentEdit = new Intent(mContext, OperateDataActivity.class);
-                                                mIntentEdit.putExtra("itemSet", operaButtonSetMapStr);
+                                            }else if(buttonName.contains("确认下课")&& StuPra.studentProId.equals("5704e45c7cf6c0b2d9873da6")){
+                                                //老师端确认下课按钮，需要修改activity
+                                                Intent mIntentEdit = new Intent(mContext, StarRatingBarActivity.class);
+                                                mIntentEdit.putExtra("itemSet1", operaButtonSetMapStr);
+                                                mIntentEdit.putExtra("itemSet2", operaButtonSetMapStr);
                                                 startActivity(mIntentEdit);
-                                            }
+                                            }else{
+                                                    Intent mIntentEdit = new Intent(mContext, OperateDataActivity.class);
+                                                    mIntentEdit.putExtra("itemSet", operaButtonSetMapStr);
+                                                    startActivity(mIntentEdit);
+                                                }
+
 
                                             break;
                                         case 13://单项删除操作
