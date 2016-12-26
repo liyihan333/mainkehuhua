@@ -1,5 +1,8 @@
 package com.kwsoft.kehuhua.adcustom;
 
+import com.kwsoft.kehuhua.adcustom.base.BaseActivity;
+
+import android.view.View;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,7 +11,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -22,7 +24,6 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.kwsoft.kehuhua.adapter.InfoAdapter;
-import com.kwsoft.kehuhua.adcustom.base.BaseActivity;
 import com.kwsoft.kehuhua.config.Constant;
 import com.kwsoft.kehuhua.hampson.activity.StarRatingBarActivity;
 import com.kwsoft.kehuhua.urlCnn.EdusStringCallback;
@@ -41,11 +42,11 @@ import okhttp3.Call;
 
 import static com.kwsoft.kehuhua.config.Constant.topBarColor;
 
-
 /**
- * Created by Administrator on 2015/12/3 0003.
+ * Created by Administrator on 2016/12/23 0023.
  */
-public class InfoActivity extends BaseActivity implements View.OnClickListener {
+
+public class InfoTwoActivity extends BaseActivity implements View.OnClickListener {
     private ListView mListView;
     private String tableId, pageId;
     //右上角下拉按钮
@@ -60,6 +61,7 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
     private List<Map<String, Object>> operaButtonSet = new ArrayList<>();
     private String mainId;
     private String titleName = "";
+    private List<String> btnNameLists = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,7 +113,8 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
                         String buttonId = String.valueOf(operaButtonSet0.get(i).get("buttonId"));
                         String buttonKey = "BTN_SHOW_" + buttonId;
                         String isShow = String.valueOf(itemDataMap.get(buttonKey));
-
+                        String buttonName = String.valueOf(operaButtonSet0.get(i).get("buttonName"));
+                        btnNameLists.add(buttonName);
                         if (!isShow.equals("0")) {
                             operaButtonNow.add(operaButtonSet0.get(i));
                         }
@@ -125,7 +128,8 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
                     Log.e("TAG", "详情页operaButtonSet " + operaButtonSet.toString());
                 }
             } else {
-                Toast.makeText(InfoActivity.this, "无详情数据", Toast.LENGTH_SHORT).show();
+                Toast.makeText(InfoTwoActivity.this, "无详情数据", Toast.LENGTH_SHORT).show();
+
             }
 
             // operaButtonSet
@@ -137,7 +141,7 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
     }
 
     public void presentData() {
-        InfoAdapter mAdapter = new InfoAdapter(InfoActivity.this, infoDataList);
+        InfoAdapter mAdapter = new InfoAdapter(InfoTwoActivity.this, infoDataList);
         mListView.setAdapter(mAdapter);
 
 //        SimpleAdapter adapter = new SimpleAdapter(InfoActivity.this, infoDataList, R.layout.activity_info_item,
@@ -207,14 +211,22 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
                         popupWindow.dismiss();
                     }
                 });
-
-
-                final SimpleAdapter adapter = new SimpleAdapter(
-                        this,
-                        operaButtonSet,
-                        R.layout.activity_list_buttonlist_item,
-                        new String[]{"buttonName"},
-                        new int[]{R.id.listItem});
+                SimpleAdapter adapter = null;
+                if (StuPra.studentProId.equals("5704e45c7cf6c0b2d9873da6") && btnNameLists.contains("确认下课") && btnNameLists.contains("作业")) {
+                    adapter = new SimpleAdapter(
+                            this,
+                            operaButtonSet.subList(0,1),
+                            R.layout.activity_list_buttonlist_item,
+                            new String[]{"buttonName"},
+                            new int[]{R.id.listItem});
+                } else {
+                    adapter = new SimpleAdapter(
+                            this,
+                            operaButtonSet,
+                            R.layout.activity_list_buttonlist_item,
+                            new String[]{"buttonName"},
+                            new int[]{R.id.listItem});
+                }
                 toolListView.setAdapter(adapter);
 
                 // 点击listview中item的处理
@@ -243,7 +255,18 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
                                                 Intent mIntentEdit = new Intent(mContext, StarRatingBarActivity.class);
                                                 mIntentEdit.putExtra("itemSet", operaButtonSetMapStr);
                                                 startActivity(mIntentEdit);
-                                            }  else {
+                                            } else if (StuPra.studentProId.equals("5704e45c7cf6c0b2d9873da6") && btnNameLists.contains("确认下课") && btnNameLists.contains("作业")){
+                                                Intent mIntentEdit = new Intent(mContext, OperateDataTwoActivity.class);
+                                                Map<String, Object> operaButtonSetMap1 = operaButtonSet.get(1);
+                                                operaButtonSetMap1.put("tableIdList", tableId);
+                                                operaButtonSetMap1.put("dataId", mainId);
+                                                operaButtonSetMap1.put("pageIdList", pageId);
+                                                String operaButtonSetMapStr1 = JSON.toJSONString(operaButtonSetMap1);
+
+                                                mIntentEdit.putExtra("itemSet", operaButtonSetMapStr);
+                                                mIntentEdit.putExtra("itemSet1", operaButtonSetMapStr1);
+                                                startActivity(mIntentEdit);
+                                            }else {
                                                 Intent mIntentEdit = new Intent(mContext, OperateDataActivity.class);
                                                 mIntentEdit.putExtra("itemSet", operaButtonSetMapStr);
                                                 startActivity(mIntentEdit);
@@ -343,7 +366,7 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
 
     }
 
-    private static final String TAG = "InfoActivity";
+    private static final String TAG = "InfoTwoActivity";
 
     private void deleteItems() {
         final String volleyUrl = Constant.sysUrl + Constant.requestDelete;
@@ -356,7 +379,7 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
                 .params(delMapParams)
                 .url(volleyUrl)
                 .build()
-                .execute(new EdusStringCallback(InfoActivity.this) {
+                .execute(new EdusStringCallback(InfoTwoActivity.this) {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         ErrorToast.errorToast(mContext, e);
@@ -370,10 +393,10 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
                         String isSuccess = response.substring(0, 1);
                         if (isSuccess.equals("1")) {
                             Intent intent = new Intent();
-                            intent.setClass(InfoActivity.this, ListActivity4.class);
+                            intent.setClass(InfoTwoActivity.this, ListActivity4.class);
                             startActivity(intent);
                         } else {
-                            Toast.makeText(InfoActivity.this, response + "请检查表关联", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(InfoTwoActivity.this, response + "请检查表关联", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

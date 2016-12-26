@@ -23,6 +23,7 @@ import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
 import com.kwsoft.kehuhua.adapter.ListAdapter2;
 import com.kwsoft.kehuhua.adcustom.InfoActivity;
+import com.kwsoft.kehuhua.adcustom.InfoTwoActivity;
 import com.kwsoft.kehuhua.adcustom.ListActivity4;
 import com.kwsoft.kehuhua.adcustom.OperateDataActivity;
 import com.kwsoft.kehuhua.adcustom.R;
@@ -151,6 +152,7 @@ public class ListFragment extends Fragment {
             paramsMap.put("start", start + "");
             if (!Constant.stu_index.equals("")) {
                 paramsMap.put("ctType", Constant.stu_index);
+                Log.e(TAG, "getData: stu_index"+Constant.stu_index );
                 paramsMap.put("SourceDataId", Constant.stu_homeSetId);
                 paramsMap.put("pageType", "1");
                 Log.e("TAG", "去看板的列表请求");
@@ -422,7 +424,7 @@ public class ListFragment extends Fragment {
     public void toItem(String itemData) {
         try {
             Intent intent = new Intent();
-            intent.setClass(getActivity(), InfoActivity.class);
+            intent.setClass(getActivity(), InfoTwoActivity.class);
             intent.putExtra("childData", itemData);
             intent.putExtra("tableId", tableId);
             intent.putExtra("operaButtonSet", operaButtonSet);

@@ -70,7 +70,7 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
     private StudyGridView homeGridView;
     private List<Map<String, Object>> parentList = new ArrayList<>();
     private int[] image = {R.mipmap.edus_see_today, R.mipmap.edus_see_tomorrow,
-            R.mipmap.edus_see_homework, R.mipmap.edus_see_feedback};
+            R.mipmap.edus_see_vip, R.mipmap.edus_see_group};
     private int[] imgs2 = {R.mipmap.k1, R.mipmap.k2,
             R.mipmap.k3, R.mipmap.k4, R.mipmap.k5,
             R.mipmap.k6, R.mipmap.k7, R.mipmap.k8,
@@ -151,7 +151,7 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
                         case "71":
                             Intent intent = new Intent(getActivity(), KanBanLRActivity.class);
                             intent.putExtra("itemData", JSON.toJSONString(itemData));
-                            Log.e("itemtdastudy",JSON.toJSONString(itemData));
+                            Log.e("itemtdastudy", JSON.toJSONString(itemData));
                             startActivity(intent);
                             break;
                         default:
@@ -214,7 +214,7 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
                     map.put("menuName", map.get("menuName").toString().replace("手机端", ""));
                     map.put("image", image[i]);
                     menuListAll.add(map);
-                    Log.e(TAG, "setMenuModel: menuName1"+menuName);
+                    Log.e(TAG, "setMenuModel: menuName1" + menuName);
                     if (menuName.contains("Today")) {
                         todayPageId = map.get("pageId").toString();
                         todayTableid = map.get("tableId").toString();
@@ -348,7 +348,7 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
                                                 if (homePagelistMap != null && homePagelistMap.size() > 0) {
                                                     Map<String, Object> map = menuListMaps.get(i);
                                                     String menuName = map.get("menuName") + "";
-                                                    Log.e(TAG, "onItemClick: menuName2"+menuName );
+                                                    Log.e(TAG, "onItemClick: menuName2" + menuName);
                                                     if (menuName.contains("Today")) {
                                                         //今日课表
                                                         Intent intent = new Intent(getActivity(), TodayCourseTableActivity.class);
@@ -649,26 +649,28 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
             Map<String, Object> menuMap = JSON.parseObject(menuData,
                     new TypeReference<Map<String, Object>>() {
                     });
-            Map<String, Object> loginfo = (Map<String, Object>) menuMap.get("loginInfo");
-            Constant.USERID = String.valueOf(loginfo.get("USERID"));
-            Constant.sessionId = String.valueOf(loginfo.get("sessionId"));
-            List<Map<String, Object>> menuListMap1 = (List<Map<String, Object>>) menuMap.get("roleFollowList");
-            // List<Map<String, Object>> menuListMap2 = (List<Map<String, Object>>) menuMap.get("menuList");
+
+                Map<String, Object> loginfo = (Map<String, Object>) menuMap.get("loginInfo");
+                Constant.USERID = String.valueOf(loginfo.get("USERID"));
+                Constant.sessionId = String.valueOf(loginfo.get("sessionId"));
+                List<Map<String, Object>> menuListMap1 = (List<Map<String, Object>>) menuMap.get("roleFollowList");
+                // List<Map<String, Object>> menuListMap2 = (List<Map<String, Object>>) menuMap.get("menuList");
 //看板模块数据
-            String arrStr = JSON.toJSONString(menuListMap1);
-            parentList.clear();
-            parentList = getkanbanData(arrStr);
-            setKanbanAdapter(parentList);
+                String arrStr = JSON.toJSONString(menuListMap1);
+                parentList.clear();
+                parentList = getkanbanData(arrStr);
+                setKanbanAdapter(parentList);
 
-            //在更新UI后，无需其它Refresh操作，系统会自己加载新的listView
-            pull_refresh_scrollview.onRefreshComplete();
-            pull_refresh_scrollview.onRefreshComplete();
-            if (isResume == 0) {
-                Toast.makeText(getActivity(), "数据已刷新", Toast.LENGTH_SHORT).show();
-            }
+                //在更新UI后，无需其它Refresh操作，系统会自己加载新的listView
+                pull_refresh_scrollview.onRefreshComplete();
+                pull_refresh_scrollview.onRefreshComplete();
+                if (isResume == 0) {
+                    Toast.makeText(getActivity(), "数据已刷新", Toast.LENGTH_SHORT).show();
+                }
 
 
-            isResume = 0;
+                isResume = 0;
+
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -52,7 +52,7 @@
     <uses-permission android:name="android.permission.READ_LOGS" /> <!-- 获取logcat日志 -->
     <application
         android:name="com.kwsoft.kehuhua.application.MyApplication"
-        android:hardwareAccelerated="false"
+        android:hardwareAccelerated="true"
         android:largeHeap="true"
         android:allowBackup="true"
         android:label="@string/app_name"
@@ -64,6 +64,7 @@
         <activity android:name="com.kwsoft.kehuhua.login.LoginActivity" android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".HomeChildActivity" />
         <activity android:name=".InfoActivity" />
+        <activity android:name=".InfoTwoActivity" />
         <activity android:name=".MainActivity" android:label="@string/app_name"/>
         <service android:name="com.kwsoft.kehuhua.sessionService.SessionService" />
         <activity android:name="com.kwsoft.kehuhua.login.ProjectSelectActivity" android:theme="@style/AppTheme.NoActionBar" />
@@ -95,6 +96,7 @@
         <activity android:name="me.iwf.photopicker.PhotoPagerActivity" android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity android:name=".CourseDetailActivity" />
         <activity android:name=".OperateDataActivity" />
+        <activity android:name=".OperateDataTwoActivity" />
         <activity android:name=".ListActivity2" />
         <activity android:name=".ListActivity4" />
         <activity android:name="com.kwsoft.kehuhua.SetIpPortActivity"/>
