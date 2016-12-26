@@ -389,7 +389,7 @@ public class OperateDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     mDatas.get(position).put(itemValue, defaultName);
                     mDatas.get(position).put(Constant.itemName, defaultName);
                 }
-//                    final String finalDateType = dateType;
+//final String finalDateType = dateType;
                 holder.addGeneral.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

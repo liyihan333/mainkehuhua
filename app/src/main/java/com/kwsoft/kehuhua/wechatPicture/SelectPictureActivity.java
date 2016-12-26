@@ -47,7 +47,6 @@ import static com.kwsoft.kehuhua.config.Constant.topBarColor;
 
 /**
  * Created by Administrator on 2016/10/13 0013.
- *
  */
 
 public class SelectPictureActivity extends BaseActivity implements View.OnClickListener {
@@ -57,7 +56,9 @@ public class SelectPictureActivity extends BaseActivity implements View.OnClickL
     private ImageView mVolumeView;
     private TextView mAudioSecondView;
 
-    /** 录音文件路径 */
+    /**
+     * 录音文件路径
+     */
     private String mAudioRecordFilePath = null;
     private AnimationDrawable mAnimation;
 
@@ -87,14 +88,12 @@ public class SelectPictureActivity extends BaseActivity implements View.OnClickL
         position = intent.getStringExtra("position");
         fieldRole = intent.getStringExtra("fieldRole");
 
-
         mToolbar = (CommonToolbar) findViewById(R.id.common_toolbar);
         if (fieldRole.equals("18")) {
             mToolbar.setTitle("单文件选择");
         } else if (fieldRole.equals("19")) {
             mToolbar.setTitle("多文件选择");
         }
-
 
         mToolbar.setBackgroundColor(getResources().getColor(topBarColor));
         //左侧返回按钮
@@ -112,12 +111,13 @@ public class SelectPictureActivity extends BaseActivity implements View.OnClickL
             @Override
             public void onClick(View view) {
                 getFile();//收集文件
-                Log.e(TAG, "onClick: 开始上传音频文件fieldRole "+fieldRole);
-                    if (myFile.size() > 0) {
-                        uploadMethod();//递归上传
-                    } else {
-                        Toast.makeText(SelectPictureActivity.this, "请至少选择一个文件", Toast.LENGTH_SHORT).show();
-                    }
+                Log.e(TAG, "onClick: 开始上传音频文件fieldRole " + fieldRole);
+                Log.e(TAG, "onClick: myFile" + myFile.size());
+                if (myFile.size() > 0) {
+                    uploadMethod();//递归上传
+                } else {
+                    Toast.makeText(SelectPictureActivity.this, "请至少选择一个文件", Toast.LENGTH_SHORT).show();
+                }
 
 
             }
@@ -305,13 +305,11 @@ public class SelectPictureActivity extends BaseActivity implements View.OnClickL
         if (img_Paths.size() >= 0) {
             for (int i = 0; i < img_Paths.size(); i++) {
                 File file = new File(img_Paths.get(i));
-
                 myFile.add(file);
-
             }
         }
         //音频
-        if (mAudioRecordFilePath!=null) {
+        if (mAudioRecordFilePath != null) {
             File file = new File(mAudioRecordFilePath);
             myFile.add(file);
         }
@@ -343,7 +341,7 @@ public class SelectPictureActivity extends BaseActivity implements View.OnClickL
                                 getFileCode(response);
                                 uploadMethod();
                             } else {//已达上限，返回关联添加页面
-                                Toast.makeText(SelectPictureActivity.this, "上传成功"+ (num + 1) + "个", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SelectPictureActivity.this, "上传成功" + (num + 1) + "个", Toast.LENGTH_SHORT).show();
                                 getFileCode(response);
                                 jump2Activity();
                             }

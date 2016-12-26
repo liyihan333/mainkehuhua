@@ -249,7 +249,7 @@ public class OperateDataTwoActivity extends BaseActivity {
 //                    }
 //                }
                 normalRequest();
-                if (fieldSet0.size() == 0) {
+                if (fieldSet.size() == 0) {
                     Snackbar.make(mRecyclerView, "本页无数据", Snackbar.LENGTH_SHORT).show();
                 } else {
                     Snackbar.make(mRecyclerView, "更新完成", Snackbar.LENGTH_SHORT).show();
@@ -544,8 +544,8 @@ public class OperateDataTwoActivity extends BaseActivity {
 
 //                    fieldSet.get(position).put(Constant.primValue, num);//选择总数
                     //将id列表记录到单元中，留待提交或者回显使用
-                    fieldSet0.get(position).put(Constant.itemValue, ids);//id列表
-                    fieldSet0.get(position).put(Constant.itemName, names);//名称列表
+                    fieldSet.get(position).put(Constant.itemValue, ids);//id列表
+                    fieldSet.get(position).put(Constant.itemName, names);//名称列表
                     //找到下一层的key值
 //                    fieldSet.get(position).put(Constant.secondKey, "t1_au_" + fieldSet.get(position).get("relationTableId") + "_" +
 //                            fieldSet.get(position).get("showFieldArr") +
@@ -553,16 +553,16 @@ public class OperateDataTwoActivity extends BaseActivity {
                     mAdapter.notifyItemChanged(position);
                     //单选情况
                 } else {
-                    fieldSet0.get(position).put(Constant.itemValue, ids);
+                    fieldSet.get(position).put(Constant.itemValue, ids);
                     Log.e("TAG", "单选回填的值 " + ids);
-                    fieldSet0.get(position).put(Constant.itemName, names);
+                    fieldSet.get(position).put(Constant.itemName, names);
                     mAdapter.notifyItemChanged(position);
                     //订单编号生成,只有
-                    if (!Constant.tmpFieldId.equals("") && Constant.tmpFieldId.equals(String.valueOf(fieldSet0.get(position).get("fieldId")))) {
+                    if (!Constant.tmpFieldId.equals("") && Constant.tmpFieldId.equals(String.valueOf(fieldSet.get(position).get("fieldId")))) {
                         try {
                             Map<String, String> parMap = paramsMap0;
-                            String key = String.valueOf(fieldSet0.get(position).get(Constant.primKey));
-                            String value = String.valueOf(fieldSet0.get(position).get(Constant.itemValue));
+                            String key = String.valueOf(fieldSet.get(position).get(Constant.primKey));
+                            String value = String.valueOf(fieldSet.get(position).get(Constant.itemValue));
                             parMap.put(key, value);
                             requestRule(parMap);
                         } catch (Exception e) {
@@ -577,7 +577,7 @@ public class OperateDataTwoActivity extends BaseActivity {
                 Bundle bundle = data.getBundleExtra("bundle");
                 String myValue = bundle.getString("myValue");
                 int positionLast = Integer.valueOf(bundle.getString("position"));
-                fieldSet0.get(positionLast).put("tempListValue", myValue);
+                fieldSet.get(positionLast).put("tempListValue", myValue);
                 List<List<Map<String, Object>>> myValueList = new ArrayList<>();
                 String secondValue = "";
                 if (myValue != null && !myValue.equals("")) {
@@ -601,7 +601,7 @@ public class OperateDataTwoActivity extends BaseActivity {
                     }
                 }
                 Log.e("TAG", "secondValue " + secondValue);
-                fieldSet0.get(positionLast).put(Constant.itemValue, myValueList.size() + "&" + secondValue);
+                fieldSet.get(positionLast).put(Constant.itemValue, myValueList.size() + "&" + secondValue);
                 mAdapter.notifyItemChanged(positionLast);
             } else if (resultCode == 101) {
                 //返回添加页面后复位jump值
@@ -612,9 +612,9 @@ public class OperateDataTwoActivity extends BaseActivity {
                 String codeListStr = bundle.getString("codeListStr");
                 int position = Integer.valueOf(positionStr);
                 Log.e(TAG, "onActivityResult: 收获的positionStr " + position);
-                fieldSet0.get(position).put(Constant.itemValue, codeListStr);
-                fieldSet0.get(position).put(Constant.itemName, codeListStr);
-                Log.e("TAG", "fieldSet.get(picturePosition) " + fieldSet0.get(position).toString());
+                fieldSet.get(position).put(Constant.itemValue, codeListStr);
+                fieldSet.get(position).put(Constant.itemName, codeListStr);
+                Log.e("TAG", "fieldSet.get(picturePosition) " + fieldSet.get(position).toString());
                 mAdapter.notifyItemChanged(position);
                 mAdapter.notifyDataSetChanged();
             }
@@ -655,11 +655,11 @@ public class OperateDataTwoActivity extends BaseActivity {
     private void putValue(String jsonData) {
         Log.e("TAG", "规则生成结果：" + jsonData);
 
-        for (int i = 0; i < fieldSet0.size(); i++) {
-            int fieldRole = Integer.valueOf(String.valueOf(fieldSet0.get(i).get("fieldRole")));
+        for (int i = 0; i < fieldSet.size(); i++) {
+            int fieldRole = Integer.valueOf(String.valueOf(fieldSet.get(i).get("fieldRole")));
             if (fieldRole == 8) {
-                fieldSet0.get(i).put(Constant.itemValue, jsonData);
-                fieldSet0.get(i).put(Constant.itemName, jsonData);
+                fieldSet.get(i).put(Constant.itemValue, jsonData);
+                fieldSet.get(i).put(Constant.itemName, jsonData);
                 mAdapter.notifyItemChanged(i);
 
             }
