@@ -6,8 +6,6 @@
     android:background="@color/white"
     >
 
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -22,18 +20,18 @@
 
             <ImageView
                 android:id="@+id/iv_logo"
-                android:layout_width="91dp"
-                android:layout_height="91dp"
-                android:layout_marginTop="100sp"
-                android:src="@drawable/index_logo" />
+                android:layout_width="263dp"
+                android:layout_height="58dp"
+                android:layout_marginTop="166sp"
+                android:src="@mipmap/hampson_teach" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15sp"
-                android:text="教 师 端"
-                android:textColor="@color/title_bg"
-                android:textSize="30sp" />
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="15sp"-->
+                <!--android:text="教 师 端"-->
+                <!--android:textColor="@color/title_bg"-->
+                <!--android:textSize="30sp" />-->
         </LinearLayout>
 
         <LinearLayout
@@ -48,7 +46,7 @@
             <LinearLayout
                 android:id="@+id/llayout_userName"
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
+                android:layout_height="50dp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -91,7 +89,7 @@
             <LinearLayout
                 android:id="@+id/llayout_pwd"
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
+                android:layout_height="50dp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -183,7 +181,7 @@
                     android:background="@drawable/btn_login_unenable"
                     android:enabled="false"
                     android:onClick="click"
-                    android:text="登录"
+                    android:text="Login"
                     android:textColor="#ffffff"
                     android:textSize="20sp" />
             </LinearLayout>
