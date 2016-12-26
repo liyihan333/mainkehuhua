@@ -65,7 +65,7 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         mContext = parent.getContext();
         LayoutInflater mInflater = LayoutInflater.from(parent.getContext());
         Log.e("TAG", "viewType:" + viewType);
-        Log.e("mdatawyl=",mDatas.get(0).get(0).toString());
+//        Log.e("mdatawyl=",mDatas.get(0).get(0).toString());
         if (VIEW_TYPE == viewType) {
             view = mInflater.inflate(R.layout.empty_view, parent, false);
 

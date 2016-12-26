@@ -1,6 +1,5 @@
 package com.kwsoft.kehuhua.hampson.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DividerItemDecoration;
@@ -8,7 +7,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
@@ -35,11 +33,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import okhttp3.Call;
 
-import static com.kwsoft.kehuhua.config.Constant.pageId;
-import static com.kwsoft.kehuhua.config.Constant.tableId;
-
 /**
  * Created by Administrator on 2016/12/15 0015.
+ *
  */
 
 public class KanBanLRActivity extends BaseActivity {
@@ -75,6 +71,7 @@ public class KanBanLRActivity extends BaseActivity {
         setContentView(R.layout.activity_kanbanlr);
 
         ButterKnife.bind(this);
+        dialog.show();
         itemData = getIntent().getStringExtra("itemData");
         itemMap = JSON.parseObject(itemData,
                 new TypeReference<Map<String, Object>>() {
@@ -85,6 +82,7 @@ public class KanBanLRActivity extends BaseActivity {
         //tableId = "17796";
         initView();
         initRefreshLayout();
+        requestData();
     }
 
     @Override
@@ -109,13 +107,13 @@ public class KanBanLRActivity extends BaseActivity {
                 DividerItemDecoration.VERTICAL));
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        datas.clear();
-        childDatas.clear();
-        requestData();
-    }
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        datas.clear();
+//        childDatas.clear();
+//        requestData();
+//    }
 
     private void initRefreshLayout() {
         mRefreshLayout.setLoadMore(true);
@@ -133,7 +131,7 @@ public class KanBanLRActivity extends BaseActivity {
                     Log.e(TAG, "onRefreshLoadMore: " + adapter.getItemCount());
                     loadMoreData();
                 } else {
-                    Snackbar.make(mRecyclerView, "没有更多了", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(mRecyclerView, "no more data", Snackbar.LENGTH_SHORT).show();
                     mRefreshLayout.finishRefreshLoadMore();
                 }
             }
@@ -173,11 +171,12 @@ public class KanBanLRActivity extends BaseActivity {
                     adapter.notifyDataSetChanged();
                     mRecyclerView.scrollToPosition(0);
                     mRefreshLayout.finishRefresh();
+                    dialog.dismiss();
                     if (datas.size() == 0) {
-                        Snackbar.make(mRecyclerView, "本页无数据", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(mRecyclerView, "no data", Snackbar.LENGTH_SHORT).show();
                     } else {
                         Log.e(TAG, "showData: 执行了共x条");
-                        Snackbar.make(mRecyclerView, "共" + totalNum + "条", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(mRecyclerView, totalNum + " datas", Snackbar.LENGTH_SHORT).show();
                     }
 
                 }
@@ -190,7 +189,7 @@ public class KanBanLRActivity extends BaseActivity {
                     adapter.notifyDataSetChanged();
                     mRecyclerView.scrollToPosition(adapter.getDatas().size());
                     mRefreshLayout.finishRefreshLoadMore();
-                    Snackbar.make(mRecyclerView, "更新了" + childDatas.size() + "条数据", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(mRecyclerView, childDatas.size() + " datas refreshed", Snackbar.LENGTH_SHORT).show();
                 }
                 break;
         }
@@ -232,7 +231,7 @@ public class KanBanLRActivity extends BaseActivity {
                         public void onError(Call call, Exception e, int id) {
                             ErrorToast.errorToast(mContext, e);
                             mRefreshLayout.finishRefresh();
-//                        ((BaseActivity) getActivity()).dialog.dismiss();
+                            dialog.dismiss();
                             backStart();
                         }
 
@@ -245,7 +244,7 @@ public class KanBanLRActivity extends BaseActivity {
         } else {
 //            ((BaseActivity) getActivity()).dialog.dismiss();
             mRefreshLayout.finishRefresh();
-            Toast.makeText(KanBanLRActivity.this, "请连接网络", Toast.LENGTH_SHORT).show();
+            Toast.makeText(KanBanLRActivity.this, "no network", Toast.LENGTH_SHORT).show();
             backStart();
         }
     }
@@ -263,24 +262,33 @@ public class KanBanLRActivity extends BaseActivity {
     }
 
     public void check(String menuData) {
-        Map<String, Object> menuMap = JSON.parseObject(menuData,
-                new TypeReference<Map<String, Object>>() {
-                });
-        List<Map<String, Object>> menuListMap2 = null;
-
+        Log.e(TAG, "check: 0");
+        Map<String, Object> menuMap = null;
+        try {
+            menuMap = JSON.parseObject(menuData,
+                    new TypeReference<Map<String, Object>>() {
+                    });
+        } catch (Exception e) {
+            e.printStackTrace();
+            dialog.dismiss();
+        }
+        List<Map<String, Object>> menuListMap2 = new ArrayList<>();
+        Log.e(TAG, "check: 1");
         if (menuMap.containsKey("pageSet")) {
+            Log.e(TAG, "check: 2");
             Map<String, Object> pageSet = (Map<String, Object>) menuMap.get("pageSet");
             if (pageSet.containsKey("fieldSet")) {
+                Log.e(TAG, "check: 3");
                 menuListMap2Key = (List<Map<String, Object>>) pageSet.get("fieldSet");
-                Log.e("menuListMap2Key", JSON.toJSONString(menuListMap2Key));
+                Log.e(TAG,"menuListMap2Key "+JSON.toJSONString(menuListMap2Key));
 
                 if (menuMap.containsKey("dataList")) {
                     menuListMap2 = (List<Map<String, Object>>) menuMap.get("dataList");
-                    Log.e("menuListMap2", JSON.toJSONString(menuListMap2));
+                    Log.e(TAG,"menuListMap2 "+JSON.toJSONString(menuListMap2));
                 }
                 childDatas.clear();
                 totalNum = Integer.parseInt(menuMap.get("dataCount") + "");
-                Log.e("menuListMap2num", menuMap.get("dataCount") + "");
+                Log.e(TAG,"menuListMap2num "+menuMap.get("dataCount") + "");
                 if (menuListMap2 != null && menuListMap2.size() > 0) {
                     for (int i = 0; i < menuListMap2.size(); i++) {
                         Map<String, Object> map = menuListMap2.get(i);
@@ -288,15 +296,18 @@ public class KanBanLRActivity extends BaseActivity {
                             childDatas.add(map);
                         } else {
                             datas.add(map);
+                            Log.e(TAG, "check: datas "+datas.size());
                         }
                     }
                 }
                 showData();
             }
         }
+        dialog.dismiss();
     }
 
     private void normalRequest() {
+        Log.e(TAG, "normalRequest: datas "+datas.size());
         adapter = new KanBLRBaseAdapter(menuListMap2Key,datas, this);
         mRecyclerView.setAdapter(adapter);
 
@@ -312,6 +323,7 @@ public class KanBanLRActivity extends BaseActivity {
                 toItem(data);
             }
         });
+        dialog.dismiss();
         //((BaseActivity) getActivity()).dialog.dismiss();
     }
 

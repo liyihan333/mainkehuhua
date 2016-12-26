@@ -63,7 +63,7 @@ public class TodayCourseTableActivity extends BaseActivity {
         initRefreshLayout();
         initData();
 
-
+        dialog.show();
     }
 
     private void initData() {
@@ -168,7 +168,7 @@ public class TodayCourseTableActivity extends BaseActivity {
         } else {
             dialog.dismiss();
             mRefreshLayout.finishRefresh();
-            Toast.makeText(TodayCourseTableActivity.this, "请连接网络", Toast.LENGTH_SHORT).show();
+            Toast.makeText(TodayCourseTableActivity.this, "no network", Toast.LENGTH_SHORT).show();
             backStart();
         }
     }
@@ -236,6 +236,38 @@ public class TodayCourseTableActivity extends BaseActivity {
                     Map<String, Object> map = fieldSet.get(i);
                     fieldCnName = map.get("fieldCnName") + "";
 
+                if (fieldCnName.contains("内容展示")) {
+                    teacherfieldAliasName = map.get("fieldAliasName") + "";
+                    continue;
+                } else if (fieldCnName.contains("时段")) {
+                    classfieldAliasName = map.get("fieldAliasName") + "";
+                    Log.e("fdsf", classfieldAliasName);
+                    continue;
+                }
+            }
+            Log.e("fdsf", classfieldAliasName);
+            for (int j = 0; j < dataList.size(); j++) {
+                Map<String, Object> dataListmap = dataList.get(j);
+                Map<String, String> map = new HashMap<String, String>();
+                if (dataListmap.containsKey(teacherfieldAliasName)) {
+                    String courseNameStr = (dataListmap.get(teacherfieldAliasName)).toString();
+                    if (courseNameStr != null && courseNameStr.length() > 0) {
+                        String[] courseNameArr = courseNameStr.split(",");
+                        if (courseNameArr.length > 2) {
+                            map.put("courseName", courseNameArr[courseNameArr.length - 2].substring(3));
+                        }
+                    }
+                }
+                if (dataListmap.containsKey(classfieldAliasName)) {
+                    map.put("courseTime", dataListmap.get(classfieldAliasName) + "");
+                }
+                list.add(map);
+            }
+        } else {
+//            Toast.makeText(TodayCourseTableActivity.this, "暂时无课表数据", Toast.LENGTH_SHORT).show();
+            dialog.dismiss();
+        }
+        showData();
                     if (fieldCnName.contains("内容展示")) {
                         teacherfieldAliasName = map.get("fieldAliasName") + "";
                         continue;
@@ -300,7 +332,7 @@ public class TodayCourseTableActivity extends BaseActivity {
 //                    mListView.scrollToPosition(mAdapter.getDatas().size());
 
                     mRefreshLayout.finishRefreshLoadMore();
-                    Snackbar.make(lv_listview, "更新了" + list.size() + "条", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(lv_listview, list.size() + " datas refreshed", Snackbar.LENGTH_SHORT).show();
                 }
 
                 break;
@@ -312,12 +344,12 @@ public class TodayCourseTableActivity extends BaseActivity {
         lv_listview.setAdapter(adapter);
         dialog.dismiss();
         if (totalNum == 0) {
-            Snackbar.make(lv_listview, "本页无数据", Snackbar.LENGTH_SHORT).show();
+//            Snackbar.make(lv_listview, "本页无数据", Snackbar.LENGTH_SHORT).show();
             empty_text.setVisibility(View.VISIBLE);
 
         } else {
             empty_text.setVisibility(View.GONE);
-            Snackbar.make(lv_listview, "加载完成，共" + totalNum + "条", Snackbar.LENGTH_SHORT).show();
+//            Snackbar.make(lv_listview, "加载完成，共" + totalNum + "条", Snackbar.LENGTH_SHORT).show();
         }
     }
 

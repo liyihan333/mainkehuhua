@@ -268,6 +268,7 @@ public class ListActivity4 extends BaseActivity implements ViewPager.OnPageChang
                 Log.e("kl","kl");
             }else {
                 xFragment = new ListFragment();
+                Log.e(TAG, "initViewPager: ListFragment ");
             }
             xFragment.setArguments(listBundle);
             fragmentList.clear();

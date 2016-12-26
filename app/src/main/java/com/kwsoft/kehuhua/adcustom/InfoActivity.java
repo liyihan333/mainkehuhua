@@ -44,6 +44,8 @@ import static com.kwsoft.kehuhua.config.Constant.topBarColor;
 
 /**
  * Created by Administrator on 2015/12/3 0003.
+ *
+ *
  */
 public class InfoActivity extends BaseActivity implements View.OnClickListener {
     private ListView mListView;
@@ -51,15 +53,15 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
     //右上角下拉按钮
     private RelativeLayout rlTopBar;
     private PopupWindow popupWindow;
-    private Map<String, String> delMapParams = new HashMap<>();
+    private Map<String,String> delMapParams=new HashMap<>();
     private CommonToolbar mToolbar;
 
     //新接口参数
 
-    private List<Map<String, String>> infoDataList = new ArrayList<>();
-    private List<Map<String, Object>> operaButtonSet = new ArrayList<>();
+    private List<Map<String, String>> infoDataList=new ArrayList<>();
+    private List<Map<String, Object>> operaButtonSet=new ArrayList<>();
     private String mainId;
-    private String titleName = "";
+    private String titleName="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,57 +77,59 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
         Intent mIntent = this.getIntent();
         try {
             String infoData = mIntent.getStringExtra("childData");
-            Log.e("TAG", "infoData " + infoData);
+            Log.e("TAG","infoData "+infoData);
             String operaData = mIntent.getStringExtra("operaButtonSet");
             infoDataList = JSON.parseObject(infoData,
                     new TypeReference<List<Map<String, String>>>() {
                     });
-            Log.e("TAG", "info收到的operaData " + operaData);
-            Log.e("TAG", "infoData " + infoData);
-            mainId = infoDataList.get(0).get("mainId");
-            tableId = infoDataList.get(0).get("tableId");
-            titleName = infoDataList.get(0).get("fieldCnName2");
-            pageId = infoDataList.get(0).get("pageId");
-            Constant.mainIdValue = mainId;
-            Log.e("TAG", "Info  getIntent+mainId: " + mainId);
+            Log.e("TAG","info收到的operaData "+operaData);
+            Log.e("TAG","infoData "+infoData);
+            mainId=infoDataList.get(0).get("mainId");
+            tableId=infoDataList.get(0).get("tableId");
+            titleName=infoDataList.get(0).get("fieldCnName2");
+            pageId=infoDataList.get(0).get("pageId");
+            Constant.mainIdValue=mainId;
+            Log.e("TAG","Info  getIntent+mainId: "+mainId);
 
 
-            List<Map<String, Object>> operaButtonSet0 = JSON.parseObject(operaData,
+
+            List<Map<String, Object>> operaButtonSet0=JSON.parseObject(operaData,
                     new TypeReference<List<Map<String, Object>>>() {
                     });
 
 //判断属性界面有数据
-            if (infoDataList.size() > 0) {
+            if (infoDataList.size()>0) {
                 //判断按钮数据非空
-                if (operaButtonSet0.size() != 0) {
+                if (operaButtonSet0.size()!=0) {
 
-                    List<Map<String, Object>> operaButtonNow = new ArrayList<>();//不能在原来的上面改，需要新建，否则后面的会得到错误的集合
-                    String itemDataStr = infoDataList.get(0).get("allItemData");
-                    Log.e(TAG, "getInfoData: itemDataStr " + itemDataStr);
-                    Map<String, Object> itemDataMap = JSON.parseObject(itemDataStr,
+                    List<Map<String, Object>> operaButtonNow=new ArrayList<>();//不能在原来的上面改，需要新建，否则后面的会得到错误的集合
+                    String itemDataStr=infoDataList.get(0).get("allItemData");
+                    Log.e(TAG, "getInfoData: itemDataStr "+itemDataStr);
+                    Map<String,Object>  itemDataMap = JSON.parseObject(itemDataStr,
                             new TypeReference<Map<String, Object>>() {
                             });
 
-                    for (int i = 0; i < operaButtonSet0.size(); i++) {
+                    for (int i=0;i<operaButtonSet0.size();i++) {
 
-                        String buttonId = String.valueOf(operaButtonSet0.get(i).get("buttonId"));
-                        String buttonKey = "BTN_SHOW_" + buttonId;
-                        String isShow = String.valueOf(itemDataMap.get(buttonKey));
+                        String buttonId= String.valueOf(operaButtonSet0.get(i).get("buttonId"));
+                        String buttonKey="BTN_SHOW_"+buttonId;
+                        String isShow=String.valueOf(itemDataMap.get(buttonKey));
 
                         if (!isShow.equals("0")) {
                             operaButtonNow.add(operaButtonSet0.get(i));
                         }
                     }
-                    Log.e(TAG, "onBindViewHolder: operaButtonNow " + operaButtonNow.toString());
+                    Log.e(TAG, "onBindViewHolder: operaButtonNow "+operaButtonNow.toString());
 
                     //operaButtonNow
 
-                    operaButtonSet = operaButtonNow;
+                    operaButtonSet=operaButtonNow;
 
-                    Log.e("TAG", "详情页operaButtonSet " + operaButtonSet.toString());
+                    Log.e("TAG", "详情页operaButtonSet " +operaButtonSet.toString());
                 }
             } else {
                 Toast.makeText(InfoActivity.this, "无详情数据", Toast.LENGTH_SHORT).show();
+
             }
 
             // operaButtonSet
@@ -137,7 +141,7 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
     }
 
     public void presentData() {
-        InfoAdapter mAdapter = new InfoAdapter(InfoActivity.this, infoDataList);
+        InfoAdapter mAdapter=new InfoAdapter(InfoActivity.this, infoDataList);
         mListView.setAdapter(mAdapter);
 
 //        SimpleAdapter adapter = new SimpleAdapter(InfoActivity.this, infoDataList, R.layout.activity_info_item,
@@ -150,7 +154,7 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
 
     public void initView() {
         mListView = (ListView) findViewById(R.id.lv_stu_info);
-        rlTopBar = (RelativeLayout) findViewById(R.id.info_title);
+        rlTopBar= (RelativeLayout) findViewById(R.id.info_title);
         //mTextViewTitle.setText(listMap.get(0).get("fieldCnName2")+"");
         mToolbar = (CommonToolbar) findViewById(R.id.common_toolbar);
         mToolbar.setTitle(titleName);
@@ -166,8 +170,8 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
         });
 
         //判断条件显示右侧按钮
-        Log.e("TAG", "详情页operaButtonSet " + operaButtonSet.toString());
-        if (operaButtonSet.size() > 0) {
+        Log.e("TAG", "详情页operaButtonSet " +operaButtonSet.toString());
+        if (operaButtonSet.size()>0) {
             mToolbar.showRightImageButton();
             //右侧下拉按钮
             mToolbar.setRightButtonOnClickListener(new View.OnClickListener() {
@@ -177,7 +181,7 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
                 }
             });
 
-        } else {
+        }else{
             mToolbar.hideRightImageButton();
         }
 
@@ -190,7 +194,7 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
 
     //右上角下拉按钮方法
 
-    private void popButton() {
+    private void  popButton(){
         try {
             if (popupWindow != null && popupWindow.isShowing()) {
                 popupWindow.dismiss();
@@ -233,21 +237,28 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
                                     operaButtonSetMap.put("pageIdList", pageId);
 
                                     String operaButtonSetMapStr = JSON.toJSONString(operaButtonSetMap);
-                                    Log.e(TAG, "onItemClick: operaButtonSetMapStr" + operaButtonSetMapStr);
+                                    Log.e(TAG, "onItemClick: operaButtonSetMapStr"+operaButtonSetMapStr);
                                     switch (buttonType) {
                                         case 12://修改页面
                                         case 18://关联添加页面
-                                            String buttonName = String.valueOf(operaButtonSetMap.get("buttonName"));
-                                            Log.e(TAG, "onItemClick: buttonName " + buttonName);
-                                            if (buttonName.contains("确认下课") && StuPra.studentProId.equals("57159822f07e75084cb8a1fe")) {
+                                            String buttonName=String.valueOf(operaButtonSetMap.get("buttonName"));
+                                            Log.e(TAG, "onItemClick: buttonName "+buttonName);
+                                            if (buttonName.contains("确认下课")&& StuPra.studentProId.equals("57159822f07e75084cb8a1fe")) {
                                                 Intent mIntentEdit = new Intent(mContext, StarRatingBarActivity.class);
                                                 mIntentEdit.putExtra("itemSet", operaButtonSetMapStr);
                                                 startActivity(mIntentEdit);
-                                            }  else {
-                                                Intent mIntentEdit = new Intent(mContext, OperateDataActivity.class);
-                                                mIntentEdit.putExtra("itemSet", operaButtonSetMapStr);
+                                            }else if(buttonName.contains("确认下课")&& StuPra.studentProId.equals("5704e45c7cf6c0b2d9873da6")){
+                                                //老师端确认下课按钮，需要修改activity
+                                                Intent mIntentEdit = new Intent(mContext, StarRatingBarActivity.class);
+                                                mIntentEdit.putExtra("itemSet1", operaButtonSetMapStr);
+                                                mIntentEdit.putExtra("itemSet2", operaButtonSetMapStr);
                                                 startActivity(mIntentEdit);
-                                            }
+                                            }else{
+                                                    Intent mIntentEdit = new Intent(mContext, OperateDataActivity.class);
+                                                    mIntentEdit.putExtra("itemSet", operaButtonSetMapStr);
+                                                    startActivity(mIntentEdit);
+                                                }
+
 
                                             break;
                                         case 13://单项删除操作
@@ -320,6 +331,8 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
     }
 
 
+
+
     private void toDelete() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("数据库中会同步删除");
@@ -341,6 +354,7 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
         builder.create().show();
 
 
+
     }
 
     private static final String TAG = "InfoActivity";
@@ -349,7 +363,7 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
         final String volleyUrl = Constant.sysUrl + Constant.requestDelete;
         Log.e("TAG", "获取dataUrl " + volleyUrl);
         delMapParams.put("sessionId", Constant.sessionId);
-        Log.e(TAG, "删除参数  " + delMapParams.toString());
+        Log.e(TAG, "删除参数  "+delMapParams.toString());
         //请求
         OkHttpUtils
                 .post()
@@ -359,21 +373,21 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
                 .execute(new EdusStringCallback(InfoActivity.this) {
                     @Override
                     public void onError(Call call, Exception e, int id) {
-                        ErrorToast.errorToast(mContext, e);
-                        Log.e(TAG, "onError: Call  " + call + "  id  " + id);
+                        ErrorToast.errorToast(mContext,e);
+                        Log.e(TAG, "onError: Call  "+call+"  id  "+id);
                     }
 
                     @Override
                     public void onResponse(String response, int id) {
-                        Log.e(TAG, "onResponse: " + "  id  " + id);
+                        Log.e(TAG, "onResponse: "+"  id  "+id);
                         Log.e("TAG", "删除返回数据" + response);
-                        String isSuccess = response.substring(0, 1);
-                        if (isSuccess.equals("1")) {
+                        String isSuccess=response.substring(0,1);
+                        if(isSuccess.equals("1")){
                             Intent intent = new Intent();
-                            intent.setClass(InfoActivity.this, ListActivity4.class);
+                            intent.setClass(InfoActivity.this,ListActivity4.class);
                             startActivity(intent);
-                        } else {
-                            Toast.makeText(InfoActivity.this, response + "请检查表关联", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(InfoActivity.this, response+"请检查表关联", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -381,6 +395,8 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
     }
 
 }
+
+
 
 
 //                                    switch (buttonType) {
