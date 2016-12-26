@@ -229,6 +229,7 @@ public class OperateDataActivity extends BaseActivity {
                 }
                 //请求地址（关联添加和修改）
                 String volleyUrl = volleyUrl1.replaceAll(" ", "%20").replaceAll("&&", "&");
+                volleyUrl = volleyUrl + "&sessionId=" + Constant.sessionId;
                 //get请求
                 OkHttpUtils
                         .get()

@@ -91,10 +91,6 @@ public class ListActivity4 extends BaseActivity implements ViewPager.OnPageChang
         //右键
         mToolbar.setRightButtonIcon(getResources().getDrawable(R.mipmap.often_more)); //右侧pop
 
-
-
-
-
         getIntentData();
         initViewPager();
         initTab();//动态产生RadioButton

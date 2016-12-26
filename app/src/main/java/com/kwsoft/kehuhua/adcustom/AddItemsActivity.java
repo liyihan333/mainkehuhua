@@ -230,6 +230,7 @@ public class AddItemsActivity extends BaseActivity {
                         value + "&" + hideFieldParagram + "&" +
                         keyRelation;
                 String volleyUrl = volleyUrl1.replaceAll(" ", "%20");
+                volleyUrl = volleyUrl + "&sessionId=" + Constant.sessionId;
                 Log.e("TAG", "添加提交地址：" + volleyUrl);
                  //get请求
                 OkHttpUtils
