@@ -268,38 +268,7 @@ public class TodayCourseTableActivity extends BaseActivity {
             dialog.dismiss();
         }
         showData();
-                    if (fieldCnName.contains("内容展示")) {
-                        teacherfieldAliasName = map.get("fieldAliasName") + "";
-                        continue;
-                    } else if (fieldCnName.contains("时段")) {
-                        classfieldAliasName = map.get("fieldAliasName") + "";
-                        Log.e("fdsf", classfieldAliasName);
-                        continue;
-                    }
-                }
-                Log.e("fdsf", classfieldAliasName);
-                for (int j = 0; j < dataList.size(); j++) {
-                    Map<String, Object> dataListmap = dataList.get(j);
-                    Map<String, String> map = new HashMap<String, String>();
-                    if (dataListmap.containsKey(teacherfieldAliasName)) {
-                        String courseNameStr = (dataListmap.get(teacherfieldAliasName)).toString();
-                        if (courseNameStr != null && courseNameStr.length() > 0) {
-                            String[] courseNameArr = courseNameStr.split(",");
-                            if (courseNameArr.length > 2) {
-                                map.put("courseName", courseNameArr[courseNameArr.length - 2].substring(3));
-                            }
-                        }
-                    }
-                    if (dataListmap.containsKey(classfieldAliasName)) {
-                        map.put("courseTime", dataListmap.get(classfieldAliasName) + "");
-                    }
-                    list.add(map);
-                }
-            } else {
-                Toast.makeText(TodayCourseTableActivity.this, "暂时无课表数据", Toast.LENGTH_SHORT).show();
-                dialog.dismiss();
-            }
-            showData();
+
         }else {
             Toast.makeText(TodayCourseTableActivity.this, menuMap.get("promptMessage").toString(), Toast.LENGTH_SHORT).show();
         }
