@@ -133,6 +133,12 @@ public class ListActivity4 extends BaseActivity implements ViewPager.OnPageChang
 //        String mainId=intent.getStringExtra("mainId");//第二个获取的参数
 //        Log.e("TAG", "tab页中的mainId："+mainId);
         mToolbar.setTitle(titleName);
+        if ("office Hour".equals(titleName)){
+            Constant.isOfficeHour = true;
+        }else {
+            Constant.isOfficeHour = false;
+        }
+
 //        String childTab = intent.getStringExtra("childTab");//第三个获取的参数
 //        List<Map<String, Object>> childTabList = JSON.parseObject(childTab,
 //                new TypeReference<List<Map<String, Object>>>() {
@@ -384,6 +390,7 @@ public class ListActivity4 extends BaseActivity implements ViewPager.OnPageChang
 
         switch (buttonType) {
             case 0://添加页面
+                Log.e(TAG, "toPage: buttonType"+"添加页面");
                 Intent intent = new Intent(ListActivity4.this, OperateDataActivity.class);
                 Log.e("buttonSetItem=",JSON.toJSONString(buttonSetItem));
                 intent.putExtra("itemSet", JSON.toJSONString(buttonSetItem));

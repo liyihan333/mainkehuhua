@@ -78,6 +78,8 @@ public class Constant {
     public static String timeName = "alterTime";
     public static String menuTime = "";
 
+    public static boolean isOfficeHour=false;
+
     public final static String sourceName = "source";
     public final static String sourceInt = "1";
 

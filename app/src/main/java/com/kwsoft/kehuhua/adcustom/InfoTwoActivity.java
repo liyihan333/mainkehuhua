@@ -267,6 +267,7 @@ public class InfoTwoActivity extends BaseActivity implements View.OnClickListene
                                                 mIntentEdit.putExtra("itemSet1", operaButtonSetMapStr1);
                                                 startActivity(mIntentEdit);
                                             }else {
+                                                Log.e(TAG, "onItemClick: OperateDataActivity"+"OperateDataActivity");
                                                 Intent mIntentEdit = new Intent(mContext, OperateDataActivity.class);
                                                 mIntentEdit.putExtra("itemSet", operaButtonSetMapStr);
                                                 startActivity(mIntentEdit);

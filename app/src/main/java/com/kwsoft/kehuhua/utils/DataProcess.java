@@ -10,6 +10,8 @@ import com.kwsoft.kehuhua.adcustom.ListActivity4;
 import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.config.Constant;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -299,6 +301,11 @@ public class DataProcess {
 
                     } else {
                         value = String.valueOf(dataCommit.get(i).get(Constant.itemValue));
+                        try {
+                            value = URLDecoder.decode(value, "UTF-8");
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
+                        }
                     }
                 } else {
                     if (fieldRole == 21) {

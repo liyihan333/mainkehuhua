@@ -69,7 +69,6 @@ public class OperateDataActivity extends BaseActivity {
         //不同页面类型请求Url不一样
         String volleyUrl = "";
         switch (buttonType) {
-
             case 0://列表添加
                 volleyUrl = Constant.sysUrl + Constant.requestAdd;
                 break;
@@ -124,7 +123,6 @@ public class OperateDataActivity extends BaseActivity {
                 case 18:
                     if (pageSet.get("relationFieldId") != null) {
                         Constant.relationFieldId = String.valueOf(pageSet.get("relationFieldId"));
-
                         keyRelation = "t0_au_" + tableId + "_" + pageId + "_" + Constant.relationFieldId + "=" + dataId;
                     }
 
@@ -230,6 +228,7 @@ public class OperateDataActivity extends BaseActivity {
                 //请求地址（关联添加和修改）
                 String volleyUrl = volleyUrl1.replaceAll(" ", "%20").replaceAll("&&", "&");
                 volleyUrl = volleyUrl + "&sessionId=" + Constant.sessionId;
+                Log.e(TAG, "getCommit: volleyUrl"+volleyUrl);
                 //get请求
                 OkHttpUtils
                         .get()
