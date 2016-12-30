@@ -33,6 +33,7 @@ import com.kwsoft.kehuhua.datetimeselect.SelectDateDialog;
 import com.kwsoft.kehuhua.datetimeselect.SelectTimeDialog;
 import com.kwsoft.kehuhua.utils.Utils;
 import com.kwsoft.kehuhua.wechatPicture.SelectPictureActivity;
+import com.kwsoft.version.StuPra;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -319,7 +320,6 @@ public class OperateDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 //将long型时间改为约定的时间格式
                 String dateType = "HH:mm:ss";
                 //判断 如果defaultName是格林尼治时间字符串
-
                 //转换long为日期
                 //如果是则转换为时间类型字符串
                 if (defaultName.matches("[0-9]+")) {
@@ -343,15 +343,15 @@ public class OperateDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                         SelectTimeDialog mSelectTimeDialog = new SelectTimeDialog(mContext, new SelectTimeDialog.OnClickListener() {
                             @Override
                             public boolean onSure(int hour, int minute, int setTimeType) {
-//                                        String result = String.format("%02d:%02d:%02d", hour, minute, 0);
+// String result = String.format("%02d:%02d:%02d", hour, minute, 0);
                                 String result;
                                 if (Constant.isOfficeHour) {
-                                     result = String.format("%02d:%02d", hour, minute);
+                                    result = String.format("%02d:%02d", hour, minute);
                                 } else {
                                     result = String.format("%02d:%02d:%02d", hour, minute, 0);
                                 }
 
-                                Log.e(TAG, "onSure: result"+result );
+                                Log.e(TAG, "onSure: result" + result);
                                 holder.addGeneral.setText(result);
                                 Log.e(TAG, "onSure: dateAndTime  " + result);
                                 mDatas.get(position).put(itemValue, result);
@@ -381,12 +381,17 @@ public class OperateDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 }
 
 
-                String defaultDateType=  String.valueOf(mDatas.get(position).get("dateType"));
+                String defaultDateType = String.valueOf(mDatas.get(position).get("dateType"));
 
                 if (defaultDateType.equals("yyyy-MM-dd HH:mm:ss")) {
-
                     //将long型时间改为约定的时间格式
                     String dateType = "yyyy-MM-dd HH:mm:ss";
+//                    if (StuPra.studentProId.equals("5704e45c7cf6c0b2d9873da6")) {
+//                        //将long型时间改为约定的时间格式
+//                        dateType = "yyyy-MM-dd HH:mm";
+//                    } else {
+//                        dateType = "yyyy-MM-dd HH:mm:ss";
+//                    }
                     Log.e("TAG", "defaultName " + defaultName);
 //判断是否为纯数字
 
@@ -420,9 +425,13 @@ public class OperateDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                                         public boolean onSure(int hour, int minute, int setTimeType) {
 //                                        String result = String.format("%02d:%02d:%02d", hour, minute, 0);
                                             String result;
-                                            result = String.format("%02d:%02d:%02d", hour, minute, 0);
-                                            String dateAndTime=date+" "+result;
-                                            Log.e(TAG, "onSure: result"+dateAndTime );
+                                            if (StuPra.studentProId.equals("5704e45c7cf6c0b2d9873da6")) {
+                                                result = String.format("%02d:%02d", hour, minute);
+                                            } else {
+                                                result = String.format("%02d:%02d:%02d", hour, minute, 0);
+                                            }
+                                            String dateAndTime = date + " " + result;
+                                            Log.e(TAG, "onSure: result" + dateAndTime);
                                             holder.addGeneral.setText(dateAndTime);
                                             Log.e(TAG, "onSure: dateAndTime  " + dateAndTime);
                                             mDatas.get(position).put(itemValue, dateAndTime);
@@ -442,9 +451,6 @@ public class OperateDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                                             c.get(Calendar.SECOND));
 
 
-
-
-
                                     return false;
                                 }
 
@@ -460,7 +466,7 @@ public class OperateDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                                     c.get(Calendar.DAY_OF_MONTH));
                         }
                     });
-                }else if (defaultDateType.equals("yyyy-MM-dd")){
+                } else if (defaultDateType.equals("yyyy-MM-dd")) {
 
                     //将long型时间改为约定的时间格式
                     String dateType = "yyyy-MM-dd";
@@ -495,6 +501,89 @@ public class OperateDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                                     holder.addGeneral.setText(date);
                                     mDatas.get(position).put(Constant.itemValue, date);
                                     mDatas.get(position).put(Constant.itemName, date);
+                                    return false;
+                                }
+
+                                @Override
+                                public boolean onCancel() {
+                                    return false;
+                                }
+                            });
+                            Calendar c = Calendar.getInstance();
+                            c.setTimeInMillis(System.currentTimeMillis());
+                            mSelectDateDialog.show(c.get(Calendar.YEAR),
+                                    c.get(Calendar.MONTH),
+                                    c.get(Calendar.DAY_OF_MONTH));
+                        }
+                    });
+                } else if (defaultDateType.equals("yyyy-MM-dd HH:mm")) {
+                    //将long型时间改为约定的时间格式
+                    String dateType = "yyyy-MM-dd HH:mm";
+//                    if (StuPra.studentProId.equals("5704e45c7cf6c0b2d9873da6")) {
+//                        //将long型时间改为约定的时间格式
+//                        dateType = "yyyy-MM-dd HH:mm";
+//                    } else {
+//                        dateType = "yyyy-MM-dd HH:mm:ss";
+//                    }
+                    Log.e("TAG", "defaultName wyl" + defaultName);
+//判断是否为纯数字
+
+                    //存储defaultName
+                    //如果是则转换为时间类型字符串
+                    if (defaultName.matches("[0-9]+")) {
+                        long defaultNameLong = Long.valueOf(defaultName);
+                        //转换long为日期
+                        Log.e("TAG", "defaultNameLong " + defaultNameLong);
+                        Date date = new Date(defaultNameLong);
+                        defaultName = new SimpleDateFormat(dateType).format(date);
+                    }
+                    holder.addGeneral.setText(defaultName);
+                    if (mDatas.get(position).get(itemValue) == null) {
+                        mDatas.get(position).put(itemValue, defaultName);
+                        mDatas.get(position).put(Constant.itemName, defaultName);
+                    }
+//final String finalDateType = dateType;
+                    holder.addGeneral.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            SelectDateDialog mSelectDateDialog = new SelectDateDialog(mContext);
+                            mSelectDateDialog.setOnClickListener(new SelectDateDialog.OnClickListener() {
+                                @Override
+                                public boolean onSure(int mYear, int mMonth, int mDay, long time) {
+                                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                                    final String date = dateFormat.format(time);
+                                    //选择时间
+                                    SelectTimeDialog mSelectTimeDialog = new SelectTimeDialog(mContext, new SelectTimeDialog.OnClickListener() {
+                                        @Override
+                                        public boolean onSure(int hour, int minute, int setTimeType) {
+//                                        String result = String.format("%02d:%02d:%02d", hour, minute, 0);
+                                            String result;
+//                                            if (StuPra.studentProId.equals("5704e45c7cf6c0b2d9873da6")) {
+//                                                result = String.format("%02d:%02d", hour, minute);
+//                                            } else {
+                                                result = String.format("%02d:%02d:%02d", hour, minute, 0);
+                                           // }
+                                            String dateAndTime = date + " " + result;
+                                            Log.e(TAG, "onSure: result" + dateAndTime);
+                                            holder.addGeneral.setText(dateAndTime);
+                                            Log.e(TAG, "onSure: dateAndTime  " + dateAndTime);
+                                            mDatas.get(position).put(itemValue, dateAndTime);
+                                            mDatas.get(position).put(Constant.itemName, dateAndTime);
+                                            return false;
+                                        }
+
+                                        @Override
+                                        public boolean onCancel() {
+                                            return false;
+                                        }
+                                    });
+                                    Calendar c = Calendar.getInstance();
+                                    c.setTimeInMillis(System.currentTimeMillis());
+                                    mSelectTimeDialog.show(c.get(Calendar.HOUR_OF_DAY),
+                                            c.get(Calendar.MINUTE),
+                                            c.get(Calendar.SECOND));
+
+
                                     return false;
                                 }
 

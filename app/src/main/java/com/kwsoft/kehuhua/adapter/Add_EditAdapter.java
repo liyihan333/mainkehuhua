@@ -38,6 +38,7 @@ import com.kwsoft.kehuhua.adcustom.UnlimitedAddActivity;
 import com.kwsoft.kehuhua.config.Constant;
 import com.kwsoft.kehuhua.utils.NoDoubleClickListener;
 import com.kwsoft.kehuhua.wechatPicture.SelectPictureActivity;
+import com.kwsoft.version.StuPra;
 import com.sleepbot.datetimepicker.time.RadialPickerLayout;
 import com.sleepbot.datetimepicker.time.TimePickerDialog;
 
@@ -321,7 +322,7 @@ public class Add_EditAdapter extends BaseAdapter {
             int dicDefaultSelectInt;
             String dicDefaultSelect;
             //有值的情况
-            if (!defaultName.equals("")&&!defaultName.equals("null")) {
+            if (!defaultName.equals("") && !defaultName.equals("null")) {
                 byId = getById(dicList, byId, Integer.valueOf(defaultName));
                 //无值、有默认值的情况
             } else if (!valueOf(fieldSet.get(position).get("dicDefaultSelect")).equals("")) {
@@ -341,10 +342,10 @@ public class Add_EditAdapter extends BaseAdapter {
             }
             fieldSet.get(position).put(Constant.itemValue, valueOf(dicList.get(byId).get("DIC_ID")));
             fieldSet.get(position).put(Constant.itemName, valueOf(dicList.get(byId).get("DIC_ID")));
-            String dicName=String.valueOf(dicList.get(byId).get("DIC_NAME"));
+            String dicName = String.valueOf(dicList.get(byId).get("DIC_NAME"));
 
 
-            if (!dicName.equals("")&&!dicName.equals("null")) {
+            if (!dicName.equals("") && !dicName.equals("null")) {
                 textView1.setText(dicName);
             }
 
@@ -377,10 +378,14 @@ public class Add_EditAdapter extends BaseAdapter {
             if (isShow) {
                 addGeneral.setVisibility(View.VISIBLE);
             }
+            String dateType;
+            // if (StuPra.studentProId.equals("5704e45c7cf6c0b2d9873da6")) {
             //将long型时间改为约定的时间格式
-            String dateType = "yyyy-MM-dd HH:mm:ss";
+            //   dateType = "yyyy-MM-dd HH:mm";
             //判断 如果defaultName是格林尼治时间字符串
-
+            //} else {
+            dateType = "yyyy-MM-dd HH:mm:ss";
+            // }
             //转换long为日期
             //如果是则转换为时间类型字符串
             if (defaultName.matches("[0-9]+")) {
@@ -415,8 +420,15 @@ public class Add_EditAdapter extends BaseAdapter {
                                                 @Override
                                                 public void onTimeSet(RadialPickerLayout view, int hour, int minute) {
                                                     //获得时分并与日期加在一起，后缀加上秒数
-                                                    String sDt = dateTime2 + " " + hour + ":" + minute + ":00";
-                                                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                                    String sDt;
+                                                    SimpleDateFormat sdf;
+                                                    if (StuPra.studentProId.equals("5704e45c7cf6c0b2d9873da6")) {
+                                                        sDt = dateTime2 + " " + hour + ":" + minute + ":00";
+                                                        sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                                    } else {
+                                                        sDt = dateTime2 + " " + hour + ":" + minute ;
+                                                        sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                                                    }
                                                     try {
                                                         Date dt2 = sdf.parse(sDt);
                                                         SimpleDateFormat sdf2 = new SimpleDateFormat(finalDateType);
