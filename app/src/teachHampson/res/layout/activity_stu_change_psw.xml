@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="旧密码"
+            android:text="@string/old_password"
             android:textColor="@color/text2"
             android:textSize="15dp" />
 
@@ -40,7 +40,7 @@
             android:textCursorDrawable="@drawable/feedback_color_cursor"
             android:layout_marginTop="16dp"
             android:background="@drawable/et_repwd"
-            android:hint="请输入原密码："
+            android:hint="@string/old_password"
             android:imeOptions="actionDone"
             android:inputType="textPassword"
             android:textColor="#5b5b5b"
@@ -50,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="新密码"
+            android:text="@string/new_password"
             android:textColor="@color/text2"
             android:textSize="15dp" />
 
@@ -63,7 +63,7 @@
             android:layout_marginRight="30dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/et_repwd"
-            android:hint="请输入新密码："
+            android:hint="@string/new_password"
             android:textCursorDrawable="@drawable/feedback_color_cursor"
             android:imeOptions="actionDone"
             android:inputType="textPassword"
@@ -74,7 +74,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="确认密码"
+            android:text="@string/confirm_password"
 
             android:textColor="@color/text2"
             android:textSize="15dp" />
@@ -89,7 +89,7 @@
             android:layout_marginTop="16dp"
             android:background="@drawable/et_repwd"
             android:textCursorDrawable="@drawable/feedback_color_cursor"
-            android:hint="确认密码："
+            android:hint="@string/new_password"
             android:imeOptions="actionDone"
             android:inputType="textPassword"
             android:textColor="#5b5b5b"
@@ -201,7 +201,7 @@ android:layout_marginLeft="@dimen/text_size_10"-->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="确认修改"
+            android:text="@string/confirm"
             android:textColor="#ffffff"
             android:textSize="16dp" />
     </LinearLayout>

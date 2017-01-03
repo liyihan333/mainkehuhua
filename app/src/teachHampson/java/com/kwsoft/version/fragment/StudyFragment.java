@@ -84,7 +84,7 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
     private PullToRefreshScrollView pull_refresh_scrollview;
     private SharedPreferences sPreferences;
     private TextView tvUserrole, tvMonth, tvDay; //角色、日期、星期
-    private String monthstr, daystr;
+    private String monthstr, daystr, enDaystr;
     private Boolean isLogin = false;
     public String arrStr;
     public Bundle arrBundle;
@@ -124,7 +124,7 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
             tvUserrole.setText(spStr[0]);
             initDateWeek();
             tvMonth.setText(monthstr);
-            tvDay.setText(daystr);
+            tvDay.setText(enDaystr);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -243,6 +243,31 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
         monthstr = format.format(date).substring(5);
         format = new SimpleDateFormat("EEEE");
         daystr = format.format(date);
+        switch (daystr) {
+            case "星期一":
+                enDaystr = "Monday";
+                break;
+            case "星期二":
+                enDaystr = "Tuesday";
+                break;
+            case "星期三":
+                enDaystr = "Wednesday";
+                break;
+            case "星期四":
+                enDaystr = "Thursday";
+                break;
+            case "星期五":
+                enDaystr = "Friday";
+                break;
+            case "星期六":
+                enDaystr = "Saturday";
+                break;
+            case "星期日":
+                enDaystr = "Sunday";
+                break;
+            default:
+                break;
+        }
     }
 
     public int isResume = 0;
@@ -650,26 +675,26 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
                     new TypeReference<Map<String, Object>>() {
                     });
 
-                Map<String, Object> loginfo = (Map<String, Object>) menuMap.get("loginInfo");
-                Constant.USERID = String.valueOf(loginfo.get("USERID"));
-                Constant.sessionId = String.valueOf(loginfo.get("sessionId"));
-                List<Map<String, Object>> menuListMap1 = (List<Map<String, Object>>) menuMap.get("roleFollowList");
-                // List<Map<String, Object>> menuListMap2 = (List<Map<String, Object>>) menuMap.get("menuList");
+            Map<String, Object> loginfo = (Map<String, Object>) menuMap.get("loginInfo");
+            Constant.USERID = String.valueOf(loginfo.get("USERID"));
+            Constant.sessionId = String.valueOf(loginfo.get("sessionId"));
+            List<Map<String, Object>> menuListMap1 = (List<Map<String, Object>>) menuMap.get("roleFollowList");
+            // List<Map<String, Object>> menuListMap2 = (List<Map<String, Object>>) menuMap.get("menuList");
 //看板模块数据
-                String arrStr = JSON.toJSONString(menuListMap1);
-                parentList.clear();
-                parentList = getkanbanData(arrStr);
-                setKanbanAdapter(parentList);
+            String arrStr = JSON.toJSONString(menuListMap1);
+            parentList.clear();
+            parentList = getkanbanData(arrStr);
+            setKanbanAdapter(parentList);
 
-                //在更新UI后，无需其它Refresh操作，系统会自己加载新的listView
-                pull_refresh_scrollview.onRefreshComplete();
-                pull_refresh_scrollview.onRefreshComplete();
-                if (isResume == 0) {
-                    Toast.makeText(getActivity(), "数据已刷新", Toast.LENGTH_SHORT).show();
-                }
+            //在更新UI后，无需其它Refresh操作，系统会自己加载新的listView
+            pull_refresh_scrollview.onRefreshComplete();
+            pull_refresh_scrollview.onRefreshComplete();
+            if (isResume == 0) {
+                Toast.makeText(getActivity(), "数据已刷新", Toast.LENGTH_SHORT).show();
+            }
 
 
-                isResume = 0;
+            isResume = 0;
 
         } catch (Exception e) {
             e.printStackTrace();

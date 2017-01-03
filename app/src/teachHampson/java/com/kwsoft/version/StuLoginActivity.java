@@ -298,7 +298,7 @@ public class StuLoginActivity extends BaseActivity implements View.OnClickListen
             //获取error的值，判断
             LoginError loginError = JSON.parseObject(menuData, LoginError.class);
             if (loginError.getError() != 0) {
-                Toast.makeText(this, "Wrong username or password", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Input the correct username and password", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             } else {
                 //当成功登陆后存储正确的用户名和密码,

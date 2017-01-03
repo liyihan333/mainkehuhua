@@ -130,4 +130,44 @@
     <string  name="want_to_cancle">松开手指，取消发送</string>
     <string name="shouzhishanghua">手指上滑，取消发送</string>
     <string name="tooshort">录音时间过短</string>
+
+    <string name="record_success">The recording has been successful</string>
+    <string name="upload_fail">Upload failed, please upload again</string>
+    <string name="upload_success">uploaded successfully</string>
+    <string name="old_pwd_error">The old password is error</string>
+    <string name="new_pwd_error">The new password is error</string>
+    <string name="two_pwd_error">Two input passwords inconsistent</string>
+    <string name="pwd_not_empty">Password can not be empty</string>
+    <string name="pwd_type_error">The password you typed is incorrect.</string>
+    <string name="pwd_change_success">Password successfully changed, please keep in mind the password.</string>
+    <string name="two_pwd_same">The new password is the same as the old one, please re-enter.</string>
+    <string name="network_error">Network error, Emergency repairing.</string>
+    <string name = "confirm">Confirm</string>
+    <string name = "good">OK</string>
+    <string name = "Submit">Submit</string>
+    <string name = "Cancel">Cancel</string>
+    <string name = "Home">Home</string>
+    <string name = "Schedule">Schedule</string>
+    <string name = "Me">Me</string>
+
+    <string name = "MON">MON</string>
+    <string name = "TUE">TUE</string>
+    <string name = "WED">WED</string>
+    <string name = "THU">THU</string>
+    <string name = "FRI">FRI</string>
+    <string name = "SAT">SAT</string>
+    <string name = "SUN">SUN</string>
+
+    <string name = "profile">Profile</string>
+    <string name = "password">Password</string>
+    <string name = "old_password">Old Password</string>
+    <string name = "new_password">New Password</string>
+    <string name = "confirm_password">Confirm Password</string>
+    <string name = "retype_password">Retype Password</string>
+    <string name = "Feedback">Feedback</string>
+    <string name = "clear_cache">Clear Cache</string>
+    <string name = "confirm_delete">This is an irreversible operation. Are you sure to delete?</string>
+    <string name = "delete">Delete</string>
+    <string name = "version">Version</string>
+    <string name = "log_out">Log Out</string>
 </resources>
