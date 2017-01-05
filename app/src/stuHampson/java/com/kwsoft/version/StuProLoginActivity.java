@@ -43,7 +43,7 @@ public class StuProLoginActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stu_pro_login);
-       initJudgeSave();
+        initJudgeSave();
     }
 
     @Override
@@ -75,6 +75,9 @@ public class StuProLoginActivity extends BaseActivity {
             toLoginPage();
         }
     }
+
+
+
 
     private static final String TAG = "StuProLoginActivity";
     /**
