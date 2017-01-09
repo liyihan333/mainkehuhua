@@ -72,7 +72,7 @@ public class InfoAdapter extends BaseAdapter {
             info_item_line.setVisibility(GONE);
         }
         tv_name.setText(name);
-        //如果名称中包含附件两个字并且不包含mongodbid，就讲附件查看text显示
+        //如果名称中包含附件两个字并且不包含mongodbid，就讲附件查看text显示 Attachment of AccomplishmentmongodbId
         if (!name.contains("mongo")) {
             if (name.contains("附件") || name.contains("Attachment of Homework") || name.contains("Attachment of Accomplishment") || name.contains("Attachment of Correction")) {
 //            if (name.contains("附件") && !name.contains("mongo")) {

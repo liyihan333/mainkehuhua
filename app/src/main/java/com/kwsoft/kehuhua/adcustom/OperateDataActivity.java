@@ -455,7 +455,6 @@ public class OperateDataActivity extends BaseActivity {
                             e.printStackTrace();
                         }
                     }
-
                 }
             } else if (5 == resultCode) {
                 //无限添加返回的listListMap字符串
@@ -505,7 +504,6 @@ public class OperateDataActivity extends BaseActivity {
                 mAdapter.notifyDataSetChanged();
             }
         }
-
         super.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -515,7 +513,6 @@ public class OperateDataActivity extends BaseActivity {
         parMap.put("sessionId", Constant.sessionId);
         Log.e("TAG", "网络获取规则dataUrl " + volleyUrl);
         Log.e("TAG", "网络获取规则table " + parMap.toString());
-
         //请求
         OkHttpUtils
                 .post()
@@ -540,7 +537,6 @@ public class OperateDataActivity extends BaseActivity {
 
     private void putValue(String jsonData) {
         Log.e("TAG", "规则生成结果：" + jsonData);
-
         for (int i = 0; i < fieldSet.size(); i++) {
             int fieldRole = Integer.valueOf(String.valueOf(fieldSet.get(i).get("fieldRole")));
             if (fieldRole == 8) {
@@ -551,5 +547,4 @@ public class OperateDataActivity extends BaseActivity {
             }
         }
     }
-
 }

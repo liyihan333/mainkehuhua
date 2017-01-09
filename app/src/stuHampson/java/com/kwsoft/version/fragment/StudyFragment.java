@@ -99,6 +99,10 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
     public void initView(View view) {
         stuName = (TextView) view.findViewById(R.id.stu_name);
         iv_head = (ImageView) view.findViewById(R.id.iv_head);
+
+
+
+
         //设置首页头像
        // Bitmap bitmap= BitmapFactory.decodeFile(StuPra.hpsStuHeadPath);
 //       Drawable drawable= getResources().getDrawable(R.mipmap.icon);
@@ -194,7 +198,6 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
         } else {
             getLoginData(stuUrl);
         }
-//
     }
 
     public void initData() {
