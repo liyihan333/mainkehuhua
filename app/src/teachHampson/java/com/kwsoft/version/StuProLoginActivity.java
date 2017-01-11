@@ -67,7 +67,7 @@ public class StuProLoginActivity extends BaseActivity {
             try {
                 postLogin();
             } catch (Exception e) {
-                Toast.makeText(this, "当前项目链接可能出错", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getResources().getString(R.string.project_link_error), Toast.LENGTH_LONG).show();
                 toLoginPage();
             }
 
@@ -86,7 +86,7 @@ public class StuProLoginActivity extends BaseActivity {
      **/
     public void postLogin() {
         if (!hasInternetConnected()) {
-            Toast.makeText(this, "当前网络不可用，请检查网络！", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.network_no_available), Toast.LENGTH_SHORT).show();
             toLoginPage();
         } else {
             if (!nameValue.equals("") && !pwdValue.equals("")) {//判断用户名密码非空
@@ -123,7 +123,6 @@ public class StuProLoginActivity extends BaseActivity {
                             }
                         });
             } else {
-
                 toLoginPage();
             }
         }

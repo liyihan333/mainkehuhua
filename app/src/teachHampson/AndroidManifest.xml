@@ -45,8 +45,7 @@
         <activity android:name="com.kwsoft.kehuhua.hampson.activity.TeachAmountDetailActivity"/>
         <receiver
             android:name="com.kwsoft.version.edusReceiver.MyReceiver"
-            android:enabled="true"
-            android:exported="false">
+            android:enabled="true">
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.REGISTRATION" /> <!-- Required  用户注册SDK的intent -->
                 <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" /> <!-- Required  用户接收SDK消息的intent -->

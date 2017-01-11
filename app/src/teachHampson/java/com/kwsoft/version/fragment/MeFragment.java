@@ -151,7 +151,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                 }
                 requestSet();
             } else {
-                Toast.makeText(getActivity(), "无菜单数据", Toast.LENGTH_SHORT).show();
+             //   Toast.makeText(getActivity(), "无菜单数据", Toast.LENGTH_SHORT).show();
             }
             Log.e("TAG", "获得学员端菜单数据：" + meStr);
 
@@ -186,7 +186,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
 
             } else {
-                Toast.makeText(getActivity(), "无菜单数据", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(getActivity(), "无菜单数据", Toast.LENGTH_SHORT).show();
             }
             Log.e("TAG", "获得学员端菜单数据：" + meStr);
 
@@ -249,8 +249,6 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 
 
@@ -313,7 +311,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
             for (int i = 0; i < pageSet.size(); i++) {
                 Map<String, Object> map = pageSet.get(i);
                 fieldCnName = map.get("fieldCnName") + "";
-                if (fieldCnName.contains("校区")) {
+                if (fieldCnName.contains("Teaching Center")) {
                     fieldAliasName = map.get("fieldAliasName") + "";
                     break;
                 }

@@ -222,8 +222,6 @@ public class ListActivity4 extends BaseActivity implements ViewPager.OnPageChang
                     listFragment.setArguments(listBundle);
                     fragmentList.add(listFragment);
                 }
-
-
             }
 
             rgChannel = (RadioGroup) super.findViewById(R.id.rgChannel);

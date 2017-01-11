@@ -172,7 +172,12 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
         });
         gridView = (GridView) view.findViewById(R.id.gridView);
         gridView.setOverScrollMode(View.OVER_SCROLL_NEVER);
+
         pull_refresh_scrollview = (PullToRefreshScrollView) view.findViewById(R.id.pull_refresh_scrollview);
+        pull_refresh_scrollview.getLoadingLayoutProxy().setLastUpdatedLabel(getResources().getString(R.string.data_refresh));
+        pull_refresh_scrollview.getLoadingLayoutProxy().setPullLabel(getResources().getString(R.string.Pull_down_refresh));
+        pull_refresh_scrollview.getLoadingLayoutProxy().setRefreshingLabel(getResources().getString(R.string.data_refreshing));
+        pull_refresh_scrollview.getLoadingLayoutProxy().setReleaseLabel(getResources().getString(R.string.data_will_refresh));
         //上拉、下拉设定
 //        pull_refresh_scrollview.setMode(PullToRefreshBase.Mode.BOTH);
         //上拉监听函数
@@ -436,7 +441,7 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
 
     @PermissionFail(requestCode = 106)
     public void doFailedCapture() {
-        Toast.makeText(getActivity(), "获取权限失败", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), getResources().getString(R.string.permission_Access_failed), Toast.LENGTH_SHORT).show();
     }
 
     public void setKanbanAdapter(List<Map<String, Object>> parentLists) {
@@ -662,7 +667,7 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
         } else {
 
             pull_refresh_scrollview.onRefreshComplete();
-            Toast.makeText(getActivity(), "无网络", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getResources().getString(R.string.no_network), Toast.LENGTH_SHORT).show();
 
         }
     }
@@ -690,9 +695,8 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
             pull_refresh_scrollview.onRefreshComplete();
             pull_refresh_scrollview.onRefreshComplete();
             if (isResume == 0) {
-                Toast.makeText(getActivity(), "数据已刷新", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getResources().getString(R.string.data_refresh), Toast.LENGTH_SHORT).show();
             }
-
 
             isResume = 0;
 

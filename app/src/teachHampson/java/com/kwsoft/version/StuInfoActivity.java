@@ -75,7 +75,7 @@ public class StuInfoActivity extends AppCompatActivity {
         CommonToolbar mToolbar = (CommonToolbar) findViewById(R.id.common_toolbar);
         mToolbar.setTitle("个人资料");
         mToolbar.showRightTextView();
-        mToolbar.setRightTextView("修改");
+        mToolbar.setRightTextView("Update");
         mToolbar.setLeftButtonOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

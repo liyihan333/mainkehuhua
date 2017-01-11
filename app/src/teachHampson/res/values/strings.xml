@@ -1,4 +1,15 @@
 <resources>
     <string name="app_name">iHampson</string>
-
+    <string name="textView_null">no data!</string>
+    <string name="please_wait">Please wait...</string>
+    <string name="data_refresh">Data has been refreshed!</string>
+    <string name="data_refreshing">Data is Refreshing...</string>
+    <string name="data_will_refresh">Loosen to refresh...</string>
+    <string name="Pull_down_refresh">Pull down refresh</string>
+    <string name="no_network">no network!</string>
+    <string name="permission_Access_failed">Permission Access failed!</string>
+    <string name="datas">datas</string>
+    <string name="count_datas_refreshed">count datas refreshed！</string>
+    <string name="project_link_error">Current project may link error！</string>
+    <string name="network_no_available">The current network is not available, please check the network！</string>
 </resources>

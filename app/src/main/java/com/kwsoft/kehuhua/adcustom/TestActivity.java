@@ -35,54 +35,54 @@ public class TestActivity extends BaseActivity {
         tv_content=(TextView)findViewById(R.id.tv_content);
         tv_date=(TextView)findViewById(R.id.tv_date);
         tv_persion=(TextView)findViewById(R.id.tv_persion);
-        Intent intent = getIntent();
-        if (null != intent) {
-	        Bundle bundle = getIntent().getExtras();
-	        String title = bundle.getString(JPushInterface.EXTRA_NOTIFICATION_TITLE);
-	        String content = bundle.getString(JPushInterface.EXTRA_ALERT);
-            String extras=bundle.getString(JPushInterface.EXTRA_EXTRA);
-            Map<String,Object> map=JSON.parseObject(extras, Map.class);
-            if (map != null) {
-                String mainIdStr = String.valueOf(map.get("mainId"));
-                String createDate = String.valueOf(map.get("createDate"));
-                String notice_name = String.valueOf(map.get("notice_name"));
-                String titleName = String.valueOf(map.get("titleName"));
-                if (!TextUtils.isEmpty(mainIdStr)&&!mainIdStr.equals("null")) {
-                    mainId = mainIdStr;
-                }
-
-                if (!TextUtils.isEmpty(createDate)&&!createDate.equals("null")) {
-                    tv_date.setText(createDate);
-                }
-
-                if (!TextUtils.isEmpty(notice_name)&&!notice_name.equals("null")) {
-                    tv_persion.setText(notice_name);
-                }
-
-                if (!TextUtils.isEmpty(titleName)&&!titleName.equals("null")) {
-                    tv_title.setText(titleName);
-                }
-            } else {
-                mainId = bundle.getString("mainId");
-                String createDate =bundle.getString("dateStr");;
-                String notice_name =bundle.getString("notice_name");
-                if (!TextUtils.isEmpty(createDate)&&!createDate.equals("null")) {
-                    tv_date.setText(createDate);
-                }
-
-                if (!TextUtils.isEmpty(notice_name)&&!notice_name.equals("null")) {
-                    tv_persion.setText(notice_name);
-                }
-
-                if (!TextUtils.isEmpty(title)&&!title.equals("null")) {
-                    tv_title.setText(title);
-                }
-            }
-//            if_seeCn=bundle.getString("if_seeCn");
-	        tv_content.setText(content);
-        }
-
-        changeReadState(Url.baseUrl+Url.changeReadState);
+//        Intent intent = getIntent();
+//        if (null != intent) {
+//	        Bundle bundle = getIntent().getExtras();
+//	        String title = bundle.getString(JPushInterface.EXTRA_NOTIFICATION_TITLE);
+//	        String content = bundle.getString(JPushInterface.EXTRA_ALERT);
+//            String extras=bundle.getString(JPushInterface.EXTRA_EXTRA);
+//            Map<String,Object> map=JSON.parseObject(extras, Map.class);
+//            if (map != null) {
+//                String mainIdStr = String.valueOf(map.get("mainId"));
+//                String createDate = String.valueOf(map.get("createDate"));
+//                String notice_name = String.valueOf(map.get("notice_name"));
+//                String titleName = String.valueOf(map.get("titleName"));
+//                if (!TextUtils.isEmpty(mainIdStr)&&!mainIdStr.equals("null")) {
+//                    mainId = mainIdStr;
+//                }
+//
+//                if (!TextUtils.isEmpty(createDate)&&!createDate.equals("null")) {
+//                    tv_date.setText(createDate);
+//                }
+//
+//                if (!TextUtils.isEmpty(notice_name)&&!notice_name.equals("null")) {
+//                    tv_persion.setText(notice_name);
+//                }
+//
+//                if (!TextUtils.isEmpty(titleName)&&!titleName.equals("null")) {
+//                    tv_title.setText(titleName);
+//                }
+//            } else {
+//                mainId = bundle.getString("mainId");
+//                String createDate =bundle.getString("dateStr");;
+//                String notice_name =bundle.getString("notice_name");
+//                if (!TextUtils.isEmpty(createDate)&&!createDate.equals("null")) {
+//                    tv_date.setText(createDate);
+//                }
+//
+//                if (!TextUtils.isEmpty(notice_name)&&!notice_name.equals("null")) {
+//                    tv_persion.setText(notice_name);
+//                }
+//
+//                if (!TextUtils.isEmpty(title)&&!title.equals("null")) {
+//                    tv_title.setText(title);
+//                }
+//            }
+////            if_seeCn=bundle.getString("if_seeCn");
+//	        tv_content.setText(content);
+//        }
+//
+//        changeReadState(Url.baseUrl+Url.changeReadState);
 //        if (if_seeCn!=null&&if_seeCn.equals("否")) {
 //        }
     }

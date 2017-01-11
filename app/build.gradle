@@ -48,7 +48,7 @@ android {
             resValue "string", "app_name", "汉普森教师端"
             versionName "1.0.0"
             manifestPlaceholders = [
-                    JPUSH_PKGNAME: applicationId,
+                    JPUSH_PKGNAME: "com.kwsoft.version.teachHampson",
                     JPUSH_APPKEY : "b941bcd18c4aec39146fb25c", //JPush上注册的包名对应的appkey.
                     JPUSH_CHANNEL: "developer-default1", //暂时填写默认值即可.
             ]

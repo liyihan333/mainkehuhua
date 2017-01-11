@@ -376,7 +376,7 @@ public class ListFragment extends Fragment {
                     mRefreshLayout.finishRefresh();
                     if (datas.size() != 0) {
                         Log.e(TAG, "showData: 执行了共x条");
-                        Snackbar.make(mRecyclerView, totalNum + " datas", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(mRecyclerView, totalNum + getResources().getString(R.string.datas), Snackbar.LENGTH_SHORT).show();
                     }
 
                 }
@@ -387,7 +387,7 @@ public class ListFragment extends Fragment {
                     mAdapter.addData(mAdapter.getDatas().size(), datas, childTab);
                     mRecyclerView.scrollToPosition(mAdapter.getDatas().size());
                     mRefreshLayout.finishRefreshLoadMore();
-                    Snackbar.make(mRecyclerView, datas.size() + " datas refreshed", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(mRecyclerView, datas.size() + getResources().getString(R.string.count_datas_refreshed), Snackbar.LENGTH_SHORT).show();
                 }
 
                 break;

@@ -301,7 +301,7 @@ public class TodayCourseTableActivity extends BaseActivity {
 //                    mListView.scrollToPosition(mAdapter.getDatas().size());
 
                     mRefreshLayout.finishRefreshLoadMore();
-                    Snackbar.make(lv_listview, list.size() + " datas refreshed", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(lv_listview, list.size() + getResources().getString(R.string.count_datas_refreshed), Snackbar.LENGTH_SHORT).show();
                 }
 
                 break;

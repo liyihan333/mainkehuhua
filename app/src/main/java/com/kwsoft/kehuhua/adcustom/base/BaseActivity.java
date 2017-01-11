@@ -21,9 +21,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.application.MyApplication;
 import com.kwsoft.kehuhua.loadDialog.LoadingDialog;
-
 
 
 /**
@@ -38,15 +38,17 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseAct
     protected MyApplication myApplication;
     protected ProgressDialog pg = null;
     protected NotificationManager notificationManager;
-    public LoadingDialog  dialog =null;
+    public LoadingDialog dialog = null;
+
     @SuppressLint("WorldReadableFiles")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
-//        preferences = getSharedPreferences("userInfo", MODE_WORLD_READABLE);
-//        notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        dialog=new LoadingDialog(mContext,"Please wait...");
+//  preferences = getSharedPreferences("userInfo", MODE_WORLD_READABLE);
+// notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        //dialog=new LoadingDialog(mContext,"Please wait...");
+        dialog = new LoadingDialog(mContext, getResources().getString(R.string.please_wait));
         myApplication = (MyApplication) getApplication();
         myApplication.addActivity(this);
 
@@ -66,7 +68,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseAct
     @Override
     protected void onResume() {
         super.onResume();
-       // JPushInterface.onResume(getApplicationContext());
+        // JPushInterface.onResume(getApplicationContext());
     }
 
     @Override

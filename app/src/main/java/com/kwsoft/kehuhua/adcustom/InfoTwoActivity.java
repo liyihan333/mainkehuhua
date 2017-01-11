@@ -62,6 +62,7 @@ public class InfoTwoActivity extends BaseActivity implements View.OnClickListene
     private String mainId;
     private String titleName = "";
     private List<String> btnNameLists = new ArrayList<>();
+    private static final int FINISH_ATY = 0123;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -215,7 +216,7 @@ public class InfoTwoActivity extends BaseActivity implements View.OnClickListene
                 if (StuPra.studentProId.equals("5704e45c7cf6c0b2d9873da6") && btnNameLists.contains("确认下课") && btnNameLists.contains("作业")) {
                     adapter = new SimpleAdapter(
                             this,
-                            operaButtonSet.subList(0,1),
+                            operaButtonSet.subList(0, 1),
                             R.layout.activity_list_buttonlist_item,
                             new String[]{"buttonName"},
                             new int[]{R.id.listItem});
@@ -254,8 +255,8 @@ public class InfoTwoActivity extends BaseActivity implements View.OnClickListene
                                             if (buttonName.contains("确认下课") && StuPra.studentProId.equals("57159822f07e75084cb8a1fe")) {
                                                 Intent mIntentEdit = new Intent(mContext, StarRatingBarActivity.class);
                                                 mIntentEdit.putExtra("itemSet", operaButtonSetMapStr);
-                                                startActivity(mIntentEdit);
-                                            } else if (StuPra.studentProId.equals("5704e45c7cf6c0b2d9873da6") && btnNameLists.contains("确认下课") && btnNameLists.contains("作业")){
+                                                startActivityForResult(mIntentEdit, FINISH_ATY);
+                                            } else if (StuPra.studentProId.equals("5704e45c7cf6c0b2d9873da6") && btnNameLists.contains("确认下课") && btnNameLists.contains("作业")) {
                                                 Intent mIntentEdit = new Intent(mContext, OperateDataTwoActivity.class);
                                                 Map<String, Object> operaButtonSetMap1 = operaButtonSet.get(1);
                                                 operaButtonSetMap1.put("tableIdList", tableId);
@@ -265,12 +266,12 @@ public class InfoTwoActivity extends BaseActivity implements View.OnClickListene
 
                                                 mIntentEdit.putExtra("itemSet", operaButtonSetMapStr);
                                                 mIntentEdit.putExtra("itemSet1", operaButtonSetMapStr1);
-                                                startActivity(mIntentEdit);
-                                            }else {
-                                                Log.e(TAG, "onItemClick: OperateDataActivity"+"OperateDataActivity");
+                                                startActivityForResult(mIntentEdit, FINISH_ATY);
+                                            } else {
+                                                Log.e(TAG, "onItemClick: OperateDataActivity" + "OperateDataActivity");
                                                 Intent mIntentEdit = new Intent(mContext, OperateDataActivity.class);
                                                 mIntentEdit.putExtra("itemSet", operaButtonSetMapStr);
-                                                startActivity(mIntentEdit);
+                                                startActivityForResult(mIntentEdit, FINISH_ATY);
                                             }
 
                                             break;
@@ -401,9 +402,15 @@ public class InfoTwoActivity extends BaseActivity implements View.OnClickListene
                         }
                     }
                 });
-
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == FINISH_ATY) {
+            finish();
+        }
+    }
 }
 
 

@@ -100,9 +100,6 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
         stuName = (TextView) view.findViewById(R.id.stu_name);
         iv_head = (ImageView) view.findViewById(R.id.iv_head);
 
-
-
-
         //设置首页头像
        // Bitmap bitmap= BitmapFactory.decodeFile(StuPra.hpsStuHeadPath);
 //       Drawable drawable= getResources().getDrawable(R.mipmap.icon);
@@ -164,6 +161,11 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
         gridView = (GridView) view.findViewById(R.id.gridView);
         gridView.setOverScrollMode(View.OVER_SCROLL_NEVER);
         pull_refresh_scrollview = (PullToRefreshScrollView) view.findViewById(R.id.pull_refresh_scrollview);
+        pull_refresh_scrollview.getLoadingLayoutProxy().setLastUpdatedLabel(getResources().getString(R.string.data_refresh));
+        pull_refresh_scrollview.getLoadingLayoutProxy().setPullLabel(getResources().getString(R.string.Pull_down_refresh));
+        pull_refresh_scrollview.getLoadingLayoutProxy().setRefreshingLabel(getResources().getString(R.string.data_refreshing));
+        pull_refresh_scrollview.getLoadingLayoutProxy().setReleaseLabel(getResources().getString(R.string.data_will_refresh));
+
         //上拉、下拉设定
 //        pull_refresh_scrollview.setMode(PullToRefreshBase.Mode.BOTH);
         //上拉监听函数

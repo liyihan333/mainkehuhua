@@ -102,7 +102,7 @@ public class StuLoginActivity extends BaseActivity implements View.OnClickListen
 
     @PermissionFail(requestCode = 188)
     public void doFailSomething() {
-        Toast.makeText(this, "permission failed", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getResources().getString(R.string.permission_Access_failed), Toast.LENGTH_SHORT).show();
     }
 
     /**

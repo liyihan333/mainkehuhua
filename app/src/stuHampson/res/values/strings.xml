@@ -1,4 +1,15 @@
 <resources>
     <string name="app_name">HAMPSON</string>
-
+    <string name="textView_null">暂时没有数据!</string>
+    <string name="please_wait">请稍等...</string>
+    <string name="data_refresh">数据已刷新!</string>
+    <string name="data_refreshing">数据正在刷新...</string>
+    <string name="data_will_refresh">松开将要刷新</string>
+    <string name="Pull_down_refresh">松开以刷新</string>
+    <string name="no_network">无网络!</string>
+    <string name="Access_failed">获取权限失败!</string>
+    <string name="datas">数据</string>
+    <string name="count_datas_refreshed">条数据已刷新！</string>
+    <string name="project_link_error">当前项目链接可能出错！</string>
+    <string name="network_no_available">当前网络不可用，请检查网络！</string>
 </resources>
