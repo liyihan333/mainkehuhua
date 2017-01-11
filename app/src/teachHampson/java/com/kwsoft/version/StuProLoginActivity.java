@@ -40,8 +40,6 @@ public class StuProLoginActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stu_pro_login);
-
-
         initJudgeSave();
     }
 
@@ -157,7 +155,6 @@ public class StuProLoginActivity extends BaseActivity {
     }
 
 
-
     private void toLoginPage() {
         //判断用户id是否登陆过
         Intent intent = new Intent();
@@ -177,7 +174,7 @@ public class StuProLoginActivity extends BaseActivity {
             String userid = String.valueOf(loginfo.get("USERID"));
             Constant.USERID = String.valueOf(loginfo.get("USERID"));
             Constant.sessionId = String.valueOf(loginfo.get("sessionId"));
-
+          //  Constant.teachmainIdVal = String.valueOf(loginfo.get("USER_13"));//教师端mainid
             sPreferences.edit().putString("userid", userid).apply();
             List<Map<String, Object>> menuListMap1 = (List<Map<String, Object>>) menuMap.get("roleFollowList");
             List<Map<String, Object>> menuListMap2 = (List<Map<String, Object>>) menuMap.get("menuList");

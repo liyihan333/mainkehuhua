@@ -355,6 +355,7 @@ public class StuLoginActivity extends BaseActivity implements View.OnClickListen
                 Constant.USERID = String.valueOf(loginfo.get("USERID"));
                 sPreferences.edit().putString("userid", userid).apply();
                 Constant.sessionId = String.valueOf(loginfo.get("sessionId"));
+               // Constant.teachmainIdVal = String.valueOf(loginfo.get("USER_13"));//教师端mainid
                 List<Map<String, Object>> menuListMap1 = (List<Map<String, Object>>) menuMap.get("roleFollowList");
                 List<Map<String, Object>> menuListMap2 = (List<Map<String, Object>>) menuMap.get("menuList");
 //            List<Map<String, Object>> menuListMap3 = (List<Map<String, Object>>) menuMap.get("hideMenuList");
@@ -409,6 +410,7 @@ public class StuLoginActivity extends BaseActivity implements View.OnClickListen
                     Log.e("TAG", "USERNAME" + loginInfo.get("USERNAME"));
                     Constant.loginName = String.valueOf(loginInfo.get("USERNAME"));
                     Constant.sessionId = String.valueOf(loginInfo.get("sessionId"));
+                  //  Constant.teachmainIdVal = String.valueOf(loginInfo.get("USER_13"));//教师端mainid
                     Constant.roleNamesTeach=String.valueOf(loginInfo.get("roleNames"));
                     Toast.makeText(StuLoginActivity.this, "logged in", Toast.LENGTH_SHORT).show();
                     Constant.USERID = String.valueOf(loginInfo.get("USERID"));

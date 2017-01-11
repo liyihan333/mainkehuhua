@@ -212,7 +212,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="30dp"
                 android:gravity="center_horizontal"
-                android:text="©版权所有:可为时代"
+                android:text="©Copyright: Hampson English"
                 android:textColor="#858585"
                 android:textSize="@dimen/text_size_9"
                 android:layout_alignParentBottom="true"

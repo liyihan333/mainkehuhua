@@ -130,32 +130,32 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
         List<Map<String, Object>> feedbackListMap = new ArrayList<>();
         Log.e(TAG, "feedbackInfoListstr: " + feedbackInfoListstr);
-        if (feedbackInfoListstr != null) {
-            try {
-                feedbackListMap = JSON.parseObject(feedbackInfoListstr,
-                        new TypeReference<List<Map<String, Object>>>() {
-                        });
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            if (feedbackListMap != null && feedbackListMap.size() > 0) {
-                for (int i = 0; i < feedbackListMap.size(); i++) {
-                    Map<String, Object> map = feedbackListMap.get(i);
-                    String menuName = map.get("menuName").toString();
-                    if (menuName.contains("反馈信息")) {
-                        Constant.teachBackPAGEID = map.get("pageId").toString();
-                        Constant.teachBackTABLEID = map.get("tableId").toString();
-                        Log.e("backtableid", Constant.teachBackPAGEID + "/" + Constant.teachBackTABLEID);
-                        break;
-                    }
-                }
-                requestSet();
-            } else {
-             //   Toast.makeText(getActivity(), "无菜单数据", Toast.LENGTH_SHORT).show();
-            }
-            Log.e("TAG", "获得学员端菜单数据：" + meStr);
+//        if (feedbackInfoListstr != null) {
+//            try {
+//                feedbackListMap = JSON.parseObject(feedbackInfoListstr,
+//                        new TypeReference<List<Map<String, Object>>>() {
+//                        });
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//            if (feedbackListMap != null && feedbackListMap.size() > 0) {
+//                for (int i = 0; i < feedbackListMap.size(); i++) {
+//                    Map<String, Object> map = feedbackListMap.get(i);
+//                    String menuName = map.get("menuName").toString();
+//                    if (menuName.contains("反馈信息")) {
+//                        Constant.teachBackPAGEID = map.get("pageId").toString();
+//                        Constant.teachBackTABLEID = map.get("tableId").toString();
+//                        Log.e("backtableid", Constant.teachBackPAGEID + "/" + Constant.teachBackTABLEID);
+//                        break;
+//                    }
+//                }
+//                requestSet();
+//            } else {
+//             //   Toast.makeText(getActivity(), "无菜单数据", Toast.LENGTH_SHORT).show();
+//            }
+        //   Log.e("TAG", "获得学员端菜单数据：" + meStr);
 
-        }
+        // }
     }
 
     private void getMeTableId(String meStr, List<Map<String, Object>> meListMap) {
@@ -176,7 +176,10 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                         Constant.teachPerPAGEID = map.get("pageId").toString();
                         Constant.teachPerTABLEID = map.get("tableId").toString();
                         Log.e("pagetable", Constant.teachPerPAGEID + "/" + Constant.teachPerTABLEID);
+                        requestSet();
                         break;
+                    } else {
+                        stuSchoolArea.setText("no school");
                     }
 //                    else if (menuName.contains("反馈信息")){
 //                        Constant.teachBackPAGEID = map.get("pageId").toString();
@@ -186,13 +189,16 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
 
             } else {
-               // Toast.makeText(getActivity(), "无菜单数据", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(getActivity(), "无菜单数据", Toast.LENGTH_SHORT).show();
+                stuSchoolArea.setText("no school");
             }
             Log.e("TAG", "获得学员端菜单数据：" + meStr);
 
+        } else {
+            stuSchoolArea.setText("no school");
         }
 //        if (!Constant.teachPerTABLEID.equals("")&&!Constant.teachPerPAGEID.equals("")) {
-        getData();
+//        getData();
 //        }else{
 //            Toast.makeText(getActivity(), "缺少参数", Toast.LENGTH_SHORT).show();
 //        }
@@ -207,9 +213,10 @@ public class MeFragment extends Fragment implements View.OnClickListener {
             Log.e("TAG", "列表请求地址：" + volleyUrl);
             //参数
             Map<String, String> paramsMap = new HashMap<>();
-            paramsMap.put(Constant.tableId, "2");
-            paramsMap.put(Constant.pageId, "3573");
+            paramsMap.put(Constant.tableId, Constant.teachPerTABLEID);
+            paramsMap.put(Constant.pageId, Constant.teachPerPAGEID);
             paramsMap.put("sessionId", Constant.sessionId);
+            Log.e(TAG, "getData: paramsMap" + paramsMap.toString());
             //请求
             OkHttpUtils
                     .post()
@@ -278,6 +285,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                         ErrorToast.errorToast(mContext, e);
                         ((BaseActivity) getActivity()).dialog.dismiss();
                         Log.e(TAG, "onError: Call  " + call + "  id  " + id);
+                        stuSchoolArea.setText("no school");
                     }
 
                     @Override
@@ -321,11 +329,11 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                 String school = (String) map.get(fieldAliasName);
                 stuSchoolArea.setText(school);
             } else {
-                stuSchoolArea.setText("");
+                stuSchoolArea.setText("no school");
             }
         } catch (Exception e) {
             //e.printStackTrace();
-            stuSchoolArea.setText("");
+            stuSchoolArea.setText("no school");
         }
     }
 
@@ -381,6 +389,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                 break;
         }
     }
+
     private final int CLEAN_SUC = 1001;
     private final int CLEAN_FAIL = 1002;
 
@@ -497,7 +506,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                                                 //更新第一个activity的ui
                                                 Intent intent = new Intent(action);
                                                 intent.putExtra("uriStr", uriStr);
-                                               getActivity().sendBroadcast(intent);
+                                                getActivity().sendBroadcast(intent);
 
                                             } else {
                                                 Toast.makeText(getActivity(), "暂时没有个人信息", Toast.LENGTH_SHORT).show();
@@ -553,7 +562,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     private LoadingDialog dialogClear;
 
     public void clearAppCache() {
-        dialogClear=new LoadingDialog(getActivity(),"清理中...");
+        dialogClear = new LoadingDialog(getActivity(), "清理中...");
         dialogClear.show();
         new Thread() {
             @Override

@@ -73,9 +73,9 @@ public class StuInfoActivity extends AppCompatActivity {
     private void initData() {
 
         CommonToolbar mToolbar = (CommonToolbar) findViewById(R.id.common_toolbar);
-        mToolbar.setTitle("个人资料");
+        mToolbar.setTitle("personal information");
         mToolbar.showRightTextView();
-        mToolbar.setRightTextView("Update");
+        mToolbar.setRightTextView("modify");
         mToolbar.setLeftButtonOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -86,6 +86,7 @@ public class StuInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (operaButtonSet != null && operaButtonSet.size() > 0) {
+
                     Intent intent = new Intent(StuInfoActivity.this, OperateDataActivity.class);
                     intent.putExtra("itemSet", operaButtonSet.toString());
                     Log.e(TAG, operaButtonSet.toString());
@@ -136,12 +137,11 @@ public class StuInfoActivity extends AppCompatActivity {
 
     @SuppressWarnings("unchecked")
     public void requestSet() {
-
-        final String volleyUrl = Constant.sysUrl + Constant.requestListSet;
+        String volleyUrl = Constant.sysUrl + Constant.requestListSet;
         Log.e("TAG", "学员端请求个人信息地址：" + volleyUrl);
 //参数
         Map<String, String> paramsMap = new HashMap<>();
-        paramsMap.put(tableId, Constant.teachPerTABLEID);
+        paramsMap.put(Constant.tableId, Constant.teachPerTABLEID);
         paramsMap.put(Constant.pageId, Constant.teachPerPAGEID);
         paramsMap.put("sessionId", Constant.sessionId);
         Log.e("TAG", "学员端请求个人信息参数：" + paramsMap.toString());
@@ -160,7 +160,7 @@ public class StuInfoActivity extends AppCompatActivity {
 
                     @Override
                     public void onResponse(String response, int id) {
-                        Log.e(TAG, "onResponse: " + "  id  " + id);
+                        Log.e(TAG, "onResponse: " + response);
                         if (response != null && response.length() > 0) {
                             setStore(response);
                         } else {
@@ -195,6 +195,7 @@ public class StuInfoActivity extends AppCompatActivity {
                         operaButtonSet = operaButtonSetList.get(0);
                         operaButtonSet.put("tableIdList", Constant.teachPerTABLEID);
                         operaButtonSet.put("pageIdList", Constant.teachPerPAGEID);
+                        operaButtonSet.put("dataId", Constant.USERID);
                     }
                 }
                 Log.e("fieldSet", fieldSet.toString());

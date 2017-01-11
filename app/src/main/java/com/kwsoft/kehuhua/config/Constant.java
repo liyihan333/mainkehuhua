@@ -122,7 +122,7 @@ public class Constant {
     public final static String searchCommitUrl = "http://192.168.6.46:8080/phone_edus_auto/model_ajaxList.do?";
 
     public static String teaMongoId = "";//老师头像id
-
+    public static String teachmainIdVal = "";//老师端mainid、
 
     /*增加学员信息*/
     public final static String tableId = "tableId";// 菜单中潜在学员的tableId

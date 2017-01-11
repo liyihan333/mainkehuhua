@@ -82,6 +82,7 @@ public class OperateDataActivity extends BaseActivity {
 
         }
         paramsMap.put("sessionId", Constant.sessionId);
+        Log.e(TAG, "getData: paramMap22"+paramsMap.toString() );
         //请求
         OkHttpUtils
                 .post()
