@@ -90,7 +90,7 @@ public class SearchActivity extends FragmentActivity {
 
         mToolbar = (CommonToolbar) findViewById(R.id.common_toolbar);
 
-        mToolbar.setTitle("条件筛选");
+        mToolbar.setTitle(getString(R.string.condition_filter));
         mToolbar.setBackgroundColor(getResources().getColor(topBarColor));
 
         //左侧返回按钮
@@ -291,8 +291,8 @@ public class SearchActivity extends FragmentActivity {
                 if (fieldRole == 14 || fieldRole == 26 || fieldRole == 28) {
 //日期类
                     linearLayoutDate.setVisibility(View.VISIBLE);
-                    date1.setHint("开始日期");
-                    date2.setHint("结束日期");
+                    date1.setHint(R.string.start_date);
+                    date2.setHint(R.string.end_date);
                     Constant.commitPra.put(fieldAliasName + "_dateType", "yyyy-MM-dd");
 
                     date1.setOnClickListener(new NoDoubleClickListener() {
@@ -377,8 +377,8 @@ public class SearchActivity extends FragmentActivity {
                     }
 
                     linearLayoutDate.setVisibility(View.VISIBLE);
-                    date1.setHint("开始时间");
-                    date2.setHint("结束时间");
+                    date1.setHint(R.string.start_date);
+                    date2.setHint(R.string.end_date);
                     date1.setOnClickListener(new NoDoubleClickListener() {
                         @Override
                         public void onNoDoubleClick(View v) {

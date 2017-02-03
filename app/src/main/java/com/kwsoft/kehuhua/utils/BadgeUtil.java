@@ -52,8 +52,8 @@ public class BadgeUtil {
         boolean isMiUIV6 = true;
         try {
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
-            builder.setContentTitle("您有"+count+"未读消息");
-            builder.setTicker("您有"+count+"未读消息");
+            builder.setContentTitle(context.getString(R.string.you_has)+count+context.getString(R.string.no_read_message));
+            builder.setTicker(context.getString(R.string.you_has)+count+context.getString(R.string.no_read_message));
             builder.setAutoCancel(true);
             builder.setSmallIcon(R.drawable.icon);
             builder.setDefaults(Notification.DEFAULT_LIGHTS);

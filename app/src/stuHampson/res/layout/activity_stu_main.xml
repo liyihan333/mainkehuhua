@@ -12,7 +12,7 @@
         android:id="@+id/stu_toolbar"
         android:layout_width="fill_parent"
         android:layout_height="45dp"
-        android:background="@color/bg_1b478e">
+        android:background="@mipmap/bg_stu_toolbar">
 
     </com.kwsoft.kehuhua.widget.CnToolbar>
 

@@ -93,11 +93,6 @@ public class StageTestAdapter extends BaseAdapter {
         //日
         holder.tv_day.setText(cpDay);
 
-
-
-
-
-
         return view;
     }
 

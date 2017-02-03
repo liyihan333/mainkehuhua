@@ -152,7 +152,7 @@ public class ListFragment extends Fragment {
             paramsMap.put("start", start + "");
             if (!Constant.stu_index.equals("")) {
                 paramsMap.put("ctType", Constant.stu_index);
-                Log.e(TAG, "getData: stu_index"+Constant.stu_index );
+                Log.e(TAG, "getData: stu_index" + Constant.stu_index);
                 paramsMap.put("SourceDataId", Constant.stu_homeSetId);
                 paramsMap.put("pageType", "1");
                 Log.e("TAG", "去看板的列表请求");
@@ -186,7 +186,7 @@ public class ListFragment extends Fragment {
         } else {
             ((BaseActivity) getActivity()).dialog.dismiss();
             mRefreshLayout.finishRefresh();
-            Toast.makeText(getActivity(), "no network", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.no_network, Toast.LENGTH_SHORT).show();
             backStart();
         }
     }
@@ -225,6 +225,7 @@ public class ListFragment extends Fragment {
 //                Log.e("TAG", "获取Constant.dataTime" + dataTime);
 //            }
 //获取条目总数
+
             totalNum = Integer.valueOf(String.valueOf(setMap.get("dataCount")));
             Log.e(TAG, "setStore: totalNum " + totalNum);
 
@@ -395,7 +396,8 @@ public class ListFragment extends Fragment {
     }
 
     public void normalRequest() {
-        Log.e(TAG, "normalRequest: ");
+        Log.e(TAG, "normalRequest: datas"+datas.toString());
+        Log.e(TAG, "normalRequest: datas"+childTab.toString());
         mAdapter = new ListAdapter2(datas, childTab, operaButtonSetList);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new WrapContentLinearLayoutManager(getActivity()));
@@ -426,7 +428,7 @@ public class ListFragment extends Fragment {
             intent.putExtra("childData", itemData);
             intent.putExtra("tableId", tableId);
             intent.putExtra("operaButtonSet", operaButtonSet);
-            Log.e(TAG, "toItem: 传递到info的operaButtonSet " + operaButtonSet);
+            Log.e(TAG, "toItem: 传递到info的operaButtonSet " + itemData);
 
             startActivity(intent);
         } catch (Exception e) {

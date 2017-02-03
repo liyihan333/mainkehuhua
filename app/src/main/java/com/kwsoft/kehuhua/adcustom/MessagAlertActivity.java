@@ -91,10 +91,10 @@ public class MessagAlertActivity extends BaseActivity {
                     layout_select_bar.setVisibility(View.VISIBLE);
                 }
                 if (layout_buttom.getVisibility() == View.VISIBLE) {
-                    tv_delete.setText("删除");
+                    tv_delete.setText(R.string.delete);
                     layout_buttom.setVisibility(View.GONE);
                 } else {
-                    tv_delete.setText("取消");
+                    tv_delete.setText(R.string.cancel);
                     layout_buttom.setVisibility(View.VISIBLE);
                 }
 
@@ -126,7 +126,7 @@ public class MessagAlertActivity extends BaseActivity {
                 } else {
                     ((GetFragment) getFragment).setShowAndHide(false);
                 }
-                tv_delete.setText("删除");
+                tv_delete.setText(R.string.cancel);
             }
         });
 
@@ -139,14 +139,14 @@ public class MessagAlertActivity extends BaseActivity {
                     if (!TextUtils.isEmpty(ids) && !ids.equals("null")&&ids.length()>0) {
                         deleteShowDailog(ids);
                     } else {
-                        Toast.makeText(MessagAlertActivity.this,"请选择消息！",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MessagAlertActivity.this, R.string.please_select_message,Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     String ids=((GetFragment) getFragment).getIds();
                     if (!TextUtils.isEmpty(ids) && !ids.equals("null")&&ids.length()>0) {
                         deleteShowDailog(ids);
                     } else {
-                        Toast.makeText(MessagAlertActivity.this,"请选择消息！",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MessagAlertActivity.this,R.string.please_select_message,Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -189,9 +189,9 @@ public class MessagAlertActivity extends BaseActivity {
     //确认删除弹出框
     public void deleteShowDailog(final String ids) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("确定删除选中消息？");
+        builder.setMessage(R.string.Identify_delete_selected_msg);
 
-        builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -200,7 +200,7 @@ public class MessagAlertActivity extends BaseActivity {
             }
         });
 
-        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
@@ -212,7 +212,7 @@ public class MessagAlertActivity extends BaseActivity {
 
     private void deleteMsgData(String volleyUrl, final String ids) {
         if (!hasInternetConnected()) {
-            Toast.makeText(this, "当前网络不可用，请检查网络！", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.network_no_available, Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -263,10 +263,10 @@ public class MessagAlertActivity extends BaseActivity {
                 ((GetFragment) getFragment).setShowAndHide(false);
                 ((GetFragment) getFragment).refreshData();
             }
-            tv_delete.setText("删除");
-            Toast.makeText(MessagAlertActivity.this,"删除成功！",Toast.LENGTH_SHORT).show();
+            tv_delete.setText(R.string.delete);
+            Toast.makeText(MessagAlertActivity.this, R.string.delete_success,Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(MessagAlertActivity.this,"删除失败！",Toast.LENGTH_SHORT).show();
+            Toast.makeText(MessagAlertActivity.this, R.string.delete_failure,Toast.LENGTH_SHORT).show();
         }
     }
 

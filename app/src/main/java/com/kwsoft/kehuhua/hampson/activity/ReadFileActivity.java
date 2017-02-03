@@ -156,7 +156,7 @@ public class ReadFileActivity extends BaseActivity {
         mMaxItemWith = (int) (outMetrics.widthPixels * 0.7f);
         mMinItemWith = (int) (outMetrics.widthPixels * 0.15f);
         CommonToolbar mToolbar = (CommonToolbar) findViewById(R.id.common_toolbar);
-        mToolbar.setTitle("查看附件");
+        mToolbar.setTitle(getString(R.string.view_attachments));
         mToolbar.setBackgroundColor(getResources().getColor(topBarColor));
         //左侧返回按钮
         mToolbar.setLeftButtonOnClickListener(new View.OnClickListener() {
@@ -218,7 +218,7 @@ public class ReadFileActivity extends BaseActivity {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         dialog.dismiss();
-                        Toast.makeText(ReadFileActivity.this, "语音下载失败,请点击重新加载", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ReadFileActivity.this, R.string.voice_download_failed_please_click_reload, Toast.LENGTH_SHORT).show();
 
                     }
                     @Override

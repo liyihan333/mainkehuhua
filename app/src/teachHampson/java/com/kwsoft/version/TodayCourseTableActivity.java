@@ -168,7 +168,7 @@ public class TodayCourseTableActivity extends BaseActivity {
         } else {
             dialog.dismiss();
             mRefreshLayout.finishRefresh();
-            Toast.makeText(TodayCourseTableActivity.this, "no network", Toast.LENGTH_SHORT).show();
+            Toast.makeText(TodayCourseTableActivity.this, R.string.no_network, Toast.LENGTH_SHORT).show();
             backStart();
         }
     }

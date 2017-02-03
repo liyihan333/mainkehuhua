@@ -197,11 +197,11 @@ public class OperateDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 }
                 if (fieldRole == 5) {//网址
                     holder.add_edit_text.setInputType(InputType.TYPE_TEXT_VARIATION_URI);
-                    holder.add_edit_text.setError("请输入正确的网址");
+                    holder.add_edit_text.setError(mContext.getResources().getString(R.string.input_correct_net));
                 }
                 if (fieldRole == 11) {//网址
                     holder.add_edit_text.setInputType(InputType.TYPE_TEXT_VARIATION_PHONETIC);
-                    holder.add_edit_text.setError("请输入正确的拼音");
+                    holder.add_edit_text.setError(mContext.getResources().getString(R.string.input_correct_pinyin));
                 }
                 if (fieldRole == 2) {//富文本
                     holder.add_edit_text.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
@@ -425,7 +425,7 @@ public class OperateDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                                         public boolean onSure(int hour, int minute, int setTimeType) {
 //                                        String result = String.format("%02d:%02d:%02d", hour, minute, 0);
                                             String result;
-                                            if (StuPra.studentProId.equals("5704e45c7cf6c0b2d9873da6")) {
+                                            if (StuPra.studentProId.equals(StuPra.teachProId)) {
                                                 result = String.format("%02d:%02d", hour, minute);
                                             } else {
                                                 result = String.format("%02d:%02d:%02d", hour, minute, 0);
@@ -629,12 +629,12 @@ public class OperateDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
                         String[] numPicArray = numPic.split(",");
                         int picLength = numPicArray.length;
-                        String picContent = "已选" + picLength + "个文件";
+                        String picContent = "已选" + picLength + mActivity.getString(R.string.a_file);
                         Log.e(TAG, "onBindViewHolder: picContent " + picContent);
                         holder.picNumber.setText(picContent);
                     } else {
                         Log.e(TAG, "onBindViewHolder: 已选文件的id字符串numPic " + numPic);
-                        holder.picNumber.setText("尚无附件");
+                        holder.picNumber.setText(mActivity.getResources().getString(R.string.no_attachment));
                     }
 
 
@@ -975,7 +975,7 @@ public class OperateDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                             if (fieldSetTemp.get(l).get(itemValue) != null) {
                                 idValues = valueOf(fieldSetTemp.get(l).get(itemValue));
                             } else {
-                                Toast.makeText(mContext, "您需要填写" + valueOf(fieldSetTemp.get(l).get("fieldCnName")), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mContext, mActivity.getResources().getString(R.string.you_need_to_fill_in) + valueOf(fieldSetTemp.get(l).get("fieldCnName")), Toast.LENGTH_SHORT).show();
                             }
                         }
                     } else {
@@ -985,7 +985,7 @@ public class OperateDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                             if (fieldSetTemp.get(l).get(itemValue) != null) {
                                 idValues = valueOf(fieldSetTemp.get(l).get(itemValue));
                             } else {
-                                Toast.makeText(mContext, "您需要填写" + valueOf(fieldSetTemp.get(l).get("fieldCnName")), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mContext, mActivity.getResources().getString(R.string.you_need_to_fill_in) + valueOf(fieldSetTemp.get(l).get("fieldCnName")), Toast.LENGTH_SHORT).show();
                             }
                         }
                     }

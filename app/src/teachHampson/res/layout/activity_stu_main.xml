@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context="com.kwsoft.version.StuMainActivity">
 
     <!--Toolbar-->
     <!--<com.kwsoft.kehuhua.widget.CnToolbar-->
-        <!--android:id="@+id/stu_toolbar"-->
-        <!--android:layout_width="fill_parent"-->
-        <!--android:layout_height="45dp"-->
-        <!--android:background="?attr/colorPrimary"-->
+    <!--android:id="@+id/stu_toolbar"-->
+    <!--android:layout_width="fill_parent"-->
+    <!--android:layout_height="45dp"-->
+    <!--android:background="?attr/colorPrimary"-->
 
-        <!--&gt;-->
+    <!--&gt;-->
     <!--</com.kwsoft.kehuhua.widget.CnToolbar>-->
 
     <com.kwsoft.kehuhua.widget.CommonToolbar
@@ -24,9 +24,7 @@
         android:background="?attr/colorPrimary"
         app:isHideLeftButton="true"
         app:isShowRightButton="true"
-        app:isShowTitle="true">
-    </com.kwsoft.kehuhua.widget.CommonToolbar>
-
+        app:isShowTitle="true"></com.kwsoft.kehuhua.widget.CommonToolbar>
 
 
     <!--app:isShowSearchView="false"-->
@@ -37,54 +35,55 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-    <FrameLayout
-        android:id="@+id/content"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/text_cbcbcb" />
-<!--底层按钮-->
-    <RadioGroup
-        android:id="@+id/radioGroup1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:background="@drawable/btn_bottom_navigation_bg"-->
-        <RadioButton
-            android:id="@+id/radio0"
+        <FrameLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/text_cbcbcb" />
+        <!--底层按钮-->
+        <RadioGroup
+            android:id="@+id/radioGroup1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:background="@drawable/btn_bottom_navigation_bg"-->
+            <RadioButton
+                android:id="@+id/radio0"
+                style="@style/activity2_footer_radio"
+                android:checked="true"
+                android:drawablePadding="2dp"
+                android:drawableTop="@drawable/teach_foot_first_selector"
+                android:text="@string/teach_home" />
+
+            <RadioButton
+            android:id="@+id/radio3"
             style="@style/activity2_footer_radio"
             android:checked="true"
             android:drawablePadding="2dp"
-            android:drawableTop="@drawable/teach_foot_first_selector"
-            android:text="Home" />
+            android:drawableTop="@drawable/teach_foot_forth_selector"
+            android:text="@string/teach_function" />
 
-        <!--<RadioButton-->
-            <!--android:id="@+id/radio3"-->
-            <!--style="@style/activity2_footer_radio"-->
-            <!--android:checked="true"-->
-            <!--android:drawablePadding="2dp"-->
-            <!--android:drawableTop="@drawable/teach_foot_forth_selector"-->
-            <!--android:text="功能管理" />-->
+            <RadioButton
+                android:id="@+id/radio1"
+                style="@style/activity2_footer_radio"
+                android:drawablePadding="2dp"
+                android:drawableTop="@drawable/teach_foot_second_selector"
+                android:text="@string/teach_schedule" />
 
-        <RadioButton
-            android:id="@+id/radio1"
-            style="@style/activity2_footer_radio"
-            android:drawablePadding="2dp"
-            android:drawableTop="@drawable/teach_foot_second_selector"
-            android:text="Schedule" />
+            <RadioButton
+                android:id="@+id/radio2"
+                style="@style/activity2_footer_radio"
+                android:drawablePadding="2dp"
+                android:drawableTop="@drawable/teach_foot_third_selector"
+                android:text="@string/teach_me" />
 
-        <RadioButton
-            android:id="@+id/radio2"
-            style="@style/activity2_footer_radio"
-            android:drawablePadding="2dp"
-            android:drawableTop="@drawable/teach_foot_third_selector"
-            android:text="Me" />
-
-    </RadioGroup>
+        </RadioGroup>
     </LinearLayout>
 </LinearLayout>

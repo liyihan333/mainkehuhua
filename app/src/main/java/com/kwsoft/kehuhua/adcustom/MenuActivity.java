@@ -100,7 +100,7 @@ public class MenuActivity extends AppCompatActivity {
 
             initEvent();
         } else {
-            Toast.makeText(MenuActivity.this, "无菜单数据",
+            Toast.makeText(MenuActivity.this, R.string.no_menu_data,
                     Toast.LENGTH_SHORT).show();
         }
 

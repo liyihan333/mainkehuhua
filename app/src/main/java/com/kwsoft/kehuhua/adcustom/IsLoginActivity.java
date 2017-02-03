@@ -108,7 +108,7 @@ public class IsLoginActivity extends Activity {
         LoginError loginError = JSON.parseObject(menuData, LoginError.class);
         if (loginError.getError() != 0) {
 
-            Toast.makeText(this, "用户名或密码错误", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.username_or_pwd_incorrect, Toast.LENGTH_SHORT).show();
             toLoginPage();
         } else {//当成功登陆后存储：：正确的用户名和密码
             DLCH.put(Constant.sysUrl+Constant.projectLoginUrl+ Constant.USERNAME_ALL + Constant.proId,menuData);

@@ -20,24 +20,23 @@
 
             <ImageView
                 android:id="@+id/iv_logo"
-                android:layout_width="238dp"
-                android:layout_height="62dp"
-                android:layout_marginTop="160dp"
-                android:src="@mipmap/hampson_stu" />
+                android:layout_width="91dp"
+                android:layout_height="91dp"
+                android:layout_marginTop="100dp"
+                android:src="@mipmap/index_logo_stu" />
 
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginTop="15sp"-->
-                <!--android:text="学 员 端"-->
-                <!--android:textColor="@color/title_bg"-->
-                <!--android:textSize="30dp" />-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15sp"
+                android:text="学 员 端"
+                android:textColor="@color/title_bg"
+                android:textSize="30sp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:background="@drawable/login"
@@ -64,7 +63,7 @@
                     android:layout_marginLeft="22dp"
                     android:layout_weight="4"
                     android:background="@null"
-                    android:hint="请输入手机号"
+                    android:hint="@string/login_hint_first"
                     android:singleLine="true"
                     android:textColor="#333333"
                     android:textColorHint="#b2b2b2"
@@ -77,7 +76,7 @@
                     android:layout_width="14dp"
                     android:layout_height="14dp"
                     android:layout_marginRight="@dimen/text_size_12"
-                    android:src="@drawable/index_close_stu"
+                    android:src="@mipmap/index_close_stu"
                     android:visibility="invisible" />
             </LinearLayout>
 
@@ -106,7 +105,7 @@
                     android:layout_marginLeft="22dp"
                     android:layout_weight="4"
                     android:background="@null"
-                    android:hint="请输入密码"
+                    android:hint="@string/login_hint_sec"
                     android:password="true"
                     android:singleLine="true"
                     android:textColor="#333333"
@@ -118,7 +117,7 @@
                     android:layout_width="14dp"
                     android:layout_height="14dp"
                     android:layout_marginRight="@dimen/text_size_12"
-                    android:src="@drawable/index_close_stu"
+                    android:src="@mipmap/index_close_stu"
                     android:visibility="invisible" />
             </LinearLayout>
 
@@ -152,16 +151,15 @@
                 android:id="@+id/btn_login"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="45dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginTop="5dp"
                 android:background="@drawable/selector_login_btn"
                 android:onClick="click"
                 android:text="登录"
                 android:textColor="#ffffff"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:visibility="gone" />
 
             <LinearLayout
@@ -175,15 +173,15 @@
 
                 <Button
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="45dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
-                    android:background="@drawable/btn_login_unenable"
+                    android:background="@drawable/btn_login_press"
                     android:enabled="false"
                     android:onClick="click"
                     android:text="登录"
                     android:textColor="#ffffff"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
             </LinearLayout>
 
             <ImageView

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="10dp"
+    android:orientation="vertical"
     android:background="@drawable/shape_list_item_background"
     android:descendantFocusability="blocksDescendants"
 
-    android:paddingEnd="15dp">
+   >
 
     <!--android:paddingBottom="19dp"-->
     <!--<CheckBox-->
@@ -24,6 +25,7 @@
     <RelativeLayout
         android:id="@+id/list_content"
         android:layout_width="match_parent"
+        android:paddingEnd="15dp"
         android:layout_height="wrap_content"
         android:background="@color/white">
 
@@ -52,7 +54,7 @@
                 android:gravity="center_vertical"
                 android:text="赵小雪"
                 android:textColor="@color/list_item_right"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:visibility="gone" />
 
             <!--<ImageView-->
@@ -83,17 +85,41 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:textColor="@color/list_item_left"
-                    android:textSize="17sp"
+                    android:textSize="14sp"
                     android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/right1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:layout_marginStart="15dp"
                     android:textColor="@color/list_item_right"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:visibility="gone" />
+                <LinearLayout
+                    android:id="@+id/click_open"
+                    android:layout_width="86dp"
+                    android:layout_height="25dp"
+                    android:background="@mipmap/related_btn"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    android:paddingLeft="5dp">
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="13dp"
+                        android:src="@mipmap/related" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
+                        android:text="相关信息"
+                        android:textColor="@color/tv_ff8200"
+                        android:textSize="14sp" />
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -108,7 +134,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:textColor="@color/list_item_left"
-                    android:textSize="17sp"
+                    android:textSize="14sp"
                     android:visibility="gone" />
 
                 <TextView
@@ -117,7 +143,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:textColor="@color/list_item_right"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:visibility="gone" />
             </LinearLayout>
 
@@ -133,7 +159,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:textColor="@color/list_item_left"
-                    android:textSize="17sp"
+                    android:textSize="14sp"
                     android:visibility="gone" />
 
                 <TextView
@@ -142,7 +168,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:textColor="@color/list_item_right"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:visibility="gone" />
             </LinearLayout>
 
@@ -158,7 +184,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:textColor="@color/list_item_left"
-                    android:textSize="17sp"
+                    android:textSize="14sp"
                     android:visibility="gone" />
 
                 <TextView
@@ -167,7 +193,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:textColor="@color/list_item_right"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:visibility="gone" />
             </LinearLayout>
 
@@ -225,94 +251,102 @@
                     <!--/>-->
             <!--</LinearLayout>-->
 
-            <LinearLayout
-                android:id="@+id/dash_ll"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:visibility="gone"
-                android:orientation="horizontal">
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="3dp"
-                    android:layout_marginLeft="15dp"
-                    android:background="@drawable/dash_view"
-                    android:layerType="software" />
-            </LinearLayout>
-
         </LinearLayout>
 
 
         <!--android:layout_below="@+id/list_item_content"-->
-        <RelativeLayout
-            android:id="@+id/click_open"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/list_item_content"
-            android:layout_marginLeft="15dp"
-            android:visibility="gone"
-            >
+        <!--<RelativeLayout-->
+            <!--android:id="@+id/click_open"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_below="@+id/list_item_content"-->
+            <!--android:layout_marginLeft="15dp"-->
+            <!--android:visibility="gone"-->
+            <!--&gt;-->
 
-            <TextView
-                android:id="@+id/click_open_btn"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_centerInParent="true"
-                android:background="@drawable/select_bg_item"
-                android:gravity="center"
-                android:paddingBottom="4dp"
-                android:focusable="false"
-                android:paddingTop="3dp"
-                android:text="查看相关列表"
-                android:textColor="@color/white"
-                android:textSize="16sp" />
+            <!--<TextView-->
+                <!--android:id="@+id/click_open_btn"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="35dp"-->
+                <!--android:layout_centerInParent="true"-->
+                <!--android:background="@drawable/select_bg_item"-->
+                <!--android:gravity="center"-->
+                <!--android:paddingBottom="4dp"-->
+                <!--android:focusable="false"-->
+                <!--android:paddingTop="3dp"-->
+                <!--android:text="查看相关列表"-->
+                <!--android:textColor="@color/white"-->
+                <!--android:textSize="16sp" />-->
 
 
-        </RelativeLayout>
+        <!--</RelativeLayout>-->
 
     </RelativeLayout>
-    <!--<RelativeLayout-->
-        <!--android:layout_marginTop="5dp"-->
-        <!--android:id="@+id/list_opera_layout"-->
-        <!--android:layout_below="@+id/list_content"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:orientation="horizontal"-->
-        <!--android:visibility="gone">-->
+    <LinearLayout
+        android:id="@+id/dash_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:visibility="gone"
+        android:orientation="horizontal">
+        <!--虚线-->
+        <!-- <View
+             android:layout_width="match_parent"
+             android:layout_height="3dp"
+             android:layout_marginLeft="15dp"
+             android:background="@drawable/dash_view"
+             android:layerType="software" />-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="@drawable/solid_line_view"
+            />
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_marginTop="5dp"
+        android:id="@+id/list_opera_layout"
+        android:layout_below="@+id/list_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone"
+       >
 
-        <!--<Button-->
+        <Button
+            android:id="@+id/list_opera0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="确认上课"
+            android:background="@drawable/photo_btn_first"
+            style="?android:attr/borderlessButtonStyle"
+            android:visibility="gone"
+            android:layout_centerVertical="true"
+           />
+        <Button
+            android:id="@+id/list_opera1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:text="确认下课"
+            android:background="@drawable/photo_btn_first"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="3dp"
+            />
+        <Button
+            android:id="@+id/list_opera2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:text="交作业"
+            android:background="@drawable/photo_btn_first"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            />
 
-            <!--android:id="@+id/list_opera0"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="确认上课"-->
-            <!--android:background="@drawable/photo_btn_first"-->
-            <!--style="?android:attr/borderlessButtonStyle"-->
-            <!--android:layout_centerVertical="true"-->
-            <!--android:visibility="gone"/>-->
-        <!--<Button-->
-            <!--android:id="@+id/list_opera1"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="确认下课"-->
-            <!--android:background="@drawable/photo_btn_first"-->
-            <!--style="?android:attr/borderlessButtonStyle"-->
-            <!--android:layout_centerInParent="true"-->
-            <!--android:layout_marginStart="3dp"-->
-            <!--android:visibility="gone"/>-->
-        <!--<Button-->
-            <!--android:id="@+id/list_opera2"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="交作业"-->
-            <!--android:background="@drawable/photo_btn_first"-->
-            <!--style="?android:attr/borderlessButtonStyle"-->
-            <!--android:layout_centerVertical="true"-->
-            <!--android:layout_alignParentEnd="true"-->
-            <!--android:visibility="gone"/>-->
+    </RelativeLayout>
 
-    <!--</RelativeLayout>-->
-
-</RelativeLayout>
+</LinearLayout>
 
 

@@ -36,16 +36,16 @@ public class MenuFragment extends Fragment {
     private GridView nextMenu;
     //    private TextView rightView;
 //    private ArrayList<String> groups = new ArrayList<String>();
-    private TextAdapter earaListViewAdapter;
-    private List<Map<String, Object>> parentList;
+    private TextAdapter earaListViewAdapter=null;
+    private List<Map<String, Object>> parentList=new ArrayList<>();
     private List<Map<String, Object>> childList = new ArrayList<>();
-    private SimpleAdapter nextAdapter;
+    private SimpleAdapter nextAdapter=null;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_menu, container, false);
-
+        Log.e("menufragment", "onCreateView: menufragment" );
         getIntentData();
         initView(view);
 
@@ -84,7 +84,7 @@ public class MenuFragment extends Fragment {
                 parentList = DataProcess.noPhoneList(menuListMap);
 
             } else {
-                Toast.makeText(getActivity(), "无菜单数据", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), R.string.no_menu_data, Toast.LENGTH_SHORT).show();
             }
             Log.e("TAG", "获得学员端菜单数据：" + menuStr);
         }

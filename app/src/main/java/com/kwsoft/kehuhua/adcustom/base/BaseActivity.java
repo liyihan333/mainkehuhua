@@ -128,15 +128,15 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseAct
      */
     @Override
     public void isExit() {
-        new AlertDialog.Builder(mContext).setTitle("确定退出吗?")
-                .setNeutralButton("确定", new DialogInterface.OnClickListener() {
+        new AlertDialog.Builder(mContext).setTitle(R.string.determined_to_quit)
+                .setNeutralButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         stopService();
                         myApplication.exit();
                     }
                 })
-                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
@@ -232,9 +232,9 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseAct
         if (!Environment.MEDIA_MOUNTED.equals(Environment
                 .getExternalStorageState())) {
             new AlertDialog.Builder(mContext)
-                    .setTitle("检测内存卡")
-                    .setMessage("请检查内存卡")
-                    .setPositiveButton("设置",
+                    .setTitle(R.string.detecting_memory_card)
+                    .setMessage(R.string.please_detecting_memory_card)
+                    .setPositiveButton(R.string.setting,
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog,
@@ -245,7 +245,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseAct
                                     mContext.startActivity(intent);
                                 }
                             })
-                    .setNegativeButton("退出",
+                    .setNegativeButton(R.string.exit,
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog,
@@ -263,9 +263,9 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseAct
     public void openWirelessSet() {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mContext);
         dialogBuilder
-                .setTitle("网络设置")
-                .setMessage("检查网络")
-                .setPositiveButton("网络设置",
+                .setTitle(R.string.net_set)
+                .setMessage(R.string.check_net)
+                .setPositiveButton(R.string.net_set,
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog,
@@ -276,7 +276,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseAct
                                 mContext.startActivity(intent);
                             }
                         })
-                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int whichButton) {
                         dialog.cancel();

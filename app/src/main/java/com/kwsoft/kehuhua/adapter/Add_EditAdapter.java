@@ -230,18 +230,18 @@ public class Add_EditAdapter extends BaseAdapter {
             }
             if (fieldRole == 4) {//邮箱
                 add_edit_text.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-                add_edit_text.setError("请输入正确的邮箱");
+                add_edit_text.setError(mActivity.getString(R.string.input_correct_email));
             }
             if (fieldRole == 13) {//金额，带小数点
                 add_edit_text.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
             }
             if (fieldRole == 5) {//网址
                 add_edit_text.setInputType(InputType.TYPE_TEXT_VARIATION_URI);
-                add_edit_text.setError("请输入正确的网址");
+                add_edit_text.setError(mActivity.getString(R.string.input_correct_net));
             }
             if (fieldRole == 11) {//网址
                 add_edit_text.setInputType(InputType.TYPE_TEXT_VARIATION_PHONETIC);
-                add_edit_text.setError("请输入正确的拼音");
+                add_edit_text.setError(mActivity.getString(R.string.input_correct_pinyin));
             }
             if (fieldRole == 2) {//富文本
                 add_edit_text.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
@@ -545,10 +545,10 @@ public class Add_EditAdapter extends BaseAdapter {
 
                     String[] numPicArray = numPic.split(",");
                     int picLength = numPicArray.length;
-                    String picContent = "已选" + picLength + "张图片";
+                    String picContent = mActivity.getString(R.string.selected) + picLength + mActivity.getString(R.string.pictures);
                     picNumber.setText(picContent);
                 } else {
-                    picNumber.setText("尚无附件");
+                    picNumber.setText(R.string.no_attachment);
                 }
 
 
@@ -821,7 +821,7 @@ public class Add_EditAdapter extends BaseAdapter {
                             if (fieldSetTemp.get(l).get(itemValue) != null) {
                                 idValues = valueOf(fieldSetTemp.get(l).get(itemValue));
                             } else {
-                                Toast.makeText(context, "您需要填写" + valueOf(fieldSetTemp.get(l).get("fieldCnName")), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, mActivity.getString(R.string.you_need_to_fill_in) + valueOf(fieldSetTemp.get(l).get("fieldCnName")), Toast.LENGTH_SHORT).show();
                             }
                         }
                     } else {
@@ -831,7 +831,7 @@ public class Add_EditAdapter extends BaseAdapter {
                             if (fieldSetTemp.get(l).get(itemValue) != null) {
                                 idValues = valueOf(fieldSetTemp.get(l).get(itemValue));
                             } else {
-                                Toast.makeText(context, "您需要填写" + valueOf(fieldSetTemp.get(l).get("fieldCnName")), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, mActivity.getString(R.string.you_need_to_fill_in) + valueOf(fieldSetTemp.get(l).get("fieldCnName")), Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
@@ -892,9 +892,9 @@ public class Add_EditAdapter extends BaseAdapter {
 
 
     public void showDialog(final Context context, final String[] arrs) {
-        new AlertDialog.Builder(context).setTitle("选择区域").setItems(arrs, new DialogInterface.OnClickListener() {
+        new AlertDialog.Builder(context).setTitle(R.string.select_region).setItems(arrs, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(context, "您已经选择了: " + which + ":" + arrs[which], Toast.LENGTH_LONG).show();
+                Toast.makeText(context, context.getString(R.string.you_have_chosen) + which + ":" + arrs[which], Toast.LENGTH_LONG).show();
                 dialog.dismiss();
             }
         }).show();

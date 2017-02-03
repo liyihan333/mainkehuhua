@@ -95,7 +95,7 @@ dialog.dismiss();
     @Override
     public void initView() {
         mToolbar = (CommonToolbar) findViewById(R.id.common_toolbar);
-        mToolbar.setTitle("播放语音");
+        mToolbar.setTitle(getString(R.string.play_voice));
         mToolbar.setBackgroundColor(getResources().getColor(topBarColor));
         //左侧返回按钮
         mToolbar.setRightButtonIcon(getResources().getDrawable(R.mipmap.often_more));

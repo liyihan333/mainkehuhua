@@ -128,7 +128,7 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
                     Log.e("TAG", "详情页operaButtonSet " +operaButtonSet.toString());
                 }
             } else {
-                Toast.makeText(InfoActivity.this, "无详情数据", Toast.LENGTH_SHORT).show();
+                Toast.makeText(InfoActivity.this, R.string.no_detail_data, Toast.LENGTH_SHORT).show();
 
             }
 
@@ -243,11 +243,11 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
                                         case 18://关联添加页面
                                             String buttonName=String.valueOf(operaButtonSetMap.get("buttonName"));
                                             Log.e(TAG, "onItemClick: buttonName "+buttonName);
-                                            if (buttonName.contains("确认下课")&& StuPra.studentProId.equals("57159822f07e75084cb8a1fe")) {
+                                            if (buttonName.contains(getString(R.string.confirm_xia_class))&& StuPra.studentProId.equals("57159822f07e75084cb8a1fe")) {
                                                 Intent mIntentEdit = new Intent(mContext, StarRatingBarActivity.class);
                                                 mIntentEdit.putExtra("itemSet", operaButtonSetMapStr);
                                                 startActivity(mIntentEdit);
-                                            }else if(buttonName.contains("确认下课")&& StuPra.studentProId.equals("5704e45c7cf6c0b2d9873da6")){
+                                            }else if(buttonName.contains(getString(R.string.confirm_xia_class))&& StuPra.studentProId.equals("5704e45c7cf6c0b2d9873da6")){
                                                 //老师端确认下课按钮，需要修改activity
                                                 Intent mIntentEdit = new Intent(mContext, StarRatingBarActivity.class);
                                                 mIntentEdit.putExtra("itemSet1", operaButtonSetMapStr);
@@ -335,9 +335,9 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
 
     private void toDelete() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("数据库中会同步删除");
-        builder.setTitle("删除");
-        builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+        builder.setMessage(R.string.database_will_be_deleted);
+        builder.setTitle(R.string.delete);
+        builder.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -345,7 +345,7 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
                 deleteItems();
             }
         });
-        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
@@ -387,7 +387,7 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
                             intent.setClass(InfoActivity.this,ListActivity4.class);
                             startActivity(intent);
                         }else{
-                            Toast.makeText(InfoActivity.this, response+"请检查表关联", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(InfoActivity.this, response+getString(R.string.please_check_table_association), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

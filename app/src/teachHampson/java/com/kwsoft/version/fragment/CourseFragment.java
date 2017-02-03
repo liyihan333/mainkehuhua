@@ -492,7 +492,7 @@ public class CourseFragment extends Fragment implements OnDataListener, WeekDate
                     Log.e("TAG", "课程表检测3。2");
                     courseView.setCourseNameText(courseName);
                 } else {
-                    courseView.setCourseNameText("暂无数据");
+                    courseView.setCourseNameText(getString(R.string.no_data));
                 }
                 courseInfoLayout.addView(courseView);
 

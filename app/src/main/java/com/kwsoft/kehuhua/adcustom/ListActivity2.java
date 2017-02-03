@@ -240,7 +240,7 @@ public class ListActivity2 extends BaseActivity {
 
             dialog.dismiss();
             mRefreshLayout.finishRefresh();
-            Toast.makeText(ListActivity2.this, "请连接网络", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ListActivity2.this, R.string.please_connect_net, Toast.LENGTH_SHORT).show();
             backStart();
         }
     }
@@ -309,13 +309,7 @@ public class ListActivity2 extends BaseActivity {
 
 
                     }
-
-
                     operaButtonSet = JSONArray.toJSONString(operaButtonSetList);
-
-
-
-
 
                     Log.e("TAG", "获取operaButtonSet" + operaButtonSet);
 
@@ -451,9 +445,9 @@ public class ListActivity2 extends BaseActivity {
                     mRecyclerView.scrollToPosition(0);
                     mRefreshLayout.finishRefresh();
                     if (datas.size() == 0) {
-                        Snackbar.make(mRecyclerView, "本页无数据", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(mRecyclerView, R.string.this_page_no_data, Snackbar.LENGTH_SHORT).show();
                     } else if(isResume==0){
-                        Snackbar.make(mRecyclerView, "共"+totalNum+"条", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(mRecyclerView, getString(R.string.total)+totalNum+getString(R.string.item), Snackbar.LENGTH_SHORT).show();
                     }
 
                 }
@@ -464,7 +458,7 @@ public class ListActivity2 extends BaseActivity {
                     mAdapter.addData(mAdapter.getDatas().size(), datas,childTab);
                     mRecyclerView.scrollToPosition(mAdapter.getDatas().size());
                     mRefreshLayout.finishRefreshLoadMore();
-                    Snackbar.make(mRecyclerView, "更新了" + datas.size() + "条数据", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(mRecyclerView, getString(R.string.update) + datas.size() + getString(R.string.item_datas), Snackbar.LENGTH_SHORT).show();
                 }
 
                 break;
@@ -489,9 +483,9 @@ public class ListActivity2 extends BaseActivity {
         });
         dialog.dismiss();
         if (totalNum>0) {
-            Snackbar.make(mRecyclerView, "加载完成，共"+totalNum+"条", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(mRecyclerView, getString(R.string.loading_completed_total)+totalNum+getString(R.string.item_datas), Snackbar.LENGTH_SHORT).show();
         }else{
-            Snackbar.make(mRecyclerView, "本页无数据", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(mRecyclerView, getString(R.string.no_data_on_this_page), Snackbar.LENGTH_SHORT).show();
 
         }
 
@@ -735,7 +729,7 @@ public class ListActivity2 extends BaseActivity {
                 initPopWindowDropdown(popInflateView);
             }
         } catch (Exception e) {
-            Toast.makeText(ListActivity2.this, "无按钮数据", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ListActivity2.this, R.string.no_button_data, Toast.LENGTH_SHORT).show();
         }
     }
 }

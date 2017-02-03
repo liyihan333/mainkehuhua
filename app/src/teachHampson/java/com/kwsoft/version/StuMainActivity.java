@@ -23,10 +23,11 @@ import com.kwsoft.kehuhua.sessionService.SessionService;
 import com.kwsoft.kehuhua.utils.CloseActivityClass;
 import com.kwsoft.kehuhua.utils.Utils;
 import com.kwsoft.kehuhua.widget.CommonToolbar;
-import com.kwsoft.kehuhua.zxing.CaptureActivity;
+import com.kwsoft.kehuhua.zxing.TestScanActivity;
 import com.kwsoft.version.androidRomType.AndtoidRomUtil;
 import com.kwsoft.version.fragment.CourseFragment;
 import com.kwsoft.version.fragment.MeFragment;
+import com.kwsoft.version.fragment.MenuFragment;
 import com.kwsoft.version.fragment.StuFragmentTabAdapter;
 import com.kwsoft.version.fragment.StudyFragment;
 import com.kwsoft.version.view.CustomDialog;
@@ -42,14 +43,15 @@ import java.util.List;
 public class StuMainActivity extends BaseActivity implements View.OnClickListener {
     StuFragmentTabAdapter stutabAdapter;
     private RadioGroup radioGroup;
-  //  private RadioButton radio3;
+      private RadioButton radio3;
     private String arrStr;
-    private String menuDataMap,menuList;//看板数据、课程表数据、主菜单数据
+    private String menuDataMap, menuList;//看板数据、课程表数据、主菜单数据
     private CommonToolbar mToolbar;
     private String hideMenuList;//获取我的界面中的tableid pageid 个人资料
     private String homePageList;//今明日课表
     private String feedbackInfoList;//反馈信息
     public static boolean isForeground = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,9 +62,10 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
         initFragment();
         // initDialog();
         PgyUpdateManager.register(this);
-        Utils.startPollingService(mContext,5*60,SessionService.class, SessionService.ACTION);//启动20分钟一次的轮询获取session服务
+        Utils.startPollingService(mContext, 5 * 60, SessionService.class, SessionService.ACTION);//启动20分钟一次的轮询获取session服务
         registerMessageReceiver();  // used for receive msg
     }
+
     //for receive customer msg from jpush server
     private MessageReceiver mMessageReceiver;
     public static final String MESSAGE_RECEIVED_ACTION = "com.example.jpushdemo.MESSAGE_RECEIVED_ACTION";
@@ -70,6 +73,7 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
     public static final String KEY_MESSAGE = "message";
     public static final String KEY_EXTRAS = "extras";
     private static final String TAG = "StuMainActivity";
+
     public void registerMessageReceiver() {
         mMessageReceiver = new MessageReceiver();
         IntentFilter filter = new IntentFilter();
@@ -77,6 +81,7 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
         filter.addAction(MESSAGE_RECEIVED_ACTION);
         registerReceiver(mMessageReceiver, filter);
     }
+
     @Override
     protected void onResume() {
         isForeground = true;
@@ -89,6 +94,7 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
         isForeground = false;
         super.onPause();
     }
+
     public class MessageReceiver extends BroadcastReceiver {
 
         @Override
@@ -106,15 +112,16 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
         }
     }
 
-    private void setCostomMsg(String msg){
-        Log.e(TAG, "setCostomMsg: msg "+msg);
+    private void setCostomMsg(String msg) {
+        Log.e(TAG, "setCostomMsg: msg " + msg);
     }
+
     public void initDialog() {
 
         CustomDialog.Builder builder = new CustomDialog.Builder(StuMainActivity.this);
 //                builder.setMessage("这个就是自定义的提示框");
-        builder.setTitle("入学须知");
-        builder.setPositiveButton("我知道了！", new DialogInterface.OnClickListener() {
+        builder.setTitle(getResources().getString(R.string.start_school));
+        builder.setPositiveButton(getResources().getString(R.string.i_known), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
                 //设置你的操作事项
@@ -138,23 +145,23 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
 
         RadioButton radio0 = (RadioButton) findViewById(R.id.radio0);
         RadioButton radio2 = (RadioButton) findViewById(R.id.radio2);
-       // radio3 = (RadioButton) findViewById(R.id.radio3);
+        // radio3 = (RadioButton) findViewById(R.id.radio3);
 
         Intent intent = getIntent();
         arrStr = intent.getStringExtra("jsonArray");
-      //   menuList = intent.getStringExtra("menuList");
+        //   menuList = intent.getStringExtra("menuList");
 
         menuDataMap = intent.getStringExtra("menuDataMap");
         hideMenuList = intent.getStringExtra("hideMenuList");
-        homePageList=intent.getStringExtra("homePageList");
-        feedbackInfoList=intent.getStringExtra("feedbackInfoList");
+        homePageList = intent.getStringExtra("homePageList");
+        feedbackInfoList = intent.getStringExtra("feedbackInfoList");
 
         mToolbar = (CommonToolbar) findViewById(R.id.common_toolbar);
 //        Resources resources = mContext.getResources().getDrawable(R.drawable.nav_news);
 //        Drawable drawable = resources.getDrawable(R.drawable.nav_news);
 //        mToolbar.setRightButtonIcon(mContext.getResources().getDrawable(R.drawable.nav_news));
 //        mToolbar.setLeftButtonIcon(mContext.getResources().getDrawable(R.drawable.nav_scan_code));
-        mToolbar.setTitle("iHampson");
+        mToolbar.setTitle(getString(R.string.project_name));
         mToolbar.setRightButtonIcon(getResources().getDrawable(R.drawable.nav_news));
 
         mToolbar.setRightButtonOnClickListener(new View.OnClickListener() {
@@ -177,34 +184,34 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
 
     public void initFragment() {
         Fragment studyFragment = new StudyFragment();
-      //  MenuFragment menuFragment = new MenuFragment();
+        Fragment menuFragment = new MenuFragment();
         Fragment courseFragment = new CourseFragment();
         Fragment meFragment = new MeFragment();
 
         Bundle studyBundle = new Bundle();
         studyBundle.putString("arrStr", arrStr);
         studyBundle.putString("menuDataMap", menuDataMap);
-        studyBundle.putString("homePageList",homePageList);
-        Log.e("homlie",homePageList);
-        studyBundle.putBoolean("isLogin",true);
+        studyBundle.putString("homePageList", homePageList);
+        Log.e("homlie", homePageList);
+        studyBundle.putBoolean("isLogin", true);
         studyFragment.setArguments(studyBundle);
-//
-//        Bundle menuBundle = new Bundle();
-//        menuBundle.putString("menuDataMap", menuDataMap);
-//        menuFragment.setArguments(menuBundle);
 
-        Bundle courseBundle = new Bundle();
-      //  courseBundle.putString("menuList", menuList);
-        courseFragment.setArguments(courseBundle);
+        Bundle menuBundle = new Bundle();
+        menuBundle.putString("menuDataMap", menuDataMap);
+        menuFragment.setArguments(menuBundle);
+
+//        Bundle courseBundle = new Bundle();
+//          courseBundle.putString("menuList", menuList);
+//        courseFragment.setArguments(courseBundle);
 
         Bundle meBundle = new Bundle();
         meBundle.putString("hideMenuList", hideMenuList);
-        meBundle.putString("feedbackInfoList",feedbackInfoList);
+        meBundle.putString("feedbackInfoList", feedbackInfoList);
         meFragment.setArguments(meBundle);
 
         List<Fragment> mFragments = new ArrayList<>();
         mFragments.add(studyFragment);
-     //   mFragments.add(menuFragment);
+        mFragments.add(menuFragment);
         mFragments.add(courseFragment);
         mFragments.add(meFragment);
         stutabAdapter = new StuFragmentTabAdapter(this, mFragments, R.id.content, radioGroup);
@@ -221,9 +228,9 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
                     case R.id.radio2:
 
                         break;
-//                    case R.id.radio3:
-//
-//                        break;
+                    case R.id.radio3:
+
+                        break;
 
                 }
             }
@@ -253,18 +260,18 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
 //                    } else {
 //                        Constant.goHuaWeiSetting(getActivity());
 //                    }
-            Intent intent = new Intent(StuMainActivity.this, CaptureActivity.class);
+            Intent intent = new Intent(StuMainActivity.this, TestScanActivity.class);
             startActivityForResult(intent, 1);
         } else if (miui) {
             //小米
-            Intent intent = new Intent(StuMainActivity.this, CaptureActivity.class);
+            Intent intent = new Intent(StuMainActivity.this, TestScanActivity.class);
             startActivityForResult(intent, 1);
         } else if (flyme) {
             //魅族rom
-            Intent intent = new Intent(StuMainActivity.this, CaptureActivity.class);
+            Intent intent = new Intent(StuMainActivity.this, TestScanActivity.class);
             startActivityForResult(intent, 1);
         } else {
-            Intent intent = new Intent(StuMainActivity.this, CaptureActivity.class);
+            Intent intent = new Intent(StuMainActivity.this, TestScanActivity.class);
             startActivityForResult(intent, 1);
         }
     }
@@ -277,12 +284,12 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             if ((System.currentTimeMillis() - exitTime) > 1000) {
 
-                String msg = "再按一次退出";
+                String msg = getString(R.string.press_another_exit);
                 Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
 
                 exitTime = System.currentTimeMillis();
             } else {
-                Toast.makeText(this, "直接退出", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.exit, Toast.LENGTH_SHORT).show();
 //                CloseActivityClass.exitClient(this);
                 finish();
             }
@@ -312,8 +319,13 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void onDestroy() {
         unregisterReceiver(mMessageReceiver);
-        super.onDestroy();
         Utils.stopPollingService(this, SessionService.class, SessionService.ACTION);
+        super.onDestroy();
+    }
 
+    @Override
+    protected void onStop() {
+        Utils.stopPollingService(this, SessionService.class, SessionService.ACTION);
+        super.onStop();
     }
 }

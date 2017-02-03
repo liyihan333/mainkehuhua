@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="10dp"
     android:background="@drawable/shape_list_item_background"
     android:descendantFocusability="blocksDescendants"
-
-    android:paddingEnd="15dp">
+    android:orientation="vertical">
 
     <!--android:paddingBottom="19dp"-->
     <!--<CheckBox-->
@@ -52,16 +51,16 @@
                 android:gravity="center_vertical"
                 android:text="赵小雪"
                 android:textColor="@color/list_item_right"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:visibility="gone" />
 
-            <!-- <ImageView
-                 android:id="@+id/iv_nextpage"
-                 android:layout_width="20dp"
-                 android:layout_height="match_parent"
-                 android:layout_alignParentEnd="true"
-                 android:layout_gravity="center_vertical"
-                 android:src="@mipmap/basics_into" />-->
+            <ImageView
+                android:id="@+id/iv_nextpage"
+                android:layout_width="25dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="center_vertical"
+                android:src="@mipmap/go_item" />
         </RelativeLayout>
 
         <LinearLayout
@@ -83,7 +82,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:textColor="@color/list_item_left"
-                    android:textSize="17sp"
+                    android:textSize="14sp"
                     android:visibility="gone" />
 
                 <TextView
@@ -91,9 +90,35 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
+                    android:layout_weight="1"
                     android:textColor="@color/list_item_right"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/click_open"
+                    android:layout_width="86dp"
+                    android:layout_height="25dp"
+                    android:background="@mipmap/related_btn"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="5dp"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="13dp"
+                        android:src="@mipmap/related" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
+                        android:text="相关信息"
+                        android:textColor="@color/tv_ff8200"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout
@@ -108,7 +133,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:textColor="@color/list_item_left"
-                    android:textSize="17sp"
+                    android:textSize="14sp"
                     android:visibility="gone" />
 
                 <TextView
@@ -117,7 +142,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:textColor="@color/list_item_right"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:visibility="gone" />
             </LinearLayout>
 
@@ -133,7 +158,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:textColor="@color/list_item_left"
-                    android:textSize="17sp"
+                    android:textSize="14sp"
                     android:visibility="gone" />
 
                 <TextView
@@ -142,7 +167,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:textColor="@color/list_item_right"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:visibility="gone" />
             </LinearLayout>
 
@@ -158,7 +183,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:textColor="@color/list_item_left"
-                    android:textSize="17sp"
+                    android:textSize="14sp"
                     android:visibility="gone" />
 
                 <TextView
@@ -167,96 +192,206 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:textColor="@color/list_item_right"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:visibility="gone" />
             </LinearLayout>
 
 
-            <LinearLayout
-                android:id="@+id/dash_ll"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal"
-                android:visibility="gone">
+            <!--<LinearLayout-->
+            <!--android:id="@+id/dash_ll"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="5dp"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:visibility="gone">-->
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="3dp"
-                    android:layout_marginLeft="15dp"
-                    android:background="@drawable/dash_view"
-                    android:layerType="software" />
-            </LinearLayout>
+            <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="3dp"-->
+            <!--android:layout_marginLeft="15dp"-->
+            <!--android:background="@drawable/dash_view"-->
+            <!--android:layerType="software" />-->
+            <!--</LinearLayout>-->
 
         </LinearLayout>
 
 
         <!--android:layout_below="@+id/list_item_content"-->
-        <RelativeLayout
-            android:id="@+id/click_open"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/list_item_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="13dp"
-            android:focusable="false"
-            android:visibility="gone">
+        <!--<RelativeLayout-->
+        <!--android:id="@+id/click_open"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/list_item_content"-->
+        <!--android:layout_marginStart="15dp"-->
+        <!--android:layout_marginTop="13dp"-->
+        <!--android:focusable="false"-->
+        <!--android:visibility="gone">-->
 
-            <TextView
-                android:id="@+id/click_open_btn"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_centerInParent="true"
-                android:background="@drawable/shape_text_border"
-                android:focusable="false"
-                android:gravity="center"
-                android:paddingBottom="4dp"
-                android:paddingTop="3dp"
-                android:text="查看相关列表"
-                android:textColor="@color/white"
-                android:textSize="16sp" />
+        <!--<TextView-->
+        <!--android:id="@+id/click_open_btn"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="35dp"-->
+        <!--android:layout_centerInParent="true"-->
+        <!--android:background="@drawable/shape_text_border"-->
+        <!--android:focusable="false"-->
+        <!--android:gravity="center"-->
+        <!--android:paddingBottom="4dp"-->
+        <!--android:paddingTop="3dp"-->
+        <!--android:text="查看相关列表"-->
+        <!--android:textColor="@color/white"-->
+        <!--android:textSize="16sp" />-->
 
 
-        </RelativeLayout>
+        <!--</RelativeLayout>-->
 
     </RelativeLayout>
-    <!--<RelativeLayout-->
-    <!--android:layout_marginTop="10dp"-->
-    <!--android:id="@+id/list_opera_layout"-->
-    <!--android:layout_below="@+id/list_content"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:orientation="horizontal"-->
-    <!--android:visibility="gone">-->
 
-    <!--<Button-->
+    <LinearLayout
+        android:id="@+id/dash_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:visibility="gone"
+        android:orientation="horizontal">
+        <!--虚线-->
+        <!-- <View
+             android:layout_width="match_parent"
+             android:layout_height="3dp"
+             android:layout_marginLeft="15dp"
+             android:background="@drawable/dash_view"
+             android:layerType="software" />-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="@drawable/solid_line_view" />
+    </LinearLayout>
 
-    <!--android:id="@+id/list_opera0"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="确认上课"-->
-    <!--android:layout_centerVertical="true"-->
-    <!--android:visibility="gone"/>-->
-    <!--<Button-->
-    <!--android:id="@+id/list_opera1"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="确认下课"-->
-    <!--android:layout_centerInParent="true"-->
-    <!--android:layout_marginStart="3dp"-->
-    <!--android:visibility="gone"/>-->
-    <!--<Button-->
-    <!--android:id="@+id/list_opera2"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="交作业"-->
-    <!--android:layout_centerVertical="true"-->
-    <!--android:layout_alignParentEnd="true"-->
-    <!--android:visibility="gone"/>-->
+    <LinearLayout
+        android:id="@+id/list_opera_layout"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:visibility="gone"
+        android:layout_below="@+id/list_content"
+        android:orientation="horizontal">
 
-    <!--</RelativeLayout>-->
+        <LinearLayout
+            android:id="@+id/list_opera0"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-</RelativeLayout>
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="13dp"
+                android:src="@mipmap/list_item_btn_edit" />
+
+            <TextView
+                android:id="@+id/list_opera0_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="编辑修改"
+                android:textColor="@color/tv_9c9c9c"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/line_view1"
+            android:layout_width="1dp"
+            android:visibility="gone"
+            android:layout_height="17dp"
+            android:layout_gravity="center_vertical"
+            android:background="#dbdbdb" />
+
+        <LinearLayout
+            android:id="@+id/list_opera1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="13dp"
+                android:src="@mipmap/list_item_btn_time" />
+
+            <TextView
+                android:id="@+id/list_opera1_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="课程考勤"
+                android:textColor="@color/tv_9c9c9c"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/line_view2"
+            android:layout_width="1dp"
+            android:visibility="gone"
+            android:layout_height="17dp"
+            android:layout_gravity="center_vertical"
+            android:background="#dbdbdb" />
+
+        <LinearLayout
+            android:id="@+id/list_opera2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="13dp"
+                android:src="@mipmap/list_item_btn_del" />
+
+            <TextView
+                android:id="@+id/list_opera2_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="删除"
+                android:textColor="@color/tv_9c9c9c"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <!--<Button-->
+
+        <!--android:id="@+id/list_opera0"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:text="确认上课"-->
+        <!--android:visibility="gone" />-->
+
+        <!--<Button-->
+        <!--android:id="@+id/list_opera1"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerInParent="true"-->
+        <!--android:layout_marginStart="3dp"-->
+        <!--android:text="确认下课"-->
+        <!--android:visibility="gone" />-->
+
+        <!--<Button-->
+        <!--android:id="@+id/list_opera2"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentEnd="true"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:text="交作业"-->
+        <!--android:visibility="gone" />-->
+
+    </LinearLayout>
+
+</LinearLayout>
 
 
     <!--<LinearLayout--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:layout_marginTop="9dp"--><!--android:orientation="horizontal">-->

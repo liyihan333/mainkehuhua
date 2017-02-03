@@ -183,10 +183,6 @@ public class AudioRecordButton extends Button implements AudioManager.AudioStage
 				
 					mListener.onFinished(mTime, mAudioManager.getCurrentFilePath());
 				}
-				
-				
-				
-				
 
 			} else if (mCurrentState == STATE_WANT_TO_CANCEL) {
 				// cancel

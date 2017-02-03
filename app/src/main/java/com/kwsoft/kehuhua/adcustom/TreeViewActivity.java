@@ -201,7 +201,7 @@ public class TreeViewActivity extends BaseActivity {
 
 
         } else {
-            Toast.makeText(TreeViewActivity.this, "无下拉数据",
+            Toast.makeText(TreeViewActivity.this, R.string.no_pull_down_data,
                     Toast.LENGTH_SHORT).show();
         }
 

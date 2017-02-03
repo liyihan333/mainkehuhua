@@ -104,7 +104,7 @@ public class TeaachAmountFragment extends Fragment {
                 if (mAdapter != null && mAdapter.getCount() < totalNum) {
                     loadMoreData();
                 } else {
-                    Snackbar.make(lv_listview, "没有更多了", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(lv_listview, R.string.no_more, Snackbar.LENGTH_SHORT).show();
                     mRefreshLayout.finishRefreshLoadMore();
                 }
             }
@@ -178,7 +178,7 @@ public class TeaachAmountFragment extends Fragment {
         } else {
             ((BaseActivity) getActivity()).dialog.dismiss();
             mRefreshLayout.finishRefresh();
-            Toast.makeText(getActivity(), "请连接网络", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.please_connect_net, Toast.LENGTH_SHORT).show();
             backStart();
         }
     }
@@ -502,11 +502,6 @@ public class TeaachAmountFragment extends Fragment {
         Constant.mainTableIdValue = tableId;
         Constant.mainPageIdValue = pageId;
         //重新请求数据
-
-
         refreshData();
-
-
     }
-
 }

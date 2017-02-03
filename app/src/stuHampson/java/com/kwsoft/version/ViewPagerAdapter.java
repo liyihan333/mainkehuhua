@@ -50,7 +50,8 @@ public class ViewPagerAdapter extends PagerAdapter {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent();
-                    intent.setClass(context, StuProLoginActivity.class);
+//                    intent.setClass(context, StuProLoginActivity.class);
+                    intent.setClass(context, StuLoginActivity.class);
                     context.startActivity(intent);
                     ((AndyViewPagerActivity) context).finish();
                 }

@@ -191,7 +191,7 @@ public class CourseRatingBarAdapter extends BaseAdapter {
 
                 tv_teach_content.setText(map.get(4).get("fieldCnName2"));
             }else{
-                tv_teach_content.setText("无评价内容");
+                tv_teach_content.setText(R.string.no_eval_content);
             }
         } catch (Exception e) {
             e.printStackTrace();

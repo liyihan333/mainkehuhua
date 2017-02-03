@@ -14,6 +14,9 @@ public class StuPra {
     public  static String stuInfoTableId = "19";//学员个人资料tableId
     public static String stuInfoPageId = "2512";//学员个人资料pageId
 
+
+    public static String stuProId = "57159822f07e75084cb8a1fe";//用于listActivity4列表中学员端id判断
+    public static String teachProId = "5704e45c7cf6c0b2d9873da6";//用于listActivity4列表中教师端id判断
    // public static String fileName;//头像名称
     public static String hpsStuHeadPath;//头像保存路径
 

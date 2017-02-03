@@ -71,11 +71,11 @@ public class KanBLRBaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 if (i==0){
                     String AFM_58 = String.valueOf(menuKeyMap.get("fieldAliasName"));
                     String left = String.valueOf(map.get(AFM_58));
-                    holder.tv_left.setText(!left.equals("null") ? left : "无");
+                    holder.tv_left.setText(!left.equals("null") ? left : mContext.getResources().getString(R.string.no));
                 }else {
                     String AFM_59 = String.valueOf(menuKeyMap.get("fieldAliasName"));
                     String right = String.valueOf(map.get(AFM_59));
-                    holder.tv_right.setText(!right.equals("null") ? right : "无");
+                    holder.tv_right.setText(!right.equals("null") ? right : mContext.getResources().getString(R.string.no));
                 }
             }
             holder.itemView.setTag(map);

@@ -93,8 +93,6 @@ public class StuProLoginActivity extends BaseActivity {
             if (!nameValue.equals("") && !pwdValue.equals("")) {//判断用户名密码非空
                 final String volleyUrl = Constant.sysUrl + Constant.projectLoginUrl;
                 Log.e("TAG", "学员端登陆地址 " + Constant.sysUrl + Constant.projectLoginUrl);
-
-
                 //参数
                 Map<String, String> map = new HashMap<>();
                 map.put(Constant.USER_NAME, nameValue);
@@ -154,7 +152,6 @@ public class StuProLoginActivity extends BaseActivity {
                 mainPage(menuData);//保存完用户名和密码，跳转到主页面
             }
         } else {
-
             Toast.makeText(StuProLoginActivity.this, "服务器超时", Toast.LENGTH_SHORT).show();
         }
     }

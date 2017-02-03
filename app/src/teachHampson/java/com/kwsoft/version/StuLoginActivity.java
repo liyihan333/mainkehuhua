@@ -56,6 +56,7 @@ public class StuLoginActivity extends BaseActivity implements View.OnClickListen
     private ImageView iv_phone_clear;
     private ImageView iv_password_clear;
     private String useridOld;
+
     static {
         //学员端设置成顶栏红色
         Constant.topBarColor = R.color.prim_topBarColor;
@@ -70,7 +71,7 @@ public class StuLoginActivity extends BaseActivity implements View.OnClickListen
         CloseActivityClass.activityList.add(this);
         sPreferences = getSharedPreferences(Constant.proId, MODE_PRIVATE);
 //        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        dialog=new LoadingDialog(mContext,"logining ...");
+        dialog = new LoadingDialog(mContext, mContext.getString(R.string.loadind));
         useridOld = sPreferences.getString("useridOld", "");
 
         initJudgeSave();
@@ -223,7 +224,7 @@ public class StuLoginActivity extends BaseActivity implements View.OnClickListen
                 try {
                     postLogin();
                 } catch (Exception e) {
-                    Toast.makeText(this, "Current project link may be error", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, R.string.cur_project_link_may_be_error, Toast.LENGTH_LONG).show();
                     Intent intent = new Intent();
                     intent.setClass(StuLoginActivity.this, SetIpPortActivity.class);
                     startActivity(intent);
@@ -235,6 +236,7 @@ public class StuLoginActivity extends BaseActivity implements View.OnClickListen
     }
 
     private static final String TAG = "StuLoginActivity";
+
     /**
      * 根据用户输入的用户名和密码，
      * 通过网络地址获取JSON数据，
@@ -243,7 +245,7 @@ public class StuLoginActivity extends BaseActivity implements View.OnClickListen
     public void postLogin() {
         Log.e("TAG", "学员端登陆 ");
         if (!hasInternetConnected()) {
-            Toast.makeText(this, "no network", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.no_network, Toast.LENGTH_SHORT).show();
         } else {
             dialog.show();
             nameValue = mUserName.getText().toString();//trim去掉首尾空格
@@ -259,7 +261,7 @@ public class StuLoginActivity extends BaseActivity implements View.OnClickListen
                 map.put(Constant.proIdName, Constant.proId);
                 map.put(Constant.timeName, Constant.menuAlterTime);
                 map.put(Constant.sourceName, Constant.sourceInt);
-                Log.e("proid",Constant.proId+"//"+Constant.menuAlterTime);
+                Log.e("proid", Constant.proId + "//" + Constant.menuAlterTime);
                 //请求
                 OkHttpUtils
                         .post()
@@ -270,20 +272,20 @@ public class StuLoginActivity extends BaseActivity implements View.OnClickListen
                             @Override
                             public void onError(Call call, Exception e, int id) {
                                 dialog.dismiss();
-                                ErrorToast.errorToast(mContext,e);
-                                Log.e(TAG, "onError: e.getClass()"+e.getClass());
+                                ErrorToast.errorToast(mContext, e);
+                                Log.e(TAG, "onError: e.getClass()" + e.getClass());
                             }
 
                             @Override
                             public void onResponse(String response, int id) {
-                                Log.e(TAG, "onResponse: "+response+"  id  "+id);
+                                Log.e(TAG, "onResponse: " + response + "  id  " + id);
                                 check(response);
                             }
                         });
-                
+
             } else {
                 dialog.dismiss();
-                Toast.makeText(StuLoginActivity.this, "Username or password cannot be empty", Toast.LENGTH_SHORT).show();
+                Toast.makeText(StuLoginActivity.this, R.string.username_or_pwd_cannot_be_empty, Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -298,7 +300,7 @@ public class StuLoginActivity extends BaseActivity implements View.OnClickListen
             //获取error的值，判断
             LoginError loginError = JSON.parseObject(menuData, LoginError.class);
             if (loginError.getError() != 0) {
-                Toast.makeText(this, "Input the correct username and password", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.input_the_correct_username_and_pwd, Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             } else {
                 //当成功登陆后存储正确的用户名和密码,
@@ -321,7 +323,7 @@ public class StuLoginActivity extends BaseActivity implements View.OnClickListen
             }
         } else {
             dialog.dismiss();
-            Toast.makeText(StuLoginActivity.this, "server no data", Toast.LENGTH_SHORT).show();
+            Toast.makeText(StuLoginActivity.this, R.string.server_no_data, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -330,7 +332,7 @@ public class StuLoginActivity extends BaseActivity implements View.OnClickListen
 
         Intent intent = new Intent();
         intent.setClass(StuLoginActivity.this, GuideActivity.class);
-        Constant.menuData=menuData;
+        Constant.menuData = menuData;
         startActivity(intent);
         dialog.dismiss();
 
@@ -340,11 +342,12 @@ public class StuLoginActivity extends BaseActivity implements View.OnClickListen
     //此方法传递菜单JSON数据
     @SuppressWarnings("unchecked")
     private void mainPage(String menuData) {
-        Log.e(TAG, "mainPage: useridOld "+String.valueOf(useridOld));
-        if (String.valueOf(useridOld).equals("")||String.valueOf(useridOld).equals("null")) {//跳转至引导页面
-            toGuide(menuData);
-            sPreferences.edit().putString("useridOld", Constant.USERID).apply();
-        }else{
+        Log.e(TAG, "mainPage: useridOld " + String.valueOf(useridOld));
+//        if (String.valueOf(useridOld).equals("")||String.valueOf(useridOld).equals("null")) {//跳转至引导页面
+       // if ((useridOld.length() <= 0) || String.valueOf(useridOld).equals("null")) {//跳转至引导页面
+       //     toGuide(menuData);
+         //   sPreferences.edit().putString("useridOld", Constant.USERID).apply();
+        //} else {
             //跳转至主界面
             try {
                 Map<String, Object> menuMap = JSON.parseObject(menuData,
@@ -355,25 +358,68 @@ public class StuLoginActivity extends BaseActivity implements View.OnClickListen
                 Constant.USERID = String.valueOf(loginfo.get("USERID"));
                 sPreferences.edit().putString("userid", userid).apply();
                 Constant.sessionId = String.valueOf(loginfo.get("sessionId"));
-               // Constant.teachmainIdVal = String.valueOf(loginfo.get("USER_13"));//教师端mainid
-                List<Map<String, Object>> menuListMap1 = (List<Map<String, Object>>) menuMap.get("roleFollowList");
-                List<Map<String, Object>> menuListMap2 = (List<Map<String, Object>>) menuMap.get("menuList");
-//            List<Map<String, Object>> menuListMap3 = (List<Map<String, Object>>) menuMap.get("hideMenuList");
-                List<Map<String, Object>> menuListMap3 = (List<Map<String, Object>>) menuMap.get("personInfoList");//个人资料
-                List<Map<String, Object>> menuListMap5 = (List<Map<String, Object>>) menuMap.get("feedbackInfoList");//反馈信息
-                List<Map<String, Object>> menuListMap6 = (List<Map<String, Object>>) menuMap.get("homePageList");//今日课表、明日课表
-                if (menuMap.containsKey("teaMongoId")) {
-                    String teaMongoId = menuMap.get("teaMongoId").toString();
-                    Constant.teaMongoId = teaMongoId;
+                // Constant.teachmainIdVal = String.valueOf(loginfo.get("USER_13"));//教师端mainid
+                List<Map<String, Object>> menuListMap1 = null;
+                if (menuMap.containsKey("roleFollowList")) {
+                    menuListMap1 = (List<Map<String, Object>>) menuMap.get("roleFollowList");
                 }
+                List<Map<String, Object>> menuListMap2 = null;
+                if (menuMap.containsKey("menuList")) {
+                    menuListMap2 = (List<Map<String, Object>>) menuMap.get("menuList");
+                    Log.e("menuListMap2", JSON.toJSONString(menuListMap2));
+                }
+                List<Map<String, Object>> menuListMap3 = null;//个人资料
+                if (menuMap.containsKey("personInfoList")) {
+                    menuListMap3 = (List<Map<String, Object>>) menuMap.get("personInfoList");
+                    Log.e("menuListMap3", JSON.toJSONString(menuListMap3));
+                }
+                List<Map<String, Object>> menuListMap5 = null;//反馈信息
+                if (menuMap.containsKey("feedbackInfoList")) {
+                    menuListMap5 = (List<Map<String, Object>>) menuMap.get("feedbackInfoList");
+                    Log.e("menuListMap5", JSON.toJSONString(menuListMap5));
+                }
+                List<Map<String, Object>> menuListMap6 = null;//今日课表、明日课表
+                if (menuMap.containsKey("homePageList")) {
+                    menuListMap6 = (List<Map<String, Object>>) menuMap.get("homePageList");
+                    Log.e("menuListMap6", JSON.toJSONString(menuListMap6));
+                }
+
+                String teaMongoId = String.valueOf(menuMap.get("teaMongoId"));
+                Constant.teaMongoId = teaMongoId;
 
                 Intent intent = new Intent();
                 intent.setClass(StuLoginActivity.this, StuMainActivity.class);
-                intent.putExtra("jsonArray", JSON.toJSONString(menuListMap1));
-                intent.putExtra("menuDataMap", JSON.toJSONString(menuListMap2));
-                intent.putExtra("hideMenuList", JSON.toJSONString(menuListMap3));
-                intent.putExtra("feedbackInfoList",JSON.toJSONString(menuListMap5));
-                intent.putExtra("homePageList",JSON.toJSONString(menuListMap6));//今明日课表
+
+                if (menuListMap1 != null && menuListMap1.size() > 0) {
+                    intent.putExtra("jsonArray", JSON.toJSONString(menuListMap1));
+                } else {
+                    intent.putExtra("jsonArray", "");
+                }
+                if (menuListMap2 != null && menuListMap2.size() > 0) {
+                    intent.putExtra("menuDataMap", JSON.toJSONString(menuListMap2));
+                } else {
+                    intent.putExtra("menuDataMap", "");
+                }
+                if (menuListMap3 != null && menuListMap3.size() > 0) {
+                    intent.putExtra("hideMenuList", JSON.toJSONString(menuListMap3));
+                } else {
+                    intent.putExtra("hideMenuList", "");
+                }
+                if (menuListMap5 != null && menuListMap5.size() > 0) {
+                    intent.putExtra("feedbackInfoList", JSON.toJSONString(menuListMap5));
+                } else {
+                    intent.putExtra("feedbackInfoList", "");
+                }
+                if (menuListMap6 != null && menuListMap6.size() > 0) {
+                    intent.putExtra("homePageList", JSON.toJSONString(menuListMap6));
+                } else {
+                    intent.putExtra("homePageList", "");
+                }
+//                intent.putExtra("jsonArray", JSON.toJSONString(menuListMap1));
+//                intent.putExtra("menuDataMap", JSON.toJSONString(menuListMap2));
+//                intent.putExtra("hideMenuList", JSON.toJSONString(menuListMap3));
+//                intent.putExtra("feedbackInfoList",JSON.toJSONString(menuListMap5));
+//                intent.putExtra("homePageList",JSON.toJSONString(menuListMap6));//今明日课表
                 startActivity(intent);
                 finish();
                 dialog.dismiss();
@@ -381,8 +427,7 @@ public class StuLoginActivity extends BaseActivity implements View.OnClickListen
                 e.printStackTrace();
                 dialog.dismiss();
             }
-        }
-
+  //     }
 
 
     }
@@ -410,11 +455,10 @@ public class StuLoginActivity extends BaseActivity implements View.OnClickListen
                     Log.e("TAG", "USERNAME" + loginInfo.get("USERNAME"));
                     Constant.loginName = String.valueOf(loginInfo.get("USERNAME"));
                     Constant.sessionId = String.valueOf(loginInfo.get("sessionId"));
-                  //  Constant.teachmainIdVal = String.valueOf(loginInfo.get("USER_13"));//教师端mainid
-                    Constant.roleNamesTeach=String.valueOf(loginInfo.get("roleNames"));
-                    Toast.makeText(StuLoginActivity.this, "logged in", Toast.LENGTH_SHORT).show();
+                    //  Constant.teachmainIdVal = String.valueOf(loginInfo.get("USER_13"));//教师端mainid
+                    Constant.roleNamesTeach = String.valueOf(loginInfo.get("roleNames"));
+                    Toast.makeText(StuLoginActivity.this, R.string.logged_n, Toast.LENGTH_SHORT).show();
                     Constant.USERID = String.valueOf(loginInfo.get("USERID"));
-
                 }
             } catch (Exception e) {
                 e.printStackTrace();

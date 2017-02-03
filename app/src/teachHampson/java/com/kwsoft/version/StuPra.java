@@ -9,10 +9,13 @@ import com.kwsoft.kehuhua.adcustom.R;
 public class StuPra {
 
 
-    public static String studentProId = "5704e45c7cf6c0b2d9873da6";//学员端项目的Id
+    public static String studentProId = "5704e45c7cf6c0b2d9873da6";//教师端项目的Id
     public final static String changePsw = "phone_resetStuPassword.do?";//修改密码
     public static String stuInfoTableId = "2";//学员个人资料tableId
     public static String stuInfoPageId = "2873";//学员个人资料pageId
+
+    public static String stuProId = "57159822f07e75084cb8a1fe";//用于listActivity4列表中学员端id判断
+    public static String teachProId = "5704e45c7cf6c0b2d9873da6";//用于listActivity4列表中教师端id判断
 
     public final static String teachchangePsw = "phone_resetMainProjectPassword.do?";//教师端修改密码
 

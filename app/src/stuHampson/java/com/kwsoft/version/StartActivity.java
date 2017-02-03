@@ -21,16 +21,16 @@ public class StartActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        preferences = getSharedPreferences("startAty", Context.MODE_PRIVATE);
+        preferences = getSharedPreferences("mainstustartAty", Context.MODE_PRIVATE);
         new Handler().postDelayed(new Runnable() {
 
             @Override
             public void run() {
                 //判断如果是第一次打开APP
-                if (preferences.getBoolean("fstart", true)) {
+                if (preferences.getBoolean("mainstufstart", true)) {
                     //则将firststart状态改为false，下次在登陆的时候就是
                     editor = preferences.edit();
-                    editor.putBoolean("fstart", false);
+                    editor.putBoolean("mainstufstart", false);
                     editor.commit(); //需要提交
                     Intent intent = new Intent();
                     //第一次启动跳到4个图片切换的欢迎界面
@@ -42,7 +42,6 @@ public class StartActivity extends BaseActivity {
                     intent.setClass(StartActivity.this, StuProLoginActivity.class);
                     StartActivity.this.startActivity(intent);
                     StartActivity.this.finish();
-
                 }
 
             }

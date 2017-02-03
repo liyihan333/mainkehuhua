@@ -184,7 +184,7 @@ public class StageTestFragment extends Fragment {
 
             ((BaseActivity) getActivity()).dialog.dismiss();
             mRefreshLayout.finishRefresh();
-            Toast.makeText(getActivity(), "请连接网络", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.please_connect_net, Toast.LENGTH_SHORT).show();
             backStart();
         }
     }
@@ -281,9 +281,8 @@ public class StageTestFragment extends Fragment {
 //                    mListView.scrollToPosition(mAdapter.getDatas().size());
 
                     mRefreshLayout.finishRefreshLoadMore();
-                    Snackbar.make(mListView, "更新了" + datas.size() + "条", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(mListView, R.string.update + datas.size() + R.string.item, Snackbar.LENGTH_SHORT).show();
                 }
-
                 break;
         }
     }
@@ -294,20 +293,16 @@ public class StageTestFragment extends Fragment {
     private void refreshData() {
         start = 0;
         state = STATE_REFREH;
-
         getData();
-
     }
 
     /**
      * 上拉加载方法
      */
     private void loadMoreData() {
-
         start += limit;
         state = STATE_MORE;
         getData();
-
     }
 
     public void normalRequest() {
@@ -317,14 +312,12 @@ public class StageTestFragment extends Fragment {
         mListView.setAdapter(mAdapter);
         ((BaseActivity) getActivity()).dialog.dismiss();
         if (totalNum == 0) {
-            Snackbar.make(mListView, "本页无数据", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(mListView, R.string.this_page_no_data, Snackbar.LENGTH_SHORT).show();
             empty_text.setVisibility(View.VISIBLE);
-
         } else {
             empty_text.setVisibility(View.GONE);
-            Snackbar.make(mListView, "加载完成，共" + totalNum + "条", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(mListView, R.string.loading_completed_total + totalNum + R.string.item, Snackbar.LENGTH_SHORT).show();
         }
-
     }
 
     /**

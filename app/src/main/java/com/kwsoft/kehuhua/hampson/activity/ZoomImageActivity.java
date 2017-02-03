@@ -49,7 +49,7 @@ public class ZoomImageActivity extends BaseActivity{
     @Override
     public void initView() {
         mToolbar = (CommonToolbar) findViewById(R.id.common_toolbar);
-        mToolbar.setTitle("查看大图");
+        mToolbar.setTitle(getString(R.string.view_larger));
         mToolbar.setBackgroundColor(getResources().getColor(topBarColor));
         mToolbar.setLeftButtonOnClickListener(new View.OnClickListener() {
             @Override

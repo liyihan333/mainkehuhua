@@ -116,8 +116,8 @@ public class MultiSpinner extends TextView implements View.OnClickListener,Dialo
         adapter.setCheckedSet(checkedSet);
         new AlertDialog.Builder(context)
                 .setTitle(title)
-                .setPositiveButton("确定",this)
-                .setNegativeButton("取消",this)
+                .setPositiveButton(R.string.confirm,this)
+                .setNegativeButton(R.string.cancel,this)
                 .setView(listView).show();
     }
 
@@ -243,7 +243,7 @@ public class MultiSpinner extends TextView implements View.OnClickListener,Dialo
                 int maxCount= MultiSpinner.this.getSelectCount();
                 if(maxCount>-1&&checkedSet.size()>=maxCount){
                     checkBox.setChecked(false);
-                    Toast.makeText(MultiSpinner.this.getContext(), String.format("最多只能选择 %s 个", selectCount), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MultiSpinner.this.getContext(), String.format(getContext().getString(R.string.most_can_only_choose_count), selectCount), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 checkedSet.add(op.getValue());

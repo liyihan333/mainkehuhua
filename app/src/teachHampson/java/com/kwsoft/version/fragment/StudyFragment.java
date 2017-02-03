@@ -40,7 +40,7 @@ import com.kwsoft.kehuhua.hampson.activity.KanBanLRActivity;
 import com.kwsoft.kehuhua.urlCnn.EdusStringCallback;
 import com.kwsoft.kehuhua.urlCnn.ErrorToast;
 import com.kwsoft.kehuhua.utils.DataProcess;
-import com.kwsoft.kehuhua.zxing.CaptureActivity;
+import com.kwsoft.kehuhua.zxing.TestScanActivity;
 import com.kwsoft.version.StuInfoActivity;
 import com.kwsoft.version.TodayCourseTableActivity;
 import com.kwsoft.version.androidRomType.AndtoidRomUtil;
@@ -216,7 +216,12 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
                 for (int i = 0; i < homePagelistMap.size(); i++) {
                     Map<String, Object> map = homePagelistMap.get(i);
                     menuName = map.get("menuName").toString();
+
+//                    if ((map.get("menuName").toString()).contains("手机端")) {
                     map.put("menuName", map.get("menuName").toString().replace("手机端", ""));
+//                    } else {
+//                        map.put("menuName", map.get("menuName").toString());
+//                    }
                     map.put("image", image[i]);
                     menuListAll.add(map);
                     Log.e(TAG, "setMenuModel: menuName1" + menuName);
@@ -248,31 +253,32 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
         monthstr = format.format(date).substring(5);
         format = new SimpleDateFormat("EEEE");
         daystr = format.format(date);
-        switch (daystr) {
-            case "星期一":
-                enDaystr = "Monday";
-                break;
-            case "星期二":
-                enDaystr = "Tuesday";
-                break;
-            case "星期三":
-                enDaystr = "Wednesday";
-                break;
-            case "星期四":
-                enDaystr = "Thursday";
-                break;
-            case "星期五":
-                enDaystr = "Friday";
-                break;
-            case "星期六":
-                enDaystr = "Saturday";
-                break;
-            case "星期日":
-                enDaystr = "Sunday";
-                break;
-            default:
-                break;
-        }
+        enDaystr = daystr;
+//        switch (daystr) {
+//            case "星期一":
+//                enDaystr = "Monday";
+//                break;
+//            case "星期二":
+//                enDaystr = "Tuesday";
+//                break;
+//            case "星期三":
+//                enDaystr = "Wednesday";
+//                break;
+//            case "星期四":
+//                enDaystr = "Thursday";
+//                break;
+//            case "星期五":
+//                enDaystr = "Friday";
+//                break;
+//            case "星期六":
+//                enDaystr = "Saturday";
+//                break;
+//            case "星期日":
+//                enDaystr = "Sunday";
+//                break;
+//            default:
+//                break;
+//        }
     }
 
     public int isResume = 0;
@@ -378,7 +384,7 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
                                                 if (homePagelistMap != null && homePagelistMap.size() > 0) {
                                                     Map<String, Object> map = menuListMaps.get(i);
                                                     String menuName = map.get("menuName") + "";
-                                                    Log.e(TAG, "onItemClick: menuName2" + menuName);
+                                                    Log.e(TAG, "onItemClick: menuName2" + menuName+"//"+map.toString());
                                                     if (menuName.contains("Today")) {
                                                         //今日课表
                                                         Intent intent = new Intent(getActivity(), TodayCourseTableActivity.class);
@@ -435,7 +441,7 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
 
     @PermissionSuccess(requestCode = 106)
     public void doCapture() {
-        Intent intent = new Intent(getActivity(), CaptureActivity.class);
+        Intent intent = new Intent(getActivity(), TestScanActivity.class);
         startActivity(intent);
     }
 
@@ -534,18 +540,18 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
 //                    } else {
 //                        Constant.goHuaWeiSetting(getActivity());
 //                    }
-                    Intent intent = new Intent(getActivity(), CaptureActivity.class);
+                    Intent intent = new Intent(getActivity(), TestScanActivity.class);
                     startActivityForResult(intent, 1);
                 } else if (miui) {
                     //小米
-                    Intent intent = new Intent(getActivity(), CaptureActivity.class);
+                    Intent intent = new Intent(getActivity(), TestScanActivity.class);
                     startActivityForResult(intent, 1);
                 } else if (flyme) {
                     //魅族rom
-                    Intent intent = new Intent(getActivity(), CaptureActivity.class);
+                    Intent intent = new Intent(getActivity(), TestScanActivity.class);
                     startActivityForResult(intent, 1);
                 } else {
-                    Intent intent = new Intent(getActivity(), CaptureActivity.class);
+                    Intent intent = new Intent(getActivity(), TestScanActivity.class);
                     startActivityForResult(intent, 1);
                 }
                 break;

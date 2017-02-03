@@ -49,7 +49,7 @@ public class SetIpPortActivity extends AppCompatActivity {
     private void initView() {
         nowSysUrl.setText(sysUrl);
         mToolbar = (CommonToolbar) findViewById(R.id.common_toolbar);
-        mToolbar.setTitle("地址设置");
+        mToolbar.setTitle(getString(R.string.address_setting));
         mToolbar.setBackgroundColor(getResources().getColor(topBarColor));
         mToolbar.setRightButtonIcon(getResources().getDrawable(R.drawable.edit_commit1));
         mToolbar.setLeftButtonOnClickListener(new View.OnClickListener() {
@@ -85,9 +85,9 @@ public class SetIpPortActivity extends AppCompatActivity {
                     }
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(SetIpPortActivity.this);
-                    builder.setMessage("确定修改项目地址为：" + url + "？");
+                    builder.setMessage(getString(R.string.determine_modify_project_addr_as) + url + "？");
                     builder.setTitle("");
-                    builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                    builder.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
 
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -95,7 +95,7 @@ public class SetIpPortActivity extends AppCompatActivity {
                             finish();
                         }
                     });
-                    builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
@@ -106,7 +106,7 @@ public class SetIpPortActivity extends AppCompatActivity {
 
                 } else {
 
-                    Snackbar.make(view, "请至少将第1、3填写完整（空格将自动过滤）", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(view, R.string.please_fill_in_the_blanks_at_least_first, Snackbar.LENGTH_SHORT).show();
                 }
             }
         });

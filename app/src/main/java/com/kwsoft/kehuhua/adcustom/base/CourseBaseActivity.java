@@ -20,6 +20,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.application.MyApplication;
 import com.kwsoft.kehuhua.loadDialog.LoadingDialog;
 
@@ -43,7 +44,7 @@ public abstract class CourseBaseActivity extends AppCompatActivity implements IB
         mContext = this;
         preferences = getSharedPreferences("userInfo", MODE_WORLD_READABLE);
 //        notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        dialog=new LoadingDialog(mContext,"玩命加载中...");
+        dialog=new LoadingDialog(mContext,getString(R.string.defying_loading));
         myApplication = (MyApplication) getApplication();
         myApplication.addActivity(this);
 
@@ -121,15 +122,15 @@ public abstract class CourseBaseActivity extends AppCompatActivity implements IB
      */
     @Override
     public void isExit() {
-        new AlertDialog.Builder(mContext).setTitle("确定退出吗?")
-                .setNeutralButton("确定", new DialogInterface.OnClickListener() {
+        new AlertDialog.Builder(mContext).setTitle(R.string.determined_to_quit)
+                .setNeutralButton(R.string.confirm, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         stopService();
                         myApplication.exit();
                     }
                 })
-                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
@@ -225,9 +226,9 @@ public abstract class CourseBaseActivity extends AppCompatActivity implements IB
         if (!Environment.MEDIA_MOUNTED.equals(Environment
                 .getExternalStorageState())) {
             new AlertDialog.Builder(mContext)
-                    .setTitle("检测内存卡")
-                    .setMessage("请检查内存卡")
-                    .setPositiveButton("设置",
+                    .setTitle(R.string.detecting_memory_card)
+                    .setMessage(R.string.please_detecting_memory_card)
+                    .setPositiveButton(R.string.setting,
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog,
@@ -238,7 +239,7 @@ public abstract class CourseBaseActivity extends AppCompatActivity implements IB
                                     mContext.startActivity(intent);
                                 }
                             })
-                    .setNegativeButton("退出",
+                    .setNegativeButton(R.string.exit,
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog,
@@ -256,9 +257,9 @@ public abstract class CourseBaseActivity extends AppCompatActivity implements IB
     public void openWirelessSet() {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mContext);
         dialogBuilder
-                .setTitle("网络设置")
-                .setMessage("检查网络")
-                .setPositiveButton("网络设置",
+                .setTitle(R.string.net_set)
+                .setMessage(R.string.check_net)
+                .setPositiveButton(R.string.net_set,
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog,
@@ -269,7 +270,7 @@ public abstract class CourseBaseActivity extends AppCompatActivity implements IB
                                 mContext.startActivity(intent);
                             }
                         })
-                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int whichButton) {
                         dialog.cancel();

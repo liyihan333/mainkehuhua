@@ -28,7 +28,7 @@ public class ExpandableActivity extends Activity {
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
 
                 Log.e("TAG","标记点4");
-                lists.get(groupPosition).getChildEntities().add(new ChildEntity("添加一条"));
+                lists.get(groupPosition).getChildEntities().add(new ChildEntity(getString(R.string.add_a)));
                 adapter.notifyDataSetChanged();
                 return true;
             }

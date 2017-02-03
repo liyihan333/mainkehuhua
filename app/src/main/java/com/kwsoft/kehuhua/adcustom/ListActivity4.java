@@ -53,7 +53,6 @@ import static com.kwsoft.kehuhua.config.Constant.topBarColor;
 
 /**
  * Created by Administrator on 2016/11/17 0017.
- *
  */
 
 public class ListActivity4 extends BaseActivity implements ViewPager.OnPageChangeListener {
@@ -62,9 +61,10 @@ public class ListActivity4 extends BaseActivity implements ViewPager.OnPageChang
     private HorizontalScrollView hvChannel;
     private PageFragmentAdapter adapter = null;
     private List<Fragment> fragmentList = new ArrayList<>();
-//    private List<Fragment> singleFragment = new ArrayList<>();
+    // private List<Fragment> singleFragment = new ArrayList<>();
     private List<Channel> selectedChannel = new ArrayList<>();
     public CommonToolbar mToolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,7 +74,6 @@ public class ListActivity4 extends BaseActivity implements ViewPager.OnPageChang
         Log.e(TAG, "进入Tab");
         initView();
     }
-
 
 
     public void initView() {
@@ -97,9 +96,6 @@ public class ListActivity4 extends BaseActivity implements ViewPager.OnPageChang
 
         rgChannel.check(0);
     }
-
-
-
 
 
     private List<Map<String, Object>> childList = new ArrayList<>();
@@ -133,9 +129,9 @@ public class ListActivity4 extends BaseActivity implements ViewPager.OnPageChang
 //        String mainId=intent.getStringExtra("mainId");//第二个获取的参数
 //        Log.e("TAG", "tab页中的mainId："+mainId);
         mToolbar.setTitle(titleName);
-        if ("office Hour".equals(titleName)){
+        if ("office Hour".equals(titleName)) {
             Constant.isOfficeHour = true;
-        }else {
+        } else {
             Constant.isOfficeHour = false;
         }
 
@@ -172,34 +168,35 @@ public class ListActivity4 extends BaseActivity implements ViewPager.OnPageChang
     }
 
     private static final String TAG = "ListActivity4";
+
     private void initViewPager() {
 
-        Log.e(TAG, "initViewPager: childList.size() "+childList.size());
+        Log.e(TAG, "initViewPager: childList.size() " + childList.size());
         if (childList.size() > 0) {
-            for (int i=0;i<childList.size();i++) {
-                String name=childList.get(i).get("menuName") + "";
+            for (int i = 0; i < childList.size(); i++) {
+                String name = childList.get(i).get("menuName") + "";
                 selectedChannel.add(new Channel("", name, 0, null, null, null));
                 String fragmentTableId = childList.get(i).get("tableId") + "";
                 String fragmentPageId = childList.get(i).get("pageId") + "";
-                Map<String,String> paramsMap = new HashMap<>();
+                Map<String, String> paramsMap = new HashMap<>();
                 paramsMap.put(tableId, fragmentTableId);
                 paramsMap.put(pageId, fragmentPageId);
                 paramsMap.put(Constant.timeName, "-1");
-                String listFragmentData=JSON.toJSONString(paramsMap);
+                String listFragmentData = JSON.toJSONString(paramsMap);
                 Bundle listBundle = new Bundle();
                 listBundle.putString("listFragmentData", listFragmentData);
 
 
-                String menuNamePanDuan=String.valueOf(childList.get(i).get("menuName"));
-                Log.e(TAG, "initViewPager: StuPra.studentProId "+StuPra.studentProId);
-                if (menuNamePanDuan.contains("成长轨迹")&& StuPra.studentProId.equals("57159822f07e75084cb8a1fe")) {
+                String menuNamePanDuan = String.valueOf(childList.get(i).get("menuName"));
+                Log.e(TAG, "initViewPager: StuPra.studentProId " + StuPra.studentProId);
+                if (menuNamePanDuan.contains(getString(R.string.grow_path)) && StuPra.studentProId.equals(StuPra.stuProId)) {
                     Fragment stageTestFragment = new StageTestFragment();
                     stageTestFragment.setArguments(listBundle);
                     fragmentList.add(stageTestFragment);
 //                    transaction.add(R.id.fragment_container,stageTestFragment);
                     Log.e(TAG, "refreshPage: 学员端走定制化阶段测评页面");
 
-                }else if (menuNamePanDuan.contains("教学日志")&& StuPra.studentProId.equals("57159822f07e75084cb8a1fe")) {
+                } else if (menuNamePanDuan.contains(getString(R.string.teaching_log)) && StuPra.studentProId.equals(StuPra.stuProId)) {
 
                     Fragment courseHpsFragment = new CourseHpsFragment();
                     courseHpsFragment.setArguments(listBundle);
@@ -207,17 +204,17 @@ public class ListActivity4 extends BaseActivity implements ViewPager.OnPageChang
 //                    transaction.add(R.id.fragment_container, courseHpsFragment);
                     Log.e(TAG, "refreshPage: 学员端走定制化课堂内容（一对一教学日志）页面");
 //评价列表有数据之后在空串后加数字，共2个地方需要修改 //Log.e("评价列表：",)
-                }else if(menuNamePanDuan.contains("学员评价")&& StuPra.studentProId.equals("57159822f07e75084cb8a1fe")){
+                } else if (menuNamePanDuan.contains(getString(R.string.student_evaluation)) && StuPra.studentProId.equals(StuPra.stuProId)) {
                     Fragment courseRatingBarFragment = new CourseRatingBarFragment();
                     courseRatingBarFragment.setArguments(listBundle);
                     fragmentList.add(courseRatingBarFragment);
                     Log.e(TAG, "refreshPage: 学员端走定制化评价列表展示页面");
-                }else if(menuNamePanDuan.contains("学员课程教师")&& StuPra.studentProId.equals("57159822f07e75084cb8a1fe")){
+                } else if (menuNamePanDuan.contains(getString(R.string.stu_course_teacher)) && StuPra.studentProId.equals(StuPra.stuProId)) {
                     Fragment stuClassTchFragment = new StuClassTchFragment();
                     stuClassTchFragment.setArguments(listBundle);
                     fragmentList.add(stuClassTchFragment);
                     Log.e(TAG, "refreshPage: 学员端走学员课程教师列表展示页面");
-                }else {
+                } else {
                     Fragment listFragment = new ListFragment();
                     listFragment.setArguments(listBundle);
                     fragmentList.add(listFragment);
@@ -240,33 +237,33 @@ public class ListActivity4 extends BaseActivity implements ViewPager.OnPageChang
             viewPager.setAdapter(adapter);
             viewPager.setOffscreenPageLimit(20);//fragment数量大于21个才会销毁第一个fragment
 
-        }else{
-            String fragmentTableId= itemMap.get("tableId") + "";
+        } else {
+            String fragmentTableId = itemMap.get("tableId") + "";
             String fragmentPageId = itemMap.get("pageId") + "";
             String titleName = itemMap.get("menuName") + "";
             selectedChannel.add(new Channel("", titleName, 0, null, null, null));
-            Map<String,String> paramsMap = new HashMap<>();
+            Map<String, String> paramsMap = new HashMap<>();
             paramsMap.put(tableId, fragmentTableId);
             paramsMap.put(pageId, fragmentPageId);
             paramsMap.put(Constant.timeName, "-1");
-            String listFragmentData=JSON.toJSONString(paramsMap);
+            String listFragmentData = JSON.toJSONString(paramsMap);
             Bundle listBundle = new Bundle();
             listBundle.putString("listFragmentData", listFragmentData);
 
             Fragment xFragment;
 
-            if (titleName.contains("成长轨迹")&& StuPra.studentProId.equals("57159822f07e75084cb8a1fe")) {
+            if (titleName.contains(getString(R.string.grow_path)) && StuPra.studentProId.equals(StuPra.stuProId)) {
                 xFragment = new StageTestFragment();
-            }else if (titleName.contains("教学日志")&& StuPra.studentProId.equals("57159822f07e75084cb8a1fe")) {
+            } else if (titleName.contains(getString(R.string.teaching_log)) && StuPra.studentProId.equals(StuPra.stuProId)) {
                 xFragment = new CourseHpsFragment();
-            }else if(titleName.contains("学员评价")&& StuPra.studentProId.equals("57159822f07e75084cb8a1fe")){
+            } else if (titleName.contains(getString(R.string.student_evaluation)) && StuPra.studentProId.equals(StuPra.stuProId)) {
                 xFragment = new CourseRatingBarFragment();
-            }else if(titleName.contains("学员课程教师")&& StuPra.studentProId.equals("57159822f07e75084cb8a1fe")){
+            } else if (titleName.contains(getString(R.string.stu_course_teacher)) && StuPra.studentProId.equals(StuPra.stuProId)) {
                 xFragment = new StuClassTchFragment();
-            }else if(titleName.equals("Class Amount")){
+            } else if (titleName.equals("Class Amount")) {
                 xFragment = new TeaachAmountFragment();
-                Log.e("kl","kl");
-            }else {
+                Log.e("kl", "kl");
+            } else {
                 xFragment = new ListFragment();
                 Log.e(TAG, "initViewPager: ListFragment ");
             }
@@ -338,6 +335,7 @@ public class ListActivity4 extends BaseActivity implements ViewPager.OnPageChang
     }
 
     private PopupWindow toolListPop;
+
     public void buttonList() {
         try {
             if (toolListPop != null && toolListPop.isShowing()) {
@@ -378,7 +376,7 @@ public class ListActivity4 extends BaseActivity implements ViewPager.OnPageChang
                 initPopWindowDropdown(popInflateView);
             }
         } catch (Exception e) {
-            Toast.makeText(ListActivity4.this, "无按钮数据", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ListActivity4.this, getString(R.string.no_button_data), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -388,9 +386,9 @@ public class ListActivity4 extends BaseActivity implements ViewPager.OnPageChang
 
         switch (buttonType) {
             case 0://添加页面
-                Log.e(TAG, "toPage: buttonType"+"添加页面");
+                Log.e(TAG, "toPage: buttonType" + "添加页面");
                 Intent intent = new Intent(ListActivity4.this, OperateDataActivity.class);
-                Log.e("buttonSetItem=",JSON.toJSONString(buttonSetItem));
+                Log.e("buttonSetItem=", JSON.toJSONString(buttonSetItem));
                 intent.putExtra("itemSet", JSON.toJSONString(buttonSetItem));
                 startActivityForResult(intent, 5);
                 break;
@@ -411,7 +409,7 @@ public class ListActivity4 extends BaseActivity implements ViewPager.OnPageChang
         ColorDrawable dw = new ColorDrawable(0xffffffff);
         toolListPop.setBackgroundDrawable(dw);
         //显示位置
-        toolListPop.showAtLocation(getLayoutInflater().inflate(R.layout.activity_list_avtivity2, null), Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+        toolListPop.showAtLocation(getLayoutInflater().inflate(R.layout.activity_list_avtivity2, null), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
         //设置背景半透明
         backgroundAlpha(0.7f);
         //关闭事件
@@ -429,11 +427,11 @@ public class ListActivity4 extends BaseActivity implements ViewPager.OnPageChang
             }
         });
     }
+
     /**
      * 设置添加屏幕的背景透明度
      */
-    public void backgroundAlpha(float bgAlpha)
-    {
+    public void backgroundAlpha(float bgAlpha) {
         WindowManager.LayoutParams lp = getWindow().getAttributes();
         lp.alpha = bgAlpha; //0.0-1.0
         getWindow().setAttributes(lp);
@@ -441,9 +439,8 @@ public class ListActivity4 extends BaseActivity implements ViewPager.OnPageChang
 
     /**
      * 添加新笔记时弹出的popWin关闭的事件，主要是为了将背景透明度改回来
-     *
      */
-    class popupDismissListener implements PopupWindow.OnDismissListener{
+    class popupDismissListener implements PopupWindow.OnDismissListener {
 
         @Override
         public void onDismiss() {

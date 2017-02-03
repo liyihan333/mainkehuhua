@@ -118,7 +118,7 @@ public class RowsAddActivity extends BaseActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(buttonName+"？");
 //        builder.setTitle("删除");
-        builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -126,7 +126,7 @@ public class RowsAddActivity extends BaseActivity {
                 requestAddCommit();
             }
         });
-        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
@@ -161,7 +161,7 @@ public class RowsAddActivity extends BaseActivity {
                                 ErrorToast.errorToast(mContext,e);
                                 dialog.dismiss();
                                 Log.e(TAG, "onError: Call  "+call+"  id  "+id);
-                                Toast.makeText(RowsAddActivity.this, "添加失败", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RowsAddActivity.this, R.string.add_failure, Toast.LENGTH_SHORT).show();
                             }
 
                             @Override
@@ -172,19 +172,19 @@ public class RowsAddActivity extends BaseActivity {
                                 if (!isCommitSuccess.equals("0")) {
                                     toListActivity();
                                 } else {
-                                    Toast.makeText(RowsAddActivity.this, "添加失败", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(RowsAddActivity.this, R.string.add_failure, Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
             }else{
-                Toast.makeText(this, "无网络", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.no_network, Toast.LENGTH_SHORT).show();
             }
         }
     }
 
 
     public void toListActivity() {
-        Toast.makeText(RowsAddActivity.this, "添加成功", Toast.LENGTH_SHORT).show();
+        Toast.makeText(RowsAddActivity.this, R.string.add_success, Toast.LENGTH_SHORT).show();
         dialog.dismiss();
         this.finish();
     }
@@ -255,7 +255,7 @@ public class RowsAddActivity extends BaseActivity {
         }else{
             dialog.dismiss();
 
-            Snackbar.make(lvAddItem,"本页无数据",Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(lvAddItem,R.string.this_page_no_data,Snackbar.LENGTH_SHORT).show();
         }
 
     }

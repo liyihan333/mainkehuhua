@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.loadDialog.LoadingDialog;
 
 /**
@@ -39,7 +40,7 @@ public abstract class BaseFragment  extends Fragment {
         mActivity = getActivity();
         View view = initView(inflater);
         initFindViewById(view);
-        dialog=new LoadingDialog(mActivity,"玩命加载中...");
+        dialog=new LoadingDialog(mActivity,getString(R.string.defying_loading));
         return view;
     }
 

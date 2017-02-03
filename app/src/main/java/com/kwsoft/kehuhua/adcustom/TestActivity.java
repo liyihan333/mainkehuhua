@@ -90,7 +90,7 @@ public class TestActivity extends BaseActivity {
     private static final String TAG = "TestActivity";
     private void changeReadState(String volleyUrl) {
         if (!hasInternetConnected()) {
-            Toast.makeText(this, "当前网络不可用，请检查网络！", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.network_no_available), Toast.LENGTH_SHORT).show();
             return;
         }
         getProgressDialog().show();

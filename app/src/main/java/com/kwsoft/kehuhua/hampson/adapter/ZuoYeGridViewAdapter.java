@@ -216,7 +216,7 @@ public class ZuoYeGridViewAdapter extends BaseAdapter {
             Log.e(TAG, "changeName: 监测点14");
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(context, "无法打开后缀名为." + ext + "的文件！",
+            Toast.makeText(context, context.getString(R.string.unable_to_open_the_suffix_name) + ext + context.getString(R.string.de_file),
                     Toast.LENGTH_LONG).show();
         }
     }

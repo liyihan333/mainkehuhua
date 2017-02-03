@@ -192,9 +192,9 @@ public class OperateDataActivity extends BaseActivity {
 //                }
                 normalRequest();
                 if (fieldSet.size() == 0) {
-                    Snackbar.make(mRecyclerView, "本页无数据", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(mRecyclerView, R.string.this_page_no_data, Snackbar.LENGTH_SHORT).show();
                 } else {
-                    Snackbar.make(mRecyclerView, "更新完成", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(mRecyclerView, R.string.update_completed, Snackbar.LENGTH_SHORT).show();
                 }
                 break;
             default:
@@ -240,22 +240,22 @@ public class OperateDataActivity extends BaseActivity {
                             public void onError(Call call, Exception e, int id) {
                                 ErrorToast.errorToast(mContext, e);
                                 dialog.dismiss();
-                                Toast.makeText(OperateDataActivity.this, "操作失败", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(OperateDataActivity.this, R.string.operation_failed, Toast.LENGTH_SHORT).show();
                             }
 
                             @Override
                             public void onResponse(String response, int id) {
                                 Log.e(TAG, "onResponse: " + response);
                                 if (response != null && !response.equals("0")) {
-                                    Toast.makeText(OperateDataActivity.this, "操作成功", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(OperateDataActivity.this, R.string.operation_success, Toast.LENGTH_SHORT).show();
                                     backToInfo();
                                 } else {
-                                    Toast.makeText(OperateDataActivity.this, "操作失败", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(OperateDataActivity.this, R.string.operation_failed, Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
             } else {
-                Toast.makeText(this, "无网络", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.no_network, Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -317,20 +317,20 @@ public class OperateDataActivity extends BaseActivity {
         mToolbar = (CommonToolbar) findViewById(R.id.common_toolbar);
         mToolbar.setTitle(buttonName);
         mToolbar.setBackgroundColor(getResources().getColor(topBarColor));
-        if (buttonName.contains("预约")) {
+        if (buttonName.contains(getString(R.string.order))) {
             mToolbar.showRightTextView();
             mToolbar.hideRightImageButton();
-            mToolbar.setRightTextView("预约");
+            mToolbar.setRightTextView(getString(R.string.order));
             mToolbar.setRightTextViewOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     toCommit();
                 }
             });
-        } else if (buttonName.contains("请假")) {
+        } else if (buttonName.contains(getString(R.string.leave))) {
             mToolbar.showRightTextView();
             mToolbar.hideRightImageButton();
-            mToolbar.setRightTextView("请假");
+            mToolbar.setRightTextView(getString(R.string.leave));
             mToolbar.setRightTextViewOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -375,7 +375,7 @@ public class OperateDataActivity extends BaseActivity {
     private void toCommit() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(buttonName + "？");
-        builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -383,7 +383,7 @@ public class OperateDataActivity extends BaseActivity {
                 getCommit();
             }
         });
-        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
@@ -395,7 +395,7 @@ public class OperateDataActivity extends BaseActivity {
 
     public static final String action = "com.kwsoft.kehuhua.fragments.ListFragment.REFRESH_LIST";
     public void backToInfo() {
-        Toast.makeText(OperateDataActivity.this, "操作成功", Toast.LENGTH_SHORT).show();
+        Toast.makeText(OperateDataActivity.this, getString(R.string.operation_success), Toast.LENGTH_SHORT).show();
         //发送广播给listFragment
         Intent intent=new Intent(action);
         sendBroadcast(intent);

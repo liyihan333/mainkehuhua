@@ -16,7 +16,6 @@ android {
             abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a', 'x86', 'x86_64', 'mips', 'mips64'
         }
 
-
     }
     buildTypes {
         release {
@@ -44,18 +43,18 @@ android {
 //    defaultConfig为所有的flavor提供基本的配置，每一个flavor都可以重设这些配置的值
     productFlavors {
         teachHampson {
-            applicationId "com.kwsoft.version.teachHampson"
+            applicationId "com.kwsoft.version.teachMain"
             resValue "string", "app_name", "汉普森教师端"
             versionName "1.0.0"
             manifestPlaceholders = [
-                    JPUSH_PKGNAME: "com.kwsoft.version.teachHampson",
+                    JPUSH_PKGNAME: applicationId,
                     JPUSH_APPKEY : "b941bcd18c4aec39146fb25c", //JPush上注册的包名对应的appkey.
                     JPUSH_CHANNEL: "developer-default1", //暂时填写默认值即可.
             ]
         }
 
         stuHampson {
-            applicationId "com.kwsoft.version.stuHampson"
+            applicationId "com.kwsoft.version.stuMain"
             resValue "string", "app_name", "汉普森学员端"
             versionName "1.0.0"
             manifestPlaceholders = [
@@ -119,7 +118,6 @@ dependencies {
     //volley网络请求框架
     compile files('libs/fastjson-1.2.7.jar')
     //阿里巴巴类型转换工具
-    compile files('libs/core-3.1.0.jar')
     //    compile 'com.google.android.gms:play-services:8.4.0'
     compile files('libs/gson-2.3.1-sources.jar')
     //谷歌类型转换工具
@@ -186,4 +184,7 @@ dependencies {
     compile 'cn.jiguang.sdk:jcore:1.0.0'  // 此处以JCore 1.0.0 版本为例。
     compile 'com.google.android.gms:play-services-maps:10.0.1'//解决大图加载问题
     compile 'com.google.android.gms:play-services-location:10.0.1'//解决大图加载问题
+
+    //扫码
+    compile project(path: ':zxingdemo')
 }

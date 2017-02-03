@@ -25,7 +25,7 @@ public class AndyViewPagerActivity extends BaseActivity implements OnClickListen
 	//private Button button;// 立即体验按钮
 
 	// 引导滑动4个图片资源
-	private static final int[] pics = { R.mipmap.guide1, R.mipmap.guide2, R.mipmap.guide3};
+	private static final int[] pics = { R.mipmap.guide_image1, R.mipmap.guide_image2, R.mipmap.guide_image3};
 
 	// 底部小点图片
 	//private ImageView[] dots;

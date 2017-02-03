@@ -179,7 +179,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                         requestSet();
                         break;
                     } else {
-                        stuSchoolArea.setText("no school");
+                        stuSchoolArea.setText(getResources().getString(R.string.no_school));
                     }
 //                    else if (menuName.contains("反馈信息")){
 //                        Constant.teachBackPAGEID = map.get("pageId").toString();
@@ -190,12 +190,12 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
             } else {
                 // Toast.makeText(getActivity(), "无菜单数据", Toast.LENGTH_SHORT).show();
-                stuSchoolArea.setText("no school");
+                stuSchoolArea.setText(getResources().getString(R.string.no_school));
             }
             Log.e("TAG", "获得学员端菜单数据：" + meStr);
 
         } else {
-            stuSchoolArea.setText("no school");
+            stuSchoolArea.setText(getResources().getString(R.string.no_school));
         }
 //        if (!Constant.teachPerTABLEID.equals("")&&!Constant.teachPerPAGEID.equals("")) {
 //        getData();
@@ -238,7 +238,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                     });
         } else {
             ((BaseActivity) getActivity()).dialog.dismiss();
-            Toast.makeText(getActivity(), "请连接网络", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.please_connect_net, Toast.LENGTH_SHORT).show();
 
         }
     }
@@ -285,7 +285,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                         ErrorToast.errorToast(mContext, e);
                         ((BaseActivity) getActivity()).dialog.dismiss();
                         Log.e(TAG, "onError: Call  " + call + "  id  " + id);
-                        stuSchoolArea.setText("no school");
+                        stuSchoolArea.setText(getResources().getString(R.string.no_school));
                     }
 
                     @Override
@@ -329,11 +329,11 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                 String school = (String) map.get(fieldAliasName);
                 stuSchoolArea.setText(school);
             } else {
-                stuSchoolArea.setText("no school");
+                stuSchoolArea.setText(getString(R.string.no_school));
             }
         } catch (Exception e) {
             //e.printStackTrace();
-            stuSchoolArea.setText("no school");
+            stuSchoolArea.setText(getString(R.string.no_school));
         }
     }
 
@@ -369,7 +369,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                     Intent intentStuInfo = new Intent(getActivity(), StuInfoActivity.class);
                     startActivity(intentStuInfo);
                 } else {
-                    Toast.makeText(getActivity().getApplicationContext(), "无个人资料信息", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity().getApplicationContext(), R.string.no_personal_info, Toast.LENGTH_SHORT).show();
                 }
 
                 break;
@@ -415,7 +415,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     @PermissionFail(requestCode = 105)
     public void doFailSomething() {
         /*打开权限失败后，给出的提示*/
-        Toast.makeText(getActivity(), "相机权限打开失败！", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), R.string.open_the_camera_error_please_check_permissions, Toast.LENGTH_SHORT).show();
     }
 
 
@@ -457,7 +457,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                             String[] valueTemp1 = response.split(":");
                             valueCode = valueTemp1[1];
                             Log.e("MyfrgupLoad", response);
-                            Toast.makeText(getActivity(), "上传成功", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), R.string.upload_success, Toast.LENGTH_SHORT).show();
                             String url = Constant.sysUrl + Constant.teachHeadUpdate;
                             Map<String, String> paramsMap = new HashMap<>();
                             paramsMap.put("t0_au_2_4171", dataId);
@@ -488,7 +488,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                                             if ("1".equals(response.trim())) {
                                                 Log.e(TAG, "onResponse: " + "sccg");  //  setStore(response);
                                                 ((BaseActivity) getActivity()).dialog.dismiss();
-                                                Toast.makeText(getActivity(), "提交成功", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(getActivity(), R.string.commit_success, Toast.LENGTH_SHORT).show();
                                                 final String uriStr = "file://" + imgPaths.get(0);
                                                 getActivity().runOnUiThread(new Runnable() {
                                                     @Override
@@ -509,7 +509,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                                                 getActivity().sendBroadcast(intent);
 
                                             } else {
-                                                Toast.makeText(getActivity(), "暂时没有个人信息", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(getActivity(), R.string.no_personal_info, Toast.LENGTH_SHORT).show();
                                                 ((BaseActivity) getActivity()).dialog.dismiss();
                                             }
                                         }
@@ -562,7 +562,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     private LoadingDialog dialogClear;
 
     public void clearAppCache() {
-        dialogClear = new LoadingDialog(getActivity(), "清理中...");
+        dialogClear = new LoadingDialog(getActivity(), getString(R.string.cleaning));
         dialogClear.show();
         new Thread() {
             @Override
@@ -622,12 +622,12 @@ public class MeFragment extends Fragment implements View.OnClickListener {
             switch (msg.what) {
                 case CLEAN_FAIL:
                     dialogClear.dismiss();
-                    Toast.makeText(getActivity(), "清除失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.clear_failure, Toast.LENGTH_SHORT).show();
                     break;
                 case CLEAN_SUC:
                     dialogClear.dismiss();
                     tvCleanCache.setText("0KB");
-                    Toast.makeText(getActivity(), "清除成功", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.clear_success, Toast.LENGTH_SHORT).show();
                     break;
             }
         }

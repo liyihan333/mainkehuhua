@@ -61,8 +61,9 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_star_rating_bar);
-        getDataIntent();
+
         initView();
+        getDataIntent();
         getData();
 
     }
@@ -176,7 +177,7 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
     @Override
     public void initView() {
         mToolbar = (CommonToolbar) findViewById(R.id.common_toolbar);
-        mToolbar.setTitle("评价");
+        mToolbar.setTitle(getString(R.string.assess));
         mToolbar.setBackgroundColor(getResources().getColor(topBarColor));
         //左侧返回按钮
         mToolbar.setLeftButtonOnClickListener(new View.OnClickListener() {

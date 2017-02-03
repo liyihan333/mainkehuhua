@@ -48,7 +48,7 @@ public class FeedbackActivity extends AppCompatActivity {
         setupActionBar();
         CommonToolbar mToolbar = (CommonToolbar) findViewById(R.id.common_toolbar);
 
-        mToolbar.setTitle("意见反馈");
+        mToolbar.setTitle(R.string.feedback);
         mToolbar.setLeftButtonOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -286,11 +286,11 @@ public class FeedbackActivity extends AppCompatActivity {
         if (jsonData.length() > 0) {
 
             finish();
-            Toast.makeText(this, "提交成功", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.commit_success, Toast.LENGTH_SHORT).show();
 
 
         } else {
-            Toast.makeText(this, "提交失败", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.commit_failure, Toast.LENGTH_SHORT).show();
         }
     }
 

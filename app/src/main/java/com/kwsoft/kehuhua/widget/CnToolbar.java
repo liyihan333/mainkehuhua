@@ -1,6 +1,7 @@
 package com.kwsoft.kehuhua.widget;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.TintTypedArray;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
@@ -26,7 +27,7 @@ public class CnToolbar extends Toolbar {
     private View mView;
     private TextView mTextTitle;
     private EditText mSearchView;
-    private ImageButton mRightImageButton;//,mLeftImageButton
+    private ImageButton mRightImageButton,mLeftImageButton;//
     private ImageView mOften_drop,mOften_collect;
     public CnToolbar(Context context) {
        this(context,null);
@@ -83,7 +84,7 @@ public class CnToolbar extends Toolbar {
 
 
             mRightImageButton = (ImageButton) mView.findViewById(R.id.toolbar_rightButton);
-//            mLeftImageButton = (ImageButton) mView.findViewById(R.id.toolbar_leftButton);
+           mLeftImageButton = (ImageButton) mView.findViewById(R.id.toolbar_leftButton);
             LayoutParams lp = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL);
             addView(mView, lp);
         }
@@ -94,10 +95,10 @@ public class CnToolbar extends Toolbar {
 
         mRightImageButton.setOnClickListener(li);
     }
-//    public  void setLeftButtonOnClickListener(OnClickListener li){
-//
-//        mLeftImageButton.setOnClickListener(li);
-//    }
+    public  void setLeftButtonOnClickListener(OnClickListener li){
+
+        mLeftImageButton.setOnClickListener(li);
+    }
 
 
 
@@ -162,7 +163,7 @@ public class CnToolbar extends Toolbar {
             mTextTitle.setVisibility(GONE);
 
     }
-}
+
 
 //
 //    private void ensureRightButtonView() {
@@ -185,15 +186,15 @@ public class CnToolbar extends Toolbar {
 //        }
 //
 //    }
-//    public void  setLeftButtonIcon(Drawable icon){
-//
-//        if(mLeftImageButton !=null){
-//
-//            mLeftImageButton.setImageDrawable(icon);
-//            mLeftImageButton.setVisibility(VISIBLE);
-//        }
-//
-//    }
+    public void  setLeftButtonIcon(Drawable icon){
+
+        if(mLeftImageButton !=null){
+
+            mLeftImageButton.setImageDrawable(icon);
+            mLeftImageButton.setVisibility(VISIBLE);
+        }
+
+    }
 
 
 
@@ -208,3 +209,5 @@ public class CnToolbar extends Toolbar {
 //                //setNavigationIcon(navIcon);
 //                setLeftButtonIcon(leftIcon);
 //            }
+
+}

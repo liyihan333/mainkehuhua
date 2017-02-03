@@ -101,11 +101,11 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
             mValues.get(position).put("isCheck",false);
         }
         if (!readState.equals("null")) {
-            if (readState.equals("否")) {
-                mHolder.iv_img.setText("未读");
+            if (readState.equals(context.getString(R.string.no))) {
+                mHolder.iv_img.setText(R.string.unread);
                 mHolder.iv_img.setBackgroundResource(R.drawable.no_read);
             } else {
-                mHolder.iv_img.setText("已读");
+                mHolder.iv_img.setText(R.string.read);
                 mHolder.iv_img.setBackgroundResource(R.drawable.read);
             }
         }

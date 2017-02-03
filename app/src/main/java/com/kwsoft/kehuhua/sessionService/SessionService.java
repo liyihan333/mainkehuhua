@@ -63,14 +63,19 @@ public class SessionService  extends Service {
                             @Override
                             public void onResponse(String response, int id) {
                                 Log.e(TAG, "请求session成功");
-
                             }
                         });
     }
 
     @Override
-    public void onStart(Intent intent, int startId) {
+    public int onStartCommand(Intent intent, int flags, int startId) {
         reGetSession();
+        return super.onStartCommand(intent, flags, startId);
+    }
+
+    @Override
+    public void onStart(Intent intent, int startId) {
+
     }
 
     @Override

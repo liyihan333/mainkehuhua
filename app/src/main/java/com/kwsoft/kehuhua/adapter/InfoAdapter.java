@@ -74,7 +74,7 @@ public class InfoAdapter extends BaseAdapter {
         tv_name.setText(name);
         //如果名称中包含附件两个字并且不包含mongodbid，就讲附件查看text显示 Attachment of AccomplishmentmongodbId
         if (!name.contains("mongo")) {
-            if (name.contains("附件") || name.contains("Attachment of Homework") || name.contains("Attachment of Accomplishment") || name.contains("Attachment of Correction")) {
+            if (name.contains(context.getString(R.string.attachment)) || name.contains("Attachment of Homework") || name.contains("Attachment of Accomplishment") || name.contains("Attachment of Correction")) {
 //            if (name.contains("附件") && !name.contains("mongo")) {
                 tv_entity_name.setVisibility(View.VISIBLE);
                 //找到downLoadId
@@ -93,7 +93,7 @@ public class InfoAdapter extends BaseAdapter {
                     fileRight.setVisibility(View.VISIBLE);
 
                     String[] valueArr = value.split(",");
-                    String fileNum = valueArr.length + "个附件";
+                    String fileNum = valueArr.length + context.getString(R.string.attachments);
                     Log.e(TAG, "getView: fileNum " + fileNum);
                     tv_entity_name.setText(fileNum);
                     final String fieldSetString = JSON.toJSONString(fieldSet);
@@ -113,7 +113,7 @@ public class InfoAdapter extends BaseAdapter {
                     }
 
                 } else {
-                    tv_entity_name.setText("无附件");
+                    tv_entity_name.setText(context.getString(R.string.no_attachment));
                 }
             } else {
                 tv_entity_name.setText(value);

@@ -139,7 +139,7 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
             viewHolder.iv_star.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    toast("click star");
+                    toast(context.getString(R.string.click_star));
                     //do something
                 }
             });
@@ -150,7 +150,7 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
                     groupList.get(groupPosition).getChildEntities().remove(childPosition);
                     finalViewHolder.swipeLayout.close();
                     notifyDataSetChanged();
-                    toast("click trash");
+                    toast(context.getString(R.string.click_trash));
                     //do something
                 }
             });

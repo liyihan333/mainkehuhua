@@ -291,7 +291,7 @@ public class CourseActivity extends AppCompatActivity implements OnDataListener,
             setCourseDataInTable();
         }else{
             // stopAnim();
-            Toast.makeText(this, "无课表数据", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.no_course_data, Toast.LENGTH_SHORT).show();
         }
 
     }

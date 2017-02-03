@@ -250,9 +250,9 @@ public class OperateDataTwoActivity extends BaseActivity {
 //                }
                 normalRequest();
                 if (fieldSet.size() == 0) {
-                    Snackbar.make(mRecyclerView, "本页无数据", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(mRecyclerView, R.string.no_data_on_this_page, Snackbar.LENGTH_SHORT).show();
                 } else {
-                    Snackbar.make(mRecyclerView, "更新完成", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(mRecyclerView, R.string.update_completed, Snackbar.LENGTH_SHORT).show();
                 }
                 break;
             default:
@@ -320,7 +320,7 @@ public class OperateDataTwoActivity extends BaseActivity {
                             public void onError(Call call, Exception e, int id) {
                                 ErrorToast.errorToast(mContext, e);
                                 dialog.dismiss();
-                                Toast.makeText(OperateDataTwoActivity.this, "操作失败", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(OperateDataTwoActivity.this, R.string.operation_failed, Toast.LENGTH_SHORT).show();
                             }
 
                             @Override
@@ -331,16 +331,16 @@ public class OperateDataTwoActivity extends BaseActivity {
                                     if (num == 0) {
                                         getCommit(buttonType1, tableId1, pageId1, keyRelation1, 1, fieldSet1);
                                     } else {
-                                        Toast.makeText(OperateDataTwoActivity.this, "操作成功", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(OperateDataTwoActivity.this, R.string.operation_success, Toast.LENGTH_SHORT).show();
                                         backToInfo();
                                     }
                                 } else {
-                                    Toast.makeText(OperateDataTwoActivity.this, "操作失败", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(OperateDataTwoActivity.this, R.string.operation_failed, Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
             } else {
-                Toast.makeText(this, "无网络", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,R.string.no_network, Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -488,7 +488,7 @@ public class OperateDataTwoActivity extends BaseActivity {
     private void toCommit() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(buttonName0 + "？");
-        builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -496,7 +496,7 @@ public class OperateDataTwoActivity extends BaseActivity {
                 getCommit(buttonType0, tableId0, pageId0, keyRelation0, 0, fieldSet0);
             }
         });
-        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
@@ -509,7 +509,7 @@ public class OperateDataTwoActivity extends BaseActivity {
     public static final String action = "com.kwsoft.kehuhua.fragments.ListFragment.REFRESH_LIST";
 
     public void backToInfo() {
-        Toast.makeText(OperateDataTwoActivity.this, "操作成功", Toast.LENGTH_SHORT).show();
+        Toast.makeText(OperateDataTwoActivity.this, R.string.operation_success, Toast.LENGTH_SHORT).show();
         //发送广播给listFragment
         Intent intent = new Intent(action);
         sendBroadcast(intent);

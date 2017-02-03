@@ -35,7 +35,7 @@ import com.kwsoft.kehuhua.adcustom.base.BaseActivity;
 import com.kwsoft.kehuhua.config.Constant;
 import com.kwsoft.kehuhua.utils.CloseActivityClass;
 import com.kwsoft.kehuhua.utils.DataProcess;
-import com.kwsoft.kehuhua.zxing.CaptureActivity;
+import com.kwsoft.kehuhua.zxing.TestScanActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,20 +56,13 @@ public class NavActivity extends BaseActivity
     //private static long exitTime=0;// 退出时间
     private ImageView[] mImageViews;
 
-
     PullToRefreshGridView homeGridView;
     List<Map<String, Object>> mList;
     List<Map<String, Object>> parentList = new ArrayList<>();
-
     public String menuData;
-
-
-
     BadgeView badgeView;//提示消息条数的view
 
     MyReceiverMsg receiverMsg;//接收通知的接收器
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -176,7 +169,7 @@ public class NavActivity extends BaseActivity
         if (mList.size()>0) {
             parentList= DataProcess.toParentList(mList);
         }else{
-            Toast.makeText(NavActivity.this, "无菜单数据", Toast.LENGTH_SHORT).show();
+            Toast.makeText(NavActivity.this, getString(R.string.no_menu_data), Toast.LENGTH_SHORT).show();
         }
 
 
@@ -230,10 +223,7 @@ public class NavActivity extends BaseActivity
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
-
-            Toast.makeText(this, "查看所有权限", Toast.LENGTH_SHORT).show();
-
-
+            Toast.makeText(this, R.string.view_all_permissions, Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
@@ -274,7 +264,7 @@ public class NavActivity extends BaseActivity
                 }
             });
         } else {
-            Toast.makeText(this, "您还没有主菜单数据！！", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.main_menu_data, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -394,7 +384,7 @@ public class NavActivity extends BaseActivity
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_er_code://二维码扫描
-                Intent intent = new Intent(this, CaptureActivity.class);
+                Intent intent = new Intent(this, TestScanActivity.class);
                 startActivityForResult(intent, 1);
                 break;
             case R.id.imageView:

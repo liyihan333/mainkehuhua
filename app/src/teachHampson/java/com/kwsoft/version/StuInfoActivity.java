@@ -52,7 +52,7 @@ public class StuInfoActivity extends AppCompatActivity {
                     if (swipeRefreshLayout.isRefreshing()) {
                         adapter.notifyDataSetChanged();
                         swipeRefreshLayout.setRefreshing(false);//设置不刷新
-                        Toast.makeText(getApplicationContext(), "数据已更新", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), R.string.data_already_update, Toast.LENGTH_SHORT).show();
                     }
                     break;
             }
@@ -73,9 +73,9 @@ public class StuInfoActivity extends AppCompatActivity {
     private void initData() {
 
         CommonToolbar mToolbar = (CommonToolbar) findViewById(R.id.common_toolbar);
-        mToolbar.setTitle("personal information");
+        mToolbar.setTitle(getResources().getString(R.string.personal_information));
         mToolbar.showRightTextView();
-        mToolbar.setRightTextView("modify");
+        mToolbar.setRightTextView(getResources().getString(R.string.personal_information_modify));
         mToolbar.setLeftButtonOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,7 +92,7 @@ public class StuInfoActivity extends AppCompatActivity {
                     Log.e(TAG, operaButtonSet.toString());
                     startActivity(intent);
                 } else {
-                    Toast.makeText(StuInfoActivity.this, "暂时不能修改！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(StuInfoActivity.this, R.string.unable_to_modify, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -164,7 +164,7 @@ public class StuInfoActivity extends AppCompatActivity {
                         if (response != null && response.length() > 0) {
                             setStore(response);
                         } else {
-                            Toast.makeText(StuInfoActivity.this, "暂时没有个人信息", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(StuInfoActivity.this, R.string.no_personal_info, Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -200,7 +200,7 @@ public class StuInfoActivity extends AppCompatActivity {
                 }
                 Log.e("fieldSet", fieldSet.toString());
             }else {
-                Toast.makeText(StuInfoActivity.this, "暂时没有个人信息", Toast.LENGTH_SHORT).show();
+                Toast.makeText(StuInfoActivity.this, R.string.no_personal_info, Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
             e.printStackTrace();

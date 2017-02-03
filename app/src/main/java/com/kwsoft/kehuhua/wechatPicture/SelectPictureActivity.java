@@ -90,9 +90,9 @@ public class SelectPictureActivity extends BaseActivity implements View.OnClickL
 
         mToolbar = (CommonToolbar) findViewById(R.id.common_toolbar);
         if (fieldRole.equals("18")) {
-            mToolbar.setTitle("单文件选择");
+            mToolbar.setTitle(getString(R.string.single_file_selection));
         } else if (fieldRole.equals("19")) {
-            mToolbar.setTitle("多文件选择");
+            mToolbar.setTitle(getString(R.string.multiple_file_selection));
         }
 
         mToolbar.setBackgroundColor(getResources().getColor(topBarColor));
@@ -116,7 +116,7 @@ public class SelectPictureActivity extends BaseActivity implements View.OnClickL
                 if (myFile.size() > 0) {
                     uploadMethod();//递归上传
                 } else {
-                    Toast.makeText(SelectPictureActivity.this, "请至少选择一个文件", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SelectPictureActivity.this, R.string.please_select_at_least_one_file, Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -235,12 +235,12 @@ public class SelectPictureActivity extends BaseActivity implements View.OnClickL
 
     @PermissionSuccess(requestCode = 106)
     public void doSomething() {
-        Toast.makeText(this, "打开权限成功", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.permission_Access_success, Toast.LENGTH_SHORT).show();
     }
 
     @PermissionFail(requestCode = 106)
     public void doFailSomething() {
-        Toast.makeText(this, "Contact permission is not granted", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.permission_Access_failed, Toast.LENGTH_SHORT).show();
     }
 
 
@@ -257,7 +257,7 @@ public class SelectPictureActivity extends BaseActivity implements View.OnClickL
 
     @PermissionFail(requestCode = 100)
     public void doFailedCapture() {
-        Toast.makeText(SelectPictureActivity.this, "获取权限失败", Toast.LENGTH_SHORT).show();
+        Toast.makeText(SelectPictureActivity.this,R.string.permission_Access_failed, Toast.LENGTH_SHORT).show();
     }
 
     public void goToActivityForResult(Context context, Class<?> cls, Bundle bundle, int requestCode) {
@@ -341,7 +341,7 @@ public class SelectPictureActivity extends BaseActivity implements View.OnClickL
                                 getFileCode(response);
                                 uploadMethod();
                             } else {//已达上限，返回关联添加页面
-                                Toast.makeText(SelectPictureActivity.this, "上传成功" + (num + 1) + "个", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SelectPictureActivity.this, R.string.upload_success + (num + 1) + getString(R.string.ge), Toast.LENGTH_SHORT).show();
                                 getFileCode(response);
                                 jump2Activity();
                             }

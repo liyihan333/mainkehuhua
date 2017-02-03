@@ -88,10 +88,6 @@ public class HomeChildActivity extends Activity implements View.OnClickListener 
             childList.get(i).put("menuName",newMenuName);
 
         }
-
-
-
-
     }
 
     public void toItem(Map<String, Object> itemData) {

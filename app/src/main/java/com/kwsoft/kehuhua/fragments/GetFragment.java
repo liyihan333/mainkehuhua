@@ -86,7 +86,7 @@ public class GetFragment extends Fragment implements View.OnClickListener {
 
     private void requestMsgData(String volleyUrl) {
         if (!((MessagAlertActivity)getActivity()).hasInternetConnected()) {
-            Toast.makeText(getActivity(), "当前网络不可用，请检查网络！", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.network_no_available, Toast.LENGTH_SHORT).show();
             return;
         }
 

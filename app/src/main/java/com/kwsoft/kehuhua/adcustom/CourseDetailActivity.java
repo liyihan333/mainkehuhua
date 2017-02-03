@@ -58,9 +58,9 @@ public class CourseDetailActivity extends AppCompatActivity {
             if (CHAPTER_DESCRIBE != null && CHAPTER_DESCRIBE.length() > 0) {
                 String CHAPTER_NAME = intent.getStringExtra("CHAPTER_NAME");
                 String CHAPTER_TASK = intent.getStringExtra("CHAPTER_TASK");
-                zhangJieMingCheng.setText(!CHAPTER_NAME.equals("null") ? CHAPTER_NAME : "无内容");
-                zhangJieRenWu.setText(!CHAPTER_TASK.equals("null") ? CHAPTER_TASK : "无内容");
-                zhangJieMiaoShu.setText(!CHAPTER_DESCRIBE.equals("null") ? CHAPTER_DESCRIBE : "无内容");
+                zhangJieMingCheng.setText(!CHAPTER_NAME.equals("null") ? CHAPTER_NAME : getString(R.string.no_content));
+                zhangJieRenWu.setText(!CHAPTER_TASK.equals("null") ? CHAPTER_TASK : getString(R.string.no_content));
+                zhangJieMiaoShu.setText(!CHAPTER_DESCRIBE.equals("null") ? CHAPTER_DESCRIBE : getString(R.string.no_content));
             }else {
                 llzhangJieMingCheng.setVisibility(View.GONE);
                 llzhangJieRenWu.setVisibility(View.GONE);
@@ -70,6 +70,6 @@ public class CourseDetailActivity extends AppCompatActivity {
             endTime.setText(eTimeStr);
             tvdetail.setText(content3);
         }
-        mToolbar.setTitle("课程详情");
+        mToolbar.setTitle(getString(R.string.course_detail));
     }
 }

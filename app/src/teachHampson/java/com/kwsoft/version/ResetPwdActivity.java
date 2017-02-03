@@ -58,7 +58,7 @@ public class ResetPwdActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void initView() {
         CommonToolbar mToolbar = (CommonToolbar) findViewById(R.id.common_toolbar);
-        mToolbar.setTitle("修改密码");
+        mToolbar.setTitle(getResources().getString(R.string.re_pwd_title));
         mToolbar.setLeftButtonOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -161,23 +161,23 @@ public class ResetPwdActivity extends BaseActivity implements View.OnClickListen
                 String oldPswLocal = sPreferences.getString("pwd", "");
                 Log.e("oldpwd",oldPswLocal);
                 if (TextUtils.isEmpty(oldPsw)) {
-                    Toast.makeText(this, "请填写原密码！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.please_fill_in_the_original_psw, Toast.LENGTH_SHORT).show();
                 } else if (!TextUtils.equals(oldPsw, oldPswLocal)) {
-                    Toast.makeText(this, "旧密码错误！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.old_pwd_error, Toast.LENGTH_SHORT).show();
                 } else if (TextUtils.isEmpty(newPsw)) {
-                    Toast.makeText(this, "请填写新密码！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.please_input_new_pwd, Toast.LENGTH_SHORT).show();
                 } else if (!newPsw.matches("^[0-9_a-zA-Z]{6,20}$")) {
-                    Toast.makeText(this, "密码格式不正确！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.incorrect_pwd, Toast.LENGTH_SHORT).show();
                 } else if (TextUtils.isEmpty(againNewPsw)) {
-                    Toast.makeText(this, "请确认新密码！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.please_confirm_new_pwd, Toast.LENGTH_SHORT).show();
                 } else if (TextUtils.equals(oldPsw, newPsw)) {
-                    Toast.makeText(this, "新密码和原密码重复！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.new_pwd_and_original_pwd_repeat, Toast.LENGTH_SHORT).show();
                 } else if (!TextUtils.equals(newPsw, againNewPsw)) {
-                    Toast.makeText(this, "新密码和确认密码不一致！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.two_pwd_error, Toast.LENGTH_SHORT).show();
                 } else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage("是否要修改密码？");
-                    builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                    builder.setMessage(R.string.if_change_your_pwd);
+                    builder.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
@@ -187,7 +187,7 @@ public class ResetPwdActivity extends BaseActivity implements View.OnClickListen
                         }
                     });
 
-                    builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
@@ -204,7 +204,7 @@ public class ResetPwdActivity extends BaseActivity implements View.OnClickListen
     private static final String TAG = "ResetPwdActivity";
     private void requestData(String volleyUrl) {
         if (!hasInternetConnected()) {
-            Toast.makeText(this, "当前网络不可用，请检查网络！", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.please_connect_net, Toast.LENGTH_LONG).show();
             return;
         }
         dialog.show();
@@ -250,13 +250,13 @@ public class ResetPwdActivity extends BaseActivity implements View.OnClickListen
             JSONObject object = new JSONObject(jsonData);
             String message = object.getString("message");
             Log.e("mesa=", message);
-            if (message.equals("密码修改成功")) {
+            if (message.equals(R.string.pwd_change_success)) {
                 edOldpwd.setText("");
                 edNewpwd.setText("");
                 edConfirmpwd.setText("");
                 AlertDialog.Builder builder = new AlertDialog.Builder(ResetPwdActivity.this);
-                builder.setMessage("修改成功！");
-                builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                builder.setMessage(R.string.pwd_change_success);
+                builder.setPositiveButton(getResources().getString(R.string.re_pwd_confirm), new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -278,8 +278,8 @@ public class ResetPwdActivity extends BaseActivity implements View.OnClickListen
                 builder.create().show();
             } else {
                 AlertDialog.Builder builder = new AlertDialog.Builder(ResetPwdActivity.this);
-                builder.setMessage("修改失败！");
-                builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                builder.setMessage(R.string.update_faiture);
+                builder.setPositiveButton(getResources().getString(R.string.re_pwd_confirm), new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

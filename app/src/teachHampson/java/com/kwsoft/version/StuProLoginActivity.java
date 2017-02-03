@@ -28,18 +28,16 @@ import okhttp3.Call;
 public class StuProLoginActivity extends BaseActivity {
     private SharedPreferences sPreferences;
     private String nameValue, pwdValue;
-
-
     static {
         //教师端设置成顶栏黑灰色
         Constant.topBarColor = R.color.prim_topBarColor;
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stu_pro_login);
+        Log.e(TAG, "onCreate: StuProLoginActivity");
         initJudgeSave();
     }
 
@@ -68,8 +66,6 @@ public class StuProLoginActivity extends BaseActivity {
                 Toast.makeText(this, getResources().getString(R.string.project_link_error), Toast.LENGTH_LONG).show();
                 toLoginPage();
             }
-
-
         } else {
             toLoginPage();
         }
@@ -135,7 +131,7 @@ public class StuProLoginActivity extends BaseActivity {
             //获取error的值，判断
             LoginError loginError = JSON.parseObject(menuData, LoginError.class);
             if (loginError.getError() != 0) {
-                Toast.makeText(this, "登陆失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.login_failure, Toast.LENGTH_SHORT).show();
                 toLoginPage();
 
                 finish();
@@ -150,7 +146,7 @@ public class StuProLoginActivity extends BaseActivity {
             }
         } else {
 
-            Toast.makeText(StuProLoginActivity.this, "服务器超时", Toast.LENGTH_SHORT).show();
+            Toast.makeText(StuProLoginActivity.this, R.string.server_time_out, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -176,24 +172,62 @@ public class StuProLoginActivity extends BaseActivity {
             Constant.sessionId = String.valueOf(loginfo.get("sessionId"));
           //  Constant.teachmainIdVal = String.valueOf(loginfo.get("USER_13"));//教师端mainid
             sPreferences.edit().putString("userid", userid).apply();
-            List<Map<String, Object>> menuListMap1 = (List<Map<String, Object>>) menuMap.get("roleFollowList");
-            List<Map<String, Object>> menuListMap2 = (List<Map<String, Object>>) menuMap.get("menuList");
-            // List<Map<String, Object>> menuListMap3 = (List<Map<String, Object>>) menuMap.get("hideMenuList");
-            List<Map<String, Object>> menuListMap3 = (List<Map<String, Object>>) menuMap.get("personInfoList");//个人资料
-            List<Map<String, Object>> menuListMap5 = (List<Map<String, Object>>) menuMap.get("feedbackInfoList");//反馈信息
-            List<Map<String, Object>> menuListMap6 = (List<Map<String, Object>>) menuMap.get("homePageList");//今日课表、明日课表
-
-            if (menuMap.containsKey("teaMongoId")) {
-                String teaMongoId = menuMap.get("teaMongoId").toString();
-                Constant.teaMongoId = teaMongoId;
+            List<Map<String, Object>> menuListMap1 = null;
+            if (menuMap.containsKey("roleFollowList")) {
+                menuListMap1 = (List<Map<String, Object>>) menuMap.get("roleFollowList");
             }
+            List<Map<String, Object>> menuListMap2 = null;
+            if (menuMap.containsKey("menuList")) {
+                menuListMap2 = (List<Map<String, Object>>) menuMap.get("menuList");
+                Log.e("menuListMap2", JSON.toJSONString(menuListMap2));
+            }
+            List<Map<String, Object>> menuListMap3 = null;//个人资料
+            if (menuMap.containsKey("personInfoList")) {
+                menuListMap3 = (List<Map<String, Object>>) menuMap.get("personInfoList");
+                Log.e("menuListMap3", JSON.toJSONString(menuListMap3));
+            }
+            List<Map<String, Object>> menuListMap5 = null;//反馈信息
+            if (menuMap.containsKey("feedbackInfoList")) {
+                menuListMap5 = (List<Map<String, Object>>) menuMap.get("feedbackInfoList");
+                Log.e("menuListMap5", JSON.toJSONString(menuListMap5));
+            }
+            List<Map<String, Object>> menuListMap6 = null;//今日课表、明日课表
+            if (menuMap.containsKey("homePageList")) {
+                menuListMap6 = (List<Map<String, Object>>) menuMap.get("homePageList");
+                Log.e("menuListMap6", JSON.toJSONString(menuListMap6));
+            }
+
+                String teaMongoId = String.valueOf(menuMap.get("teaMongoId"));
+                Constant.teaMongoId = teaMongoId;
+
             Intent intent = new Intent();
             intent.setClass(StuProLoginActivity.this, StuMainActivity.class);
-            intent.putExtra("jsonArray", JSON.toJSONString(menuListMap1));
-            intent.putExtra("menuDataMap", JSON.toJSONString(menuListMap2));
-            intent.putExtra("hideMenuList", JSON.toJSONString(menuListMap3));
-            intent.putExtra("feedbackInfoList", JSON.toJSONString(menuListMap5));
-            intent.putExtra("homePageList", JSON.toJSONString(menuListMap6));//今明日课表
+
+            if (menuListMap1 != null && menuListMap1.size() > 0) {
+                intent.putExtra("jsonArray", JSON.toJSONString(menuListMap1));
+            } else {
+                intent.putExtra("jsonArray", "");
+            }
+            if (menuListMap2 != null && menuListMap2.size() > 0) {
+                intent.putExtra("menuDataMap", JSON.toJSONString(menuListMap2));
+            } else {
+                intent.putExtra("menuDataMap", "");
+            }
+            if (menuListMap3 != null && menuListMap3.size() > 0) {
+                intent.putExtra("hideMenuList", JSON.toJSONString(menuListMap3));
+            } else {
+                intent.putExtra("hideMenuList", "");
+            }
+            if (menuListMap5 != null && menuListMap5.size() > 0) {
+                intent.putExtra("feedbackInfoList", JSON.toJSONString(menuListMap5));
+            } else {
+                intent.putExtra("feedbackInfoList", "");
+            }
+            if (menuListMap6 != null && menuListMap6.size() > 0) {
+                intent.putExtra("homePageList", JSON.toJSONString(menuListMap6));
+            } else {
+                intent.putExtra("homePageList", "");
+            }
             startActivity(intent);
             finish();
 
@@ -234,7 +268,7 @@ public class StuProLoginActivity extends BaseActivity {
                     Log.e("TAG", "USERNAME" + loginInfo.get("USERNAME"));
                     Constant.loginName = String.valueOf(loginInfo.get("USERNAME"));
                     Constant.roleNamesTeach = String.valueOf(loginInfo.get("roleNames"));
-                    Toast.makeText(StuProLoginActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(StuProLoginActivity.this, R.string.login_suc, Toast.LENGTH_SHORT).show();
                     Constant.USERID = String.valueOf(loginInfo.get("USERID"));
                 }
             } catch (Exception e) {

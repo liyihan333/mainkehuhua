@@ -266,7 +266,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
      **/
     public void postLogin() {
         if (!hasInternetConnected()) {
-            Toast.makeText(this, "当前网络不可用，请检查网络！", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.network_no_available, Toast.LENGTH_SHORT).show();
             return;
         }
         nameValue = mUserName.getText().toString();//trim去掉首尾空格
@@ -304,7 +304,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     });
         } else {
             stopAnim();
-            Toast.makeText(LoginActivity.this, "用户名或密码不能为空", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, R.string.username_or_password_can_not_be_empty, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -328,7 +328,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             LoginError loginError = JSON.parseObject(menuData, LoginError.class);
             if (loginError.getError() != 0) {
                 stopAnim();
-                Toast.makeText(this, "用户名或密码错误", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.username_or_password_error, Toast.LENGTH_SHORT).show();
             } else {
                 Log.e("TAG", "登陆成功后的menu数据" + menuData);
                 //当成功登陆后存储正确的用户名和密码,
@@ -361,7 +361,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 mainPage();//保存完用户名和密码，跳转到主页面
             }
         } else {
-            Toast.makeText(LoginActivity.this, "服务器超时", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, R.string.server_time_out, Toast.LENGTH_SHORT).show();
 
         }
     }
@@ -387,7 +387,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 if (loginInfo.get("USERNAME") != null) {
                     Log.e("TAG", "USERNAME" + loginInfo.get("USERNAME"));
                     Constant.loginName = String.valueOf(loginInfo.get("USERNAME"));
-                    Toast.makeText(LoginActivity.this, "欢迎登陆：" + Constant.loginName, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, getString(R.string.welcome_login) + Constant.loginName, Toast.LENGTH_SHORT).show();
                     Constant.USERID = String.valueOf(loginInfo.get("USERID"));
                     Constant.sessionId = String.valueOf(loginInfo.get("sessionId"));
                     //xiebubiao修改

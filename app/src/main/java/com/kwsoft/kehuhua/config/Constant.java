@@ -10,6 +10,8 @@ import android.os.Looper;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import com.kwsoft.kehuhua.adcustom.R;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,12 +24,13 @@ import java.util.regex.PatternSyntaxException;
  * Created by Administrator on 2015/11/28 0028.
  */
 public class Constant {
-    public static String sysUrl = "http://124.254.63.60:8874/edus_auto/";//汉普森项目
+   // public static String sysUrl = "http://192.168.6.72:8080/edus_auto/";//汉普森项目
     //    public static String sysUrl = "http://182.92.108.162/edus_auto/";//外网项目
     // public static String sysUrl = "http://192.168.6.171:8080/edus_auto/";//小庞项目
     // public static String sysUrl = "http://192.168.6.129:8080/edus_auto/";//红伟项目
 //    public static String sysUrl = "http://192.168.6.117:8080/edus_auto/";
-//    public static String sysUrl = "http://192.168.6.150:8081/edus_auto/";//陈蒙项目
+    //public static String sysUrl = "http://192.168.6.150:8081/edus_auto/";//陈蒙项目
+    public static String sysUrl = "http://192.168.6.150:8081/edus_auto_main/";//陈蒙项目
 
     public static String admissionInfo = "http://192.168.6.150:8081/hps_edus_auto/";
 
@@ -48,6 +51,8 @@ public class Constant {
     public final static String requestEdit = "update_interfaceToUpdate.do";
     public final static String requestDelete = "delete_interfaceDelete.do";
     public final static String commitEdit = "update_interfaceUpdate.do";
+
+    public final static String directDicreation="update_interfaceDicrectTrigger.do";
 
     public final static String requestTreeDialog = "treeDialog_interfaceToList.do";
     public final static String requestMaxRule = "add_interfaceAjaxGetMaxRule.do";
@@ -303,7 +308,7 @@ public class Constant {
             e.printStackTrace();
         } catch (Exception e) {
             //抛出异常时提示信息
-            Toast.makeText(context, "进入设置页面失败，请手动设置", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, R.string.failed_to_enter_the_settings_page, Toast.LENGTH_LONG).show();
         }
     }
 }

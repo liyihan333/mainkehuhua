@@ -253,7 +253,7 @@ public class TabsFragment extends Fragment {
 //将dataList与fieldSet合并准备适配数据
         datas = DataProcess.combineSetData(tableId,pageId, fieldSet, dataList);
         if (datas == null) {
-            Snackbar.make(mRecyclerView, "本页无数据", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(mRecyclerView, R.string.no_data_on_this_page, Snackbar.LENGTH_SHORT).show();
 
         }
 //用适配器并判断展示数据
@@ -298,9 +298,9 @@ public class TabsFragment extends Fragment {
                     mRecyclerView.scrollToPosition(0);
                     mRefreshLayout.finishRefresh();
                     if (datas.size() == 0) {
-                        Snackbar.make(mRecyclerView, "本页无数据", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(mRecyclerView, R.string.no_data_on_this_page, Snackbar.LENGTH_SHORT).show();
                     } else {
-                        Snackbar.make(mRecyclerView, "更新完成", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(mRecyclerView, R.string.update_completed, Snackbar.LENGTH_SHORT).show();
                     }
 
                 }
@@ -310,7 +310,7 @@ public class TabsFragment extends Fragment {
                     mAdapter.addData(mAdapter.getDatas().size(), datas,childTab);
                     mRecyclerView.scrollToPosition(mAdapter.getDatas().size());
                     mRefreshLayout.finishRefreshLoadMore();
-                    Snackbar.make(mRecyclerView, "更新了" + datas.size() + "条数据", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(mRecyclerView, R.string.update + datas.size() + R.string.item_datas, Snackbar.LENGTH_SHORT).show();
                 }
 
                 break;

@@ -268,11 +268,11 @@ public class ProjectSelectActivity extends BaseActivity implements OnRefreshList
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             if ((System.currentTimeMillis() - exitTime) > 1000) {
-                String msg = "再按一次退出";
+                String msg = getString(R.string.press_another_exit);
                 Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
                 exitTime = System.currentTimeMillis();
             } else {
-                Toast.makeText(this, "直接退出", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.exit, Toast.LENGTH_SHORT).show();
                 CloseActivityClass.exitClient(this);
                 finish();
             }

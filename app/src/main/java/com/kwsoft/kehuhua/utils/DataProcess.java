@@ -228,7 +228,7 @@ public class DataProcess {
             Log.e("TAG", "添加合成数据" + commitUrl);
         } else {
             commitUrl = "no";
-            Toast.makeText(mActivity, "必填字段不能为空", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mActivity, R.string.required_field_cannot_be_empty, Toast.LENGTH_SHORT).show();
         }
         return commitUrl;
 
@@ -345,7 +345,7 @@ public class DataProcess {
 
         } else {
             commitUrl = "no";
-            Toast.makeText(mActivity, "必填字段不能为空", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mActivity, R.string.required_field_cannot_be_empty, Toast.LENGTH_SHORT).show();
         }
         return commitUrl;
     }

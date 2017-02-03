@@ -4,6 +4,8 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.kwsoft.kehuhua.adcustom.R;
+
 /**
  * Created by Administrator on 2016/10/28 0028.
  *
@@ -16,7 +18,7 @@ public class ErrorToast {
         Class errorClass = e.getClass();
         if (errorClass == java.net.SocketTimeoutException.class) {
             Log.d("TAG", "NetworkError");
-            Toast.makeText(context, "连接超时", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, R.string.connect_timed_out, Toast.LENGTH_LONG).show();
         }
 
     }

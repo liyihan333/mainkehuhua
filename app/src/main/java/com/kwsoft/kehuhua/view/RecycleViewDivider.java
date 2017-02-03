@@ -11,6 +11,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.kwsoft.kehuhua.adcustom.R;
+
 /**
  * Created by Administrator on 2016/10/21 0021.
  */
@@ -30,7 +32,7 @@ public class RecycleViewDivider extends RecyclerView.ItemDecoration {
      */
     public RecycleViewDivider(Context context, int orientation) {
         if (orientation != LinearLayoutManager.VERTICAL && orientation != LinearLayoutManager.HORIZONTAL) {
-            throw new IllegalArgumentException("请输入正确的参数！");
+            throw new IllegalArgumentException(context.getString(R.string.please_input_correct_param));
         }
         mOrientation = orientation;
 

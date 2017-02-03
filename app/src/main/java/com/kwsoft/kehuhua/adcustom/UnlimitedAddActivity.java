@@ -98,7 +98,7 @@ public class UnlimitedAddActivity extends AppCompatActivity {
         unlimitedAddLv.setAdapter(adapter);
         //适配无限添加列表数据到界面
         if (dataList.size() <= 0) {
-            Toast.makeText(UnlimitedAddActivity.this, "请点击右上角加号添加数据", Toast.LENGTH_SHORT).show();
+            Toast.makeText(UnlimitedAddActivity.this, R.string.please_click_right_corner_to_add_data, Toast.LENGTH_SHORT).show();
         }
 
     }

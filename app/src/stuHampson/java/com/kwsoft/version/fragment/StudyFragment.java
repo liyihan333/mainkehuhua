@@ -36,7 +36,7 @@ import com.kwsoft.kehuhua.config.Constant;
 import com.kwsoft.kehuhua.urlCnn.EdusStringCallback;
 import com.kwsoft.kehuhua.urlCnn.ErrorToast;
 import com.kwsoft.kehuhua.utils.DataProcess;
-import com.kwsoft.kehuhua.zxing.CaptureActivity;
+import com.kwsoft.kehuhua.zxing.TestScanActivity;
 import com.kwsoft.version.ResetPwdActivity;
 import com.kwsoft.version.StuInfoActivity;
 import com.kwsoft.version.StuLoginActivity;
@@ -346,18 +346,18 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
 //                    } else {
 //                        Constant.goHuaWeiSetting(getActivity());
 //                    }
-                    Intent intent = new Intent(getActivity(), CaptureActivity.class);
+                    Intent intent = new Intent(getActivity(), TestScanActivity.class);
                     startActivityForResult(intent, 1);
                 } else if (miui) {
                     //小米
-                    Intent intent = new Intent(getActivity(), CaptureActivity.class);
+                    Intent intent = new Intent(getActivity(), TestScanActivity.class);
                     startActivityForResult(intent, 1);
                 } else if (flyme) {
                     //魅族rom
-                    Intent intent = new Intent(getActivity(), CaptureActivity.class);
+                    Intent intent = new Intent(getActivity(), TestScanActivity.class);
                     startActivityForResult(intent, 1);
                 } else {
-                    Intent intent = new Intent(getActivity(), CaptureActivity.class);
+                    Intent intent = new Intent(getActivity(), TestScanActivity.class);
                     startActivityForResult(intent, 1);
                 }
                 break;
@@ -389,10 +389,10 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
 
     private class TestNormalAdapter extends StaticPagerAdapter {
         private int[] imgs = {
-                R.drawable.stu_see_banner,
-                R.drawable.stu_see_banner,
-                R.drawable.stu_see_banner,
-                R.drawable.stu_see_banner,
+                R.drawable.stu_see_banner_first,
+                R.drawable.stu_see_banner_sec,
+                R.drawable.stu_see_banner_third,
+                R.drawable.stu_see_banner_sec,
         };
 
 

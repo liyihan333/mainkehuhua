@@ -131,7 +131,7 @@ public class KanBanLRActivity extends BaseActivity {
                     Log.e(TAG, "onRefreshLoadMore: " + adapter.getItemCount());
                     loadMoreData();
                 } else {
-                    Snackbar.make(mRecyclerView, "no more data", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(mRecyclerView, R.string.no_more, Snackbar.LENGTH_SHORT).show();
                     mRefreshLayout.finishRefreshLoadMore();
                 }
             }
@@ -173,10 +173,10 @@ public class KanBanLRActivity extends BaseActivity {
                     mRefreshLayout.finishRefresh();
                     dialog.dismiss();
                     if (datas.size() == 0) {
-                        Snackbar.make(mRecyclerView, "no data", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(mRecyclerView, R.string.no_data, Snackbar.LENGTH_SHORT).show();
                     } else {
                         Log.e(TAG, "showData: 执行了共x条");
-                        Snackbar.make(mRecyclerView, totalNum + " datas", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(mRecyclerView, totalNum + R.string.count_datas_refreshed, Snackbar.LENGTH_SHORT).show();
                     }
 
                 }
@@ -189,7 +189,7 @@ public class KanBanLRActivity extends BaseActivity {
                     adapter.notifyDataSetChanged();
                     mRecyclerView.scrollToPosition(adapter.getDatas().size());
                     mRefreshLayout.finishRefreshLoadMore();
-                    Snackbar.make(mRecyclerView, childDatas.size() + " datas refreshed", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(mRecyclerView, childDatas.size() + R.string.count_datas_refreshed, Snackbar.LENGTH_SHORT).show();
                 }
                 break;
         }
@@ -244,7 +244,7 @@ public class KanBanLRActivity extends BaseActivity {
         } else {
 //            ((BaseActivity) getActivity()).dialog.dismiss();
             mRefreshLayout.finishRefresh();
-            Toast.makeText(KanBanLRActivity.this, "no network", Toast.LENGTH_SHORT).show();
+            Toast.makeText(KanBanLRActivity.this, R.string.no_network, Toast.LENGTH_SHORT).show();
             backStart();
         }
     }
