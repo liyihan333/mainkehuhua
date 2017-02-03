@@ -151,40 +151,9 @@ public class WeekCalendarTeach extends LinearLayout {
                     for (int i = 0; i < daysName.size(); i++) {
                         String dayName = daysName.get(i);
                         Log.e(TAG, "getWeekDayNames: " + dayName);
-                        switch (dayName) {
-                            case "周一":
-                                String weekDay = daysName.get(i).replace("周一", "MON");
-                                daysName.set(i, weekDay);
-                                break;
-                            case "周二":
-                                weekDay = daysName.get(i).replace("周二", "TUE");
-                                daysName.set(i, weekDay);
-                                break;
-                            case "周三":
-                                weekDay = daysName.get(i).replace("周三", "WED");
-                                daysName.set(i, weekDay);
-                                break;
-                            case "周四":
-                                weekDay = daysName.get(i).replace("周四", "THU");
-                                daysName.set(i, weekDay);
-                                break;
-                            case "周五":
-                                weekDay = daysName.get(i).replace("周五", "FRI");
-                                daysName.set(i, weekDay);
-
-                                break;
-                            case "周六":
-                                weekDay = daysName.get(i).replace("周六", "SAT");
-                                daysName.set(i, weekDay);
-                                break;
-                            case "周日":
-                                weekDay = daysName.get(i).replace("周日", "SUN");
-                                daysName.set(i, weekDay);
-                                break;
-                            default:
-                                break;
-
-                        }
+                        daysName.set(i, dayName);
+                        //将中文星期变为英文
+                       // setDayEnglish(daysName, i, dayName);
 
 
 //                        if (daysName.get(i).contains("周")) {
@@ -206,6 +175,43 @@ public class WeekCalendarTeach extends LinearLayout {
                     .WeekCalendar_weekBackgroundColor, ContextCompat.getColor(getContext(), R
                     .color.colorPrimary)));
         return daysName;
+    }
+
+    private void setDayEnglish(List<String> daysName, int i, String dayName) {
+        switch (dayName) {
+            case "周一":
+                String weekDay = daysName.get(i).replace("周一", "MON");
+                daysName.set(i, weekDay);
+                break;
+            case "周二":
+                weekDay = daysName.get(i).replace("周二", "TUE");
+                daysName.set(i, weekDay);
+                break;
+            case "周三":
+                weekDay = daysName.get(i).replace("周三", "WED");
+                daysName.set(i, weekDay);
+                break;
+            case "周四":
+                weekDay = daysName.get(i).replace("周四", "THU");
+                daysName.set(i, weekDay);
+                break;
+            case "周五":
+                weekDay = daysName.get(i).replace("周五", "FRI");
+                daysName.set(i, weekDay);
+
+                break;
+            case "周六":
+                weekDay = daysName.get(i).replace("周六", "SAT");
+                daysName.set(i, weekDay);
+                break;
+            case "周日":
+                weekDay = daysName.get(i).replace("周日", "SUN");
+                daysName.set(i, weekDay);
+                break;
+            default:
+                break;
+
+        }
     }
 
     public void moveToPrevious() {
