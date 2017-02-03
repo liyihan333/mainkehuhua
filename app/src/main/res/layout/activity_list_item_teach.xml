@@ -302,7 +302,7 @@
             android:background="@drawable/solid_line_view"
             />
     </LinearLayout>
-    <RelativeLayout
+    <LinearLayout
         android:layout_marginTop="5dp"
         android:id="@+id/list_opera_layout"
         android:layout_below="@+id/list_content"
@@ -345,7 +345,7 @@
             android:layout_alignParentEnd="true"
             />
 
-    </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>
 

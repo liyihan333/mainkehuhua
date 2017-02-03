@@ -22,7 +22,6 @@ import com.alibaba.fastjson.TypeReference;
 import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
 import com.kwsoft.kehuhua.adapter.ListAdapter2;
-import com.kwsoft.kehuhua.adcustom.InfoActivity;
 import com.kwsoft.kehuhua.adcustom.InfoTwoActivity;
 import com.kwsoft.kehuhua.adcustom.ListActivity4;
 import com.kwsoft.kehuhua.adcustom.OperateDataActivity;
@@ -396,8 +395,8 @@ public class ListFragment extends Fragment {
     }
 
     public void normalRequest() {
-        Log.e(TAG, "normalRequest: datas"+datas.toString());
-        Log.e(TAG, "normalRequest: datas"+childTab.toString());
+//        Log.e(TAG, "normalRequest: datas"+datas.toString());
+//        Log.e(TAG, "normalRequest: datas"+childTab.toString());
         mAdapter = new ListAdapter2(datas, childTab, operaButtonSetList);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new WrapContentLinearLayoutManager(getActivity()));

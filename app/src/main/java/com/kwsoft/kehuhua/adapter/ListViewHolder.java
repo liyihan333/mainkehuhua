@@ -4,7 +4,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.kwsoft.kehuhua.adcustom.R;
@@ -23,7 +22,7 @@ public class ListViewHolder extends RecyclerView.ViewHolder {
     LinearLayout dash_ll;
     LinearLayout list_opera_layout;
 
-    LinearLayout list_opera0, list_opera1, list_opera2;
+    Button list_opera0, list_opera1, list_opera2;
     TextView list_opera0_tv, list_opera1_tv, list_opera2_tv;
 
     View line_view1,line_view2;
@@ -52,9 +51,9 @@ public class ListViewHolder extends RecyclerView.ViewHolder {
         dash_ll = (LinearLayout) view.findViewById(R.id.dash_ll);
         //初始化三个按钮
         list_opera_layout = (LinearLayout) view.findViewById(R.id.list_opera_layout);
-        list_opera0 = (LinearLayout) view.findViewById(R.id.list_opera0);
-        list_opera1 = (LinearLayout) view.findViewById(R.id.list_opera1);
-        list_opera2 = (LinearLayout) view.findViewById(R.id.list_opera2);
+        list_opera0 = (Button) view.findViewById(R.id.list_opera0);
+        list_opera1 = (Button) view.findViewById(R.id.list_opera1);
+        list_opera2 = (Button) view.findViewById(R.id.list_opera2);
         // list_opera2=(LinearLayout)view.findViewById(R.id.list_opera2);
         list_opera0_tv= (TextView) view.findViewById(R.id.list_opera0_tv);
         list_opera1_tv= (TextView) view.findViewById(R.id.list_opera1_tv);
