@@ -143,8 +143,6 @@
         <activity android:name="com.kwsoft.kehuhua.hampson.activity.AssessActivity" />
         <activity android:name="com.kwsoft.kehuhua.hampson.activity.ReadFileActivity" />
         <activity android:name="com.kwsoft.kehuhua.zxing.TestScanActivity" />
-
-
     </application>
 
 </manifest>
