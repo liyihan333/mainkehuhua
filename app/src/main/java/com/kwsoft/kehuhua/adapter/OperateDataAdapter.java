@@ -80,8 +80,6 @@ public class OperateDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     public OperateDataAdapter(List<Map<String, Object>> mDatas, Map<String, String> paramsMap) {
-
-
         this.mDatas = mDatas;
         tableId = paramsMap.get(Constant.tableId);
         pageId = paramsMap.get(Constant.pageId);

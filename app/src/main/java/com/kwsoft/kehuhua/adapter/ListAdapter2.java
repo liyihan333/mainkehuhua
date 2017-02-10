@@ -92,11 +92,11 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             return new EmptyViewHolder(view);
         }
 
-        if (!StuPra.studentProId.equals(StuPra.teachProId)) {
-            view = mInflater.inflate(R.layout.activity_list_item, null);
-        } else {
-            view = mInflater.inflate(R.layout.activity_list_item_teach, null);
-        }
+        //  if (!StuPra.studentProId.equals(StuPra.teachProId)) {
+        view = mInflater.inflate(R.layout.activity_list_item, null);
+//        } else {
+//            view = mInflater.inflate(R.layout.activity_list_item_teach, null);
+//        }
 
         //将创建的View注册点击事件
         view.setOnClickListener(this);
@@ -179,20 +179,25 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                             String mainId = item.get(0).get("mainId");
                             final String pageId = item.get(0).get("pageId");
                             final String tableId = item.get(0).get("tableId");
-                            final String dataIds = item.get(0).get("dataIds");
+//                            final String dataIds = item.get(0).get("dataIds");
+                            String allItemData = item.get(0).get("allItemData");
+                            Map<String, Object> allItemDataMap = JSON.parseObject(allItemData,
+                                    new TypeReference<Map<String, Object>>() {
+                                    });
+                            final String dataIds = String.valueOf(allItemDataMap.get("LMF_ID"));
 
                             //第1个按钮
                             final String buttonName1 = String.valueOf(operaButtonNow.get(0).get("buttonName"));
                             final String buttonType1 = String.valueOf(operaButtonNow.get(0).get("buttonType"));
                             holder.list_opera0_tv.setText(!buttonName1.equals("null") ? buttonName1 : "");
-                            holder.list_opera0.setVisibility(View.VISIBLE);
+                            holder.ll_list_opera0.setVisibility(View.VISIBLE);
 
                             operaButtonNow.get(0).put("dataId", mainId);
                             operaButtonNow.get(0).put("tableIdList", tableId);
                             operaButtonNow.get(0).put("pageIdList", pageId);
                             final String operaButtonSetMapStr = JSON.toJSONString(operaButtonNow.get(0));
 
-                            holder.list_opera0.setOnClickListener(new View.OnClickListener() {
+                            holder.ll_list_opera0.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
 
@@ -201,12 +206,18 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                                         case "12"://修改页面
                                         case "18"://关联添加页面
                                             Log.e(TAG, "onItemClick: operaButtonNow.get(0) " + operaButtonNow.get(0));
-                                            Intent mIntentEdit = new Intent(mContext, OperateDataActivity.class);
-                                            mIntentEdit.putExtra("itemSet", operaButtonSetMapStr);
-                                            mContext.startActivity(mIntentEdit);
+                                            if (buttonName1.contains(mContext.getString(R.string.confirm_xia_class)) && StuPra.studentProId.equals(StuPra.stuProId)) {
+                                                //学员端
+                                                Intent mIntentEdit = new Intent(mContext, StarRatingBarActivity.class);
+                                                mIntentEdit.putExtra("itemSet", operaButtonSetMapStr);
+                                                mContext.startActivity(mIntentEdit);
+                                            } else {
+                                                Intent mIntentEdit = new Intent(mContext, OperateDataActivity.class);
+                                                mIntentEdit.putExtra("itemSet", operaButtonSetMapStr);
+                                                mContext.startActivity(mIntentEdit);
+                                            }
                                             break;
                                         case "13"://单项删除操作
-
                                             delMapParams.put(Constant.tableId, tableId);
                                             delMapParams.put(Constant.pageId, String.valueOf(operaButtonNow.get(0).get("startTurnPage")));
                                             delMapParams.put(Constant.delIds, String.valueOf(operaButtonNow.get(0).get("dataId")));
@@ -253,7 +264,7 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                             final String buttonName2 = String.valueOf(operaButtonNow.get(1).get("buttonName"));
                             final String buttonType2 = String.valueOf(operaButtonNow.get(1).get("buttonType"));
                             holder.list_opera1_tv.setText(!buttonName2.equals("null") ? buttonName2 : "");
-                            holder.list_opera1.setVisibility(View.VISIBLE);
+                            holder.ll_list_opera1.setVisibility(View.VISIBLE);
                             holder.line_view1.setVisibility(View.VISIBLE);
                             Log.e(TAG, "onBindViewHolder: operaButton.get(1) " + operaButtonNow.get(1).toString());
                             operaButtonNow.get(1).put("dataId", mainId);
@@ -263,16 +274,22 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                             final String operaButtonSetMapStr1 = JSON.toJSONString(operaButtonNow.get(1));
 
 
-                            holder.list_opera1.setOnClickListener(new View.OnClickListener() {
+                            holder.ll_list_opera1.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
                                     switch (buttonType2) {
                                         case "12"://修改页面
                                         case "18"://关联添加页面
                                             Log.e(TAG, "onItemClick: operaButtonNow.get(1) " + operaButtonNow.get(1));
+                                            if (buttonName1.contains(mContext.getString(R.string.confirm_xia_class)) && StuPra.studentProId.equals(StuPra.stuProId)) {
+                                                //学员端
+                                                Intent mIntentEdit = new Intent(mContext, StarRatingBarActivity.class);
+                                                mIntentEdit.putExtra("itemSet", operaButtonSetMapStr);
+                                                mContext.startActivity(mIntentEdit);
+                                            } else {
                                             Intent mIntentEdit = new Intent(mContext, OperateDataActivity.class);
                                             mIntentEdit.putExtra("itemSet", operaButtonSetMapStr1);
-                                            mContext.startActivity(mIntentEdit);
+                                            mContext.startActivity(mIntentEdit);}
                                             break;
                                         case "13"://单项删除操作
                                             delMapParams.put(Constant.tableId, tableId);
@@ -319,14 +336,14 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                             final String buttonName3 = String.valueOf(operaButtonNow.get(2).get("buttonName"));
                             final String buttonType3 = String.valueOf(operaButtonNow.get(2).get("buttonType"));
                             holder.list_opera2_tv.setText(!buttonName3.equals("null") ? buttonName3 : "");
-                            holder.list_opera2.setVisibility(View.VISIBLE);
+                            holder.ll_list_opera2.setVisibility(View.VISIBLE);
                             holder.line_view2.setVisibility(View.VISIBLE);
                             operaButtonNow.get(2).put("dataId", mainId);
                             operaButtonNow.get(2).put("tableIdList", tableId);
                             operaButtonNow.get(2).put("pageIdList", pageId);
                             final String operaButtonSetMapStr2 = JSON.toJSONString(operaButtonNow.get(2));
 
-                            holder.list_opera2.setOnClickListener(new View.OnClickListener() {
+                            holder.ll_list_opera2.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
                                     Log.e(TAG, "onItemClick: buttonName " + buttonName3 + "//" + buttonType3);
@@ -334,9 +351,15 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                                         case "12"://修改页面
                                         case "18"://关联添加页面
                                             Log.e(TAG, "onItemClick: operaButtonNow.get(2) " + operaButtonNow.get(2));
+                                            if (buttonName1.contains(mContext.getString(R.string.confirm_xia_class)) && StuPra.studentProId.equals(StuPra.stuProId)) {
+                                                //学员端
+                                                Intent mIntentEdit = new Intent(mContext, StarRatingBarActivity.class);
+                                                mIntentEdit.putExtra("itemSet", operaButtonSetMapStr);
+                                                mContext.startActivity(mIntentEdit);
+                                            } else {
                                             Intent mIntentEdit = new Intent(mContext, OperateDataActivity.class);
                                             mIntentEdit.putExtra("itemSet", operaButtonSetMapStr2);
-                                            mContext.startActivity(mIntentEdit);
+                                            mContext.startActivity(mIntentEdit);}
                                             break;
                                         case "13"://单项删除操作
                                             delMapParams.put(Constant.tableId, tableId);
@@ -390,15 +413,22 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 e.printStackTrace();
             }
 
-
 //判断跳转子表格
             try {
                 final String titleName = item.get(0).get("fieldCnName2");
                 final String mainId = item.get(0).get("mainId");
                 Log.e(TAG, "onBindViewHolder: childTab " + childTab.toString());
-                if (childTab.size() > 0) {
-                    holder.dash_ll.setVisibility(View.VISIBLE);
+                Log.e(TAG, "onBindViewHolder: operaButton "+operaButton.size()+" \\ "+operaButton.get(0).toString());
+
+                if (childTab.size() > 0  && StuPra.studentProId.equals(StuPra.stuProId)) {
+//                    holder.dash_ll.setVisibility(View.VISIBLE);
                     holder.click_open.setVisibility(View.VISIBLE);
+
+                    if (operaButton!=null&&operaButton.size()>0){
+                        holder.dash_ll.setVisibility(View.VISIBLE);
+                    }else {
+                        holder.dash_ll.setVisibility(View.GONE);
+                    }
                     holder.click_open.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -408,24 +438,25 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                             intent.putExtra("childTab", JSON.toJSONString(childTab));
                             intent.putExtra("titleName", titleName);
                             mContext.startActivity(intent);
-                            //holder.click_open_btn.setAlpha(new Float(0.75));
 
                         }
                     });
                 } else {
-                    holder.dash_ll.setVisibility(View.GONE);
+                    //holder.dash_ll.setVisibility(View.GONE);
                     holder.click_open.setVisibility(View.GONE);
+                    if (operaButton!=null&&operaButton.size()>0 && StuPra.studentProId.equals(StuPra.stuProId)){
+                        holder.dash_ll.setVisibility(View.VISIBLE);
+                    }else {
+                        holder.dash_ll.setVisibility(View.GONE);
+                    }
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
-
             holder.itemView.setTag(item);
         }
-
     }
-
 
 
     private void toDOperation(final String tableId, final String pageId, final String dataIds, final String directSetIds) {
@@ -479,15 +510,12 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     public void onResponse(String response, int id) {
                         Log.e(TAG, "onResponse: " + "  id  " + id);
                         Log.e("TAG", "删除返回数据" + response);
-                        Toast.makeText(mContext, "暂未处理", Toast.LENGTH_SHORT).show();
-//                        String isSuccess = response.substring(0, 1);
-//                        if (isSuccess.equals("1")) {
-//                            Intent intent = new Intent();
-//                            intent.setClass(InfoTwoActivity.this, ListActivity4.class);
-//                            startActivity(intent);
-//                        } else {
-//                            Toast.makeText(InfoTwoActivity.this, response + getString(R.string.please_check_table_association), Toast.LENGTH_SHORT).show();
-//                        }
+                        if ("1".equals(response)) {
+                            Toast.makeText(mContext, "操作成功", Toast.LENGTH_SHORT).show();
+                            ((ListActivity4) mContext).finish();
+                        } else {
+                            Toast.makeText(mContext, "操作失败", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
     }

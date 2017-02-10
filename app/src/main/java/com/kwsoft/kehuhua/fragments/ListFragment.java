@@ -57,8 +57,6 @@ public class ListFragment extends Fragment {
 
 
     private String tableId, pageId;
-
-
     private int totalNum = 0;
     private int start = 0;
     private final int limit = 20;
@@ -67,13 +65,11 @@ public class ListFragment extends Fragment {
     private static final int STATE_MORE = 2;
     private int state = STATE_NORMAL;
 
-
     private String operaButtonSet;
     private List<List<Map<String, String>>> datas;
     private ListAdapter2 mAdapter;
     private List<Map<String, Object>> childTab;
     private List<Map<String, Object>> childList = new ArrayList<>();
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -178,7 +174,7 @@ public class ListFragment extends Fragment {
 
                         @Override
                         public void onResponse(String response, int id) {
-//                            Utils.printLog(TAG,"onResponse: "+ response);
+                            Log.e(TAG, "onResponse: getData-"+response);
                             setStore(response);
                         }
                     });
@@ -294,8 +290,6 @@ public class ListFragment extends Fragment {
 //将dataList与fieldSet合并准备适配数据
         datas = DataProcess.combineSetData(tableId, pageId, fieldSet, dataList);
         showData();
-
-
     }
 
     public void setButtonSet() {
@@ -343,7 +337,6 @@ public class ListFragment extends Fragment {
         state = STATE_REFREH;
 
         getData();
-
     }
 
     /**
@@ -367,9 +360,7 @@ public class ListFragment extends Fragment {
                 normalRequest();
                 break;
             case STATE_REFREH:
-
                 if (mAdapter != null) {
-
                     mAdapter.clearData();
                     mAdapter.addData(datas, childTab);
                     mRecyclerView.scrollToPosition(0);
@@ -378,7 +369,6 @@ public class ListFragment extends Fragment {
                         Log.e(TAG, "showData: 执行了共x条");
                         Snackbar.make(mRecyclerView, totalNum + getResources().getString(R.string.datas), Snackbar.LENGTH_SHORT).show();
                     }
-
                 }
 
                 break;

@@ -316,7 +316,7 @@ public class StageTestFragment extends Fragment {
             empty_text.setVisibility(View.VISIBLE);
         } else {
             empty_text.setVisibility(View.GONE);
-            Snackbar.make(mListView, R.string.loading_completed_total + totalNum + R.string.item, Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(mListView, getResources().getString(R.string.loading_completed_total) + totalNum + getResources().getString(R.string.item), Snackbar.LENGTH_SHORT).show();
         }
     }
 

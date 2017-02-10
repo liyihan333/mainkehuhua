@@ -75,8 +75,10 @@ public class StageTestAdapter extends BaseAdapter {
         holder.tv_score.setText(map.get(1).get("fieldCnName2"));
 
         //成绩描述
-        holder.tv_content_title.setText(map.get(2).get("fieldCnName"));
-        holder.tv_content.setText(map.get(2).get("fieldCnName2"));
+//        holder.tv_content_title.setText(map.get(2).get("fieldCnName"));
+//        holder.tv_content.setText(map.get(2).get("fieldCnName2"));
+        holder.tv_content_title.setText(map.get(5).get("fieldCnName"));
+        holder.tv_content.setText(map.get(5).get("fieldCnName2"));
 
        //考试日期
 

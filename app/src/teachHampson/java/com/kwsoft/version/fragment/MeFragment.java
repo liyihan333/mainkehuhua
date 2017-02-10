@@ -252,6 +252,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                     new TypeReference<Map<String, Object>>() {
                     });
             List<Map<String, Object>> mapList = (List<Map<String, Object>>) setMap.get("dataList");
+            Log.e(TAG, "getDataId: dataId "+mapList.get(0));
             dataId = String.valueOf(mapList.get(0).get("T_" + "2" + "_0"));
         } catch (Exception e) {
             e.printStackTrace();
@@ -457,15 +458,14 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                             String[] valueTemp1 = response.split(":");
                             valueCode = valueTemp1[1];
                             Log.e("MyfrgupLoad", response);
-                            Toast.makeText(getActivity(), R.string.upload_success, Toast.LENGTH_SHORT).show();
-                            String url = Constant.sysUrl + Constant.teachHeadUpdate;
+                          String url = Constant.sysUrl + Constant.teachHeadUpdate;
                             Map<String, String> paramsMap = new HashMap<>();
-                            paramsMap.put("t0_au_2_4171", dataId);
-                            paramsMap.put("t0_au_2_4171_3569", valueCode);
+                            paramsMap.put("t0_au_2_4232", Constant.USERID);
+                            paramsMap.put("t0_au_2_4232_3652", valueCode);
                             paramsMap.put("ifCleanInnerData", "undefined");
                             paramsMap.put("ifRecordingLog", "0");
                             paramsMap.put(Constant.tableId, "2");
-                            paramsMap.put(Constant.pageId, "4171");
+                            paramsMap.put(Constant.pageId, "4232");
                             paramsMap.put("sessionId", Constant.sessionId);
                             Log.e("up2", paramsMap.toString());
 
@@ -485,7 +485,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                                         @Override
                                         public void onResponse(String response, int id) {
                                             Log.e(TAG, "onResponse: " + response);
-                                            if ("1".equals(response.trim())) {
+                                            if (!"0".equals(response.trim())) {
                                                 Log.e(TAG, "onResponse: " + "sccg");  //  setStore(response);
                                                 ((BaseActivity) getActivity()).dialog.dismiss();
                                                 Toast.makeText(getActivity(), R.string.commit_success, Toast.LENGTH_SHORT).show();

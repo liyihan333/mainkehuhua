@@ -65,7 +65,6 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
         initView();
         getDataIntent();
         getData();
-
     }
 
     private String mainTableId, mainPageId, tableId, pageId, dataId;
@@ -77,6 +76,7 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
         //获取数据并解析
         Intent intent = getIntent();
         String buttonSetItemStr = intent.getStringExtra("itemSet");
+        Log.e(TAG, "getDataIntent: buttonSetItemStr" + buttonSetItemStr);
         Map<String, Object> buttonSetItem = JSON.parseObject(buttonSetItemStr);
         Log.e(TAG, "getIntentData: buttonSetItem " + buttonSetItem.toString());
         //赋值页面标题
@@ -93,11 +93,11 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
         paramsMap.put(Constant.tableId, tableId);
         //pageId
         pageId = String.valueOf(buttonSetItem.get("startTurnPage"));
+
         paramsMap.put(Constant.pageId, pageId);
         //dataId：在对列表操作的时候是没有的，只有行级操作的时候才有
         dataId = String.valueOf(buttonSetItem.get("dataId"));
         if (dataId != null && !dataId.equals("null")) {
-
             paramsMap.put(mainId, dataId);
         }
         Log.e(TAG, "getIntentData: paramsMap " + paramsMap.toString());
@@ -108,6 +108,9 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
         //不同页面类型请求Url不一样
         String volleyUrl = Constant.sysUrl + Constant.requestRowsAdd;
         paramsMap.put("sessionId", Constant.sessionId);
+        Log.e(TAG, "getData: volleyUrl-" + volleyUrl);
+        Log.e(TAG, "getData: paramsMap-" + paramsMap.toString());
+
         //请求
         OkHttpUtils
                 .post()
@@ -145,7 +148,6 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
             fieldSet = (List<Map<String, Object>>) pageSet.get("fieldSet");
             Log.e(TAG, "setStore: fieldSet " + fieldSet.toString());
 //判断添加还是修改，keyRelation赋值不一样
-
             if (pageSet.get("relationFieldId") != null) {
                 Constant.relationFieldId = String.valueOf(pageSet.get("relationFieldId"));
 
@@ -186,7 +188,6 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
                 finish();
             }
         });
-
 
         ratebar1 = (Button) findViewById(R.id.ratebar1);
         ratebar2 = (Button) findViewById(R.id.ratebar2);
@@ -246,15 +247,15 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
         et_content = (EditText) findViewById(R.id.et_content);
         btnAdd = (Button) findViewById(R.id.btn_add);
         btnAdd.setOnClickListener(this);
-
-
     }
-    String xingJiKey,xingJiKey1,xingJiKey2;
+
+    String xingJiKey, xingJiKey1, xingJiKey2;
+
     private void initRateBarListener() {
         Log.e(TAG, "initRateBarListener: fieldSet " + fieldSet.toString());
         Map<String, Object> xingJiMap = fieldSet.get(0);
         Map<String, Object> xingJiMap1 = fieldSet.get(1);
-        Map<String, Object> xingJiMapNum = fieldSet.get(fieldSet.size()-1);
+        Map<String, Object> xingJiMapNum = fieldSet.get(fieldSet.size() - 1);
 
         //获取提交的key
         xingJiKey = String.valueOf(xingJiMap.get(Constant.primKey));
@@ -273,6 +274,8 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
         xingJiDicList = (List<Map<String, String>>) xingJiMap.get("dicList");
         //获取星级对应文字列表
         xingJiDicList1 = (List<Map<String, String>>) xingJiMap1.get("dicList");
+        Log.e(TAG, "initRateBarListener: xingJiMap "+xingJiMap.toString());
+        Log.e(TAG, "initRateBarListener: xingJiMap1 "+xingJiMap1.toString());
 
         String finalXingJiKey = xingJiKey;
         String finalXingJiKey1 = xingJiKey1;
@@ -283,7 +286,7 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
         ll_cb_forth.setVisibility(View.GONE);
         ll_cb_fifth.setVisibility(View.VISIBLE);
         tv_assess.setText(xingJiDicList1.get(0).get("DIC_NAME"));
-        commitMap.put(xingJiKey, xingJiDicList.get(0).get("DIC_ID"));
+        commitMap.put(xingJiKey, xingJiDicList.get(4).get("DIC_ID"));
         commitMap.put(xingJiKey1, xingJiDicList1.get(0).get("DIC_ID"));
         commitMap.put(xingJiKey2, "5");
         //  initChoise();
@@ -296,33 +299,33 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
 
         mapCheckBox = new HashMap<>();
         //一星五个
-        mapCheckBox.put("893", cb_first_rb1);
-        mapCheckBox.put("894", cb_first_rb2);
-        mapCheckBox.put("895", cb_first_rb3);
-        mapCheckBox.put("896", cb_first_rb4);
-        mapCheckBox.put("897", cb_first_rb5);
+        mapCheckBox.put("531", cb_first_rb1);
+        mapCheckBox.put("532", cb_first_rb2);
+        mapCheckBox.put("533", cb_first_rb3);
+        mapCheckBox.put("534", cb_first_rb4);
+        mapCheckBox.put("535", cb_first_rb5);
 //二星三个
-        mapCheckBox.put("898", cb_sec_rb1);
-        mapCheckBox.put("899", cb_sec_rb2);
-        mapCheckBox.put("900", cb_sec_rb3);
+        mapCheckBox.put("536", cb_sec_rb1);
+        mapCheckBox.put("537", cb_sec_rb2);
+        mapCheckBox.put("538", cb_sec_rb3);
 //三星四个
-        mapCheckBox.put("901", cb_third_rb1);
-        mapCheckBox.put("902", cb_third_rb2);
-        mapCheckBox.put("903", cb_third_rb3);
-        mapCheckBox.put("904", cb_third_rb4);
+        mapCheckBox.put("539", cb_third_rb1);
+        mapCheckBox.put("540", cb_third_rb2);
+        mapCheckBox.put("541", cb_third_rb3);
+        mapCheckBox.put("542", cb_third_rb4);
 //四星6个
-        mapCheckBox.put("905", cb_forth_rb1);
-        mapCheckBox.put("906", cb_forth_rb2);
-        mapCheckBox.put("907", cb_forth_rb3);
-        mapCheckBox.put("908", cb_forth_rb4);
-        mapCheckBox.put("909", cb_forth_rb5);
-        mapCheckBox.put("910", cb_forth_rb6);
+        mapCheckBox.put("543", cb_forth_rb1);
+        mapCheckBox.put("544", cb_forth_rb2);
+        mapCheckBox.put("545", cb_forth_rb3);
+        mapCheckBox.put("546", cb_forth_rb4);
+        mapCheckBox.put("547", cb_forth_rb5);
+        mapCheckBox.put("548", cb_forth_rb6);
 //五星五个
-        mapCheckBox.put("911", cb_fifth_rb1);
-        mapCheckBox.put("912", cb_fifth_rb2);
-        mapCheckBox.put("913", cb_fifth_rb3);
-        mapCheckBox.put("914", cb_fifth_rb4);
-        mapCheckBox.put("915", cb_fifth_rb5);
+        mapCheckBox.put("549", cb_fifth_rb1);
+        mapCheckBox.put("550", cb_fifth_rb2);
+        mapCheckBox.put("551", cb_fifth_rb3);
+        mapCheckBox.put("552", cb_fifth_rb4);
+        mapCheckBox.put("553", cb_fifth_rb5);
     }
 
 
@@ -343,22 +346,26 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
 
     private void getCommit() {
         String pingJiaValue = "";
+        Log.e(TAG, "getCommit: commitMap"+commitMap.toString() );
         for (Map.Entry entry : commitMap.entrySet()) {
             pingJiaValue += entry.getKey() + "=" + entry.getValue() + "&";
         }
 
+        Log.e(TAG, "getCommit:pingJiaValue " + pingJiaValue);
         if (pingJiaValue.length() > 0) {
             pingJiaValue = pingJiaValue.substring(0, pingJiaValue.length() - 1);
         }
-
+        Log.e(TAG, "getCommit:hideFieldParagram " + hideFieldParagram);
+        Log.e(TAG, "getCommit:keyRelation " + keyRelation);
         if (hasInternetConnected()) {
             dialog.show();
             String volleyUrl1 = Constant.sysUrl + Constant.commitAdd + "?" +
                     Constant.tableId + "=" + tableId + "&" + Constant.pageId + "=" + pageId + "&" +
-                    pingJiaValue + "&" + hideFieldParagram + "&" + keyRelation+"&sessionId="+Constant.sessionId;
+                    pingJiaValue + "&" + hideFieldParagram + "&" + keyRelation + "&sessionId=" + Constant.sessionId;
 
             //请求地址（关联添加和修改）
             String volleyUrl = volleyUrl1.replaceAll(" ", "%20").replaceAll("&&", "&");
+            Log.e(TAG, "getCommit: volleyUrl=" + volleyUrl);
             //get请求
             OkHttpUtils
                     .get()
@@ -386,8 +393,6 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
         } else {
             Toast.makeText(this, "无网络", Toast.LENGTH_SHORT).show();
         }
-
-
     }
 
     public void backToInfo() {
@@ -421,7 +426,7 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
                     ratebar55.setVisibility(View.VISIBLE);
                 }
                 tv_assess.setText(xingJiDicList1.get(4).get("DIC_NAME"));
-                commitMap.put(xingJiKey, xingJiDicList.get(4).get("DIC_ID"));
+                commitMap.put(xingJiKey, xingJiDicList.get(0).get("DIC_ID"));
                 commitMap.put(xingJiKey1, xingJiDicList1.get(4).get("DIC_ID"));
                 commitMap.put(xingJiKey2, "1");
                 clearCheckBox();
@@ -433,7 +438,7 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
 //                commitMap.put(finalXingJiKey, xingJiDicList.get(4).get("DIC_ID"));
 //                commitMap.put(finalXingJiKey1, xingJiDicList1.get(4).get("DIC_ID"));
 
-                  Log.e(TAG, "onCheckedChanged: commitMap " + commitMap.toString());
+                Log.e(TAG, "onCheckedChanged: commitMap " + commitMap.toString());
                 break;
             case R.id.ratebar2:
             case R.id.ratebar22:
@@ -450,7 +455,7 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
                     ratebar22.setVisibility(View.GONE);
                 }
                 tv_assess.setText(xingJiDicList1.get(3).get("DIC_NAME"));
-                commitMap.put(xingJiKey, xingJiDicList.get(3).get("DIC_ID"));
+                commitMap.put(xingJiKey, xingJiDicList.get(1).get("DIC_ID"));
                 commitMap.put(xingJiKey1, xingJiDicList1.get(3).get("DIC_ID"));
                 commitMap.put(xingJiKey2, "2");
                 clearCheckBox();
@@ -502,7 +507,7 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
                     ratebar44.setVisibility(View.GONE);
                 }
                 tv_assess.setText(xingJiDicList1.get(1).get("DIC_NAME"));
-                commitMap.put(xingJiKey, xingJiDicList.get(1).get("DIC_ID"));
+                commitMap.put(xingJiKey, xingJiDicList.get(3).get("DIC_ID"));
                 commitMap.put(xingJiKey1, xingJiDicList1.get(1).get("DIC_ID"));
                 commitMap.put(xingJiKey2, "4");
 
@@ -533,7 +538,7 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
                 ll_cb_forth.setVisibility(View.GONE);
                 ll_cb_fifth.setVisibility(View.VISIBLE);
                 tv_assess.setText(xingJiDicList1.get(0).get("DIC_NAME"));
-                commitMap.put(xingJiKey, xingJiDicList.get(0).get("DIC_ID"));
+                commitMap.put(xingJiKey, xingJiDicList.get(4).get("DIC_ID"));
                 commitMap.put(xingJiKey1, xingJiDicList1.get(0).get("DIC_ID"));
                 commitMap.put(xingJiKey2, "5");
                 Log.e(TAG, "onCheckedChanged: commitMap " + commitMap.toString());
@@ -541,8 +546,6 @@ public class StarRatingBarActivity extends BaseActivity implements View.OnClickL
             default:
                 break;
         }
-
-
     }
 
 

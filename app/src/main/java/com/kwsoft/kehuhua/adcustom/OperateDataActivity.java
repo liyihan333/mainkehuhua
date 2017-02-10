@@ -258,8 +258,6 @@ public class OperateDataActivity extends BaseActivity {
                 Toast.makeText(this, R.string.no_network, Toast.LENGTH_SHORT).show();
             }
         }
-
-
     }
 
     /**

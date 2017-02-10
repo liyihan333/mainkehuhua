@@ -8,9 +8,10 @@
     android:paddingLeft="11dp"
     android:paddingRight="11dp"
     android:paddingTop="9dp"
-    android:textSize="16sp"
+    android:textSize="12sp"
     android:text="一般"
     android:textColor="#ff8a18" >
+    <!--android:textSize="16sp"-->
 
 
     </TextView>

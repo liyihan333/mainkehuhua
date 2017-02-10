@@ -158,6 +158,7 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
                             intent = new Intent();
                             intent.setClass(getActivity(), ListActivity4.class);
                             intent.putExtra("itemData", JSON.toJSONString(itemData));
+                            Log.e("itemtdastudy", JSON.toJSONString(itemData));
                             startActivity(intent);
                             break;
                     }

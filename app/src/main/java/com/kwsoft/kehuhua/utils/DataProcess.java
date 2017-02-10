@@ -9,6 +9,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.kwsoft.kehuhua.adcustom.ListActivity4;
 import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.config.Constant;
+import com.kwsoft.kehuhua.hampson.activity.AssessActivity;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -258,7 +259,7 @@ public class DataProcess {
 
     public static String commit(Activity mActivity,
                                 List<Map<String, Object>> dataCommit) {
-        Log.e(TAG, "commit: dataCommit "+dataCommit.toString());
+        Log.e(TAG, "commit: dataCommit " + dataCommit.toString());
 //必填项判断
         String commitUrl = "";
         int numNull = 0;//判断必填项是否填写
@@ -326,13 +327,13 @@ public class DataProcess {
 
 //不会抛出异常的map遍历移除key方式
             Iterator<Map.Entry<String, Object>> it = commitMap1.entrySet().iterator();
-            while(it.hasNext()){
+            while (it.hasNext()) {
                 Map.Entry<String, Object> entry = it.next();
                 String key = entry.getKey();
-                if(key.endsWith("_0")){
-                    Log.e(TAG, "commit: "+"To delete key " + key);
+                if (key.endsWith("_0")) {
+                    Log.e(TAG, "commit: " + "To delete key " + key);
                     it.remove();
-                    Log.e(TAG, "commit: "+"The key " +key + " was deleted");
+                    Log.e(TAG, "commit: " + "The key " + key + " was deleted");
 
                 }
             }
@@ -412,12 +413,13 @@ public class DataProcess {
 //        if ((itemData.get("menuName").toString()).contains("评价")) {
 //            intent.setClass(mActivity, AssessActivity.class);
 //        } else {
-//            if (itemData.get("menuPageUrl") == null) {
+        //  if (itemData.get("menuPageUrl") == null) {
         intent.setClass(mActivity, ListActivity4.class);
-//            } else {
+//            }
+//else {
 //                intent.setClass(mActivity, CourseActivity.class);
 //            }
-//        }
+        //   }
         intent.putExtra("itemData", itemDataString);//父级菜单数据
         intent.putExtra("childData", childString);
         mActivity.startActivity(intent);

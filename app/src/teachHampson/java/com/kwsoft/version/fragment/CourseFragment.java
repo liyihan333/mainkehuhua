@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
@@ -396,11 +397,12 @@ public class CourseFragment extends Fragment implements OnDataListener, WeekDate
 
         list = (List<Map<String, Object>>) dataMap.get("dataInfo");
 
-        if (list.size() > 0) {
+        if (list != null && list.size() > 0) {
+       // if (list.size() > 0) {
             setCourseDataInTable();
         } else {
             // stopAnim();
-            //  Toast.makeText(getActivity(), "无课表数据", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "无课表数据", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -503,7 +505,7 @@ public class CourseFragment extends Fragment implements OnDataListener, WeekDate
 
                         Intent intent = new Intent(getActivity(), CourseDetailActivity.class);
                         if (!content.equals("null") && content.length() > 0) {
-                            Log.e("courseFrag","contnent"+content);
+                            Log.e("courseFrag", "contnent" + content);
                             intent.putExtra("content", content);
                             intent.putExtra("sTimeStr", sTimeStr);
                             intent.putExtra("eTimeStr", eTimeStr);

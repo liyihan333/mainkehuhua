@@ -174,7 +174,6 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
                 //执行刷新函数
-
                 getLoginData(stuUrl);
             }
         });

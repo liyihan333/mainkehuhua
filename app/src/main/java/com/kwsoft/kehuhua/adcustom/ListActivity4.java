@@ -189,6 +189,7 @@ public class ListActivity4 extends BaseActivity implements ViewPager.OnPageChang
 
                 String menuNamePanDuan = String.valueOf(childList.get(i).get("menuName"));
                 Log.e(TAG, "initViewPager: StuPra.studentProId " + StuPra.studentProId);
+                //R.string.grow_path 由成长轨迹改为测评
                 if (menuNamePanDuan.contains(getString(R.string.grow_path)) && StuPra.studentProId.equals(StuPra.stuProId)) {
                     Fragment stageTestFragment = new StageTestFragment();
                     stageTestFragment.setArguments(listBundle);
@@ -196,13 +197,13 @@ public class ListActivity4 extends BaseActivity implements ViewPager.OnPageChang
 //                    transaction.add(R.id.fragment_container,stageTestFragment);
                     Log.e(TAG, "refreshPage: 学员端走定制化阶段测评页面");
 
-                } else if (menuNamePanDuan.contains(getString(R.string.teaching_log)) && StuPra.studentProId.equals(StuPra.stuProId)) {
-
-                    Fragment courseHpsFragment = new CourseHpsFragment();
-                    courseHpsFragment.setArguments(listBundle);
-                    fragmentList.add(courseHpsFragment);
-//                    transaction.add(R.id.fragment_container, courseHpsFragment);
-                    Log.e(TAG, "refreshPage: 学员端走定制化课堂内容（一对一教学日志）页面");
+//                } else if (menuNamePanDuan.contains(getString(R.string.teaching_log)) && StuPra.studentProId.equals(StuPra.stuProId)) {
+//
+//                    Fragment courseHpsFragment = new CourseHpsFragment();
+//                    courseHpsFragment.setArguments(listBundle);
+//                    fragmentList.add(courseHpsFragment);
+////                    transaction.add(R.id.fragment_container, courseHpsFragment);
+//                    Log.e(TAG, "refreshPage: 学员端走定制化课堂内容（一对一教学日志）页面");
 //评价列表有数据之后在空串后加数字，共2个地方需要修改 //Log.e("评价列表：",)
                 } else if (menuNamePanDuan.contains(getString(R.string.student_evaluation)) && StuPra.studentProId.equals(StuPra.stuProId)) {
                     Fragment courseRatingBarFragment = new CourseRatingBarFragment();

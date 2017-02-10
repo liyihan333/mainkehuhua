@@ -187,7 +187,7 @@
     <string name="commit_success">提交成功</string>
     <string name="commit_failure">提交失败</string>
     <string name="no_detail_data">无详情数据</string>
-    <string name="confirm_xia_class">确认下课</string>
+    <string name="confirm_xia_class">下课并评价</string>
     <string name="database_will_be_deleted">数据库中会同步删除</string>
     <string name="no_detailed_data">无详情数据</string>
     <string name="please_check_table_association">请检查表关联</string>
@@ -195,12 +195,12 @@
     <string name="please_connect_net">请连接网络</string>
     <string name="this_page_no_data">本页无数据</string>
     <string name="total">共</string>
-    <string name="item">条</string>
+    <string name="item"> 条</string>
     <string name="update">更新了</string>
     <string name="item_datas">条数据</string>
-    <string name="loading_completed_total">加载完成，共</string>
+    <string name="loading_completed_total">加载完成，共 </string>
     <string name="no_button_data">无按钮数据</string>
-    <string name="grow_path">成长轨迹</string>
+    <string name="grow_path">测评</string>
     <string name="teaching_log">教学日志</string>
     <string name="student_evaluation">学员评价</string>
     <string name="stu_course_teacher">学员课程教师</string>
@@ -272,7 +272,7 @@
     <string name="project_name">主项目</string>
     <string name="login_failure">登陆失败</string>
     <string name="login_suc">登陆成功</string>
-    <string name="if_direct_operation">确定要这样做吗吗？</string>
+    <string name="if_direct_operation">确定要这样做吗？</string>
     <string name="direct_operation">确认操作</string>
 
 

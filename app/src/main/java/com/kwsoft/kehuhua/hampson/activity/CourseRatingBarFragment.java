@@ -120,7 +120,7 @@ public class CourseRatingBarFragment extends Fragment {
     public void getDataIntent() {
         listDataBundle = getArguments();
         String paramsStr = listDataBundle.getString("listFragmentData");
-
+        Log.e(TAG, "getDataIntent: paramsStr "+paramsStr );
         paramsMap = JSON.parseObject(paramsStr,
                 new TypeReference<Map<String, String>>() {
                 });
@@ -166,8 +166,7 @@ public class CourseRatingBarFragment extends Fragment {
 
                         @Override
                         public void onResponse(String response, int id) {
-                            Log.e(TAG, "onResponse-wyl: " + "  id  " + response);
-
+                            Log.e(TAG, "onResponse-wyl: " + response);
                             setStore(response);
                         }
                     });
@@ -208,6 +207,7 @@ public class CourseRatingBarFragment extends Fragment {
 //获取条目总数
             totalNum = Integer.valueOf(String.valueOf(setMap.get("dataCount")));
 
+
 //获取子项内部按钮
             if (pageSet.get("operaButtonSet") != null) {
                 try {
@@ -241,8 +241,6 @@ public class CourseRatingBarFragment extends Fragment {
 //将dataList与fieldSet合并准备适配数据
         datas = DataProcess.combineSetData(tableId, pageId, fieldSet, dataList);
         showData();
-
-
     }
 
 //    public int isResume = 0;
@@ -269,12 +267,10 @@ public class CourseRatingBarFragment extends Fragment {
                 if (mAdapter != null) {
                     mListView.setSelection(mAdapter.getCount());
                     mAdapter.addData(datas);
-//                    mListView.scrollToPosition(mAdapter.getDatas().size());
-
+                    //mListView.scrollToPosition(mAdapter.getDatas().size());
                     mRefreshLayout.finishRefreshLoadMore();
                     Snackbar.make(mListView, R.string.update + datas.size() + R.string.item, Snackbar.LENGTH_SHORT).show();
                 }
-
                 break;
         }
     }
@@ -287,18 +283,15 @@ public class CourseRatingBarFragment extends Fragment {
         state = STATE_REFREH;
 
         getData();
-
     }
 
     /**
      * 上拉加载方法
      */
     private void loadMoreData() {
-
         start += limit;
         state = STATE_MORE;
         getData();
-
     }
 
     public void normalRequest() {
@@ -313,7 +306,7 @@ public class CourseRatingBarFragment extends Fragment {
 
         }else{
             empty_text.setVisibility(View.GONE);
-            Snackbar.make(mListView, R.string.loading_completed_total + totalNum + R.string.item, Snackbar.LENGTH_SHORT).show();
+           Snackbar.make(mListView, getResources().getString(R.string.loading_completed_total) +totalNum+ getResources().getString(R.string.item), Snackbar.LENGTH_SHORT).show();
         }
 
     }
