@@ -19,6 +19,7 @@ import com.kwsoft.kehuhua.adcustom.base.BaseActivity;
 import com.kwsoft.kehuhua.config.Constant;
 import com.kwsoft.kehuhua.urlCnn.EdusStringCallback;
 import com.kwsoft.kehuhua.urlCnn.ErrorToast;
+import com.kwsoft.kehuhua.urlCnn.MemoEdusStringCallback;
 import com.kwsoft.kehuhua.utils.CloseActivityClass;
 import com.kwsoft.kehuhua.utils.DataProcess;
 import com.kwsoft.kehuhua.widget.CommonToolbar;
@@ -155,7 +156,7 @@ public class RowsAddActivity extends BaseActivity {
                         .get()
                         .url(volleyUrl)
                         .build()
-                        .execute(new EdusStringCallback(RowsAddActivity.this) {
+                        .execute(new MemoEdusStringCallback(RowsAddActivity.this) {
                             @Override
                             public void onError(Call call, Exception e, int id) {
                                 ErrorToast.errorToast(mContext,e);
@@ -165,7 +166,7 @@ public class RowsAddActivity extends BaseActivity {
                             }
 
                             @Override
-                            public void onResponse(String response, int id) {
+                            public void edusOnResponse(String response, int id) {
                                 Log.e(TAG, "onResponse: "+"  id  "+id);
                                 Log.e("TAG", "获得添加结果" + response);
                                 String isCommitSuccess = String.valueOf(response);
@@ -203,7 +204,7 @@ public class RowsAddActivity extends BaseActivity {
                 .params(paramsMap)
                 .url(volleyUrl)
                 .build()
-                .execute(new EdusStringCallback(RowsAddActivity.this) {
+                .execute(new MemoEdusStringCallback(RowsAddActivity.this) {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         ErrorToast.errorToast(mContext,e);
@@ -212,7 +213,7 @@ public class RowsAddActivity extends BaseActivity {
                     }
 
                     @Override
-                    public void onResponse(String response, int id) {
+                    public void edusOnResponse(String response, int id) {
                         Log.e(TAG, "onResponse: "+"  id  "+id);
                         setStore(response);
                     }
@@ -382,7 +383,7 @@ public class RowsAddActivity extends BaseActivity {
                 .params(parMap)
                 .url(volleyUrl)
                 .build()
-                .execute(new EdusStringCallback(RowsAddActivity.this) {
+                .execute(new MemoEdusStringCallback(RowsAddActivity.this) {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         ErrorToast.errorToast(mContext,e);
@@ -391,7 +392,7 @@ public class RowsAddActivity extends BaseActivity {
                     }
 
                     @Override
-                    public void onResponse(String response, int id) {
+                    public void edusOnResponse(String response, int id) {
                         Log.e(TAG, "onResponse: "+"  id  "+id);
                         putValue(response);
                     }

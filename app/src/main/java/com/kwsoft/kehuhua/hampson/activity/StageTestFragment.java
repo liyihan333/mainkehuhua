@@ -25,6 +25,7 @@ import com.kwsoft.kehuhua.config.Constant;
 import com.kwsoft.kehuhua.hampson.adapter.StageTestAdapter;
 import com.kwsoft.kehuhua.urlCnn.EdusStringCallback;
 import com.kwsoft.kehuhua.urlCnn.ErrorToast;
+import com.kwsoft.kehuhua.urlCnn.MemoEdusStringCallback;
 import com.kwsoft.kehuhua.utils.DataProcess;
 import com.zhy.http.okhttp.OkHttpUtils;
 
@@ -162,7 +163,7 @@ public class StageTestFragment extends Fragment {
                     .params(paramsMap)
                     .url(volleyUrl)
                     .build()
-                    .execute(new EdusStringCallback(getActivity()) {
+                    .execute(new MemoEdusStringCallback(getActivity()) {
                         @Override
                         public void onError(Call call, Exception e, int id) {
                             ErrorToast.errorToast(mContext, e);
@@ -173,7 +174,7 @@ public class StageTestFragment extends Fragment {
                         }
 
                         @Override
-                        public void onResponse(String response, int id) {
+                        public void edusOnResponse(String response, int id) {
                             Log.e(TAG, "onResponse: " + "  id  " + id);
                             if (response != null && response.length() > 0) {
                                 setStore(response);

@@ -24,6 +24,7 @@ import com.kwsoft.kehuhua.application.MyApplication;
 import com.kwsoft.kehuhua.config.Constant;
 import com.kwsoft.kehuhua.urlCnn.EdusStringCallback;
 import com.kwsoft.kehuhua.urlCnn.ErrorToast;
+import com.kwsoft.kehuhua.urlCnn.MemoEdusStringCallback;
 import com.kwsoft.kehuhua.widget.CommonToolbar;
 import com.zhy.http.okhttp.OkHttpUtils;
 
@@ -226,7 +227,7 @@ public class ResetPwdActivity extends BaseActivity implements View.OnClickListen
                 .params(paramsMap)
                 .url(volleyUrl)
                 .build()
-                .execute(new EdusStringCallback(ResetPwdActivity.this) {
+                .execute(new MemoEdusStringCallback(ResetPwdActivity.this) {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         ErrorToast.errorToast(mContext, e);
@@ -234,7 +235,7 @@ public class ResetPwdActivity extends BaseActivity implements View.OnClickListen
                     }
 
                     @Override
-                    public void onResponse(String response, int id) {
+                    public void edusOnResponse(String response, int id) {
                         Log.e(TAG, "onResponse: " + "  id  " + id);
                         Log.e("response=", response);
                         setStore(response);

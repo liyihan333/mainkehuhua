@@ -29,6 +29,7 @@ import com.kwsoft.kehuhua.config.Constant;
 import com.kwsoft.kehuhua.hampson.activity.StarRatingBarActivity;
 import com.kwsoft.kehuhua.urlCnn.EdusStringCallback;
 import com.kwsoft.kehuhua.urlCnn.ErrorToast;
+import com.kwsoft.kehuhua.urlCnn.MemoEdusStringCallback;
 import com.kwsoft.kehuhua.utils.CloseActivityClass;
 import com.kwsoft.kehuhua.widget.CommonToolbar;
 import com.kwsoft.version.StuPra;
@@ -431,14 +432,14 @@ public class InfoTwoActivity extends BaseActivity implements View.OnClickListene
         paramMap.put("directSetIds", directSetIds);
         paramMap.put("sessionId", Constant.sessionId);
 
-        Log.e(TAG, "删除参数  " + paramMap.toString());
+        Log.e(TAG, "参数  " + paramMap.toString());
 //请求
         OkHttpUtils
                 .post()
                 .params(paramMap)
                 .url(volleyUrl)
                 .build()
-                .execute(new EdusStringCallback(InfoTwoActivity.this) {
+                .execute(new MemoEdusStringCallback(InfoTwoActivity.this) {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         ErrorToast.errorToast(mContext, e);
@@ -446,8 +447,8 @@ public class InfoTwoActivity extends BaseActivity implements View.OnClickListene
                     }
 
                     @Override
-                    public void onResponse(String response, int id) {
-                        Log.e("TAG", "删除返回数据" + response);
+                    public void edusOnResponse(String response, int id) {
+                        Log.e("TAG", "返回数据" + response);
                         //Toast.makeText(InfoTwoActivity.this, "暂未处理", Toast.LENGTH_SHORT).show();
                         if ("1".equals(response)) {
                             Toast.makeText(InfoTwoActivity.this, "操作成功", Toast.LENGTH_SHORT).show();
@@ -503,7 +504,7 @@ public class InfoTwoActivity extends BaseActivity implements View.OnClickListene
                 .params(delMapParams)
                 .url(volleyUrl)
                 .build()
-                .execute(new EdusStringCallback(InfoTwoActivity.this) {
+                .execute(new MemoEdusStringCallback(InfoTwoActivity.this) {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         ErrorToast.errorToast(mContext, e);
@@ -511,7 +512,7 @@ public class InfoTwoActivity extends BaseActivity implements View.OnClickListene
                     }
 
                     @Override
-                    public void onResponse(String response, int id) {
+                    public void edusOnResponse(String response, int id) {
                         Log.e(TAG, "onResponse: " + "  id  " + id);
                         Log.e("TAG", "删除返回数据" + response);
                         String isSuccess = response.substring(0, 1);

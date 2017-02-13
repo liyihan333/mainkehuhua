@@ -15,6 +15,7 @@ import com.alibaba.fastjson.TypeReference;
 import com.kwsoft.kehuhua.config.Constant;
 import com.kwsoft.kehuhua.urlCnn.EdusStringCallback;
 import com.kwsoft.kehuhua.urlCnn.ErrorToast;
+import com.kwsoft.kehuhua.urlCnn.MemoEdusStringCallback;
 import com.zhy.http.okhttp.OkHttpUtils;
 
 import java.util.ArrayList;
@@ -100,7 +101,7 @@ public class RowsReadActivity extends AppCompatActivity {
                 .params(paramsMap)
                 .url(volleyUrl)
                 .build()
-                .execute(new EdusStringCallback(RowsReadActivity.this) {
+                .execute(new MemoEdusStringCallback(RowsReadActivity.this) {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         ErrorToast.errorToast(mContext,e);
@@ -108,7 +109,7 @@ public class RowsReadActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onResponse(String response, int id) {
+                    public void edusOnResponse(String response, int id) {
                         Log.e(TAG, "onResponse: "+"  id  "+id);
                         setStore(response);
                     }

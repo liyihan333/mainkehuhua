@@ -24,6 +24,7 @@ import com.kwsoft.kehuhua.config.Constant;
 import com.kwsoft.kehuhua.hampson.activity.StarRatingBarActivity;
 import com.kwsoft.kehuhua.urlCnn.EdusStringCallback;
 import com.kwsoft.kehuhua.urlCnn.ErrorToast;
+import com.kwsoft.kehuhua.urlCnn.MemoEdusStringCallback;
 import com.kwsoft.version.StuPra;
 import com.zhy.http.okhttp.OkHttpUtils;
 
@@ -149,6 +150,34 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 holder.right4.setText(!right4Title.equals("null") ? right4Title : "");
                 holder.right4.setVisibility(View.VISIBLE);
 
+                //判断跳转子表格
+                try {
+                    final String titleName = item.get(0).get("fieldCnName2");
+                    final String mainId = item.get(0).get("mainId");
+                    Log.e(TAG, "onBindViewHolder: childTab " + childTab.toString());
+                    Log.e(TAG, "onBindViewHolder: operaButton " + operaButton.size() + " \\ " + operaButton.get(0).toString());
+
+                    if (childTab.size() > 0) {
+                        holder.click_open.setVisibility(View.VISIBLE);
+
+                        holder.click_open.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent();
+                                intent.setClass(mContext, TabActivity.class);
+                                intent.putExtra("mainId", mainId);
+                                intent.putExtra("childTab", JSON.toJSONString(childTab));
+                                intent.putExtra("titleName", titleName);
+                                mContext.startActivity(intent);
+
+                            }
+                        });
+                    } else {
+                        holder.click_open.setVisibility(View.GONE);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
                 //判断显示按钮
                 //首先过滤不能显示的按钮，将不显示的按钮删除
@@ -174,9 +203,10 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     Log.e(TAG, "onBindViewHolder: operaButtonNow " + operaButtonNow.toString());
 
                     if (operaButtonNow.size() > 0) {
+                        holder.dash_ll.setVisibility(View.VISIBLE);
                         holder.list_opera_layout.setVisibility(View.VISIBLE);
                         try {
-                            String mainId = item.get(0).get("mainId");
+                            final String mainId = item.get(0).get("mainId");
                             final String pageId = item.get(0).get("pageId");
                             final String tableId = item.get(0).get("tableId");
 //                            final String dataIds = item.get(0).get("dataIds");
@@ -189,7 +219,11 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                             //第1个按钮
                             final String buttonName1 = String.valueOf(operaButtonNow.get(0).get("buttonName"));
                             final String buttonType1 = String.valueOf(operaButtonNow.get(0).get("buttonType"));
-                            holder.list_opera0_tv.setText(!buttonName1.equals("null") ? buttonName1 : "");
+                            if ((buttonName1.contains("教学日志") || buttonName1.contains("班课作业")) && StuPra.studentProId.equals(StuPra.teachProId)) {
+                                holder.list_opera0_tv.setText("确认下课");
+                            } else {
+                                holder.list_opera0_tv.setText(!buttonName1.equals("null") ? buttonName1 : "");
+                            }
                             holder.ll_list_opera0.setVisibility(View.VISIBLE);
 
                             operaButtonNow.get(0).put("dataId", mainId);
@@ -210,6 +244,18 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                                                 //学员端
                                                 Intent mIntentEdit = new Intent(mContext, StarRatingBarActivity.class);
                                                 mIntentEdit.putExtra("itemSet", operaButtonSetMapStr);
+                                                mContext.startActivity(mIntentEdit);
+                                            } else if (StuPra.studentProId.equals(StuPra.teachProId) && (buttonName1.contains("教学日志") || buttonName1.contains("班课作业"))) {
+                                                //教师端 一对一
+                                                Intent mIntentEdit = new Intent(mContext, OperateDataTwoActivity.class);
+                                                Map<String, Object> operaButtonSetMap1 = operaButtonNow.get(1);
+                                                operaButtonSetMap1.put("tableIdList", tableId);
+                                                operaButtonSetMap1.put("dataId", mainId);
+                                                operaButtonSetMap1.put("pageIdList", pageId);
+                                                String operaButtonSetMapStr1 = JSON.toJSONString(operaButtonSetMap1);
+
+                                                mIntentEdit.putExtra("itemSet", operaButtonSetMapStr);
+                                                mIntentEdit.putExtra("itemSet1", operaButtonSetMapStr1);
                                                 mContext.startActivity(mIntentEdit);
                                             } else {
                                                 Intent mIntentEdit = new Intent(mContext, OperateDataActivity.class);
@@ -233,105 +279,60 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                                             break;
                                     }
 
-//                                    if (buttonName1.contains("确认下课") && StuPra.studentProId.equals(StuPra.stuProId)) {
-//                                        //学员端
-//                                        Intent mIntentEdit = new Intent(mContext, StarRatingBarActivity.class);
-//                                        mIntentEdit.putExtra("itemSet", operaButtonSetMapStr);
-//                                        Log.e(TAG, "onClick: operaButtonSetMapStr " + operaButtonSetMapStr);
-//                                        mContext.startActivity(mIntentEdit);
-//                                    } else if (StuPra.studentProId.equals(StuPra.teachProId) && buttonName1.contains("确认下课") && buttonName1.contains("作业")) {
-//                                        //教师端
-//                                        Intent mIntentEdit = new Intent(mContext, OperateDataTwoActivity.class);
-//                                        Map<String, Object> operaButtonSetMap1 = operaButtonSet.get(1);
-//                                        operaButtonSetMap1.put("tableIdList", tableId);
-//                                        operaButtonSetMap1.put("dataId", mainId);
-//                                        operaButtonSetMap1.put("pageIdList", pageId);
-//                                        String operaButtonSetMapStr1 = JSON.toJSONString(operaButtonSetMap1);
-//
-//                                        mIntentEdit.putExtra("itemSet", operaButtonSetMapStr);
-//                                        mIntentEdit.putExtra("itemSet1", operaButtonSetMapStr1);
-//                                        startActivityForResult(mIntentEdit, FINISH_ATY);
-                                    // } else {
-//                                        Intent mIntentEdit = new Intent(mContext, OperateDataActivity.class);
-//                                        mIntentEdit.putExtra("itemSet", operaButtonSetMapStr);
-//                                        Log.e(TAG, "onClick: operaButtonSetMapStr " + operaButtonSetMapStr);
-//                                        mContext.startActivity(mIntentEdit);
-                                    //  }
                                 }
                             });
 
                             //第2个按钮
                             final String buttonName2 = String.valueOf(operaButtonNow.get(1).get("buttonName"));
                             final String buttonType2 = String.valueOf(operaButtonNow.get(1).get("buttonType"));
-                            holder.list_opera1_tv.setText(!buttonName2.equals("null") ? buttonName2 : "");
-                            holder.ll_list_opera1.setVisibility(View.VISIBLE);
-                            holder.line_view1.setVisibility(View.VISIBLE);
-                            Log.e(TAG, "onBindViewHolder: operaButton.get(1) " + operaButtonNow.get(1).toString());
-                            operaButtonNow.get(1).put("dataId", mainId);
-                            operaButtonNow.get(1).put("tableIdList", tableId);
-                            operaButtonNow.get(1).put("pageIdList", pageId);
-                            Log.e(TAG, "onBindViewHolder: operaButton.get(1) " + operaButtonNow.get(1).toString());
-                            final String operaButtonSetMapStr1 = JSON.toJSONString(operaButtonNow.get(1));
+                            if (!buttonName2.equals("作业") && (!buttonName2.equals("教学日志"))) {
+                                holder.list_opera1_tv.setText(!buttonName2.equals("null") ? buttonName2 : "");
+                                holder.ll_list_opera1.setVisibility(View.VISIBLE);
+                                holder.line_view1.setVisibility(View.VISIBLE);
+                                Log.e(TAG, "onBindViewHolder: operaButton.get(1) " + operaButtonNow.get(1).toString());
+                                operaButtonNow.get(1).put("dataId", mainId);
+                                operaButtonNow.get(1).put("tableIdList", tableId);
+                                operaButtonNow.get(1).put("pageIdList", pageId);
+                                Log.e(TAG, "onBindViewHolder: operaButton.get(1) " + operaButtonNow.get(1).toString());
+                                final String operaButtonSetMapStr1 = JSON.toJSONString(operaButtonNow.get(1));
 
 
-                            holder.ll_list_opera1.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    switch (buttonType2) {
-                                        case "12"://修改页面
-                                        case "18"://关联添加页面
-                                            Log.e(TAG, "onItemClick: operaButtonNow.get(1) " + operaButtonNow.get(1));
-                                            if (buttonName1.contains(mContext.getString(R.string.confirm_xia_class)) && StuPra.studentProId.equals(StuPra.stuProId)) {
-                                                //学员端
-                                                Intent mIntentEdit = new Intent(mContext, StarRatingBarActivity.class);
-                                                mIntentEdit.putExtra("itemSet", operaButtonSetMapStr);
-                                                mContext.startActivity(mIntentEdit);
-                                            } else {
-                                            Intent mIntentEdit = new Intent(mContext, OperateDataActivity.class);
-                                            mIntentEdit.putExtra("itemSet", operaButtonSetMapStr1);
-                                            mContext.startActivity(mIntentEdit);}
-                                            break;
-                                        case "13"://单项删除操作
-                                            delMapParams.put(Constant.tableId, tableId);
-                                            delMapParams.put(Constant.pageId, String.valueOf(operaButtonNow.get(1).get("startTurnPage")));
-                                            delMapParams.put(Constant.delIds, String.valueOf(operaButtonNow.get(1).get("dataId")));
-                                            delMapParams.put("buttonType", String.valueOf(operaButtonNow.get(1).get("buttonType")));
-                                            toDelete();
-                                            break;
-                                        case "21"://直接操作
-                                            Toast.makeText(mContext, "直接操作", Toast.LENGTH_SHORT).show();
-                                            String directSetIds = String.valueOf(operaButtonNow.get(1).get("directSetIds"));
-                                            toDOperation(tableId, pageId, dataIds, directSetIds);
-                                            break;
-                                        default:
-                                            break;
+                                holder.ll_list_opera1.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        switch (buttonType2) {
+                                            case "12"://修改页面
+                                            case "18"://关联添加页面
+                                                Log.e(TAG, "onItemClick: operaButtonNow.get(1) " + operaButtonNow.get(1));
+                                                if (buttonName1.contains(mContext.getString(R.string.confirm_xia_class)) && StuPra.studentProId.equals(StuPra.stuProId)) {
+                                                    //学员端
+                                                    Intent mIntentEdit = new Intent(mContext, StarRatingBarActivity.class);
+                                                    mIntentEdit.putExtra("itemSet", operaButtonSetMapStr);
+                                                    mContext.startActivity(mIntentEdit);
+                                                } else {
+                                                    Intent mIntentEdit = new Intent(mContext, OperateDataActivity.class);
+                                                    mIntentEdit.putExtra("itemSet", operaButtonSetMapStr1);
+                                                    mContext.startActivity(mIntentEdit);
+                                                }
+                                                break;
+                                            case "13"://单项删除操作
+                                                delMapParams.put(Constant.tableId, tableId);
+                                                delMapParams.put(Constant.pageId, String.valueOf(operaButtonNow.get(1).get("startTurnPage")));
+                                                delMapParams.put(Constant.delIds, String.valueOf(operaButtonNow.get(1).get("dataId")));
+                                                delMapParams.put("buttonType", String.valueOf(operaButtonNow.get(1).get("buttonType")));
+                                                toDelete();
+                                                break;
+                                            case "21"://直接操作
+                                                Toast.makeText(mContext, "直接操作", Toast.LENGTH_SHORT).show();
+                                                String directSetIds = String.valueOf(operaButtonNow.get(1).get("directSetIds"));
+                                                toDOperation(tableId, pageId, dataIds, directSetIds);
+                                                break;
+                                            default:
+                                                break;
+                                        }
                                     }
-//                                    if (buttonName1.contains("确认下课") && StuPra.studentProId.equals(StuPra.stuProId)) {
-//                                        //学员端
-//                                        Intent mIntentEdit = new Intent(mContext, StarRatingBarActivity.class);
-//                                        mIntentEdit.putExtra("itemSet", operaButtonSetMapStr);
-//                                        Log.e(TAG, "onClick: operaButtonSetMapStr " + operaButtonSetMapStr);
-//                                        mContext.startActivity(mIntentEdit);
-//                                    } else if (StuPra.studentProId.equals(StuPra.teachProId) && buttonName1.contains("确认下课") && buttonName1.contains("作业")) {
-//                                        //教师端
-//                                        Intent mIntentEdit = new Intent(mContext, OperateDataTwoActivity.class);
-//                                        Map<String, Object> operaButtonSetMap1 = operaButtonSet.get(1);
-//                                        operaButtonSetMap1.put("tableIdList", tableId);
-//                                        operaButtonSetMap1.put("dataId", mainId);
-//                                        operaButtonSetMap1.put("pageIdList", pageId);
-//                                        String operaButtonSetMapStr1 = JSON.toJSONString(operaButtonSetMap1);
-//
-//                                        mIntentEdit.putExtra("itemSet", operaButtonSetMapStr);
-//                                        mIntentEdit.putExtra("itemSet1", operaButtonSetMapStr1);
-//                                        startActivityForResult(mIntentEdit, FINISH_ATY);
-                                    //  } else {
-//                                    Intent mIntentEdit = new Intent(mContext, OperateDataActivity.class);
-//                                    mIntentEdit.putExtra("itemSet", operaButtonSetMapStr);
-//                                    Log.e(TAG, "onClick: operaButtonSetMapStr " + operaButtonSetMapStr);
-//                                    mContext.startActivity(mIntentEdit);
-                                    //   }
-                                }
-                            });
+                                });
+                            }
                             //第3个按钮
                             final String buttonName3 = String.valueOf(operaButtonNow.get(2).get("buttonName"));
                             final String buttonType3 = String.valueOf(operaButtonNow.get(2).get("buttonType"));
@@ -357,9 +358,10 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                                                 mIntentEdit.putExtra("itemSet", operaButtonSetMapStr);
                                                 mContext.startActivity(mIntentEdit);
                                             } else {
-                                            Intent mIntentEdit = new Intent(mContext, OperateDataActivity.class);
-                                            mIntentEdit.putExtra("itemSet", operaButtonSetMapStr2);
-                                            mContext.startActivity(mIntentEdit);}
+                                                Intent mIntentEdit = new Intent(mContext, OperateDataActivity.class);
+                                                mIntentEdit.putExtra("itemSet", operaButtonSetMapStr2);
+                                                mContext.startActivity(mIntentEdit);
+                                            }
                                             break;
                                         case "13"://单项删除操作
                                             delMapParams.put(Constant.tableId, tableId);
@@ -405,54 +407,58 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
+                    } else {
+                        holder.dash_ll.setVisibility(View.GONE);
                     }
-
                 }
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
-//判断跳转子表格
-            try {
-                final String titleName = item.get(0).get("fieldCnName2");
-                final String mainId = item.get(0).get("mainId");
-                Log.e(TAG, "onBindViewHolder: childTab " + childTab.toString());
-                Log.e(TAG, "onBindViewHolder: operaButton "+operaButton.size()+" \\ "+operaButton.get(0).toString());
-
-                if (childTab.size() > 0  && StuPra.studentProId.equals(StuPra.stuProId)) {
-//                    holder.dash_ll.setVisibility(View.VISIBLE);
-                    holder.click_open.setVisibility(View.VISIBLE);
-
-                    if (operaButton!=null&&operaButton.size()>0){
-                        holder.dash_ll.setVisibility(View.VISIBLE);
-                    }else {
-                        holder.dash_ll.setVisibility(View.GONE);
-                    }
-                    holder.click_open.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent();
-                            intent.setClass(mContext, TabActivity.class);
-                            intent.putExtra("mainId", mainId);
-                            intent.putExtra("childTab", JSON.toJSONString(childTab));
-                            intent.putExtra("titleName", titleName);
-                            mContext.startActivity(intent);
-
-                        }
-                    });
-                } else {
-                    //holder.dash_ll.setVisibility(View.GONE);
-                    holder.click_open.setVisibility(View.GONE);
-                    if (operaButton!=null&&operaButton.size()>0 && StuPra.studentProId.equals(StuPra.stuProId)){
-                        holder.dash_ll.setVisibility(View.VISIBLE);
-                    }else {
-                        holder.dash_ll.setVisibility(View.GONE);
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+////判断跳转子表格
+//            try {
+//                final String titleName = item.get(0).get("fieldCnName2");
+//                final String mainId = item.get(0).get("mainId");
+//                Log.e(TAG, "onBindViewHolder: childTab " + childTab.toString());
+//                Log.e(TAG, "onBindViewHolder: operaButton " + operaButton.size() + " \\ " + operaButton.get(0).toString());
+//
+//                //if (childTab.size() > 0  && StuPra.studentProId.equals(StuPra.stuProId)) {
+//
+//                if (childTab.size() > 0) {
+////                    holder.dash_ll.setVisibility(View.VISIBLE);
+//                    holder.click_open.setVisibility(View.VISIBLE);
+//
+//                    if (operaButton != null && operaButton.size() > 0) {
+//                        holder.dash_ll.setVisibility(View.VISIBLE);
+//                    } else {
+//                        holder.dash_ll.setVisibility(View.GONE);
+//                    }
+//                    holder.click_open.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            Intent intent = new Intent();
+//                            intent.setClass(mContext, TabActivity.class);
+//                            intent.putExtra("mainId", mainId);
+//                            intent.putExtra("childTab", JSON.toJSONString(childTab));
+//                            intent.putExtra("titleName", titleName);
+//                            mContext.startActivity(intent);
+//
+//                        }
+//                    });
+//                } else {
+//                    //holder.dash_ll.setVisibility(View.GONE);
+//                    holder.click_open.setVisibility(View.GONE);
+////                    if (operaButton!=null&&operaButton.size()>0 && StuPra.studentProId.equals(StuPra.stuProId)){
+//                    if (operaButton != null && operaButton.size() > 0) {
+//                        holder.dash_ll.setVisibility(View.VISIBLE);
+//                    } else {
+//                        holder.dash_ll.setVisibility(View.GONE);
+//                    }
+//                }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
 
             holder.itemView.setTag(item);
         }
@@ -499,7 +505,7 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 .params(paramMap)
                 .url(volleyUrl)
                 .build()
-                .execute(new EdusStringCallback(mContext) {
+                .execute(new MemoEdusStringCallback(mContext) {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         ErrorToast.errorToast(mContext, e);
@@ -507,7 +513,7 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     }
 
                     @Override
-                    public void onResponse(String response, int id) {
+                    public void edusOnResponse(String response, int id) {
                         Log.e(TAG, "onResponse: " + "  id  " + id);
                         Log.e("TAG", "删除返回数据" + response);
                         if ("1".equals(response)) {
@@ -554,7 +560,7 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 .params(delMapParams)
                 .url(volleyUrl)
                 .build()
-                .execute(new EdusStringCallback(mContext) {
+                .execute(new MemoEdusStringCallback(mContext) {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         ErrorToast.errorToast(mContext, e);
@@ -562,7 +568,7 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     }
 
                     @Override
-                    public void onResponse(String response, int id) {
+                    public void edusOnResponse(String response, int id) {
                         Log.e(TAG, "onResponse: " + "  id  " + id);
                         Log.e("TAG", "删除返回数据" + response);
                         String isSuccess = response.substring(0, 1);

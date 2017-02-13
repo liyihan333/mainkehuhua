@@ -25,6 +25,7 @@ import com.fourmob.datetimepicker.date.DatePickerDialog;
 import com.kwsoft.kehuhua.config.Constant;
 import com.kwsoft.kehuhua.urlCnn.EdusStringCallback;
 import com.kwsoft.kehuhua.urlCnn.ErrorToast;
+import com.kwsoft.kehuhua.urlCnn.MemoEdusStringCallback;
 import com.kwsoft.kehuhua.utils.DiskLruCacheHelper;
 import com.kwsoft.kehuhua.utils.NoDoubleClickListener;
 import com.kwsoft.kehuhua.widget.CommonToolbar;
@@ -144,7 +145,7 @@ public class SearchActivity extends FragmentActivity {
                 .params(paramsMapNew)
                 .url(volleyUrl)
                 .build()
-                .execute(new EdusStringCallback(SearchActivity.this) {
+                .execute(new MemoEdusStringCallback(SearchActivity.this) {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         ErrorToast.errorToast(mContext,e);
@@ -152,7 +153,7 @@ public class SearchActivity extends FragmentActivity {
                     }
 
                     @Override
-                    public void onResponse(String response, int id) {
+                    public void edusOnResponse(String response, int id) {
                         Log.e(TAG, "onResponse: "+"  id  "+id);
                         setStore(response);
                     }

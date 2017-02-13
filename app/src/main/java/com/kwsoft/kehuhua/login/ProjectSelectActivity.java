@@ -23,6 +23,7 @@ import com.kwsoft.kehuhua.config.Constant;
 import com.kwsoft.kehuhua.model.OnRefreshListener;
 import com.kwsoft.kehuhua.urlCnn.EdusStringCallback;
 import com.kwsoft.kehuhua.urlCnn.ErrorToast;
+import com.kwsoft.kehuhua.urlCnn.MemoEdusStringCallback;
 import com.kwsoft.kehuhua.utils.CloseActivityClass;
 import com.kwsoft.kehuhua.utils.DiskLruCacheHelper;
 import com.kwsoft.kehuhua.view.DepthPageTransformer;
@@ -164,7 +165,7 @@ public class ProjectSelectActivity extends BaseActivity implements OnRefreshList
                 .params(paramsMap)
                 .url(volleyUrl)
                 .build()
-                .execute(new EdusStringCallback(ProjectSelectActivity.this) {
+                .execute(new MemoEdusStringCallback(ProjectSelectActivity.this) {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         ErrorToast.errorToast(mContext,e);
@@ -173,7 +174,7 @@ public class ProjectSelectActivity extends BaseActivity implements OnRefreshList
                     }
 
                     @Override
-                    public void onResponse(String response, int id) {
+                    public void edusOnResponse(String response, int id) {
                         Log.e(TAG, "onResponse: "+"  id  "+id);
                         analysisData(response);
                         Log.e(TAG, "项目列表请求数据：" + response);

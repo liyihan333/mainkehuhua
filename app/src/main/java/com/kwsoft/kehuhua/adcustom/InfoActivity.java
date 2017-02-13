@@ -27,6 +27,7 @@ import com.kwsoft.kehuhua.config.Constant;
 import com.kwsoft.kehuhua.hampson.activity.StarRatingBarActivity;
 import com.kwsoft.kehuhua.urlCnn.EdusStringCallback;
 import com.kwsoft.kehuhua.urlCnn.ErrorToast;
+import com.kwsoft.kehuhua.urlCnn.MemoEdusStringCallback;
 import com.kwsoft.kehuhua.utils.CloseActivityClass;
 import com.kwsoft.kehuhua.widget.CommonToolbar;
 import com.kwsoft.version.StuPra;
@@ -370,7 +371,7 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
                 .params(delMapParams)
                 .url(volleyUrl)
                 .build()
-                .execute(new EdusStringCallback(InfoActivity.this) {
+                .execute(new MemoEdusStringCallback(InfoActivity.this) {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         ErrorToast.errorToast(mContext,e);
@@ -378,7 +379,7 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
                     }
 
                     @Override
-                    public void onResponse(String response, int id) {
+                    public void edusOnResponse(String response, int id) {
                         Log.e(TAG, "onResponse: "+"  id  "+id);
                         Log.e("TAG", "删除返回数据" + response);
                         String isSuccess=response.substring(0,1);

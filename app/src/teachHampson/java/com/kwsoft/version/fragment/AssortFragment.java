@@ -30,6 +30,7 @@ import com.kwsoft.kehuhua.urlCnn.EdusStringCallback;
 import com.kwsoft.kehuhua.urlCnn.ErrorToast;
 import com.kwsoft.kehuhua.utils.DataProcess;
 import com.kwsoft.kehuhua.utils.Utils;
+import com.kwsoft.version.StuLoginActivity;
 import com.zhy.http.okhttp.OkHttpUtils;
 
 import java.util.ArrayList;
@@ -245,11 +246,27 @@ public class AssortFragment extends Fragment {
     @SuppressWarnings("unchecked")
     private void check(String menuData) {
         Map<String, Object> stuMenuMap = Utils.str2map(menuData);
-        menuListAll = (List<Map<String, Object>>) stuMenuMap.get("menuList");
-        Log.e("TAG", "sessionId=" + menuListAll.toString());
-        menuListMap.removeAll(menuListMap);
-        menuListMap.addAll(DataProcess.toParentList(menuListAll));
-        Log.e("TAG", "刷新后的父类菜单数据=" + menuListMap.toString());
+        Map<String, Object> loginfo = (Map<String, Object>) stuMenuMap.get("loginInfo");
+        if (String.valueOf(loginfo.get("sessionId")).equals(Constant.sessionId)) {
+            if (stuMenuMap.containsKey("menuList")) {
+                menuListAll = (List<Map<String, Object>>) stuMenuMap.get("menuList");
+                Log.e("TAG", "sessionId=" + menuListAll.toString());
+                menuListMap.removeAll(menuListMap);
+                if (menuListAll != null && menuListAll.size() > 0) {
+                    menuListMap.addAll(DataProcess.toStuParentList(menuListAll));
+                    Log.e("TAG", "刷新后的父类菜单数据=" + menuListMap.toString());
+                }
+            }
+        } else {
+            Toast.makeText(getActivity(), "登陆失效，请退出登陆！", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getActivity(), StuLoginActivity.class);
+            startActivity(intent);
+        }
+//        menuListAll = (List<Map<String, Object>>) stuMenuMap.get("menuList");
+//        Log.e("TAG", "sessionId=" + menuListAll.toString());
+//        menuListMap.removeAll(menuListMap);
+//        menuListMap.addAll(DataProcess.toParentList(menuListAll));
+//        Log.e("TAG", "刷新后的父类菜单数据=" + menuListMap.toString());
     }
 
 

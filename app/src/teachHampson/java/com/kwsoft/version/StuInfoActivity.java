@@ -16,6 +16,7 @@ import com.kwsoft.kehuhua.adcustom.R;
 import com.kwsoft.kehuhua.config.Constant;
 import com.kwsoft.kehuhua.urlCnn.EdusStringCallback;
 import com.kwsoft.kehuhua.urlCnn.ErrorToast;
+import com.kwsoft.kehuhua.urlCnn.MemoEdusStringCallback;
 import com.kwsoft.kehuhua.utils.Utils;
 import com.kwsoft.kehuhua.widget.CommonToolbar;
 import com.kwsoft.version.fragment.StuInfoAdapter;
@@ -151,7 +152,7 @@ public class StuInfoActivity extends AppCompatActivity {
                 .params(paramsMap)
                 .url(volleyUrl)
                 .build()
-                .execute(new EdusStringCallback(StuInfoActivity.this) {
+                .execute(new MemoEdusStringCallback(StuInfoActivity.this) {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         ErrorToast.errorToast(mContext, e);
@@ -159,7 +160,7 @@ public class StuInfoActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onResponse(String response, int id) {
+                    public void edusOnResponse(String response, int id) {
                         Log.e(TAG, "onResponse: " + response);
                         if (response != null && response.length() > 0) {
                             setStore(response);

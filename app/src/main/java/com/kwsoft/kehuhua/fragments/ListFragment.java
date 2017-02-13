@@ -30,6 +30,7 @@ import com.kwsoft.kehuhua.adcustom.base.BaseActivity;
 import com.kwsoft.kehuhua.config.Constant;
 import com.kwsoft.kehuhua.urlCnn.EdusStringCallback;
 import com.kwsoft.kehuhua.urlCnn.ErrorToast;
+import com.kwsoft.kehuhua.urlCnn.MemoEdusStringCallback;
 import com.kwsoft.kehuhua.utils.DataProcess;
 import com.kwsoft.kehuhua.view.RecycleViewDivider;
 import com.kwsoft.kehuhua.view.WrapContentLinearLayoutManager;
@@ -155,14 +156,20 @@ public class ListFragment extends Fragment {
             paramsMap.put("sessionId", Constant.sessionId);
             paramsMap.put("limit", limit + "");
 
-            Log.e(TAG, "getData: paramsMap " + paramsMap.toString());
+            Log.e(TAG, "getData: paramsMap6 " + paramsMap.toString());
             //请求
             OkHttpUtils
                     .post()
                     .params(paramsMap)
                     .url(volleyUrl)
                     .build()
-                    .execute(new EdusStringCallback(getActivity()) {
+                    .execute(new MemoEdusStringCallback(getActivity()) {
+                        @Override
+                        public void edusOnResponse(String response, int id) {
+                            Log.e(TAG, "onResponse: getData-"+response);
+                            setStore(response);
+                        }
+
                         @Override
                         public void onError(Call call, Exception e, int id) {
                             ErrorToast.errorToast(mContext, e);
@@ -172,11 +179,11 @@ public class ListFragment extends Fragment {
                             Log.e(TAG, "onError: Call  " + call + "  id  " + id);
                         }
 
-                        @Override
-                        public void onResponse(String response, int id) {
-                            Log.e(TAG, "onResponse: getData-"+response);
-                            setStore(response);
-                        }
+//                        @Override
+//                        public void onResponse(String response, int id) {
+//                            Log.e(TAG, "onResponse: getData-"+response);
+//                            setStore(response);
+//                        }
                     });
         } else {
             ((BaseActivity) getActivity()).dialog.dismiss();

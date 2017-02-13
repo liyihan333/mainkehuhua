@@ -16,6 +16,7 @@ import com.kwsoft.kehuhua.adcustom.base.BaseActivity;
 import com.kwsoft.kehuhua.config.Constant;
 import com.kwsoft.kehuhua.urlCnn.EdusStringCallback;
 import com.kwsoft.kehuhua.urlCnn.ErrorToast;
+import com.kwsoft.kehuhua.urlCnn.MemoEdusStringCallback;
 import com.kwsoft.kehuhua.utils.CloseActivityClass;
 import com.zhy.http.okhttp.OkHttpUtils;
 
@@ -29,7 +30,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.Call;
 
-public class AddTemplateDataActivity extends BaseActivity {
+public class                                                                                                                                                                                                                                                                                                                                                                                                                                                                              AddTemplateDataActivity extends BaseActivity {
     @Bind(R.id.unlimited_add_item_to_add)
     ImageView unlimitedAddItemToAdd;
     @Bind(R.id.unlimited_add_commit_item_tadd)
@@ -184,7 +185,7 @@ commitValue();
                 .params(parMap)
                 .url(volleyUrl)
                 .build()
-                .execute(new EdusStringCallback(AddTemplateDataActivity.this) {
+                .execute(new MemoEdusStringCallback(AddTemplateDataActivity.this) {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         dialog.dismiss();
@@ -193,7 +194,7 @@ commitValue();
                     }
 
                     @Override
-                    public void onResponse(String response, int id) {
+                    public void edusOnResponse(String response, int id) {
                         Log.e(TAG, "onResponse: "+"  id  "+id);
                         putValue(response);
                     }

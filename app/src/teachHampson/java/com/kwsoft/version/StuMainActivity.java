@@ -62,7 +62,7 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
         initFragment();
         // initDialog();
         PgyUpdateManager.register(this);
-        Utils.startPollingService(mContext, 5 * 60, SessionService.class, SessionService.ACTION);//启动20分钟一次的轮询获取session服务
+       // Utils.startPollingService(mContext, 5 * 60, SessionService.class, SessionService.ACTION);//启动20分钟一次的轮询获取session服务
         registerMessageReceiver();  // used for receive msg
     }
 
@@ -305,7 +305,6 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
         switch (item.getItemId()) {
             case android.R.id.home:
                 toCamera();
-
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -319,13 +318,13 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void onDestroy() {
         unregisterReceiver(mMessageReceiver);
-        Utils.stopPollingService(this, SessionService.class, SessionService.ACTION);
+       // Utils.stopPollingService(this, SessionService.class, SessionService.ACTION);
         super.onDestroy();
     }
 
     @Override
     protected void onStop() {
-        Utils.stopPollingService(this, SessionService.class, SessionService.ACTION);
+       // Utils.stopPollingService(this, SessionService.class, SessionService.ACTION);
         super.onStop();
     }
 }

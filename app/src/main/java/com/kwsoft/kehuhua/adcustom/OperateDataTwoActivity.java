@@ -22,6 +22,7 @@ import com.kwsoft.kehuhua.adcustom.base.BaseActivity;
 import com.kwsoft.kehuhua.config.Constant;
 import com.kwsoft.kehuhua.urlCnn.EdusStringCallback;
 import com.kwsoft.kehuhua.urlCnn.ErrorToast;
+import com.kwsoft.kehuhua.urlCnn.MemoEdusStringCallback;
 import com.kwsoft.kehuhua.utils.DataProcess;
 import com.kwsoft.kehuhua.widget.CommonToolbar;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -97,7 +98,7 @@ public class OperateDataTwoActivity extends BaseActivity {
                     .params(paramsMap0)
                     .url(volleyUrl)
                     .build()
-                    .execute(new EdusStringCallback(OperateDataTwoActivity.this) {
+                    .execute(new MemoEdusStringCallback(OperateDataTwoActivity.this) {
                         @Override
                         public void onError(Call call, Exception e, int id) {
                             ErrorToast.errorToast(mContext, e);
@@ -105,7 +106,7 @@ public class OperateDataTwoActivity extends BaseActivity {
                         }
 
                         @Override
-                        public void onResponse(String response, int id) {
+                        public void edusOnResponse(String response, int id) {
                             Log.e(TAG, "onResponse: " + response + "  id  " + id);
                             setStore(response, buttonType0, tableId0, pageId0, dataId0, 0);
                         }
@@ -118,7 +119,7 @@ public class OperateDataTwoActivity extends BaseActivity {
                     .params(paramsMap1)
                     .url(volleyUrl)
                     .build()
-                    .execute(new EdusStringCallback(OperateDataTwoActivity.this) {
+                    .execute(new MemoEdusStringCallback(OperateDataTwoActivity.this) {
                         @Override
                         public void onError(Call call, Exception e, int id) {
                             ErrorToast.errorToast(mContext, e);
@@ -126,7 +127,7 @@ public class OperateDataTwoActivity extends BaseActivity {
                         }
 
                         @Override
-                        public void onResponse(String response, int id) {
+                        public void edusOnResponse(String response, int id) {
                             Log.e(TAG, "onResponse: " + response + "  id  " + id);
                             setStore(response, buttonType1, tableId1, pageId1, dataId1, 1);
 
@@ -315,7 +316,7 @@ public class OperateDataTwoActivity extends BaseActivity {
                         .get()
                         .url(volleyUrl)
                         .build()
-                        .execute(new EdusStringCallback(OperateDataTwoActivity.this) {
+                        .execute(new MemoEdusStringCallback(OperateDataTwoActivity.this) {
                             @Override
                             public void onError(Call call, Exception e, int id) {
                                 ErrorToast.errorToast(mContext, e);
@@ -324,7 +325,7 @@ public class OperateDataTwoActivity extends BaseActivity {
                             }
 
                             @Override
-                            public void onResponse(String response, int id) {
+                            public void edusOnResponse(String response, int id) {
                                 Log.e(TAG, "onResponse: " + response);
                                 if (response != null && !response.equals("0")) {
                                    // Toast.makeText(OperateDataTwoActivity.this, "操作成功", Toast.LENGTH_SHORT).show();
@@ -636,7 +637,7 @@ public class OperateDataTwoActivity extends BaseActivity {
                 .params(parMap)
                 .url(volleyUrl)
                 .build()
-                .execute(new EdusStringCallback(mContext) {
+                .execute(new MemoEdusStringCallback(mContext) {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         ErrorToast.errorToast(mContext, e);
@@ -645,7 +646,7 @@ public class OperateDataTwoActivity extends BaseActivity {
                     }
 
                     @Override
-                    public void onResponse(String response, int id) {
+                    public void edusOnResponse(String response, int id) {
                         Log.e(TAG, "onResponse: " + "  id  " + id);
                         putValue(response);
                     }

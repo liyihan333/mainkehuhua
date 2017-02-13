@@ -28,6 +28,7 @@ import com.kwsoft.kehuhua.fragments.UnGetFragment;
 import com.kwsoft.kehuhua.login.LoginActivity;
 import com.kwsoft.kehuhua.urlCnn.EdusStringCallback;
 import com.kwsoft.kehuhua.urlCnn.ErrorToast;
+import com.kwsoft.kehuhua.urlCnn.MemoEdusStringCallback;
 import com.kwsoft.kehuhua.utils.BadgeUtil;
 import com.zhy.http.okhttp.OkHttpUtils;
 
@@ -228,7 +229,7 @@ public class MessagAlertActivity extends BaseActivity {
                 .params(paramsMap)
                 .url(volleyUrl)
                 .build()
-                .execute(new EdusStringCallback(MessagAlertActivity.this) {
+                .execute(new MemoEdusStringCallback(MessagAlertActivity.this) {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         ErrorToast.errorToast(mContext,e);
@@ -236,7 +237,7 @@ public class MessagAlertActivity extends BaseActivity {
                     }
 
                     @Override
-                    public void onResponse(String response, int id) {
+                    public void edusOnResponse(String response, int id) {
                         Log.e(TAG, "onResponse: "+"  id  "+id);
                         setStore(response);
                     }

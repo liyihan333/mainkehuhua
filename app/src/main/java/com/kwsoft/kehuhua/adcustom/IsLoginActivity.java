@@ -28,7 +28,7 @@ import static android.content.ContentValues.TAG;
 
 public class IsLoginActivity extends Activity {
     private DiskLruCacheHelper DLCH;
-    private Map<String, String> paramsMap=new HashMap<>();
+    private Map<String, String> paramsMap = new HashMap<>();
     private String paramsString;
     private String loginUrl;
 
@@ -38,13 +38,13 @@ public class IsLoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_is_login);
 
-        ImageView welcomeImage= (ImageView) findViewById(R.id.welcomeImage);
+        ImageView welcomeImage = (ImageView) findViewById(R.id.welcomeImage);
         welcomeImage.setImageResource(R.drawable.welcomepage);
         welcomeImage.setScaleType(ImageView.ScaleType.FIT_XY);
-        Log.e("TAG","已进入主项目");
+        Log.e("TAG", "已进入主项目");
         CloseActivityClass.activityList.add(this);
         try {
-            DLCH=new DiskLruCacheHelper(IsLoginActivity.this);
+            DLCH = new DiskLruCacheHelper(IsLoginActivity.this);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -52,7 +52,7 @@ public class IsLoginActivity extends Activity {
 
         SharedPreferences sPreferences = getSharedPreferences(Constant.proId, MODE_PRIVATE);
         Map<String, String> map = (Map<String, String>) sPreferences.getAll();
-        int i = map.size()/2;
+        int i = map.size() / 2;
         if (i > 0) {//如果存在账户
             //取出用户名和密码并直接跳转至登录页面
             String userName = sPreferences.getString("name" + (i - 1), "");
@@ -63,8 +63,8 @@ public class IsLoginActivity extends Activity {
             paramsMap.put(Constant.PASSWORD, Constant.PASSWORD_ALL);
             paramsMap.put(Constant.sourceName, Constant.sourceInt);
             paramsMap.put(Constant.timeName, Constant.menuTime);
-            paramsString=paramsMap.toString();
-           postLogin();//直接下载数据
+            paramsString = paramsMap.toString();
+            postLogin();//直接下载数据
         } else {//否则转到登录界面
             toLoginPage();
         }
@@ -72,12 +72,12 @@ public class IsLoginActivity extends Activity {
 
 
     public void postLogin() {
-        loginUrl=Constant.sysUrl+Constant.projectLoginUrl;
-        Log.e("TAG","loginUrl"+loginUrl);
+        loginUrl = Constant.sysUrl + Constant.projectLoginUrl;
+        Log.e("TAG", "loginUrl" + loginUrl);
         //参数
         Map<String, String> paramsMap = new HashMap<>();
         paramsMap.put(Constant.USER_NAME, Constant.USERNAME_ALL);
-        paramsMap.put(Constant.PASSWORD,  Constant.PASSWORD_ALL);
+        paramsMap.put(Constant.PASSWORD, Constant.PASSWORD_ALL);
         paramsMap.put(Constant.proIdName, Constant.proId);
         paramsMap.put(Constant.timeName, Constant.menuTime);
         paramsMap.put(Constant.sourceName, Constant.sourceInt);
@@ -90,14 +90,14 @@ public class IsLoginActivity extends Activity {
                 .execute(new EdusStringCallback(IsLoginActivity.this) {
                     @Override
                     public void onError(Call call, Exception e, int id) {
-                        ErrorToast.errorToast(mContext,e);
+                        ErrorToast.errorToast(mContext, e);
 //                        mainPage(diskData);
-                        Log.e(TAG, "onError: Call  "+call+"  id  "+id);
+                        Log.e(TAG, "onError: Call  " + call + "  id  " + id);
                     }
 
                     @Override
                     public void onResponse(String response, int id) {
-                        Log.e(TAG, "onResponse: "+"  id  "+id);
+                        Log.e(TAG, "onResponse: " + "  id  " + id);
                         check(response);//除非用户名密码输错，否则不会到这里
                     }
                 });
@@ -111,34 +111,35 @@ public class IsLoginActivity extends Activity {
             Toast.makeText(this, R.string.username_or_pwd_incorrect, Toast.LENGTH_SHORT).show();
             toLoginPage();
         } else {//当成功登陆后存储：：正确的用户名和密码
-            DLCH.put(Constant.sysUrl+Constant.projectLoginUrl+ Constant.USERNAME_ALL + Constant.proId,menuData);
+            DLCH.put(Constant.sysUrl + Constant.projectLoginUrl + Constant.USERNAME_ALL + Constant.proId, menuData);
             getLoginName(menuData);
 
 
-            mainPage(menuData);
+
         }
 
 
     }
+
     public void getLoginName(String menuData) {
 
         Map<String, Object> menuMap = JSON.parseObject(menuData, Map.class);
         if (menuMap.get("loginInfo") != null) {
             Map<String, Object> loginInfo = (Map<String, Object>) menuMap.get("loginInfo");
-            Constant.sessionId = String.valueOf(loginInfo.get("sessionId"));
-            if (loginInfo.get("USERNAME") != null) {
-                Log.e("TAG", "USERNAME" + loginInfo.get("USERNAME"));
-                Constant.loginName = (String) loginInfo.get("USERNAME");
-                Constant.USERID=String.valueOf(loginInfo.get("USERID"));
-                Constant.menuTime=String.valueOf(menuMap.get("menuTime"));
+            // Constant.sessionId = String.valueOf(loginInfo.get("sessionId"));
+            if ((String.valueOf(loginInfo.get("sessionId"))).equals(Constant.sessionId)) {
+                if (loginInfo.get("USERNAME") != null) {
+                    Log.e("TAG", "USERNAME" + loginInfo.get("USERNAME"));
+                    Constant.loginName = (String) loginInfo.get("USERNAME");
+                    Constant.USERID = String.valueOf(loginInfo.get("USERID"));
+                    Constant.menuTime = String.valueOf(menuMap.get("menuTime"));
+                    mainPage(menuData);
+                }
+            } else {
+                toLoginPage();
             }
         }
     }
-
-
-
-
-
 
 
     private void mainPage(String menuStr) {

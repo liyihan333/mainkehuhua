@@ -100,6 +100,7 @@ public class StuProLoginActivity extends BaseActivity {
                 map.put(Constant.proIdName, Constant.proId);
                 map.put(Constant.timeName, Constant.menuAlterTime);
                 map.put(Constant.sourceName, Constant.sourceInt);
+                Log.e(TAG, "postLogin1 222: "+map.toString() );
                 //请求
                 OkHttpUtils
                         .post()
@@ -263,6 +264,7 @@ public class StuProLoginActivity extends BaseActivity {
                     Toast.makeText(StuProLoginActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
                     Constant.USERID = String.valueOf(loginInfo.get("USERID"));
                     Constant.sessionId = String.valueOf(loginInfo.get("sessionId"));
+                    Log.e(TAG, "getLoginName: sessionId222 "+ String.valueOf(loginInfo.get("sessionId")));
                 }
             } catch (Exception e) {
                 e.printStackTrace();

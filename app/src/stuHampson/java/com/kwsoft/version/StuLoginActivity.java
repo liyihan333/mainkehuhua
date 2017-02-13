@@ -259,6 +259,7 @@ public class StuLoginActivity extends BaseActivity implements View.OnClickListen
                 map.put(Constant.proIdName, Constant.proId);
                 map.put(Constant.timeName, Constant.menuAlterTime);
                 map.put(Constant.sourceName, Constant.sourceInt);
+                Log.e(TAG, "postLogin1 111: "+map.toString() );
                 //请求
                 OkHttpUtils
                         .post()
@@ -422,6 +423,7 @@ public class StuLoginActivity extends BaseActivity implements View.OnClickListen
                     Toast.makeText(StuLoginActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
                     Constant.USERID = String.valueOf(loginInfo.get("USERID"));
                     Constant.sessionId = String.valueOf(loginInfo.get("sessionId"));
+                    Log.e(TAG, "getLoginName: sessionId111 " + String.valueOf(loginInfo.get("sessionId")));
                 }
             } catch (Exception e) {
                 e.printStackTrace();

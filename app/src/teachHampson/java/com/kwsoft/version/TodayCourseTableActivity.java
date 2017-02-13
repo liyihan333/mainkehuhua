@@ -18,6 +18,7 @@ import com.kwsoft.kehuhua.adcustom.base.BaseActivity;
 import com.kwsoft.kehuhua.config.Constant;
 import com.kwsoft.kehuhua.urlCnn.EdusStringCallback;
 import com.kwsoft.kehuhua.urlCnn.ErrorToast;
+import com.kwsoft.kehuhua.urlCnn.MemoEdusStringCallback;
 import com.kwsoft.kehuhua.widget.CommonToolbar;
 import com.kwsoft.version.adapter.TodayCourseTabAdapter;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -149,7 +150,7 @@ public class TodayCourseTableActivity extends BaseActivity {
                     .params(paramsMap)
                     .url(volleyUrl)
                     .build()
-                    .execute(new EdusStringCallback(TodayCourseTableActivity.this) {
+                    .execute(new MemoEdusStringCallback(TodayCourseTableActivity.this) {
                         @Override
                         public void onError(Call call, Exception e, int id) {
                             ErrorToast.errorToast(mContext, e);
@@ -159,7 +160,7 @@ public class TodayCourseTableActivity extends BaseActivity {
                         }
 
                         @Override
-                        public void onResponse(String response, int id) {
+                        public void edusOnResponse(String response, int id) {
                             Log.e(TAG, "today:" + response);
 
                             parseData(response);

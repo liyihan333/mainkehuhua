@@ -25,6 +25,7 @@ import com.kwsoft.kehuhua.config.Constant;
 import com.kwsoft.kehuhua.model.OnDataListener;
 import com.kwsoft.kehuhua.urlCnn.EdusStringCallback;
 import com.kwsoft.kehuhua.urlCnn.ErrorToast;
+import com.kwsoft.kehuhua.urlCnn.MemoEdusStringCallback;
 import com.kwsoft.kehuhua.view.CourseView;
 import com.zhy.http.okhttp.OkHttpUtils;
 
@@ -218,13 +219,14 @@ public class CourseFragment extends Fragment implements OnDataListener, WeekDate
         DateTime startDate = midDate.plusDays(-3);
         DateTime endDate = midDate.plusDays(3);
         thisWeekFirstDate = startDate.toString("yyyy-MM-dd");
+
         thisWeekLastDate = endDate.toString("yyyy-MM-dd");
 
         paramsMap.put("mainId", Constant.USERID);
         paramsMap.put("tableId", tableId);
         paramsMap.put("minDate", thisWeekFirstDate);//thisWeekFirstDate
         paramsMap.put("maxDate", thisWeekLastDate);//thisWeekLastDate
-
+        paramsMap.put("sessionId", Constant.sessionId);
 
         Log.e(TAG, Constant.USERID + "//" + tableId);
     }
@@ -356,25 +358,26 @@ public class CourseFragment extends Fragment implements OnDataListener, WeekDate
         }
     }
 
+    private static final String TAG = "CourseFragment";
     //请求课程表数据
     private void requestCourseData(String volleyUrl) {
         //startAnim();
         Log.e("TAG", "请求课表数据");
-
+        Log.e(TAG, "requestCourseData: paramsMap"+paramsMap.toString() );
         //请求
         OkHttpUtils
                 .post()
                 .params(paramsMap)
                 .url(volleyUrl)
                 .build()
-                .execute(new EdusStringCallback(getActivity()) {
+                .execute(new MemoEdusStringCallback(getActivity()) {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         ErrorToast.errorToast(mContext, e);
                     }
 
                     @Override
-                    public void onResponse(String response, int id) {
+                    public void edusOnResponse(String response, int id) {
                         Log.e(TAG, "onResponse: " + "  id  " + id);
                         Log.e("onres=", response);
                         setStore(response);
@@ -393,8 +396,7 @@ public class CourseFragment extends Fragment implements OnDataListener, WeekDate
             e.printStackTrace();
         }
 
-        Log.e("TAG", "转换课程表数据");
-
+        Log.e("TAG", "转换课程表数据 "+dataMap.toString());
         list = (List<Map<String, Object>>) dataMap.get("dataInfo");
 
         if (list != null && list.size() > 0) {
@@ -516,16 +518,12 @@ public class CourseFragment extends Fragment implements OnDataListener, WeekDate
                 Log.e("TAG", "课程表检测4");
             } catch (NumberFormatException e) {
                 e.printStackTrace();
-
             }
-
         }
         // stopAnim();
     }
 
     public boolean isContainChinese(String str) {
-
-
         Pattern p = Pattern.compile("[\u4e00-\u9fa5]");
         Matcher m = p.matcher(str);
         if (m.find()) {

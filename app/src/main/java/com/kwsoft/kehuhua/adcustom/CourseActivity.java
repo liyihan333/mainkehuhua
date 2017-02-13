@@ -20,6 +20,7 @@ import com.kwsoft.kehuhua.config.Constant;
 import com.kwsoft.kehuhua.model.OnDataListener;
 import com.kwsoft.kehuhua.urlCnn.EdusStringCallback;
 import com.kwsoft.kehuhua.urlCnn.ErrorToast;
+import com.kwsoft.kehuhua.urlCnn.MemoEdusStringCallback;
 import com.kwsoft.kehuhua.view.CourseView;
 import com.zhy.http.okhttp.OkHttpUtils;
 
@@ -254,7 +255,7 @@ public class CourseActivity extends AppCompatActivity implements OnDataListener,
                 .params(paramsMap)
                 .url(volleyUrl)
                 .build()
-                .execute(new EdusStringCallback(CourseActivity.this) {
+                .execute(new MemoEdusStringCallback(CourseActivity.this) {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         ErrorToast.errorToast(mContext,e);
@@ -262,7 +263,7 @@ public class CourseActivity extends AppCompatActivity implements OnDataListener,
                     }
 
                     @Override
-                    public void onResponse(String response, int id) {
+                    public void edusOnResponse(String response, int id) {
                         Log.e(TAG, "onResponse: "+"  id  "+id);
                         setStore(response);
                     }

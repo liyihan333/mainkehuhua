@@ -20,6 +20,7 @@ import com.kwsoft.kehuhua.adcustom.base.BaseActivity;
 import com.kwsoft.kehuhua.config.Constant;
 import com.kwsoft.kehuhua.urlCnn.EdusStringCallback;
 import com.kwsoft.kehuhua.urlCnn.ErrorToast;
+import com.kwsoft.kehuhua.urlCnn.MemoEdusStringCallback;
 import com.kwsoft.kehuhua.utils.DataProcess;
 import com.kwsoft.kehuhua.widget.CommonToolbar;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -89,7 +90,7 @@ public class OperateDataActivity extends BaseActivity {
                 .params(paramsMap)
                 .url(volleyUrl)
                 .build()
-                .execute(new EdusStringCallback(OperateDataActivity.this) {
+                .execute(new MemoEdusStringCallback(OperateDataActivity.this) {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         ErrorToast.errorToast(mContext, e);
@@ -97,7 +98,7 @@ public class OperateDataActivity extends BaseActivity {
                     }
 
                     @Override
-                    public void onResponse(String response, int id) {
+                    public void edusOnResponse(String response, int id) {
                         Log.e(TAG, "onResponse: " + response + "  id  " + id);
                         setStore(response);
                     }
@@ -235,7 +236,7 @@ public class OperateDataActivity extends BaseActivity {
                         .get()
                         .url(volleyUrl)
                         .build()
-                        .execute(new EdusStringCallback(OperateDataActivity.this) {
+                        .execute(new MemoEdusStringCallback(OperateDataActivity.this) {
                             @Override
                             public void onError(Call call, Exception e, int id) {
                                 ErrorToast.errorToast(mContext, e);
@@ -244,7 +245,7 @@ public class OperateDataActivity extends BaseActivity {
                             }
 
                             @Override
-                            public void onResponse(String response, int id) {
+                            public void edusOnResponse(String response, int id) {
                                 Log.e(TAG, "onResponse: " + response);
                                 if (response != null && !response.equals("0")) {
                                     Toast.makeText(OperateDataActivity.this, R.string.operation_success, Toast.LENGTH_SHORT).show();
@@ -518,7 +519,7 @@ public class OperateDataActivity extends BaseActivity {
                 .params(parMap)
                 .url(volleyUrl)
                 .build()
-                .execute(new EdusStringCallback(mContext) {
+                .execute(new MemoEdusStringCallback(mContext) {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         ErrorToast.errorToast(mContext, e);
@@ -527,7 +528,7 @@ public class OperateDataActivity extends BaseActivity {
                     }
 
                     @Override
-                    public void onResponse(String response, int id) {
+                    public void edusOnResponse(String response, int id) {
                         Log.e(TAG, "onResponse: " + "  id  " + id);
                         putValue(response);
                     }

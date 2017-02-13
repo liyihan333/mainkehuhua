@@ -42,11 +42,13 @@ import com.kwsoft.kehuhua.urlCnn.ErrorToast;
 import com.kwsoft.kehuhua.utils.DataProcess;
 import com.kwsoft.kehuhua.zxing.TestScanActivity;
 import com.kwsoft.version.StuInfoActivity;
+import com.kwsoft.version.StuLoginActivity;
 import com.kwsoft.version.TodayCourseTableActivity;
 import com.kwsoft.version.androidRomType.AndtoidRomUtil;
 import com.kwsoft.version.view.StudyGridView;
 import com.zhy.http.okhttp.OkHttpUtils;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -60,6 +62,7 @@ import kr.co.namee.permissiongen.PermissionFail;
 import kr.co.namee.permissiongen.PermissionGen;
 import kr.co.namee.permissiongen.PermissionSuccess;
 import okhttp3.Call;
+import okhttp3.Response;
 
 /**
  * Created by Administrator on 2016/9/6 0006.
@@ -665,6 +668,7 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
                             pull_refresh_scrollview.onRefreshComplete();
                         }
 
+
                         @Override
                         public void onResponse(String response, int id) {
                             Log.e(TAG, "onResponse: " + "  id  " + id);
@@ -672,7 +676,6 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
                         }
                     });
         } else {
-
             pull_refresh_scrollview.onRefreshComplete();
             Toast.makeText(getActivity(), getResources().getString(R.string.no_network), Toast.LENGTH_SHORT).show();
 
@@ -689,7 +692,7 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
 
             Map<String, Object> loginfo = (Map<String, Object>) menuMap.get("loginInfo");
             Constant.USERID = String.valueOf(loginfo.get("USERID"));
-            Constant.sessionId = String.valueOf(loginfo.get("sessionId"));
+            if (String.valueOf(loginfo.get("sessionId")).equals(Constant.sessionId)) {
             List<Map<String, Object>> menuListMap1 = (List<Map<String, Object>>) menuMap.get("roleFollowList");
             // List<Map<String, Object>> menuListMap2 = (List<Map<String, Object>>) menuMap.get("menuList");
 //看板模块数据
@@ -706,7 +709,11 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
             }
 
             isResume = 0;
-
+            } else {
+                Toast.makeText(getActivity(), "登陆失效，已退出登陆！", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), StuLoginActivity.class);
+                startActivity(intent);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
