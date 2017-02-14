@@ -240,7 +240,6 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         } else {
             ((BaseActivity) getActivity()).dialog.dismiss();
             Toast.makeText(getActivity(), R.string.please_connect_net, Toast.LENGTH_SHORT).show();
-
         }
     }
 

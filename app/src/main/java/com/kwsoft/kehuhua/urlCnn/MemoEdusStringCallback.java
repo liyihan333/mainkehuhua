@@ -13,6 +13,8 @@ import com.zhy.http.okhttp.callback.Callback;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import okhttp3.Response;
 
@@ -36,15 +38,24 @@ public abstract class MemoEdusStringCallback extends Callback<String> {
     public void onResponse(String response, int id) {
         Log.e(TAG, "onResponse: responsestr" + response);
         if (!response.contains("!DOCTYPE html")) {
-            Map<String, Object> menuMap = JSON.parseObject(response,
-                    new TypeReference<Map<String, Object>>() {
-                    });
-            Log.e(TAG, "onResponse: menuMap" + menuMap.toString());
-            if (menuMap.containsKey("promptMessage")) {
+//            Pattern p = Pattern.compile("[0-9]*");
+//            Matcher m = p.matcher(response);
+//            if ((response.length() <= 2) && (m.matches())) {
+//                edusOnResponse(re]
+//
+// sponse, id);
+//            } else {
+//                Map<String, Object> menuMap = JSON.parseObject(response,
+//                        new TypeReference<Map<String, Object>>() {
+//                        });
+//                Log.e(TAG, "onResponse: menuMap" + menuMap.toString());
+//                if (menuMap.containsKey("promptMessage")) {
+            if (response.contains("promptMessage")) {
                 sentLogin();
             } else {
                 edusOnResponse(response, id);
             }
+//            }
         } else {
             sentLogin();
         }
