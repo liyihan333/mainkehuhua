@@ -286,7 +286,7 @@
             <ImageView
                 android:layout_width="15dp"
                 android:layout_height="13dp"
-                android:src="@mipmap/list_item_btn_edit" />
+                android:src="@mipmap/edit_a" />
 
             <TextView
                 android:id="@+id/list_opera0_tv"
@@ -294,7 +294,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:text="编辑修改"
-                android:textColor="@color/tv_9c9c9c"
+                android:textColor="@color/btn_tv"
                 android:textSize="14sp" />
         </LinearLayout>
 
@@ -318,7 +318,7 @@
             <ImageView
                 android:layout_width="15dp"
                 android:layout_height="13dp"
-                android:src="@mipmap/list_item_btn_time" />
+                android:src="@mipmap/time_a" />
 
             <TextView
                 android:id="@+id/list_opera1_tv"
@@ -326,7 +326,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:text="课程考勤"
-                android:textColor="@color/tv_9c9c9c"
+                android:textColor="@color/btn_tv"
                 android:textSize="14sp" />
         </LinearLayout>
 
@@ -350,7 +350,7 @@
             <ImageView
                 android:layout_width="15dp"
                 android:layout_height="13dp"
-                android:src="@mipmap/list_item_btn_del" />
+                android:src="@mipmap/del_a" />
 
             <TextView
                 android:id="@+id/list_opera2_tv"
@@ -358,7 +358,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:text="删除"
-                android:textColor="@color/tv_9c9c9c"
+                android:textColor="@color/btn_tv"
                 android:textSize="14sp" />
         </LinearLayout>
 

@@ -481,7 +481,7 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
                     new TypeReference<Map<String, Object>>() {
                     });
             Map<String, Object> loginfo = (Map<String, Object>) menuMap.get("loginInfo");
-            Constant.USERID = String.valueOf(loginfo.get("USERID"));
+            //Constant.USERID = String.valueOf(loginfo.get("USERID"));
             if (String.valueOf(loginfo.get("sessionId")).equals(Constant.sessionId)) {
                 List<Map<String, Object>> menuListMap1 = null;
                 if (menuMap.containsKey("roleFollowList")) {

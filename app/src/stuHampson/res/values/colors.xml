@@ -5,4 +5,5 @@
     <color name="colorPrimaryDark">#ef5152</color><!--导航栏颜色 -->
     <color name="prim_topBarColor">#ef5152</color>
     <color name="course_bg_title">#f5f5f5</color>
+    <color name="btn_tv">#ff8200</color>
 </resources>
