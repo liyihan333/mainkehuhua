@@ -154,8 +154,8 @@ public class ListAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 try {
                     final String titleName = item.get(0).get("fieldCnName2");
                     final String mainId = item.get(0).get("mainId");
-                    Log.e(TAG, "onBindViewHolder: childTab " + childTab.toString());
-                    Log.e(TAG, "onBindViewHolder: operaButton " + operaButton.size() + " \\ " + operaButton.get(0).toString());
+//                    Log.e(TAG, "onBindViewHolder: childTab " + childTab.toString());
+//                    Log.e(TAG, "onBindViewHolder: operaButton " + operaButton.size() + " \\ " + operaButton.get(0).toString());
 
                     if (childTab.size() > 0) {
                         holder.click_open.setVisibility(View.VISIBLE);

@@ -91,6 +91,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_weight="1"
+                    android:autoLink="phone"
                     android:textColor="@color/list_item_right"
                     android:textSize="16sp"
                     android:visibility="gone" />
@@ -141,6 +142,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
+                    android:autoLink="phone"
                     android:textColor="@color/list_item_right"
                     android:textSize="16sp"
                     android:visibility="gone" />
@@ -166,6 +168,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
+                    android:autoLink="phone"
                     android:textColor="@color/list_item_right"
                     android:textSize="16sp"
                     android:visibility="gone" />
@@ -189,6 +192,7 @@
                 <TextView
                     android:id="@+id/right4"
                     android:layout_width="match_parent"
+                    android:autoLink="phone"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:textColor="@color/list_item_right"
@@ -390,6 +394,7 @@
         <!--android:visibility="gone" />-->
 
     </LinearLayout>
+
 
 </LinearLayout>
 

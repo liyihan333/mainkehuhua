@@ -81,7 +81,7 @@ public class StuMainActivity extends BaseActivity implements View.OnClickListene
 
         initView();
         initFragment();
-        if (!Constant.USERID.equals(useridOld)) {
+        if (!(Constant.USERID).equals(useridOld)) {
             initDialog();
             sPreferences.edit().putString("useridOld", Constant.USERID).apply();
         }

@@ -35,6 +35,7 @@
         android:paddingStart="25dp"
         android:paddingEnd="20dp"
         android:textSize="20sp"
+        android:autoLink="phone"
         android:text="fgfg"
         android:layout_centerVertical="true"
         android:layout_toEndOf="@+id/tv_name"

@@ -148,23 +148,23 @@ public class StudyFragment extends Fragment implements View.OnClickListener {
                 Constant.stu_homeSetId = String.valueOf(parentList.get(position).get("SourceDataId"));
                 try {
                     Log.e(TAG, "onItemClick: wyl" + tableId + "//" + pageId + "//" + String.valueOf(parentList.get(position).get("cnName")));
-                    switch (tableId) {
-                        case "19":
-                        case "70":
-                        case "71":
-                            Intent intent = new Intent(getActivity(), KanBanLRActivity.class);
-                            intent.putExtra("itemData", JSON.toJSONString(itemData));
-                            Log.e("itemtdastudy", JSON.toJSONString(itemData));
-                            startActivity(intent);
-                            break;
-                        default:
-                            intent = new Intent();
+//                    switch (tableId) {
+//                        case "19":
+//                        case "70":
+//                        case "71":
+//                            Intent intent = new Intent(getActivity(), KanBanLRActivity.class);
+//                            intent.putExtra("itemData", JSON.toJSONString(itemData));
+//                            Log.e("itemtdastudy", JSON.toJSONString(itemData));
+//                            startActivity(intent);
+//                            break;
+//                        default:
+                    Intent  intent = new Intent();
                             intent.setClass(getActivity(), ListActivity4.class);
                             intent.putExtra("itemData", JSON.toJSONString(itemData));
                             Log.e("itemtdastudy", JSON.toJSONString(itemData));
                             startActivity(intent);
-                            break;
-                    }
+//                            break;
+//                    }
 //                    Intent intent = new Intent();
 //                    intent.setClass(getActivity(), ListActivity4.class);
 //                    intent.putExtra("itemData", JSON.toJSONString(itemData));
